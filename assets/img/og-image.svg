@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Forward Framework">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="1200" height="4" fill="#A99A8C"/>
+  <g transform="translate(96 132) scale(0.62)">
+    <path fill="#A99A8C" d="M78 34 L198 34 L164 68 L112 68 L112 112 L174 112 L140 146 L112 146 L112 200 L78 166 Z"/>
+    <path fill="#FFFFFF" d="M0 0 L120 0 L86 34 L34 34 L34 78 L96 78 L62 112 L34 112 L34 200 L0 166 Z"/>
+  </g>
+  <text x="96" y="360" fill="#FFFFFF" font-family="Jost, Futura, 'Century Gothic', Helvetica, Arial, sans-serif" font-size="62" font-weight="300" letter-spacing="14">FORWARD FRAMEWORK</text>
+  <text x="98" y="428" fill="#A99A8C" font-family="Jost, Futura, 'Century Gothic', Helvetica, Arial, sans-serif" font-size="30" font-weight="400" letter-spacing="5">WEB DESIGN • AI CONSULTING • AUTOMATION • MARKETING</text>
+  <text x="98" y="512" fill="#C9C6C1" font-family="Inter, Helvetica, Arial, sans-serif" font-size="27" font-weight="400">Websites, AI systems and campaigns engineered to compound revenue.</text>
+  <text x="98" y="562" fill="#8B8681" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="400">Get your free Growth Plan — no contracts, no retainers to start.</text>
+</svg>

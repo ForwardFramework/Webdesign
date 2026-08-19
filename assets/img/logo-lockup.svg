@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" role="img" aria-label="Forward Framework — Web Design, AI Consulting, Automation, Marketing">
+  <title>Forward Framework</title>
+  <rect width="960" height="620" fill="#0A0A0A"/>
+  <g transform="translate(380 90) scale(1.0)">
+    <path fill="#A99A8C" d="M78 34 L198 34 L164 68 L112 68 L112 112 L174 112 L140 146 L112 146 L112 200 L78 166 Z"/>
+    <path fill="#FFFFFF" d="M0 0 L120 0 L86 34 L34 34 L34 78 L96 78 L62 112 L34 112 L34 200 L0 166 Z"/>
+  </g>
+  <text x="480" y="405" fill="#FFFFFF" font-family="Jost, Futura, 'Century Gothic', 'Avenir Next', Helvetica, Arial, sans-serif" font-size="86" font-weight="300" letter-spacing="20" text-anchor="middle">FORWARD</text>
+  <g stroke="#A99A8C" stroke-width="2">
+    <line x1="150" y1="470" x2="255" y2="470"/>
+    <line x1="705" y1="470" x2="810" y2="470"/>
+  </g>
+  <text x="484" y="484" fill="#A99A8C" font-family="Jost, Futura, 'Century Gothic', 'Avenir Next', Helvetica, Arial, sans-serif" font-size="58" font-weight="300" letter-spacing="17" text-anchor="middle">FRAMEWORK</text>
+  <text x="482" y="546" fill="#E8E4DF" font-family="Jost, Futura, 'Century Gothic', 'Avenir Next', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" letter-spacing="6" text-anchor="middle">WEB DESIGN • AI CONSULTING • AUTOMATION • MARKETING</text>
+</svg>

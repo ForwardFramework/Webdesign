@@ -1,0 +1,16 @@
+{
+  "name": "Forward Framework",
+  "short_name": "Forward",
+  "description": "Web design, AI consulting, automation and marketing built as one growth engine.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    {
+      "src": "/assets/img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
