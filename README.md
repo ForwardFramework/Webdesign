@@ -225,9 +225,11 @@ Then: verify in Google Rich Results Test and Search Console, submit the sitemap,
 
 ## 7. Deployment
 
-Hosted on Vercel. See **[DEPLOY.md](DEPLOY.md)** for the full walkthrough,
-including the production-branch setting (this repo has no `main`) and the
-domain switch that has to happen at launch.
+See **[DEPLOY.md](DEPLOY.md)** for full walkthroughs. GitHub Pages deploys
+automatically via `.github/workflows/pages.yml` (just set Settings → Pages →
+Source to *GitHub Actions*); Vercel and static.app are covered too. Note this
+repo has no `main` branch, and the absolute domain has to be switched at
+launch.
 
 ```bash
 python3 tools/set_domain.py https://your-domain.com   # rewrites + rebuilds everything

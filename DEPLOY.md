@@ -57,6 +57,56 @@ page. Ask and the attribute can be added to all of them in one pass.
 
 ---
 
+# GitHub Pages
+
+A workflow at `.github/workflows/pages.yml` builds and publishes the site on
+every push. Turn it on once:
+
+**Repository → Settings → Pages → Build and deployment → Source: `GitHub Actions`**
+
+That is the only setting. Push, and the Actions tab shows the deploy; the URL
+appears on the workflow run and under Settings → Pages.
+
+### The subpath problem, handled
+
+A GitHub *project* site is served from `https://<owner>.github.io/<repo>/`, not
+from the domain root. Every link and asset in this site is root-absolute
+(`/assets/css/styles.css`), which is correct for a real domain and broken under
+a subpath — 1,188 references would 404.
+
+Rather than compromise the source, `tools/build_pages.py` copies the site into
+`_site/` at deploy time and rewrites those paths, using the `base_path` and
+`base_url` that `actions/configure-pages` reports. So:
+
+- **No custom domain** → served at `/<repo>/`, paths and canonical URLs are
+  rewritten to match.
+- **Custom domain added** (Settings → Pages → Custom domain) → `base_path` is
+  empty, nothing is rewritten, and the staged output is byte-identical to the
+  source.
+
+Either way the canonical tags, Open Graph tags, JSON-LD, `sitemap.xml`,
+`robots.txt` and `llms.txt` all point at the address actually serving the site.
+A `.nojekyll` file is added so Pages serves the files as-is.
+
+Verified locally by staging with `base_path=/Webdesign`, serving it from a
+subfolder and loading every route: no 404s, no JS errors, navigation stays
+inside the subpath, canonicals correct.
+
+### Branch note
+
+The workflow triggers on `main` and on `claude/forward-framework-website-qwe3cg`.
+This repository currently has no `main` — see the branch note under Vercel
+below, which applies here too.
+
+### Run it locally
+
+```bash
+python3 tools/build_pages.py /Webdesign https://owner.github.io/Webdesign
+cd _site && python3 -m http.server 8000
+```
+
+---
+
 # Deploying to Vercel
 
 The site is static HTML, CSS and vanilla JavaScript. There is no build step,
