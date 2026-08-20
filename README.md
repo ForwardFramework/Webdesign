@@ -147,6 +147,22 @@ python3 tools/build.py      # regenerates all pages + robots.txt, sitemap.xml, l
 
 Edit `index.html` for shell changes, `tools/build.py` for service copy/pricing, then rebuild.
 
+### Source code bundle
+
+```bash
+python3 tools/build_source_pdf.py    # -> dist/forward-framework-source.{html,txt}
+```
+
+Renders every file into one print document, plus a plain-text bundle. To produce
+the PDF, print `dist/forward-framework-source.html` to PDF (Letter, landscape) or
+use headless Chromium.
+
+Note on copy-paste: PDF text layers have no concept of line continuity, so a
+source line long enough to wrap visually extracts with a newline at the wrap
+point. Measured round-trip is 93% of non-blank lines; every failure is a line
+over ~170 characters, and none is a short line. Use the `.txt` bundle when the
+code needs to be pasted back out intact — it is byte-for-byte lossless.
+
 ### Single-file preview
 
 ```bash
