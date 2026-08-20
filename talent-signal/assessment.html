@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal — Behavioural Assessment</title>
+<meta name="description" content="Take the Signal behavioural hiring assessment. Seventy items, about twenty minutes, scored entirely in your browser.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/brand.css">
+<link rel="stylesheet" href="assets/css/landing.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230b1f3a'/><path d='M7 21l5-9 4 6 3-4 6 7' stroke='%23c8a44d' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body class="app-shell">
+<a class="skip-link" href="#app">Skip to the assessment</a>
+
+<header class="site-header no-print">
+  <div class="wrap site-header__inner">
+    <a class="mark" href="index.html" aria-label="Signal home">
+      <span class="mark__glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0b1f3a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-8 4 5 3-4 6 7"/></svg>
+      </span>
+      <span class="mark__text">Signal<span>&nbsp;/ Assessment</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html#frameworks">Frameworks</a>
+      <a href="index.html#report">The report</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn btn--ghost btn--sm" href="index.html">Overview</a>
+  </div>
+</header>
+
+<div class="progress-bar no-print" id="progress" hidden>
+  <div class="wrap progress-bar__inner">
+    <span class="progress-bar__section" id="progress-section"></span>
+    <div class="progress-bar__track" role="progressbar" aria-label="Assessment progress"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+    <span class="progress-bar__label" id="progress-label">0 / 70</span>
+  </div>
+</div>
+
+<main class="app-main" id="app">
+  <div class="wrap">
+    <div class="panel panel--narrow">
+      <p class="lede">Loading the assessment…</p>
+      <noscript>
+        <div class="notice notice--warn">
+          <b>JavaScript is required.</b> Signal scores everything in your browser rather than on a server,
+          so the assessment cannot run without it.
+        </div>
+      </noscript>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer no-print">
+  <div class="wrap">
+    <p class="disclaimer">Signal is an independent instrument built on public constructs. Big Five/OCEAN is a public research model; DISC, the Hogan Personality Inventory, the Predictive Index Behavioral Assessment and the Caliper Profile are trademarks of their respective owners, referenced only to describe the constructs this assessment draws on. No affiliation or endorsement is implied. Not a clinical or diagnostic instrument, and not validated for adverse impact — use it to inform judgement, never as a pass/fail screen.</p>
+  </div>
+</footer>
+
+<script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

@@ -3,6 +3,18 @@
 Design tooling for Claude Code: the vendored [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 skills plus the [21st.dev](https://21st.dev) MCP server.
 
+## Signal assessment
+
+[`talent-signal/`](talent-signal/) holds a complete behavioural hiring assessment and its landing
+page — 70 items scored five ways (Big Five, DISC, Hogan HPI-style, Predictive Index-style drives,
+Caliper-style competencies with a reasoning screen). Static HTML/CSS/ES modules, no build step and
+no server; see [talent-signal/README.md](talent-signal/README.md) for the scoring model, the norm
+table, and the fair-use guidance.
+
+```bash
+cd talent-signal && python3 -m http.server 8000   # http://localhost:8000
+```
+
 ## Skills
 
 `.claude/skills/` holds seven vendored skills (`ui-ux-pro-max`, `ui-styling`, `design`,
