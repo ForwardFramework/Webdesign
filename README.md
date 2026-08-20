@@ -147,6 +147,24 @@ python3 tools/build.py      # regenerates all pages + robots.txt, sitemap.xml, l
 
 Edit `index.html` for shell changes, `tools/build.py` for service copy/pricing, then rebuild.
 
+### Deployment bundles
+
+```bash
+python3 tools/build_zip.py       # -> dist/forward-framework-site.zip (upload to any static host)
+python3 tools/build_preview.py   # -> dist/single-file/index.html (one self-contained file)
+```
+
+`forward-framework-site.zip` is the real multi-page site — 27 files, separate
+URLs, per-page canonicals, sitemap. **Use this whenever the host accepts file
+uploads**; it is the version the SEO/GEO/AEO work was built for.
+
+`single-file/index.html` is the whole site in one complete HTML document for
+hosts that only offer a single paste box. It carries the homepage's meta tags
+and JSON-LD, and a client-side router swaps the other 16 pages into `<main>`.
+Trade-off: one URL for the whole site, so per-page canonicals, the sitemap and
+per-page schema stop applying, and `og:image` needs a real hosted image before
+social previews work.
+
 ### Source code bundle
 
 ```bash

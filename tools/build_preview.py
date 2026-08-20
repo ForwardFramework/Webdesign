@@ -157,3 +157,57 @@ os.makedirs(os.path.join(ROOT, "dist"), exist_ok=True)
 dest = os.path.join(ROOT, "dist", "preview.html")
 open(dest, "w", encoding="utf-8").write(out)
 print(f"wrote dist/preview.html — {len(PAGES)} pages, {len(out) / 1024:.0f} KB")
+
+# ---------------------------------------------------------------------------
+# Standalone build: the same single file, but a complete HTML document that can
+# be pasted into a host's single-file editor and served as-is.
+# ---------------------------------------------------------------------------
+home = read("index.html")
+head_meta = re.search(r"<title>.*?</title>", home, re.S).group(0)
+desc = re.search(r'<meta name="description"[^>]*>', home).group(0)
+og = "\n".join(re.findall(r'<meta property="og:[^>]*>', home))
+tw = "\n".join(re.findall(r'<meta name="twitter:[^>]*>', home))
+schema = re.search(r'<script type="application/ld\+json">.*?</script>', home, re.S).group(0)
+
+standalone = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{head_meta}
+{desc}
+<meta name="theme-color" content="#0A0A0A">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+{og}
+{tw}
+<link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+{css}
+</style>
+{schema}
+</head>
+<body>
+
+{shell_top}
+<main id="main"></main>
+{shell_bottom}
+
+{chr(10).join(blocks)}
+
+<script>
+{js}
+</script>
+<script>
+{router}
+</script>
+</body>
+</html>
+"""
+os.makedirs(os.path.join(ROOT, "dist", "single-file"), exist_ok=True)
+sdest = os.path.join(ROOT, "dist", "single-file", "index.html")
+open(sdest, "w", encoding="utf-8").write(standalone)
+print(f"wrote dist/single-file/index.html — {len(standalone) / 1024:.0f} KB (complete document)")
