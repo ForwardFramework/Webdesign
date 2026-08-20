@@ -1,0 +1,5 @@
+# Build tooling and generated bundles — not part of the served site.
+tools/
+dist/
+README.md
+.claude/

@@ -222,7 +222,17 @@ Then: verify in Google Rich Results Test and Search Console, submit the sitemap,
 
 ---
 
-## 7. Local preview
+## 7. Deployment
+
+Hosted on Vercel. See **[DEPLOY.md](DEPLOY.md)** for the full walkthrough,
+including the production-branch setting (this repo has no `main`) and the
+domain switch that has to happen at launch.
+
+```bash
+python3 tools/set_domain.py https://your-domain.com   # rewrites + rebuilds everything
+```
+
+## 8. Local preview
 
 ```bash
 python3 -m http.server 8000
