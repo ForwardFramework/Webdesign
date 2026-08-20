@@ -40,11 +40,12 @@ Every service leads with a **real deliverable**, not a "book a call" button.
 | Service | Offer | Rationale |
 |---|---|---|
 | Web Design | Free **homepage concept** — actually designed | Interactive/personalised beats a static checklist; shows the work instead of describing it |
-| AI Consulting | Free **AI Opportunity Audit** → $4,950 Readiness Sprint → build | The "audit gateway": a small paid diagnostic anchors and de-risks a large build. Framing it as strategic advisory (not a technical audit) commands 20–40% higher rates |
+| AI Consulting | Free **AI Opportunity Audit** → $1,999 Readiness Sprint → build | The "audit gateway": a small paid diagnostic anchors and de-risks a large build. Framing it as strategic advisory (not a technical audit) commands 20–40% higher rates |
 | Automation | Free **automation blueprint** (60-min session + hours/dollars returned) | Sells an absence; the number has to be produced before the buyer believes it |
 | Marketing / SEO | Free **AI Search Visibility Report** | The 2026 differentiator — shows the buyer a transcript of an AI recommending their competitors |
 | Ad Management | Free **ad account audit** | Most audited accounts hide 20–40% wasted spend; a dollar figure is the entire pitch |
 | Social Media | Free **30-day content plan**, 10 scripted posts | Immediately usable, which is exactly why it earns the reply |
+| Scaffold (business systems) | Free **Key-Person Risk Map** | Names the processes that live only in someone's head and ranks them by revenue at risk — a problem owners feel but have never seen written down |
 
 ---
 
@@ -120,8 +121,8 @@ Its accessibility and forms guidance **was** applied in full — see §4.
 
 ```
 index.html                  Homepage — the full composite build
-services/                   Hub + 6 service pages (each with its own offer, pricing, FAQ, schema)
-pricing.html                Every price for all six services
+services/                   Hub + 7 service pages (each with its own offer, pricing, FAQ, schema)
+pricing.html                Every price for all seven services
 results.html                Case studies
 about.html                  Positioning, principles, the five-phase method
 contact.html                Growth Plan form
@@ -180,7 +181,7 @@ Everything below is a placeholder and is marked in the source.
 | **Partner badges** | Text placeholders | Trust bar in `index.html` |
 | **Postal address** | Intentionally absent from schema | Add `PostalAddress` + `LocalBusiness` once HQ is confirmed — it materially helps local SEO |
 | **Legal pages** | Templates | `privacy.html`, `terms.html` — have counsel review |
-| **Pricing** | Benchmarked against 2026 US market rates | Confirm against your actual cost model |
+| **Pricing** | Set by the client. Web/AI/automation/marketing/ads/social/Scaffold starting prices are the figures supplied, not market benchmarks | Confirm against your actual cost model |
 
 Then: verify in Google Rich Results Test and Search Console, submit the sitemap, and add analytics
 (the form handler already pushes a `generate_lead` event to `dataLayer` if GTM is present).

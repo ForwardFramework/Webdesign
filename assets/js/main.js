@@ -329,7 +329,7 @@
         calc.querySelector('#res-hours').textContent = Math.round(recovered).toLocaleString('en-US');
         calc.querySelector('#res-weekly').textContent = money(weeklyValue);
         calc.querySelector('#res-annual').textContent = money(annual);
-        var payback = annual > 0 ? Math.max(1, Math.round((12000 / annual) * 12)) : 0;
+        var payback = annual > 0 ? Math.max(1, Math.round((2499 / annual) * 12)) : 0;
         calc.querySelector('#res-payback').textContent = payback <= 1 ? '< 1 month' : payback + ' months';
       };
       Array.prototype.forEach.call(calc.querySelectorAll('input[type=range]'), function (el) {

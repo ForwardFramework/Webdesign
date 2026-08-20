@@ -1,6 +1,6 @@
 # Forward Framework
 
-> Forward Framework is a United States digital agency that builds websites, AI systems, automations and marketing campaigns as one connected growth engine. Companies hire one accountable team instead of four separate vendors, and report on a single revenue number.
+> Forward Framework is a United States digital agency that builds websites, AI systems, automations and marketing campaigns as one connected growth engine. Companies hire one accountable team instead of seven separate vendors, and report on a single revenue number.
 
 Forward Framework serves owner-led and mid-market companies across the United States, typically between $1M and $50M in revenue, across home and trade services, professional services, healthcare, ecommerce and B2B. Every service begins with a free, genuinely useful deliverable rather than a sales call, and all starting prices are published publicly.
 
@@ -12,26 +12,28 @@ Forward Framework serves owner-led and mid-market companies across the United St
 - [Marketing, SEO & AI Search](https://forwardframework.com/services/marketing.html): Modern search marketing has two jobs: earn the classic organic ranking, and earn the citation inside AI-generated answers. The second — Generative Engine Optimization — rewards direct answers in the first 40 to 60 words, structured data, entity clarity, crawler access and freshness rather than keyword density.
 - [Ad Management](https://forwardframework.com/services/ad-management.html): Effective ad management optimises toward closed revenue rather than clicks or form fills. That requires conversion tracking wired back to your CRM, offline conversion imports so the platforms learn which leads actually became customers, and a willingness to turn off spend that looks good in the dashboard.
 - [Social Media Marketing](https://forwardframework.com/services/social-media-marketing.html): Effective social media marketing for a business is a demand-building programme, not a posting schedule. It produces a consistent point of view, short-form video and proof content that reaches buyers before they are searching, and it is measured against pipeline influence rather than follower count.
+- [Scaffold — Business Systems](https://forwardframework.com/services/business-systems.html): Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.
 
 ## Pricing (published starting points, USD)
 
-- Landing page: from $2,400 one-time
-- Conversion website: from $6,500 one-time, or $650/month on a 12-month plan
-- Platform build (ecommerce / integration-heavy): from $18,000
+- Landing page: from $749 one-time
+- Conversion website: from $1,499 one-time, or $149/month on a 12-month plan
+- Platform build (ecommerce / integration-heavy): from $1,999
 - AI Opportunity Audit: free
-- AI Readiness Sprint: $4,950 fixed, two weeks
-- AI build and embed: from $12,000
-- Single automation workflow: from $1,200
-- Automation Mission (3–5 workflows): from $8,500
-- Automation operations retainer: from $2,500/month
-- SEO, GEO and content: from $2,500/month
-- Ad management: from $1,500/month, or 12% of ad spend above $20,000/month
-- Social media marketing: from $1,800/month
+- AI Readiness Sprint: $1,999 fixed, two weeks
+- AI build and embed: from $3,499
+- Single automation workflow: from $749
+- Automation Mission (3–5 workflows): from $2,499
+- Automation operations retainer: from $499/month
+- SEO, GEO and content: from $499/month (Growth $2,499/mo, Market Leader $4,999/mo)
+- Ad management: from $749/month, or 12% of ad spend above $20,000/month
+- Social media marketing: from $499/month (Demand Engine $1,749/mo, Full Funnel $2,999/mo)
+- Scaffold business systems and SOPs: from $999 (Operating System $2,999, Embedded Ops $999/month)
 
 ## Key pages
 
 - [Home](https://forwardframework.com/): overview, method and the free Growth Plan offer
-- [Services](https://forwardframework.com/services/): all six services with their free deliverables
+- [Services](https://forwardframework.com/services/): all seven services with their free deliverables
 - [Pricing](https://forwardframework.com/pricing.html): published starting prices for every service
 - [Results](https://forwardframework.com/results.html): case studies with baselines and methods
 - [About](https://forwardframework.com/about.html): operating principles and the five-phase method

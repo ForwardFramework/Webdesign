@@ -250,7 +250,7 @@ SERVICES = [
  "nav": "Web Design & Development",
  "h1": "Websites that behave like your best salesperson.",
  "title": "Web Design &amp; Development Company | Forward Framework",
- "desc": "Conversion-first web design and development from $6,500. Launch in 30–45 days with green Core Web Vitals, full schema and AI-search readiness. Free homepage concept first.",
+ "desc": "Conversion-first web design and development from $749. Launch in 30–45 days with green Core Web Vitals, full schema and AI-search readiness. Free homepage concept first.",
  "eyebrow": "Web design & development",
  "answer": "Conversion-focused web design is the practice of building a website around a single measurable business outcome instead of around aesthetics. It combines clear positioning, one dominant call to action, proof placed above the fold, sub-2.5-second load times and forms engineered to be finished rather than abandoned.",
  "intro": [
@@ -282,17 +282,17 @@ SERVICES = [
    ("Handover and ownership", "You get the repository, the accounts, the documentation and a recorded walkthrough. Edit it yourself, hand it to anyone, or keep us on retainer — your call, not a lock-in.")
  ],
  "prices": [
-   ("Landing Page", "$2,400", "one-time, from", "Single high-intent page for one campaign or offer.",
+   ("Landing Page", "$749", "one-time, from", "Single high-intent page for one campaign or offer.",
     ["Message and offer workshop", "Design + build + QA", "Analytics and form tracking", "Live in 10–14 days"], False),
-   ("Conversion Site", "$6,500", "one-time, from", "The core build for most companies. 5–12 pages.",
+   ("Conversion Site", "$1,499", "one-time, from", "The core build for most companies. 5–12 pages.",
     ["Full positioning and design system", "Core Web Vitals green at launch", "Complete SEO + AI-search layer", "Live in 30–45 days"], True),
-   ("Platform Build", "$18,000", "project, from", "Ecommerce, multi-location or integration-heavy builds.",
+   ("Platform Build", "$1,999", "project, from", "Ecommerce, multi-location or integration-heavy builds.",
     ["Shopify, headless or custom app", "CRM, ERP and payment integration", "Programmatic location or service pages", "Phased launch with staging"], False)
  ],
  "metrics": [("30–45", "Days to launch"), ("&lt;2.5s", "LCP at handover"), ("100%", "Ownership, day one")],
  "faqs": [
    ("How much does a conversion-focused website cost?",
-    "Landing pages start at $2,400, full conversion sites at $6,500, and platform builds at $18,000. Most small and mid-sized company projects land between $6,500 and $28,000 depending on page count, integrations and ecommerce complexity. Pricing is fixed-scope and published before you speak to a salesperson."),
+    "Landing pages start at $749, full conversion sites at $1,499, and platform builds at $1,999. Most small and mid-sized company projects land between $1,499 and $4,500 depending on page count, integrations and ecommerce complexity. Pricing is fixed-scope and published before you speak to a salesperson."),
    ("How long does a website take to build?",
     "A landing page ships in 10–14 days. A full conversion site launches in 30–45 days from kickoff. Platform builds run 8–14 weeks. The pace depends far more on how quickly we get content, approvals and access than on production time."),
    ("Do you build on WordPress, Shopify or custom code?",
@@ -308,7 +308,7 @@ SERVICES = [
  "nav": "AI Consulting",
  "h1": "Find the profit in AI before you spend a dollar building it.",
  "title": "AI Consulting for Growing Companies | Forward Framework",
- "desc": "AI consulting that starts with a free AI Opportunity Audit: ranked use cases with dollar estimates, buy-vs-build calls and a build order. Readiness Sprint from $4,950.",
+ "desc": "AI consulting that starts with a free AI Opportunity Audit: ranked use cases with dollar estimates, buy-vs-build calls and a build order. Readiness Sprint from $1,999.",
  "eyebrow": "AI consulting",
  "answer": "AI consulting is the work of identifying where artificial intelligence will actually make or save money in a specific business, then sequencing those opportunities by value, effort and risk. A good engagement produces a ranked use-case roadmap with dollar estimates and clear buy-versus-build decisions — not a technology demonstration.",
  "intro": [
@@ -342,15 +342,15 @@ SERVICES = [
  "prices": [
    ("Opportunity Audit", "$0", "free, no obligation", "The gateway. Ranked opportunities with dollars attached.",
     ["Two operator interviews", "Ranked use-case roadmap", "Buy-vs-build recommendations", "90-day build order"], False),
-   ("AI Readiness Sprint", "$4,950", "two weeks, fixed", "Go deep on the top opportunities and prove one works.",
+   ("AI Readiness Sprint", "$1,999", "two weeks, fixed", "Go deep on the top opportunities and prove one works.",
     ["Full data and governance review", "One working proof of concept", "Cost model and ROI forecast", "Board-ready written findings"], True),
-   ("Build & Embed", "$12,000", "project, from", "We build the systems and hand them over documented.",
+   ("Build & Embed", "$3,499", "project, from", "We build the systems and hand them over documented.",
     ["Custom agents, RAG or copilots", "Integrated into your real stack", "Evaluation and monitoring built in", "Team training and SOPs"], False)
  ],
  "metrics": [("7–10", "Days to roadmap"), ("$0", "To find out if it's worth it"), ("100%", "Vendor-neutral advice")],
  "faqs": [
    ("What does AI consulting actually cost?",
-    "Our AI Opportunity Audit is free. The AI Readiness Sprint is $4,950 fixed for two weeks. Implementation projects start at $12,000 and are scoped to a fixed price after the audit. Market rates for comparable readiness assessments run from roughly $2,000 for narrow small-business scopes to $50,000 and up for enterprise engagements."),
+    "Our AI Opportunity Audit is free. The AI Readiness Sprint is $1,999 fixed for two weeks. Implementation projects start at $3,499 and are scoped to a fixed price after the audit. That is deliberately below the market: comparable readiness assessments commonly run from roughly $2,000 for narrow small-business scopes to $50,000 and up for enterprise engagements."),
    ("How do you decide which AI use cases are worth building?",
     "Each candidate is scored on three axes: annual value if it works, build and maintenance cost, and risk when it fails. High-value, low-risk, repetitive information work wins nearly every time — quoting, intake, document processing, support deflection and reporting. Anything requiring flawless judgement on rare edge cases usually loses."),
    ("Is our data safe if we use AI tools?",
@@ -366,7 +366,7 @@ SERVICES = [
  "nav": "Automation",
  "h1": "Delete the manual work between your tools.",
  "title": "Business Process Automation Agency | Forward Framework",
- "desc": "Automation that removes the manual work between your tools, leads and staff. Free automation blueprint, first workflow live in under two weeks. Missions from $8,500.",
+ "desc": "Automation that removes the manual work between your tools, leads and staff. Free automation blueprint, first workflow live in under two weeks. Missions from $2,499.",
  "eyebrow": "Automation",
  "answer": "Business process automation replaces the manual steps people take to move information between systems — copying leads into a CRM, chasing quotes, assembling reports, onboarding a customer. Done properly it removes roughly 65% of the identified manual hours and cuts response times from hours to seconds.",
  "intro": [
@@ -398,17 +398,17 @@ SERVICES = [
    ("Built to be owned", "n8n, Make or Zapier chosen on merit, documented in plain language, tested, monitored with failure alerts, and handed over. No black boxes, no hostage workflows.")
  ],
  "prices": [
-   ("Single Workflow", "$1,200", "one-time, from", "One painful process, removed. A good first proof.",
+   ("Single Workflow", "$749", "one-time, from", "One painful process, removed. A good first proof.",
     ["Scoped, built and tested in 7–10 days", "Documentation and handover", "30 days of monitoring", "Fixed price, no surprises"], False),
-   ("Automation Mission", "$8,500", "project, from", "3–5 workflows audited, designed, built, deployed.",
+   ("Automation Mission", "$2,499", "project, from", "3–5 workflows audited, designed, built, deployed.",
     ["Full process audit and blueprint", "3–5 production workflows", "AI agents where they pay off", "Team training and runbooks"], True),
-   ("Ops Retainer", "$2,500", "/month, from", "We run, monitor and keep extending the system.",
+   ("Ops Retainer", "$499", "/month, from", "We run, monitor and keep extending the system.",
     ["Ongoing build and optimisation", "Monitoring and failure response", "Monthly hours-saved reporting", "Month to month after 90 days"], False)
  ],
  "metrics": [("&lt;60s", "Speed to lead"), ("~65%", "Of manual hours removed"), ("14", "Days to first workflow live")],
  "faqs": [
    ("How much does business process automation cost?",
-    "Single workflows start at $1,200 one-time. A full Automation Mission covering three to five workflows runs from $8,500 depending on integration complexity. Ongoing operations retainers start at $2,500 per month. Most clients see the build cost returned within three to six months of recovered labour."),
+    "Single workflows start at $749 one-time. A full Automation Mission covering three to five workflows runs from $2,499 depending on integration complexity. Ongoing operations retainers start at $499 per month. Most clients see the build cost returned within the first few months of recovered labour."),
    ("Which automation platform do you use — Zapier, Make or n8n?",
     "Whichever fits the job and your budget. Zapier is fastest to stand up and most expensive at volume. Make is cheaper for high-volume branching logic. n8n is the most flexible and can be self-hosted for data-sensitive work. We recommend on merit and you own the account regardless."),
    ("Will automation replace my staff?",
@@ -424,7 +424,7 @@ SERVICES = [
  "nav": "Marketing, SEO & AI Search",
  "h1": "Rank in Google. Get cited by the AI.",
  "title": "SEO, GEO &amp; AI Search Marketing Agency | Forward Framework",
- "desc": "SEO plus Generative Engine Optimization: get found in Google and cited by ChatGPT, Perplexity, Gemini and AI Overviews. Free AI Search Visibility Report. From $2,500/mo.",
+ "desc": "SEO plus Generative Engine Optimization: get found in Google and cited by ChatGPT, Perplexity, Gemini and AI Overviews. Free AI Search Visibility Report. From $499/mo.",
  "eyebrow": "Marketing, SEO & AI search",
  "answer": "Modern search marketing has two jobs: earn the classic organic ranking, and earn the citation inside AI-generated answers. The second — Generative Engine Optimization — rewards direct answers in the first 40 to 60 words, structured data, entity clarity, crawler access and freshness rather than keyword density.",
  "intro": [
@@ -456,11 +456,11 @@ SERVICES = [
    ("Measurement that includes AI", "Monthly tracking of which prompts cite you, which cite competitors, and how that maps to non-brand organic traffic and pipeline — alongside conventional rankings and conversions.")
  ],
  "prices": [
-   ("Foundation", "$2,500", "/month, from", "Technical, structural and AI-search fundamentals.",
+   ("Foundation", "$499", "/month, from", "Technical, structural and AI-search fundamentals.",
     ["Technical SEO and Core Web Vitals", "Full schema and llms.txt build", "2 answer-shaped pages per month", "Monthly AI citation tracking"], False),
-   ("Growth", "$5,000", "/month, from", "Foundation plus a real content and authority engine.",
+   ("Growth", "$2,499", "/month, from", "Foundation plus a real content and authority engine.",
     ["Everything in Foundation", "6 content assets per month", "Digital PR and citation building", "CRO testing on money pages"], True),
-   ("Market Leader", "$9,500", "/month, from", "Multi-location, multi-service or national ambition.",
+   ("Market Leader", "$4,999", "/month, from", "Multi-location, multi-service or national ambition.",
     ["Everything in Growth", "Programmatic location/service pages", "Competitive displacement campaigns", "Executive reporting and forecasting"], False)
  ],
  "metrics": [("4", "AI assistants tracked monthly"), ("12", "Buying prompts in your free report"), ("90", "Days to first citation movement")],
@@ -482,7 +482,7 @@ SERVICES = [
  "nav": "Ad Management",
  "h1": "Ads managed to profit, not to impressions.",
  "title": "PPC &amp; Ad Management Agency | Google, Meta, LinkedIn | Forward Framework",
- "desc": "Google, Meta, LinkedIn and Microsoft ads managed to closed revenue. Free ad account audit — most accounts hide 20–40% wasted spend. Month to month, from $1,500.",
+ "desc": "Google, Meta, LinkedIn and Microsoft ads managed to closed revenue. Free ad account audit — most accounts hide 20–40% wasted spend. Month to month, from $749.",
  "eyebrow": "Ad management",
  "answer": "Effective ad management optimises toward closed revenue rather than clicks or form fills. That requires conversion tracking wired back to your CRM, offline conversion imports so the platforms learn which leads actually became customers, and a willingness to turn off spend that looks good in the dashboard.",
  "intro": [
@@ -514,7 +514,7 @@ SERVICES = [
    ("Reporting you can act on", "One dashboard showing spend, leads, qualified leads, closed revenue and blended CAC. Monthly commentary in English. You keep every account, permanently.")
  ],
  "prices": [
-   ("Managed Growth", "$1,500", "/month, from", "For accounts under $20K monthly spend.",
+   ("Managed Growth", "$749", "/month, from", "For accounts under $20K monthly spend.",
     ["Up to two platforms", "Tracking and attribution build", "Landing page testing", "Month to month after 90 days"], True),
    ("Multi-Channel", "12%", "of ad spend", "For accounts spending $20K–$150K per month.",
     ["All major platforms", "Offline conversion imports", "Dedicated creative cadence", "Weekly optimisation and reporting"], False),
@@ -524,7 +524,7 @@ SERVICES = [
  "metrics": [("20–40%", "Typical wasted spend found"), ("0", "Long-term contracts"), ("100%", "You own the accounts")],
  "faqs": [
    ("How much does PPC management cost?",
-    "Management starts at $1,500 per month for accounts under $20,000 in monthly spend, or 12% of spend for larger accounts. There is no long-term contract after an initial 90-day runway, and you own every ad account, pixel and piece of data from day one to the day you leave."),
+    "Management starts at $749 per month for accounts under $20,000 in monthly spend, or 12% of spend for larger accounts. There is no long-term contract after an initial 90-day runway, and you own every ad account, pixel and piece of data from day one to the day you leave."),
    ("What does a free ad account audit include?",
     "A written teardown covering wasted spend with dollar figures attached, conversion tracking and attribution health, account structure, keyword and audience quality, creative performance, competitor auction overlap, and a prioritised fix list. You keep the document and are welcome to hand it to your current agency."),
    ("How much ad spend do I need to make this worthwhile?",
@@ -540,7 +540,7 @@ SERVICES = [
  "nav": "Social Media Marketing",
  "h1": "Social that builds demand instead of chasing the algorithm.",
  "title": "Social Media Marketing Agency | Forward Framework",
- "desc": "Social media marketing tied to pipeline, not likes. Free 30-day content plan with ten scripted posts. Management from $1,800/month, month to month.",
+ "desc": "Social media marketing tied to pipeline, not likes. Free 30-day content plan with ten scripted posts. Management from $499/month, month to month.",
  "eyebrow": "Social media marketing",
  "answer": "Effective social media marketing for a business is a demand-building programme, not a posting schedule. It produces a consistent point of view, short-form video and proof content that reaches buyers before they are searching, and it is measured against pipeline influence rather than follower count.",
  "intro": [
@@ -572,17 +572,17 @@ SERVICES = [
    ("Reporting against pipeline", "Reach and engagement are inputs. We report on profile visits, link clicks, direct enquiries and influenced pipeline, tracked through the same attribution as every other channel.")
  ],
  "prices": [
-   ("Presence", "$1,800", "/month, from", "Consistent, credible, two platforms.",
+   ("Presence", "$499", "/month, from", "Consistent, credible, two platforms.",
     ["12 posts per month", "Community management", "Monthly reporting", "Month to month after 90 days"], False),
-   ("Demand Engine", "$3,600", "/month, from", "Video-led, built to be seen and remembered.",
+   ("Demand Engine", "$1,749", "/month, from", "Video-led, built to be seen and remembered.",
     ["Monthly filming day, 16+ assets", "20 posts across three platforms", "Paid amplification management", "Pipeline-influence reporting"], True),
-   ("Full Funnel", "$6,500", "/month, from", "Organic, paid social and creator partnerships together.",
+   ("Full Funnel", "$2,999", "/month, from", "Organic, paid social and creator partnerships together.",
     ["Everything in Demand Engine", "Creator and partnership programme", "Dedicated creative strategist", "Quarterly brand campaign"], False)
  ],
  "metrics": [("10", "Free scripted posts"), ("1", "Filming day per month"), ("0", "Vanity metrics in reporting")],
  "faqs": [
    ("How much does social media management cost?",
-    "Management starts at $1,800 per month for two platforms and consistent publishing. Video-led programmes with a monthly filming day start at $3,600, and full-funnel work combining organic, paid social and creator partnerships starts at $6,500. All are month to month after an initial 90-day runway."),
+    "Management starts at $499 per month for two platforms and consistent publishing. Video-led programmes with a monthly filming day start at $1,749, and full-funnel work combining organic, paid social and creator partnerships starts at $2,999. All are month to month after an initial 90-day runway."),
    ("Which social platforms should my business be on?",
     "Two or three, chosen by where your buyers already spend attention and what your team can sustain. For most B2B that is LinkedIn plus YouTube or Instagram. For home services and local businesses it is usually Facebook and Instagram with short-form video. Being mediocre on six platforms beats nobody."),
    ("Does organic social actually generate leads?",
@@ -591,6 +591,64 @@ SERVICES = [
     "It helps enormously, and it is not mandatory. Faces outperform logos on every short-form platform, but we produce plenty of high-performing work using customer footage, jobsite and product B-roll, screen recordings, and motion-designed text formats."),
    ("How quickly does social media marketing work?",
     "Consistency shows in engagement within four to six weeks. Meaningful influence on pipeline typically takes three to six months, because you are building familiarity rather than harvesting demand. It is a compounding channel, which is exactly why stopping and restarting it is so expensive.")
+ ]
+},
+{
+ "slug": "business-systems",
+ "nav": "Scaffold — Business Systems",
+ "h1": "The company should run the same whether or not you're in the room.",
+ "title": "Business Systems, SOPs, Training &amp; Hiring | Scaffold | Forward Framework",
+ "desc": "Scaffold builds the structure under your business: org design, SOPs, sales playbooks, training manuals and hiring systems. Free Key-Person Risk Map. From $999.",
+ "eyebrow": "Scaffold — business systems",
+ "answer": "Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.",
+ "intro": [
+   "Most owner-led companies are held together by three people who simply remember how everything works. It functions right up until one of them takes a holiday, quits or gets promoted — and then the same fire gets fought from scratch, badly, by someone guessing.",
+   "It is also the reason marketing and automation stall. You cannot automate a process nobody has written down, AI cannot follow a standard that does not exist, and you cannot scale a sales team that has no playbook. Scaffold is the layer everything else stands on."
+ ],
+ "offer": {
+   "tag": "Highest-converting offer",
+   "name": "A free Key-Person Risk Map",
+   "blurb": "We interview your team and map every process that currently exists only in someone's head — then rank them by what it would cost you the week that person is unavailable. Most owners have never seen this written down.",
+   "bullets": [
+     "Every undocumented process, named and owned",
+     "Ranked by revenue at risk, not by tidiness",
+     "The three to document first, and why",
+     "Yours to act on with or without us"
+   ],
+   "form_id": "risk-map",
+   "form_heading": "Get my free Key-Person Risk Map",
+   "form_blurb": "Tell us how your team is structured. We'll show you exactly where the business depends on individuals instead of systems.",
+   "cta": "Map my key-person risk",
+   "trigger": "Two short interviews, then a written map within 7 business days. Free, and useful whether or not you hire us."
+ },
+ "includes": [
+   ("Business structure and org design", "Who owns which outcome, not who sits where. We define roles by the results they are accountable for, then show you which seats are empty, doubled up, or being quietly carried by one exhausted person."),
+   ("SOP build-out", "Your real processes documented the way people actually work — short, visual, and written for the person doing the job at 7am, not for a binder nobody opens."),
+   ("Sales guides and playbooks", "Discovery questions, objection handling, pricing conversations, follow-up cadence and proposal templates, built from what your best closer already does instinctively but has never written down."),
+   ("Training manuals and onboarding", "A new hire productive in weeks instead of quarters. Role-based onboarding paths, checkpoints and competency checks, so \"they\'ll pick it up\" stops being the plan."),
+   ("Hiring systems", "Scorecards, structured interview guides, work-sample tests and a repeatable process — so hiring stops being a gut call made under pressure at the worst possible moment."),
+   ("Operating cadence", "The meeting rhythm, scorecard and handful of numbers that keep it running: a weekly that ends in decisions, and a quarterly that resets priorities before they drift.")
+ ],
+ "prices": [
+   ("Scaffold Sprint", "$999", "project, from", "Document the five processes that break most often.",
+    ["Key-person risk map included", "5 core SOPs written and shipped", "Delivered in your tools, not ours", "Live in 3–4 weeks"], False),
+   ("Operating System", "$2,999", "project, from", "The full build: structure, SOPs, sales and hiring.",
+    ["Org and accountability design", "Full SOP library and training paths", "Sales playbook and hiring scorecards", "Team rollout and adoption support"], True),
+   ("Embedded Ops", "$999", "/month, from", "We keep the system current as the company grows.",
+    ["Ongoing documentation and revisions", "New-role onboarding builds", "Quarterly operating reviews", "Month to month after 90 days"], False)
+ ],
+ "metrics": [("7", "Days to your risk map"), ("$0", "To find where you're exposed"), ("100%", "Documented and owned by you")],
+ "faqs": [
+   ("How much does it cost to document our processes?",
+    "A Scaffold Sprint covering your five most fragile processes starts at $999. A full Operating System build — structure, SOP library, sales playbook, training paths and hiring scorecards — starts at $2,999. Ongoing support to keep it all current starts at $999 per month. Every price is fixed in writing after your free risk map."),
+   ("What is an SOP and why does my business need one?",
+    "A standard operating procedure is a short, specific document describing how one task gets done correctly every time. Businesses need them because undocumented process is a single point of failure: when the person who knows how it works is unavailable, quality drops, training takes months, and nothing can be safely automated or delegated."),
+   ("How long does it take to build a company operating system?",
+    "A Scaffold Sprint ships in three to four weeks. A full Operating System build runs six to ten weeks depending on headcount and how many roles need documenting. The pace depends far more on your team's availability for interviews than on our writing speed."),
+   ("Will my team actually use the documentation?",
+    "Only if it is built with them rather than at them. We write from recorded interviews with the people doing the work, keep each procedure short enough to read on a phone, store it where they already work, and roll it out alongside an operating cadence that references it weekly. Documentation nobody opens is a cost, not an asset."),
+   ("How does this connect to your other services?",
+    "It is the layer underneath them. You cannot automate a process nobody has written down, and AI cannot follow a standard that does not exist. Clients who systemise first get materially more out of automation, hiring and paid acquisition, because there is a defined process for the new leads and new people to land in.")
  ]
 }
 ]
@@ -697,7 +755,7 @@ def render_service(s):
     </div>
     <div class="price-grid">{prices_html}</div>
     <div class="btn-row mt-7" style="justify-content:center">
-      <a class="btn btn--dark btn--lg" href="/pricing.html">Compare all six services <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn--dark btn--lg" href="/pricing.html">Compare all seven services <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -799,10 +857,10 @@ def render_services_index():
   <div class="wrap">
     <div style="max-width:840px">
       <span class="eyebrow">Services</span>
-      <h1 class="balance">Six disciplines, engineered to work as one.</h1>
+      <h1 class="balance">Seven disciplines, engineered to work as one.</h1>
       <div class="answer">
         <span class="eyebrow">Quick answer</span>
-        <p>Forward Framework offers web design and development, AI consulting, business automation, SEO and AI-search marketing, paid ad management, and social media marketing. Each service leads with a free, genuinely useful deliverable, and each is built to connect to the others rather than run in isolation.</p>
+        <p>Forward Framework offers web design and development, AI consulting, business automation, SEO and AI-search marketing, paid ad management, social media marketing, and Scaffold — our business systems, SOP and hiring practice. Each service leads with a free, genuinely useful deliverable, and each is built to connect to the others rather than run in isolation.</p>
       </div>
       <div class="btn-row mt-6">
         <a class="btn btn--primary btn--lg" href="/contact.html">Get my free Growth Plan <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
@@ -869,7 +927,7 @@ def render_pricing():
       ("Do you offer bundled pricing across services?",
        "Yes. Clients running three or more services together typically save 10–15% against the individual rates, because the work genuinely overlaps — one audit, one tracking build, one reporting layer instead of three."),
       ("What is the smallest engagement you take on?",
-       "A single automation workflow at $1,200 or a landing page at $2,400. Below that we are not the right value for you, and we will usually point you to something you can do yourself."),
+       "A single automation workflow at $749 or a landing page at $749. Below that we are not the right value for you, and we will usually point you to something you can do yourself."),
       ("Do you require payment upfront?",
        "Projects are billed 50% at kickoff and 50% at launch. Retainers are billed monthly in advance. Media spend always goes directly from you to the platform, never through us."),
     ]
@@ -898,7 +956,7 @@ def render_pricing():
       <h1 class="balance">Every price. On the website. Where prices belong.</h1>
       <div class="answer">
         <span class="eyebrow">Quick answer</span>
-        <p>Forward Framework publishes starting prices for all six services: websites from $6,500, AI readiness from $4,950, automation projects from $8,500, SEO and AI search from $2,500 per month, ad management from $1,500 per month, and social media from $1,800 per month.</p>
+        <p>Forward Framework publishes starting prices for all seven services: websites from $749, AI readiness from $1,999, automation from $749, SEO and AI search from $499 per month, ad management from $749 per month, social media from $499 per month, and business systems from $999.</p>
       </div>
       <p class="lede">In an industry where "contact us for a quote" is the default, publishing numbers is a real differentiator — and it saves us both a discovery call that was only ever going to end in sticker shock. Final scope is fixed in writing after your free deliverable, and it does not move.</p>
       <div class="btn-row mt-6">
@@ -953,7 +1011,7 @@ def render_pricing():
         faq_schema(faqs, url),
     ]}
     page(path, "Pricing | Web Design, AI, Automation &amp; Marketing | Forward Framework",
-         "Published starting prices for all six services: websites from $6,500, automation from $8,500, SEO and AI search from $2,500/mo, ads from $1,500/mo, social from $1,800/mo.",
+         "Published starting prices for all seven services: websites from $749, automation from $749, SEO and AI search from $499/mo, ads from $749/mo, social from $499/mo, business systems from $999.",
          body, schema=schema, active="/pricing.html")
 
 
@@ -1439,7 +1497,7 @@ Sitemap: {SITE}/sitemap.xml
         for s in SERVICES)
     llms = f"""# Forward Framework
 
-> Forward Framework is a United States digital agency that builds websites, AI systems, automations and marketing campaigns as one connected growth engine. Companies hire one accountable team instead of four separate vendors, and report on a single revenue number.
+> Forward Framework is a United States digital agency that builds websites, AI systems, automations and marketing campaigns as one connected growth engine. Companies hire one accountable team instead of seven separate vendors, and report on a single revenue number.
 
 Forward Framework serves owner-led and mid-market companies across the United States, typically between $1M and $50M in revenue, across home and trade services, professional services, healthcare, ecommerce and B2B. Every service begins with a free, genuinely useful deliverable rather than a sales call, and all starting prices are published publicly.
 
@@ -1449,23 +1507,24 @@ Forward Framework serves owner-led and mid-market companies across the United St
 
 ## Pricing (published starting points, USD)
 
-- Landing page: from $2,400 one-time
-- Conversion website: from $6,500 one-time, or $650/month on a 12-month plan
-- Platform build (ecommerce / integration-heavy): from $18,000
+- Landing page: from $749 one-time
+- Conversion website: from $1,499 one-time, or $149/month on a 12-month plan
+- Platform build (ecommerce / integration-heavy): from $1,999
 - AI Opportunity Audit: free
-- AI Readiness Sprint: $4,950 fixed, two weeks
-- AI build and embed: from $12,000
-- Single automation workflow: from $1,200
-- Automation Mission (3–5 workflows): from $8,500
-- Automation operations retainer: from $2,500/month
-- SEO, GEO and content: from $2,500/month
-- Ad management: from $1,500/month, or 12% of ad spend above $20,000/month
-- Social media marketing: from $1,800/month
+- AI Readiness Sprint: $1,999 fixed, two weeks
+- AI build and embed: from $3,499
+- Single automation workflow: from $749
+- Automation Mission (3–5 workflows): from $2,499
+- Automation operations retainer: from $499/month
+- SEO, GEO and content: from $499/month (Growth $2,499/mo, Market Leader $4,999/mo)
+- Ad management: from $749/month, or 12% of ad spend above $20,000/month
+- Social media marketing: from $499/month (Demand Engine $1,749/mo, Full Funnel $2,999/mo)
+- Scaffold business systems and SOPs: from $999 (Operating System $2,999, Embedded Ops $999/month)
 
 ## Key pages
 
 - [Home]({SITE}/): overview, method and the free Growth Plan offer
-- [Services]({SITE}/services/): all six services with their free deliverables
+- [Services]({SITE}/services/): all seven services with their free deliverables
 - [Pricing]({SITE}/pricing.html): published starting prices for every service
 - [Results]({SITE}/results.html): case studies with baselines and methods
 - [About]({SITE}/about.html): operating principles and the five-phase method
