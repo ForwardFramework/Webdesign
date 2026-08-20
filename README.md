@@ -8,7 +8,9 @@
 [![No dependencies](https://img.shields.io/badge/dependencies-none-A99A8C)](#)
 [![Static HTML](https://img.shields.io/badge/stack-static%20HTML%20%C2%B7%20CSS%20%C2%B7%20vanilla%20JS-0A0A0A)](#)
 
-**[Deploy guide](DEPLOY.md)** · **[Pricing page](pricing.html)** · **[All services](services/)**
+**[Live site](https://forwardframework.github.io/Webdesign/)** · **[Deploy guide](DEPLOY.md)** · **[How it was built](#how-it-was-built)**
+
+<sub>The live link goes live once Pages is enabled — see the note below.</sub>
 
 </div>
 
