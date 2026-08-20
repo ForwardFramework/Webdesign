@@ -60,19 +60,30 @@ page. Ask and the attribute can be added to all of them in one pass.
 # GitHub Pages
 
 A workflow at `.github/workflows/pages.yml` builds and publishes the site on
-every push. It passes `enablement: true` to `actions/configure-pages`, so it
-switches Pages on through the API itself — **no repository setting to change.**
+every push.
 
-Push, and the Actions tab shows the deploy. The URL appears on the workflow run
-and under Settings → Pages, and will be:
+### One-time setup (required, and only a repo admin can do it)
+
+**Settings → Pages → Build and deployment → Source: `GitHub Actions`**
+
+Then re-run the latest workflow (Actions → *Deploy to GitHub Pages* → Re-run
+jobs), or push any commit.
+
+This step cannot be automated. `actions/configure-pages` accepts
+`enablement: true` to switch Pages on through the API, but the workflow token
+is refused: *Create Pages site failed — Resource not accessible by
+integration.* Creating a Pages site needs administration rights the default
+`GITHUB_TOKEN` does not carry. Until the toggle is set, every run fails at the
+Configure Pages step with *"Get Pages site failed… verify that the repository
+has Pages enabled."*
+
+Once set, the site publishes to:
 
 ```
 https://forwardframework.github.io/Webdesign/
 ```
 
-If your account restricts Actions from enabling Pages, set it by hand instead —
-Settings → Pages → Build and deployment → Source: `GitHub Actions` — and re-run
-the workflow.
+The URL also appears on each workflow run and under Settings → Pages.
 
 ### The subpath problem, handled
 

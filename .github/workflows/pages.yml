@@ -25,17 +25,14 @@ jobs:
       - name: Check out the site
         uses: actions/checkout@v4
 
-      # Resolves base_path and base_url, and accounts for a custom domain
-      # (CNAME) automatically — with one, base_path is empty and nothing is
-      # rewritten.
       - name: Configure Pages
         id: pages
+        # Reports base_path and base_url, and accounts for a custom domain
+        # (CNAME) automatically. Note: `enablement: true` was tried and the
+        # workflow token is not permitted to create the Pages site
+        # ("Resource not accessible by integration"), so Pages must be switched
+        # on once by hand — see DEPLOY.md.
         uses: actions/configure-pages@v5
-        with:
-          # Turn Pages on via the API if it isn't already, so no manual
-          # repository setting is needed. Requires the pages: write permission
-          # granted above.
-          enablement: true
 
       - name: Stage the site
         run: |
