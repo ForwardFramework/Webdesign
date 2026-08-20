@@ -129,11 +129,11 @@ router = """
 
 out = f"""<title>Forward Framework</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#101010">
 <link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap">
 <script>document.documentElement.classList.add('js');</script>
 <style>
 {css}
@@ -176,14 +176,14 @@ standalone = f"""<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {head_meta}
 {desc}
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#101010">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
 {og}
 {tw}
 <link rel="icon" href="data:image/svg+xml;base64,{favicon}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap">
 <script>document.documentElement.classList.add('js');</script>
 <style>
 {css}

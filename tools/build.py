@@ -66,7 +66,7 @@ def page(path, title, description, body, schema=None, active=None,
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{canonical}">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#101010">
 <meta name="robots" content="{robots}">
 
 <meta property="og:type" content="{og_type}">
@@ -89,9 +89,9 @@ def page(path, title, description, body, schema=None, active=None,
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/css/styles.css">
 <script>document.documentElement.classList.add('js');</script>
 {schema_block}</head>
@@ -1561,8 +1561,8 @@ Forward Framework serves owner-led and mid-market companies across the United St
         "description": "Web design, AI consulting, automation and marketing built as one growth engine.",
         "start_url": "/",
         "display": "standalone",
-        "background_color": "#0A0A0A",
-        "theme_color": "#0A0A0A",
+        "background_color": "#101010",
+        "theme_color": "#101010",
         "icons": [{"src": "/assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml"}],
     }
     open(os.path.join(ROOT, "site.webmanifest"), "w", encoding="utf-8").write(

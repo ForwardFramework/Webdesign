@@ -5,8 +5,8 @@
 ### Web design, AI consulting, automation and marketing — built as one growth engine
 
 [![Deploy to GitHub Pages](https://github.com/ForwardFramework/Webdesign/actions/workflows/pages.yml/badge.svg)](https://github.com/ForwardFramework/Webdesign/actions/workflows/pages.yml)
-[![No dependencies](https://img.shields.io/badge/dependencies-none-A99A8C)](#)
-[![Static HTML](https://img.shields.io/badge/stack-static%20HTML%20%C2%B7%20CSS%20%C2%B7%20vanilla%20JS-0A0A0A)](#)
+[![No dependencies](https://img.shields.io/badge/dependencies-none-6f879c)](#)
+[![Static HTML](https://img.shields.io/badge/stack-static%20HTML%20%C2%B7%20CSS%20%C2%B7%20vanilla%20JS-101010)](#)
 
 **[Live site](https://forwardframework.github.io/Webdesign/)** · **[Deploy guide](DEPLOY.md)** · **[How it was built](#how-it-was-built)**
 
@@ -35,7 +35,7 @@ Every page works with JavaScript disabled. The whole site is 147 KB zipped.
 |---|---|
 | **Pages** | 17 — homepage, 7 service pages, pricing, results, about, contact, legal, 404 |
 | **Weight** | 40 KB CSS · 16 KB JS · no external libraries |
-| **Fonts** | Jost + Inter, loaded async from Google Fonts with a real fallback stack |
+| **Fonts** | Neue Montreal (Inter Tight substitute), loaded async from Google Fonts with a real fallback stack |
 | **Accessibility** | WCAG AA contrast across the palette, keyboard navigable, `prefers-reduced-motion` honoured |
 | **Structured data** | Organization, Service, OfferCatalog, FAQPage, HowTo, BreadcrumbList |
 
@@ -158,20 +158,30 @@ Every service leads with a real deliverable rather than a "book a call" button.
 
 <br>
 
-The brand mark supplied the entire system: black field, white primary, warm taupe secondary,
-45° chamfers, wide-letterspaced geometric caps.
+Prismatic light through obsidian. A cinematic near-black canvas carries a single bone-white
+typographic voice at weight 400 — authority comes from scale, not stroke weight — and the whole
+system stays monochrome except for one artifact: the prism.
 
 ```
---ink   #0A0A0A   page field        --white      #FFFFFF   primary
---bone  #EFEBE6   light sections    --taupe      #A99A8C   secondary / CTA
---text  #C9C6C1   body              --taupe-lt   #C9BCAF   hover / emphasis
---muted #8B8681   secondary text    --taupe-ink  #6B5E52   taupe on light
+--obsidian  #101010   page canvas       --bone   #fffdf9   all type, all UI chrome
+--surface-1 #161a1d   alternating band  --muted  #6f879c   de-emphasised metadata
+--surface-2 #1b2025   raised surface    --line   #403f3f   the one border colour
+--graphite  #495764   slate reference   --bone   #fffdf9   inverted (light) sections
 ```
 
-- **Display:** Jost — a geometric face matching the logo's wordmark · **Body:** Inter
-- **Chamfer motif:** `clip-path` cuts the bottom-right corner of buttons, cards and panels,
-  echoing the 45° cuts in the FF monogram
-- Swiss/minimalist grid, 1px rules, generous whitespace, one soft radial in the hero
+- **Typeface:** Neue Montreal at weight 400 everywhere — heading, body, nav, button, footer.
+  Weight 500 is the ceiling for emphasis. Google Fonts serves Inter Tight as the substitute.
+- **Scale over weight:** display headlines run to 105px at line-height 1.01 and -0.02em tracking,
+  paired with 18px body — a 5.8× ratio doing the work that bolding usually does.
+- **The prism** (`assets/img/prism.svg`): an isometric array of glass cubes with black cores,
+  bone-white specular edges and RGB-split caustics in `#ff2a2a` / `#2a7fff` / `#2aff2a`. It is the
+  only chromatic element in the system and the only thing that reads as three-dimensional — those
+  three colours never appear on UI.
+- **Flat by design:** zero box-shadows, 0px radius on buttons and cards, no filled call-to-action.
+  The nav's outlined Contact button is the only bordered element in the header. Depth comes from
+  the obsidian-to-slate canvas and the prism's chromatic edges.
+- **Motion:** one signature curve, `cubic-bezier(.52, .01, 0, 1)` at 0.5s — a slow start and a
+  decisive stop, like optical focus pulling. The prism shimmers on a 6.65s loop.
 
 </details>
 

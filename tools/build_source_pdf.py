@@ -120,7 +120,7 @@ def main():
   .cover dl {{ display: grid; grid-template-columns: max-content 1fr; gap: 2mm 8mm; margin: 0; font-size: 9.5pt; }}
   .cover dt {{ color: #857868; letter-spacing: .12em; text-transform: uppercase; font-size: 7.5pt; align-self: center; }}
   .cover dd {{ margin: 0; }}
-  .rule {{ height: 2px; background: #A99A8C; width: 46mm; margin-bottom: 8mm; }}
+  .rule {{ height: 2px; background: #6f879c; width: 46mm; margin-bottom: 8mm; }}
 
   /* ---- Contents ---- */
   .toc {{ break-before: page; padding-top: 4mm; }}
@@ -137,7 +137,7 @@ def main():
     display: flex; align-items: baseline; gap: 4mm;
     border-bottom: 1.2pt solid #14120F; padding-bottom: 1.8mm; margin-bottom: 3.5mm;
   }}
-  .file-idx {{ font-size: 8pt; color: #A99A8C; letter-spacing: .1em; }}
+  .file-idx {{ font-size: 8pt; color: #6f879c; letter-spacing: .1em; }}
   .file-path {{
     font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
     font-size: 11pt; font-weight: 700; flex: 1;
@@ -160,7 +160,7 @@ def main():
 
 <div class="cover">
   <svg class="mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#A99A8C" d="M78 34 L198 34 L164 68 L112 68 L112 112 L174 112 L140 146 L112 146 L112 200 L78 166 Z"/>
+    <path fill="#6f879c" d="M78 34 L198 34 L164 68 L112 68 L112 112 L174 112 L140 146 L112 146 L112 200 L78 166 Z"/>
     <path fill="#14120F" d="M0 0 L120 0 L86 34 L34 34 L34 78 L96 78 L62 112 L34 112 L34 200 L0 166 Z"/>
   </svg>
   <div class="rule"></div>
