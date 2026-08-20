@@ -1,0 +1,6 @@
+# Local Claude Code settings — may hold secrets, never commit
+.claude/settings.local.json
+
+# Local environment files
+.env
+.env.local
