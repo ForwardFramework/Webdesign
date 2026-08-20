@@ -1,245 +1,231 @@
-# Forward Framework — Website
+<div align="center">
 
-A static, dependency-free marketing website for **Forward Framework** (web design, AI consulting,
-automation, marketing, ad management, social media marketing).
+<img src="docs/banner.png" alt="Forward Framework" width="100%">
 
-Built by reverse-engineering the highest-traffic, highest-converting US agency websites, then
-rebuilding their best patterns into one site under the Forward Framework brand — and optimised for
-**SEO, GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization)**.
+### Web design, AI consulting, automation and marketing — built as one growth engine
 
----
+[![Deploy to GitHub Pages](https://github.com/ForwardFramework/Webdesign/actions/workflows/pages.yml/badge.svg)](https://github.com/ForwardFramework/Webdesign/actions/workflows/pages.yml)
+[![No dependencies](https://img.shields.io/badge/dependencies-none-A99A8C)](#)
+[![Static HTML](https://img.shields.io/badge/stack-static%20HTML%20%C2%B7%20CSS%20%C2%B7%20vanilla%20JS-0A0A0A)](#)
 
-## 1. Research: the five sites reverse-engineered
+**[Deploy guide](DEPLOY.md)** · **[Pricing page](pricing.html)** · **[All services](services/)**
 
-Chosen for a combination of organic traffic scale and documented conversion performance in the
-US agency market.
-
-| Site | Why it's here | What was taken |
-|---|---|---|
-| **WebFX** | Among the highest-traffic agency domains in the US; enormous organic content footprint | Hard-number proof band, service-by-service depth, transparent pricing tables, "free proposal" as the single dominant offer |
-| **KlientBoost** | Proposal requests are their primary acquisition metric; publishes its own CRO methodology | **"Free Marketing Plan" instead of "free consultation"**, click-triggers directly under every CTA to handle objections, personalised hero |
-| **SmartSites** | 360+ verified reviews; consistently top-ranked on Clutch | **Lead form inside the hero**, phone number in the global header, wall of partner badges below the form, results pages with real numbers |
-| **Neil Patel Digital / NP Digital** | Authority-first model built on a massive content and free-tool footprint | Free interactive tool as top-of-funnel, question-shaped content architecture (the basis of the GEO/AEO layer) |
-| **Hook Agency** | Radical pricing transparency in an industry that hides it | **Published prices**, layered conversion paths (read / watch / call / book), and a tagline that names exactly who the agency is for |
-
-Supporting patterns from Thrive Internet Marketing and Ignite Visibility: phone number in the global
-header, industry-specific landing pages, proof placed above the fold.
-
-**Cross-cutting findings applied:**
-
-- Interactive lead magnets (quizzes, calculators, instant audits) convert roughly **2.4× static PDF downloads**.
-- Free audits convert only 1–3% of visitors — but those leads convert to qualified at a far higher rate.
-- Burying social proof below the fold measurably weakens performance.
-- A single dominant CTA outperforms competing CTAs.
-- Section order that maps to how a skeptical buyer evaluates: hero → social proof → problem/outcome → solution → evidence → close.
-
-### Highest-converting offer per service
-
-Every service leads with a **real deliverable**, not a "book a call" button.
-
-| Service | Offer | Rationale |
-|---|---|---|
-| Web Design | Free **homepage concept** — actually designed | Interactive/personalised beats a static checklist; shows the work instead of describing it |
-| AI Consulting | Free **AI Opportunity Audit** → $1,999 Readiness Sprint → build | The "audit gateway": a small paid diagnostic anchors and de-risks a large build. Framing it as strategic advisory (not a technical audit) commands 20–40% higher rates |
-| Automation | Free **automation blueprint** (60-min session + hours/dollars returned) | Sells an absence; the number has to be produced before the buyer believes it |
-| Marketing / SEO | Free **AI Search Visibility Report** | The 2026 differentiator — shows the buyer a transcript of an AI recommending their competitors |
-| Ad Management | Free **ad account audit** | Most audited accounts hide 20–40% wasted spend; a dollar figure is the entire pitch |
-| Social Media | Free **30-day content plan**, 10 scripted posts | Immediately usable, which is exactly why it earns the reply |
-| Scaffold (business systems) | Free **Key-Person Risk Map** | Names the processes that live only in someone's head and ranks them by revenue at risk — a problem owners feel but have never seen written down |
+</div>
 
 ---
 
-## 2. Design system
+<div align="center">
+  <img src="docs/preview-home.png" alt="The Forward Framework homepage: dark hero with a multi-step lead form" width="49%">
+  <img src="docs/preview-pricing.png" alt="The pricing page, with published starting prices for every service" width="49%">
+</div>
+
+---
+
+## What this is
+
+A 17-page marketing website for Forward Framework — a US agency offering web design, AI
+consulting, automation, marketing, ad management, social media and business systems.
+
+It is static HTML, CSS and vanilla JavaScript. **No framework, no build step, no dependencies.**
+Every page works with JavaScript disabled. The whole site is 147 KB zipped.
+
+| | |
+|---|---|
+| **Pages** | 17 — homepage, 7 service pages, pricing, results, about, contact, legal, 404 |
+| **Weight** | 40 KB CSS · 16 KB JS · no external libraries |
+| **Fonts** | Jost + Inter, loaded async from Google Fonts with a real fallback stack |
+| **Accessibility** | WCAG AA contrast across the palette, keyboard navigable, `prefers-reduced-motion` honoured |
+| **Structured data** | Organization, Service, OfferCatalog, FAQPage, HowTo, BreadcrumbList |
+
+## Quick start
+
+```bash
+python3 -m http.server 8000     # then open http://localhost:8000
+```
+
+That is the entire toolchain. To regenerate the pages after editing content:
+
+```bash
+python3 tools/build.py
+```
+
+## Deploying
+
+Full walkthroughs for each host are in **[DEPLOY.md](DEPLOY.md)**.
+
+| Host | Command | Notes |
+|---|---|---|
+| **GitHub Pages** | automatic on push | Requires one setting — see below |
+| **Vercel** | connect the repo | `vercel.json` included |
+| **static.app** | `python3 tools/build_zip.py --portable` | Drag the zip into the dashboard |
+| **Anything else** | `python3 tools/build_zip.py` | Plain static files |
+
+> [!IMPORTANT]
+> **GitHub Pages needs one manual step before it will publish.**
+> Go to **Settings → Pages → Build and deployment → Source: `GitHub Actions`**, then re-run the
+> workflow. This cannot be automated — creating a Pages site requires admin rights the workflow
+> token does not carry, so every run fails at *Configure Pages* until it is set.
+> Once live, the site publishes to `https://forwardframework.github.io/Webdesign/`.
+
+> [!NOTE]
+> This repository has no `main` branch. The workflow runs from
+> `claude/forward-framework-website-qwe3cg`.
+
+## Project structure
+
+```
+index.html              Homepage — also the source of truth for the site shell
+services/               Hub + 7 service pages
+pricing.html            Every published price
+results.html            Case studies
+about.html              Method and operating principles
+contact.html            Growth Plan form
+privacy.html terms.html thank-you.html 404.html
+assets/css/styles.css   The complete design system, one file
+assets/js/main.js       Nav, multi-step forms, validation, ROI calculator
+robots.txt sitemap.xml llms.txt site.webmanifest
+tools/                  Build scripts (see below)
+```
+
+`index.html` is hand-authored and holds the site shell. `tools/build.py` extracts that shell and
+stamps it onto every other page, so navigation and footer can never drift.
+
+<details>
+<summary><b>The build scripts</b></summary>
+
+| Script | What it does |
+|---|---|
+| `tools/build.py` | Regenerates all pages plus `robots.txt`, `sitemap.xml`, `llms.txt` |
+| `tools/build_zip.py` | Upload-ready zip. `--portable` drops host-specific config |
+| `tools/build_pages.py` | Stages `_site/` for GitHub Pages, rewriting paths for the subpath |
+| `tools/build_preview.py` | Single self-contained HTML file containing all 17 pages |
+| `tools/build_source_pdf.py` | The whole source as a printable document plus a text bundle |
+| `tools/set_domain.py` | Rewrites the absolute domain everywhere, then rebuilds |
+
+</details>
+
+---
+
+## How it was built
+
+<details>
+<summary><b>The five agency sites reverse-engineered</b></summary>
+
+<br>
+
+Chosen for organic traffic scale combined with documented conversion performance in the US market.
+
+| Site | Why | What was taken |
+|---|---|---|
+| **WebFX** | Among the highest-traffic agency domains in the US | Hard-number proof band, transparent pricing tables, one dominant "free proposal" offer |
+| **KlientBoost** | Proposal requests are their primary acquisition metric | A *free plan* instead of a free consultation; click-triggers under every CTA |
+| **SmartSites** | 360+ verified reviews, consistently top-ranked on Clutch | Lead form inside the hero, phone in the global header, badge wall under the form |
+| **NP Digital** | Authority model built on a huge content and free-tool footprint | Free interactive tool as top-of-funnel, question-shaped content architecture |
+| **Hook Agency** | Radical pricing transparency in an industry that hides it | Published prices, layered conversion paths, a tagline naming exactly who it is for |
+
+**Findings applied**
+
+- Interactive lead magnets convert roughly **2.4×** static PDF downloads
+- Burying social proof below the fold measurably weakens performance
+- A single dominant CTA beats competing CTAs
+- Section order matching how a skeptical buyer evaluates: hero → proof → problem → solution → evidence → close
+
+</details>
+
+<details>
+<summary><b>The offer behind each service</b></summary>
+
+<br>
+
+Every service leads with a real deliverable rather than a "book a call" button.
+
+| Service | Free offer | Why it converts |
+|---|---|---|
+| Web Design | Homepage concept, actually designed | Shows the work instead of describing it |
+| AI Consulting | AI Opportunity Audit | A small diagnostic anchors and de-risks a large build |
+| Automation | Automation blueprint | Sells an absence — the number has to be produced before it is believed |
+| Marketing / SEO | AI Search Visibility Report | Shows a transcript of an AI recommending their competitors |
+| Ad Management | Ad account audit | Most audited accounts hide 20–40% wasted spend |
+| Social Media | 30-day content plan, 10 scripted posts | Immediately usable, which is why it earns the reply |
+| Scaffold | Key-Person Risk Map | Names processes living in one person's head, ranked by revenue at risk |
+
+</details>
+
+<details>
+<summary><b>Design system</b></summary>
+
+<br>
 
 The brand mark supplied the entire system: black field, white primary, warm taupe secondary,
-45-degree chamfers, and wide-letterspaced geometric caps.
+45° chamfers, wide-letterspaced geometric caps.
 
 ```
---ink        #0A0A0A   page field            --white      #FFFFFF   primary
---ink-2/3/4  #0F0F0F / #151515 / #1C1C1C     --taupe      #A99A8C   secondary / CTA
---bone       #EFEBE6   light sections        --taupe-lt   #C9BCAF   hover / emphasis
---text       #C9C6C1   body                  --taupe-ink  #6B5E52   taupe on light
---muted      #8B8681   secondary text
+--ink   #0A0A0A   page field        --white      #FFFFFF   primary
+--bone  #EFEBE6   light sections    --taupe      #A99A8C   secondary / CTA
+--text  #C9C6C1   body              --taupe-lt   #C9BCAF   hover / emphasis
+--muted #8B8681   secondary text    --taupe-ink  #6B5E52   taupe on light
 ```
 
-- **Display:** Jost (a Futura-like geometric that matches the logo's wordmark) · **Body:** Inter
-- **Chamfer motif:** `clip-path` cuts the bottom-right corner of buttons, cards and panels, echoing the 45° cuts in the FF monogram.
-- **Structure:** Swiss/minimalist grid, thin 1px rules, generous whitespace, no decorative gradients beyond one soft radial in the hero.
+- **Display:** Jost — a geometric face matching the logo's wordmark · **Body:** Inter
+- **Chamfer motif:** `clip-path` cuts the bottom-right corner of buttons, cards and panels,
+  echoing the 45° cuts in the FF monogram
+- Swiss/minimalist grid, 1px rules, generous whitespace, one soft radial in the hero
 
-The `ui-ux-pro-max` skill was run for this build. Its **pattern** and **style** matches were adopted
-directly — *Trust & Authority + Conversion* (security badges, case studies, transparent pricing,
-low-friction form) and *Minimalism & Swiss Style* (geometric, grid-based, high contrast). Its
-generated **palette and font pairing were not** adopted: the query returned a navy/gold corporate
-palette with EB Garamond, which conflicts with the supplied brand. Brand assets win.
+</details>
 
-Its accessibility and forms guidance **was** applied in full — see §4.
+<details>
+<summary><b>SEO, GEO and AEO</b></summary>
+
+<br>
+
+**Traditional SEO** — semantic HTML5, one `<h1>` per page, canonicals, Open Graph and Twitter
+cards, `sitemap.xml`, breadcrumbs, no render-blocking JavaScript, CLS-safe layout.
+
+**AEO** — a direct 40–60 word answer opens every key section, H2s written as the questions buyers
+actually ask, `FAQPage` schema **word-for-word identical** to the visible copy (verified by the
+build check), and a `speakable` specification.
+
+**GEO** — a full JSON-LD `@graph` with `sameAs` entity links, an `llms.txt` index at the root, and
+a `robots.txt` that explicitly allows GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot,
+Google-Extended, Applebot-Extended, CCBot and others.
+
+> `AggregateRating` and `Review` schema are **deliberately omitted**. Publishing invented ratings
+> risks a Google manual action. Add them once real reviews exist.
+
+</details>
+
+<details>
+<summary><b>Accessibility</b></summary>
+
+<br>
+
+- Every text pair in the palette meets **WCAG AA (4.5:1)** — audited programmatically, three
+  failures found and fixed
+- Focusable `role="alert"` error summary linking to each invalid field, `aria-describedby`,
+  `aria-invalid`, validation on blur
+- Skip link, visible focus rings, `aria-expanded` on disclosures, 44px touch targets
+- `prefers-reduced-motion` honoured; scroll reveals are progressive enhancement, so all content
+  renders without JavaScript — which also matters for AI crawlers that do not execute it
+
+</details>
 
 ---
 
-## 3. SEO / GEO / AEO implementation
-
-**Traditional SEO**
-- Semantic HTML5, exactly one `<h1>` per page, descriptive `<title>` and meta descriptions
-- Canonical URLs, Open Graph + Twitter cards, `sitemap.xml`, breadcrumbs (markup + schema)
-- No framework, no render-blocking JS (`defer`), fonts loaded async with `display=swap`
-- Explicit image dimensions and CLS-safe layout; target LCP < 2.5s, INP < 200ms, CLS < 0.1
-
-**AEO (Answer Engine Optimization)**
-- A **direct 40–60 word answer** opens every key section (`.answer` blocks) and every FAQ
-- H2s written as the questions buyers actually ask
-- `FAQPage` schema on every major page, **word-for-word identical** to the visible on-page copy
-- `speakable` specification pointing at the answer and FAQ selectors
-
-**GEO (Generative Engine Optimization)**
-- Full JSON-LD `@graph`: `Organization`, `ProfessionalService`, `WebSite`, `WebPage`, `Service`,
-  `OfferCatalog`, `BreadcrumbList`, `FAQPage`, `HowTo` — with `sameAs` entity links
-- **`llms.txt`** at the root: a clean markdown index of services, pricing, method and contact
-- **`robots.txt` explicitly allows** GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai,
-  PerplexityBot, Google-Extended, Applebot-Extended, CCBot, Amazonbot and meta-externalagent
-- Speed matters here specifically: AI crawlers time out in ~1–5 seconds
-- `dateModified` on every page to support a freshness cadence
-
-> **Deliberately omitted:** `AggregateRating` and `Review` schema. Publishing invented ratings risks a
-> Google manual action. Add these only once real, verifiable reviews exist.
-
----
-
-## 4. Accessibility
-
-- Contrast audited programmatically across the palette — every text pair meets **WCAG AA (4.5:1)**.
-  Three failures found and fixed (partner logos 3.68:1, placeholders 3.41:1, breadcrumb separators 2.12:1).
-- Skip link, visible `:focus-visible` rings, full keyboard navigation, `aria-expanded` on disclosures
-- Forms: visible labels, inline errors linked by `aria-describedby`, `aria-invalid` toggling,
-  **a focusable `role="alert"` error summary** that links to each invalid field, and validation on blur
-- Touch targets ≥ 44px with `touch-action: manipulation`
-- `prefers-reduced-motion` fully respected; scroll reveals are progressive enhancement only, so all
-  content is visible without JavaScript — which also matters for AI crawlers that don't execute JS
-
----
-
-## 5. Structure
-
-```
-index.html                  Homepage — the full composite build
-services/                   Hub + 7 service pages (each with its own offer, pricing, FAQ, schema)
-pricing.html                Every price for all seven services
-results.html                Case studies
-about.html                  Positioning, principles, the five-phase method
-contact.html                Growth Plan form
-thank-you.html / 404.html   noindex
-privacy.html / terms.html   Legal templates — have counsel review
-robots.txt sitemap.xml llms.txt site.webmanifest
-assets/css/styles.css       Complete design system (one file, no build step)
-assets/js/main.js           Nav, multi-step form, validation, calculator, reveals (no dependencies)
-assets/img/                 SVG logo mark, lockup, favicon, OG image
-tools/build.py              Page generator — see below
-```
-
-### The generator
-
-`index.html` is hand-authored and is the **single source of truth for the site shell**. `tools/build.py`
-extracts the header, utility bar, footer and mobile CTA from it and stamps every other page, so
-navigation can never drift between pages.
-
-```bash
-python3 tools/build.py      # regenerates all pages + robots.txt, sitemap.xml, llms.txt
-```
-
-Edit `index.html` for shell changes, `tools/build.py` for service copy/pricing, then rebuild.
-
-### Deployment bundles
-
-```bash
-python3 tools/build_zip.py              # -> dist/forward-framework-site.zip (includes vercel.json)
-python3 tools/build_zip.py --portable   # -> dist/forward-framework-site-portable.zip (any other host)
-python3 tools/build_preview.py          # -> dist/single-file/index.html (one self-contained file)
-```
-
-`forward-framework-site.zip` is the real multi-page site — 27 files, separate
-URLs, per-page canonicals, sitemap. **Use this whenever the host accepts file
-uploads**; it is the version the SEO/GEO/AEO work was built for.
-
-`single-file/index.html` is the whole site in one complete HTML document for
-hosts that only offer a single paste box. It carries the homepage's meta tags
-and JSON-LD, and a client-side router swaps the other 16 pages into `<main>`.
-Trade-off: one URL for the whole site, so per-page canonicals, the sitemap and
-per-page schema stop applying, and `og:image` needs a real hosted image before
-social previews work.
-
-### Source code bundle
-
-```bash
-python3 tools/build_source_pdf.py    # -> dist/forward-framework-source.{html,txt}
-```
-
-Renders every file into one print document, plus a plain-text bundle. To produce
-the PDF, print `dist/forward-framework-source.html` to PDF (Letter, landscape) or
-use headless Chromium.
-
-Note on copy-paste: PDF text layers have no concept of line continuity, so a
-source line long enough to wrap visually extracts with a newline at the wrap
-point. Measured round-trip is 93% of non-blank lines; every failure is a line
-over ~170 characters, and none is a short line. Use the `.txt` bundle when the
-code needs to be pasted back out intact — it is byte-for-byte lossless.
-
-### Single-file preview
-
-```bash
-python3 tools/build_preview.py   # -> dist/preview.html (gitignored, regenerable)
-```
-
-Bundles all 16 pages into one self-contained HTML file with a small client-side
-router, for sharing a clickable preview where the multi-file site can't be hosted.
-Only one page is in the DOM at a time, so element IDs never collide. The
-production site is unaffected — it needs no JavaScript to be read.
-
-`assets/js/main.js` is split into `initShell()` (header and nav, runs once) and
-`initPage(root)` (everything inside `<main>`, re-runnable), which is what lets
-swapped-in content wire itself up exactly as a fresh page load would.
-
----
-
-## 6. Before launch — required changes
+## Before launch
 
 Everything below is a placeholder and is marked in the source.
 
-| What | Current value | Where |
-|---|---|---|
-| **Phone** | `(555) 012-3456` (reserved fictional range) | All pages, JSON-LD, `llms.txt` |
-| **Email** | `hello@forwardframework.com` | All pages, JSON-LD, `llms.txt` |
-| **Domain** | `https://forwardframework.com` | `SITE` in `tools/build.py`, canonicals, `sitemap.xml`, `robots.txt` |
-| **Form endpoint** | `REPLACE_WITH_YOUR_FORM_ENDPOINT` | Every `data-endpoint` attribute. Until set, forms log the payload to the console and show the success state so the flow stays testable |
-| **Social profiles** | `linkedin.com/company/forwardframework` etc. | Footer + `sameAs` in JSON-LD |
-| **Case studies** | Illustrative examples, marked `PLACEHOLDER` in HTML comments | `results.html`, `index.html` |
-| **Testimonials** | Illustrative, marked `PLACEHOLDER` | `index.html` |
-| **Review count** | "Rated 5.0 by owners…" in the hero | `index.html` |
-| **Partner badges** | Text placeholders | Trust bar in `index.html` |
-| **Postal address** | Intentionally absent from schema | Add `PostalAddress` + `LocalBusiness` once HQ is confirmed — it materially helps local SEO |
-| **Legal pages** | Templates | `privacy.html`, `terms.html` — have counsel review |
-| **Pricing** | Set by the client. Web/AI/automation/marketing/ads/social/Scaffold starting prices are the figures supplied, not market benchmarks | Confirm against your actual cost model |
+| What | Current value |
+|---|---|
+| **Phone** | `(555) 012-3456` — reserved fictional range |
+| **Email** | `hello@forwardframework.com` |
+| **Domain** | `https://forwardframework.com` — change with `tools/set_domain.py` |
+| **Form endpoint** | `REPLACE_WITH_YOUR_FORM_ENDPOINT` on every `data-endpoint` |
+| **Case studies** | Illustrative examples, marked `PLACEHOLDER` in HTML comments |
+| **Testimonials** | Illustrative, marked `PLACEHOLDER` |
+| **Partner badges** | Text placeholders in the trust bar |
+| **Postal address** | Intentionally absent from schema — add once HQ is confirmed |
+| **Legal pages** | Templates — have counsel review |
 
-Then: verify in Google Rich Results Test and Search Console, submit the sitemap, and add analytics
-(the form handler already pushes a `generate_lead` event to `dataLayer` if GTM is present).
-
----
-
-## 7. Deployment
-
-See **[DEPLOY.md](DEPLOY.md)** for full walkthroughs. GitHub Pages deploys
-automatically via `.github/workflows/pages.yml` (just set Settings → Pages →
-Source to *GitHub Actions*); Vercel and static.app are covered too. Note this
-repo has no `main` branch, and the absolute domain has to be switched at
-launch.
-
-```bash
-python3 tools/set_domain.py https://your-domain.com   # rewrites + rebuilds everything
-```
-
-## 8. Local preview
-
-```bash
-python3 -m http.server 8000
-# then open http://localhost:8000
-```
-
-No build step, no dependencies, no framework. Deploys as-is to any static host.
+Then verify in Google Rich Results Test, submit the sitemap in Search Console, and add analytics
+(the form handler already pushes a `generate_lead` event to `dataLayer` when GTM is present).
