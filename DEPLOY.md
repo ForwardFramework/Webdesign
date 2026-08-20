@@ -60,12 +60,19 @@ page. Ask and the attribute can be added to all of them in one pass.
 # GitHub Pages
 
 A workflow at `.github/workflows/pages.yml` builds and publishes the site on
-every push. Turn it on once:
+every push. It passes `enablement: true` to `actions/configure-pages`, so it
+switches Pages on through the API itself — **no repository setting to change.**
 
-**Repository → Settings → Pages → Build and deployment → Source: `GitHub Actions`**
+Push, and the Actions tab shows the deploy. The URL appears on the workflow run
+and under Settings → Pages, and will be:
 
-That is the only setting. Push, and the Actions tab shows the deploy; the URL
-appears on the workflow run and under Settings → Pages.
+```
+https://forwardframework.github.io/Webdesign/
+```
+
+If your account restricts Actions from enabling Pages, set it by hand instead —
+Settings → Pages → Build and deployment → Source: `GitHub Actions` — and re-run
+the workflow.
 
 ### The subpath problem, handled
 

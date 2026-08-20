@@ -31,6 +31,11 @@ jobs:
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on via the API if it isn't already, so no manual
+          # repository setting is needed. Requires the pages: write permission
+          # granted above.
+          enablement: true
 
       - name: Stage the site
         run: |
