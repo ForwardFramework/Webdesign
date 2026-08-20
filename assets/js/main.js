@@ -251,12 +251,22 @@
     /* ---------- Form submission ---------- */
     Array.prototype.forEach.call(forms, function (form) {
       form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
         var hp = form.querySelector('.hp input');
-        if (hp && hp.value) return; // honeypot
+        if (hp && hp.value) { e.preventDefault(); return; } // honeypot
 
         var scope = form.querySelector('.fstep.is-active') || form;
+
+        /* Hosts with built-in form capture (static.app's `static-form`
+           attribute, Netlify's `netlify`, and similar) handle the POST
+           themselves. Run our validation, then get out of the way and let the
+           browser submit the form exactly as the markup specifies. */
+        if (form.hasAttribute('static-form') || form.hasAttribute('netlify') ||
+            form.hasAttribute('data-native-submit')) {
+          if (!validateScope(form, scope)) e.preventDefault();
+          return;
+        }
+
+        e.preventDefault();
         if (!validateScope(form, scope)) return;
 
         var btn = form.querySelector('[type=submit]');

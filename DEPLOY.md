@@ -1,3 +1,62 @@
+# Deploying
+
+The site is static HTML, CSS and vanilla JavaScript — no build step, no
+framework, no dependencies. It runs on any static host.
+
+Two bundles are produced by `python3 tools/build_zip.py`:
+
+| Bundle | For |
+|---|---|
+| `dist/forward-framework-site.zip` | Vercel — includes `vercel.json` and `.vercelignore` |
+| `dist/forward-framework-site-portable.zip` | Everything else — static.app, Netlify drop, cPanel, S3 |
+
+---
+
+# static.app
+
+1. Build the portable bundle: `python3 tools/build_zip.py --portable`
+2. In your static.app dashboard, **Add a new site** and drag
+   `forward-framework-site-portable.zip` into the drop zone. It unpacks and
+   deploys automatically.
+3. The site goes live on a `your-site.static.domains` address. Add your own
+   domain under **Settings → Domains** (SSL is issued for free).
+
+### Set the domain
+
+Same rule as any host: the canonical tags, Open Graph tags, JSON-LD,
+`sitemap.xml`, `robots.txt` and `llms.txt` all carry an absolute URL. Point
+them at whatever address is actually serving the site:
+
+```bash
+python3 tools/set_domain.py https://your-site.static.domains
+python3 tools/build_zip.py --portable      # then re-upload
+```
+
+### Making the forms live
+
+static.app has a built-in **Forms** feature: add a `static-form` attribute to a
+`<form>` and submissions land in your dashboard — no endpoint, no third party.
+
+`assets/js/main.js` already supports this. When a form carries `static-form`
+(or `netlify`, or `data-native-submit`), the script runs its own validation and
+then hands off to the browser instead of intercepting the submit. Without the
+attribute it keeps the current behaviour: validate, show the success state, log
+the payload to the console.
+
+There are eight forms — the hero form on the homepage plus one per service
+page. Ask and the attribute can be added to all of them in one pass.
+
+### Check after deploying
+
+- [ ] `/services/` loads the services hub — this is the one behaviour that
+      varies between hosts (serving `index.html` from a subfolder). Verified
+      working on a plain static server; confirm it on static.app.
+- [ ] A made-up URL shows the branded 404 rather than a host default
+- [ ] `/robots.txt`, `/sitemap.xml` and `/llms.txt` all load
+- [ ] Canonical tags match the address you are actually serving from
+
+---
+
 # Deploying to Vercel
 
 The site is static HTML, CSS and vanilla JavaScript. There is no build step,

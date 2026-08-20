@@ -150,8 +150,9 @@ Edit `index.html` for shell changes, `tools/build.py` for service copy/pricing, 
 ### Deployment bundles
 
 ```bash
-python3 tools/build_zip.py       # -> dist/forward-framework-site.zip (upload to any static host)
-python3 tools/build_preview.py   # -> dist/single-file/index.html (one self-contained file)
+python3 tools/build_zip.py              # -> dist/forward-framework-site.zip (includes vercel.json)
+python3 tools/build_zip.py --portable   # -> dist/forward-framework-site-portable.zip (any other host)
+python3 tools/build_preview.py          # -> dist/single-file/index.html (one self-contained file)
 ```
 
 `forward-framework-site.zip` is the real multi-page site — 27 files, separate
