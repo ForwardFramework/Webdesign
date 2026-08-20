@@ -146,6 +146,21 @@ python3 tools/build.py      # regenerates all pages + robots.txt, sitemap.xml, l
 
 Edit `index.html` for shell changes, `tools/build.py` for service copy/pricing, then rebuild.
 
+### Single-file preview
+
+```bash
+python3 tools/build_preview.py   # -> dist/preview.html (gitignored, regenerable)
+```
+
+Bundles all 16 pages into one self-contained HTML file with a small client-side
+router, for sharing a clickable preview where the multi-file site can't be hosted.
+Only one page is in the DOM at a time, so element IDs never collide. The
+production site is unaffected — it needs no JavaScript to be read.
+
+`assets/js/main.js` is split into `initShell()` (header and nav, runs once) and
+`initPage(root)` (everything inside `<main>`, re-runnable), which is what lets
+swapped-in content wire itself up exactly as a fresh page load would.
+
 ---
 
 ## 6. Before launch — required changes
