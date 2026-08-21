@@ -1,0 +1,496 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import ReviewsSection from '../../components/ReviewsSection.astro';
+import PromoGrid from '../../components/PromoGrid.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Faq from '../../components/Faq.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { site, primaryAreas } from '../../data/site.ts';
+import { services, allServices } from '../../data/services.ts';
+import { promosForService } from '../../data/promos.ts';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const promos = promosForService(service.slug);
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: service.name, href: `/services/${service.slug}` },
+];
+
+const schema = [
+  {
+    '@type': 'Service',
+    '@id': `${site.domain}/services/${service.slug}#service`,
+    name: service.name,
+    description: service.summary,
+    url: `${site.domain}/services/${service.slug}`,
+    serviceType: service.name,
+    provider: { '@id': `${site.domain}/#organization` },
+    areaServed: primaryAreas.map((a) => ({ '@type': 'City', name: `${a.name}, PA` })),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `${service.name} products and systems`,
+      itemListElement: service.products.map((p) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: p.name, description: p.blurb },
+        eligibleRegion: { '@type': 'AdministrativeArea', name: 'Greater Pittsburgh, PA' },
+      })),
+    },
+  },
+  {
+    '@type': 'HowTo',
+    name: `How Top Dog Exteriors handles a ${service.name.toLowerCase()} project`,
+    description: `Our ${service.name.toLowerCase()} process in the Greater Pittsburgh area, start to finish.`,
+    step: service.process.map((step, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: step.title,
+      text: step.body,
+    })),
+  },
+];
+---
+
+<Base
+  title={service.metaTitle}
+  description={service.metaDescription}
+  canonical={`/services/${service.slug}`}
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+  <section class="svc-hero texture-diagonal">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+          {
+            breadcrumbs.map((b, i) => (
+              <li>
+                {i < breadcrumbs.length - 1 ? (
+                  <>
+                    <a href={b.href}>{b.name}</a>
+                    <Icon name="chevron-right" size={14} />
+                  </>
+                ) : (
+                  <span aria-current="page">{b.name}</span>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="svc-hero__inner">
+        <div>
+          <span class="eyebrow">{service.name} · Greater Pittsburgh</span>
+          <h1>{service.heroHeadline}</h1>
+          <p class="lede svc-hero__sub">{service.heroSub}</p>
+
+          <ul class="svc-hero__pills">
+            {
+              service.highlights.map((h) => (
+                <li class="pill pill--light"><Icon name="check" size={14} /> {h}</li>
+              ))
+            }
+          </ul>
+
+          <div class="btn-row" style="margin-top:var(--sp-6)">
+            <a href="#service-quote" class="btn btn--primary btn--lg">Get My Free Estimate</a>
+            <a href={`tel:${site.phoneRaw}`} class="btn btn--ghost-light btn--lg">
+              <Icon name="phone" size={19} /> {site.phone}
+            </a>
+          </div>
+        </div>
+
+        <div class="svc-hero__form" id="service-quote">
+          <QuoteForm
+            id={`quote-${service.slug}`}
+            heading={`Free ${service.singular} Estimate`}
+            sub="Tell us about the project. We reply within one business day."
+            service={service.slug}
+            source={`service-${service.slug}`}
+            compact
+            submitLabel={`Get My ${service.singular} Quote`}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ANSWER-FIRST SUMMARY ═════════════════════════════════════════
+       A single self-contained paragraph naming the entity, the service, the
+       products and the geography. This is the block AI answer engines lift. -->
+  <section class="section section--tight answer" aria-label={`About ${service.name.toLowerCase()} from Top Dog Exteriors`}>
+    <div class="container">
+      <div class="answer__box">
+        <Icon name="check-circle" size={22} class="answer__icon" />
+        <p>{service.summary}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THE EDGE ══════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="edge-heading">
+    <div class="container edge">
+      <div>
+        <span class="eyebrow">Why us for this</span>
+        <h2 id="edge-heading">The Difference That Actually Matters</h2>
+        <p class="edge__body">{service.edge}</p>
+        {service.workmanship && (
+          <div class="edge__warranty">
+            <Icon name="shield-check" size={22} />
+            <p>{service.workmanship}</p>
+          </div>
+        )}
+      </div>
+      <ul class="edge__stats">
+        {site.stats.map((s) => (
+          <li>
+            <span>{s.value}</span>
+            <span>{s.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ PRODUCTS & WARRANTIES ═════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="products-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Systems &amp; warranties</span>
+        <h2 id="products-heading">Every {service.singular} Option We Install — and Exactly What It’s Warranted For</h2>
+        <p class="lede" style="margin-inline:auto">
+          Warranty coverage is where contractors get vague. Here is ours in plain language,
+          per product, so you can compare it against anyone else’s quote.
+        </p>
+      </div>
+
+      <ul class="products">
+        {
+          service.products.map((p, i) => (
+            <li class="product reveal" data-reveal-delay={Math.min(i, 5) * 55}>
+              <div class="product__head">
+                <h3>{p.name}</h3>
+                {p.badge && <span class="pill pill--accent">{p.badge}</span>}
+              </div>
+              <p class="product__blurb">{p.blurb}</p>
+              <dl class="product__meta">
+                <div>
+                  <dt><Icon name="shield-check" size={16} /> Warranty</dt>
+                  <dd>{p.warranty}</dd>
+                </div>
+                <div>
+                  <dt><Icon name="check-circle" size={16} /> Best for</dt>
+                  <dd>{p.bestFor}</dd>
+                </div>
+              </dl>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ PROCESS ═══════════════════════════════════════════════════════ -->
+  <section class="section section--dark" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Our process</span>
+        <h2 id="process-heading">How Your {service.singular} Project Runs</h2>
+      </div>
+      <ol class="proc">
+        {
+          service.process.map((step, i) => (
+            <li class="proc__item reveal" data-reveal-delay={Math.min(i, 5) * 55}>
+              <span class="proc__num">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ OFFERS ════════════════════════════════════════════════════════ -->
+  {
+    promos.length > 0 && (
+      <section class="section" aria-labelledby="svc-offers-heading">
+        <div class="container">
+          <div class="section-head center">
+            <span class="eyebrow">Current offers</span>
+            <h2 id="svc-offers-heading">{service.singular} Savings Available Now</h2>
+          </div>
+          <PromoGrid promos={promos} columns={promos.length >= 3 ? 3 : 2} />
+        </div>
+      </section>
+    )
+  }
+
+  <ReviewsSection service={service.slug} variant="alt" limit={3} />
+
+  <Faq
+    items={service.faqs}
+    heading={`${service.name} Questions, Answered Straight`}
+    id={`faq-${service.slug}`}
+  />
+
+  <!-- ══ SERVICE AREAS ═════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="svc-areas-heading">
+    <div class="container center">
+      <span class="eyebrow">Where we work</span>
+      <h2 id="svc-areas-heading">{service.name} Across the South Hills</h2>
+      <p class="lede" style="margin-inline:auto;margin-bottom:var(--sp-6)">
+        We handle {service.singular.toLowerCase()} projects throughout Allegheny and Washington counties.
+      </p>
+      <ul class="area-pills">
+        {
+          primaryAreas.map((a) => (
+            <li><a href={`/service-areas/${a.slug}`} class="pill">{a.name}</a></li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ OTHER SERVICES ════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="other-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">While we’re there</span>
+        <h2 id="other-heading">Bundle Two Services and Save 10%</h2>
+        <p class="lede" style="margin-inline:auto">
+          One mobilization, one dumpster, one crew setup — we pass the savings back.
+        </p>
+      </div>
+      <ServiceGrid services={allServices} exclude={service.slug} columns={4} />
+    </div>
+  </section>
+
+  <CtaBand
+    heading={`Ready to Price Your ${service.singular} Project?`}
+    body="Free estimates, real numbers, and a written line-item proposal you can actually compare."
+    primaryLabel={`Get My ${service.singular} Quote`}
+    primaryHref="#service-quote"
+    secondaryLabel={service.slug === 'roofing' ? 'Instant Roof Quote' : 'See All Services'}
+    secondaryHref={service.slug === 'roofing' ? '/instant-roof-quote' : '/services'}
+  />
+</Base>
+
+<style>
+  /* ── Breadcrumbs ──────────────────────────────────────────────────── */
+  .crumbs ol {
+    list-style: none;
+    margin: 0 0 var(--sp-6);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+  }
+  .crumbs li { display: flex; align-items: center; gap: 0.35rem; color: var(--n-500); }
+  .crumbs a { color: var(--n-400); text-decoration: none; }
+  .crumbs a:hover { color: var(--brand-400); text-decoration: underline; }
+  .crumbs [aria-current='page'] { color: var(--n-200); font-weight: 600; }
+
+  /* ── Hero ─────────────────────────────────────────────────────────── */
+  .svc-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(194, 65, 12, 0.2), transparent 60%),
+      linear-gradient(155deg, var(--steel-900), var(--n-900) 60%, var(--n-950));
+    color: var(--n-300);
+    padding-block: clamp(2rem, 4vw, 3rem) clamp(3rem, 6vw, 5rem);
+  }
+  .svc-hero h1 { color: #fff; max-width: 17ch; }
+  .svc-hero .eyebrow { color: var(--brand-400); }
+  .svc-hero__sub { color: var(--n-300); margin-top: var(--sp-5); }
+
+  .svc-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+
+  .svc-hero__pills {
+    list-style: none;
+    margin: var(--sp-6) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .svc-hero__pills svg { color: var(--brand-400); }
+
+  @media (max-width: 1000px) {
+    .svc-hero__inner { grid-template-columns: 1fr; }
+  }
+
+  /* ── Answer block ─────────────────────────────────────────────────── */
+  .answer__box {
+    display: flex;
+    gap: var(--sp-4);
+    max-width: 900px;
+    margin-inline: auto;
+    padding: var(--sp-5) var(--sp-6);
+    background: var(--brand-50);
+    border: 1px solid var(--brand-100);
+    border-left: 4px solid var(--brand-600);
+    border-radius: var(--radius-lg);
+  }
+  .answer__icon { color: var(--brand-600); flex: none; margin-top: 3px; }
+  .answer__box p { font-size: var(--fs-md); line-height: 1.62; color: var(--n-800); }
+
+  /* ── Edge ─────────────────────────────────────────────────────────── */
+  .edge {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    gap: var(--sp-8);
+    align-items: center;
+  }
+  .edge__body { margin-top: var(--sp-4); font-size: var(--fs-md); line-height: 1.65; color: var(--text-muted); }
+  .edge__warranty {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: var(--sp-5);
+    padding: var(--sp-5);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--success-700);
+    border-radius: var(--radius);
+  }
+  .edge__warranty svg { color: var(--success-700); flex: none; margin-top: 2px; }
+  .edge__warranty p { font-size: var(--fs-sm); line-height: 1.6; color: var(--n-800); }
+
+  .edge__stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+  }
+  .edge__stats li {
+    padding: var(--sp-5) var(--sp-4);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  .edge__stats span:first-child {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--brand-700);
+    line-height: 1.1;
+  }
+  .edge__stats span:last-child {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.74rem;
+    line-height: 1.35;
+    color: var(--text-subtle);
+  }
+
+  @media (max-width: 880px) {
+    .edge { grid-template-columns: 1fr; }
+  }
+
+  /* ── Products ─────────────────────────────────────────────────────── */
+  .products {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: var(--sp-5);
+  }
+  .product {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--t), box-shadow var(--t);
+  }
+  .product:hover { border-color: var(--brand-500); box-shadow: var(--shadow); }
+
+  .product__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
+  }
+  .product__head h3 { font-size: var(--fs-lg); }
+  .product__blurb { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+
+  .product__meta { margin-top: var(--sp-4); display: grid; gap: var(--sp-3); }
+  .product__meta > div {
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--border);
+  }
+  .product__meta dt {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 0.3rem;
+  }
+  .product__meta dt svg { color: var(--brand-600); }
+  .product__meta dd { margin: 0; font-size: 0.86rem; line-height: 1.6; color: var(--n-800); }
+
+  /* ── Process ──────────────────────────────────────────────────────── */
+  .proc { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-4); max-width: 860px; margin-inline: auto; }
+  .proc__item {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--n-850);
+    border: 1px solid var(--n-700);
+    border-radius: var(--radius-lg);
+  }
+  .proc__num {
+    flex: none;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--brand-500);
+    line-height: 1.1;
+    min-width: 2.2ch;
+  }
+  .proc__item h3 { font-size: var(--fs-base); margin-bottom: 0.25rem; }
+  .proc__item p { font-size: 0.88rem; line-height: 1.62; color: var(--n-400); }
+
+  /* ── Area pills ───────────────────────────────────────────────────── */
+  .area-pills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .area-pills a { text-decoration: none; background: #fff; transition: all var(--t-fast); }
+  .area-pills a:hover { border-color: var(--brand-600); color: var(--brand-700); }
+</style>

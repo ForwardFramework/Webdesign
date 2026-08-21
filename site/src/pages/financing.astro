@@ -1,0 +1,222 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Financing', href: '/financing' },
+];
+
+const options = [
+  {
+    icon: 'sparkle',
+    title: '0% APR for 18 Months',
+    body: 'Pay no interest at all if the balance is cleared within the promotional term. The strongest option if you have the cash flow but would rather not drain savings for a roof.',
+    fit: 'Best if you can retire the balance inside 18 months.',
+  },
+  {
+    icon: 'dollar',
+    title: 'Low Fixed Monthly Payment',
+    body: 'Stretch the project across a longer term for a small predictable payment. Roofs commonly land near $99–$250 a month depending on project size and approved terms.',
+    fit: 'Best if a manageable monthly number matters more than total interest.',
+  },
+  {
+    icon: 'clock',
+    title: 'Deferred Payment Options',
+    body: 'Get the work done now and start payments later. Useful when insurance proceeds, a tax refund or a bonus is coming but has not landed yet.',
+    fit: 'Best when money is coming, just not this month.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Does applying affect my credit score?',
+    a: 'Checking your rate uses a soft credit inquiry, which does not affect your score. Only if you accept an offer and move forward does the lender run a hard inquiry. You can see what you qualify for before committing to anything.',
+  },
+  {
+    q: 'How long does approval take?',
+    a: 'Usually a couple of minutes. The application takes about two minutes to complete and most homeowners get a decision immediately.',
+  },
+  {
+    q: 'Do I need to put money down?',
+    a: 'Approved financing typically requires no money down. We also do not ask for large deposits before work begins — a contractor who wants half the job in cash up front is telling you something about their cash position.',
+  },
+  {
+    q: 'Can I pay the loan off early?',
+    a: 'Yes. Our lending programs have no prepayment penalty, so paying it off early simply saves you the remaining interest. Confirm the specific terms in your loan documents before signing — that is where the binding language lives.',
+  },
+  {
+    q: 'Can I use financing on an insurance claim?',
+    a: 'Yes, commonly to cover your deductible or upgrades beyond the insurance scope. What we will not do is discount the job to make your deductible disappear. That is illegal in Pennsylvania and it is insurance fraud, no matter how routinely you have heard it offered.',
+  },
+  {
+    q: 'What if I do not qualify?',
+    a: 'We will tell you plainly and then talk about scope. Often a project can be phased — the roof this year, the siding next — so that the urgent work gets done without stretching you. We would rather do half the job right than talk you into a payment you will resent.',
+  },
+];
+---
+
+<Base
+  title="Financing | 0% APR & Low Monthly Payments | Top Dog"
+  description="Financing for roofing, siding, windows and decks in Greater Pittsburgh. 0% APR terms, low monthly payments, no money down. Checking your rate is a soft pull."
+  canonical="/financing"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    eyebrow="Financing"
+    title="Do the Project Now. Pay for It Sensibly."
+    lede="A failing roof does not wait for a good month. Approved financing through our lending partner gives you 0% promotional terms or a low fixed monthly payment, with no money down — and checking your rate does not affect your credit score."
+    breadcrumbs={breadcrumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Your options</span>
+        <h2>Three Ways to Pay for It</h2>
+      </div>
+      <ul class="opts">
+        {
+          options.map((o) => (
+            <li>
+              <span class="icon-tile"><Icon name={o.icon} size={26} /></span>
+              <h3>{o.title}</h3>
+              <p>{o.body}</p>
+              <p class="opts__fit"><Icon name="check-circle" size={16} /> {o.fit}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="disclosure">
+        <Icon name="alert" size={18} />
+        <span>
+          All financing is provided by a third-party lending partner and is subject to credit
+          approval. Rates, terms, promotional periods and qualifying project amounts are set by
+          the lender, vary by applicant, and are disclosed in full in your loan documents before
+          you sign anything. Promotional offers generally apply to full replacement projects and
+          not to repairs or insurance-claim work. Top Dog Exteriors is not a lender and does not
+          make credit decisions.
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container fin">
+      <div>
+        <span class="eyebrow">Get started</span>
+        <h2>See What You Qualify For</h2>
+        <p class="lede">
+          Tell us what you are planning and we will send you the application link along with your
+          project estimate — so you can see the number and the payment side by side rather than
+          guessing at one of them.
+        </p>
+        <ul class="fin__list">
+          <li><Icon name="check-circle" size={19} /> Soft credit check — no impact on your score</li>
+          <li><Icon name="check-circle" size={19} /> About two minutes to apply</li>
+          <li><Icon name="check-circle" size={19} /> Decision usually immediate</li>
+          <li><Icon name="check-circle" size={19} /> No money down on approved projects</li>
+          <li><Icon name="check-circle" size={19} /> No prepayment penalty</li>
+        </ul>
+        <p class="fin__call">
+          Questions first? Call <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>.
+        </p>
+      </div>
+      <QuoteForm
+        id="financing-form"
+        heading="Check Your Financing Options"
+        sub="We will send the application link with your estimate."
+        source="financing"
+        submitLabel="Send Me the Details"
+      />
+    </div>
+  </section>
+
+  <Faq items={faqs} heading="Financing Questions" id="faq-financing" />
+
+  <CtaBand
+    heading="Price the Project First"
+    body="Start with a free estimate and a real number. Financing is easier to think about once you know what you are financing."
+  />
+</Base>
+
+<style>
+  .opts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--sp-5);
+  }
+  .opts li {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .opts h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-3); }
+  .opts p { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+  .opts__fit {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem !important;
+    color: var(--n-800) !important;
+    font-weight: 600;
+  }
+  .opts__fit svg { color: var(--success-700); flex: none; margin-top: 2px; }
+
+  .disclosure {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 880px;
+    margin: var(--sp-7) auto 0;
+    padding: var(--sp-5);
+    background: var(--n-50);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .disclosure svg { color: var(--brand-600); flex: none; margin-top: 2px; }
+
+  .fin {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .fin__list {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+  .fin__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: var(--fs-sm);
+    color: var(--n-800);
+  }
+  .fin__list svg { color: var(--brand-600); flex: none; margin-top: 2px; }
+  .fin__call { margin-top: var(--sp-5); font-size: var(--fs-sm); color: var(--text-muted); }
+  .fin__call a { font-weight: 700; }
+
+  @media (max-width: 940px) {
+    .fin { grid-template-columns: 1fr; }
+  }
+</style>

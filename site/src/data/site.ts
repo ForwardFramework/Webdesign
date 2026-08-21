@@ -1,0 +1,137 @@
+/**
+ * Single source of truth for business identity (NAP), credentials and service area.
+ * Everything the site renders — schema.org, footer, click-to-call, local landing
+ * pages — reads from here, so a change lands everywhere at once.
+ */
+
+export const site = {
+  name: 'Top Dog Exteriors',
+  legalName: 'Top Dog Exteriors LLC',
+  tagline: 'Pittsburgh’s Top Dog for Roofing, Decks & Exteriors',
+  domain: 'https://topdogexteriors.com',
+  description:
+    'Veteran-owned, family-operated exterior contractor serving the Greater Pittsburgh area. Roofing, decks, siding, windows, doors, gutters, concrete, additions and site work — backed by a 5-year workmanship warranty.',
+  founded: '2023',
+  owner: 'Tyler Hoffman',
+
+  phone: '(412) 438-8364',
+  phoneRaw: '+14124388364',
+  email: 'info@topdogexteriors.com',
+
+  address: {
+    street: '4607 Library Rd',
+    city: 'Bethel Park',
+    state: 'PA',
+    stateFull: 'Pennsylvania',
+    zip: '15102',
+    country: 'US',
+  },
+
+  // Bethel Park, PA centroid — used for LocalBusiness geo + service radius.
+  geo: { lat: 40.3273, lng: -80.0395 },
+
+  hours: [
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], open: '07:00', close: '18:00' },
+    { days: ['Saturday'], open: '08:00', close: '14:00' },
+  ],
+  hoursLabel: 'Mon–Fri 7am–6pm · Sat 8am–2pm · Emergency service 24/7',
+
+  license: 'PA193451',
+  licenseAuthority: 'Pennsylvania Attorney General — Registered Contractor',
+
+  social: {
+    facebook: 'https://www.facebook.com/gettopdog/',
+    instagram: 'https://www.instagram.com/topdogexteriorspgh/',
+    bbb: 'https://www.bbb.org/us/pa/bethel-park/profile/home-improvement/top-dog-exteriors-0141-71127170',
+    google: 'https://www.google.com/search?q=Top+Dog+Exteriors+Bethel+Park+PA',
+    nextdoor: 'https://nextdoor.com/pages/top-dog-exteriors-bethel-park-pa/',
+  },
+
+  /** Badges rendered in the trust bar and referenced by AI answer engines. */
+  credentials: [
+    {
+      label: 'Owens Corning Preferred Contractor',
+      detail:
+        'Factory-vetted roofing credential that unlocks the Preferred Protection Roofing System Limited Warranty — the only Owens Corning warranty tier that covers contractor workmanship.',
+      icon: 'shield-check',
+    },
+    {
+      label: 'Veteran Owned & Family Operated',
+      detail: 'Run with military discipline and accountability. Your project is managed by the owner, not a call center.',
+      icon: 'star',
+    },
+    {
+      label: 'BBB Accredited Since 2025',
+      detail: 'Accredited by the Better Business Bureau of Western Pennsylvania.',
+      icon: 'badge',
+    },
+    {
+      label: '5-Star Rated on Google & Facebook',
+      detail: 'Verified homeowner reviews across Google, Facebook, BBB and HomeAdvisor.',
+      icon: 'stars',
+    },
+    {
+      label: 'Licensed PA193451 & Fully Insured',
+      detail: 'General liability and workers’ compensation carried on every job. Certificates furnished on request.',
+      icon: 'document',
+    },
+    {
+      label: '5-Year Workmanship Warranty',
+      detail: 'Written, transferable 5-year labor warranty on roofing and siding installations.',
+      icon: 'wrench',
+    },
+  ],
+
+  /** Headline proof points used in the hero stat strip. */
+  stats: [
+    { value: '5.0★', label: 'Google & Facebook rating' },
+    { value: '5-Year', label: 'Workmanship warranty' },
+    { value: '24 Hr', label: 'Estimate turnaround' },
+    { value: '100%', label: 'Veteran owned & operated' },
+  ],
+} as const;
+
+/**
+ * Local landing pages. `primary: true` towns get a dedicated /service-areas/<slug>
+ * page; the rest are listed for internal-link equity and NAP consistency.
+ */
+export const serviceAreas = [
+  { name: 'Bethel Park', slug: 'bethel-park', county: 'Allegheny County', primary: true, zip: '15102',
+    note: 'Our home base on Library Road — most Bethel Park jobs get a same-week estimate.' },
+  { name: 'Mt. Lebanon', slug: 'mt-lebanon', county: 'Allegheny County', primary: true, zip: '15228',
+    note: 'Historic-district homes and slate-era rooflines need a contractor who respects the architecture.' },
+  { name: 'Upper St. Clair', slug: 'upper-st-clair', county: 'Allegheny County', primary: true, zip: '15241',
+    note: 'Larger rooflines, steep pitches and premium composite decks are the norm here.' },
+  { name: 'Peters Township', slug: 'peters-township', county: 'Washington County', primary: true, zip: '15317',
+    note: 'New-build neighborhoods reaching the 20-year mark on builder-grade roofs and decks.' },
+  { name: 'Canonsburg', slug: 'canonsburg', county: 'Washington County', primary: true, zip: '15317',
+    note: 'A mix of century homes and new construction — we handle both.' },
+  { name: 'South Park', slug: 'south-park', county: 'Allegheny County', primary: true, zip: '15129',
+    note: 'Sloped lots where deck framing and site work often go hand in hand.' },
+  { name: 'Washington', slug: 'washington-pa', county: 'Washington County', primary: true, zip: '15301',
+    note: 'Full exterior remodels and metal roofing on rural and in-town properties.' },
+  { name: 'McMurray', slug: 'mcmurray', county: 'Washington County', primary: true, zip: '15317',
+    note: 'Composite deck rebuilds and James Hardie siding are our most-requested jobs here.' },
+  { name: 'Whitehall', slug: 'whitehall', county: 'Allegheny County', primary: false, zip: '15236' },
+  { name: 'Castle Shannon', slug: 'castle-shannon', county: 'Allegheny County', primary: false, zip: '15234' },
+  { name: 'Dormont', slug: 'dormont', county: 'Allegheny County', primary: false, zip: '15216' },
+  { name: 'Baldwin', slug: 'baldwin', county: 'Allegheny County', primary: false, zip: '15227' },
+  { name: 'Brentwood', slug: 'brentwood', county: 'Allegheny County', primary: false, zip: '15227' },
+  { name: 'Pleasant Hills', slug: 'pleasant-hills', county: 'Allegheny County', primary: false, zip: '15236' },
+  { name: 'Jefferson Hills', slug: 'jefferson-hills', county: 'Allegheny County', primary: false, zip: '15025' },
+  { name: 'Bridgeville', slug: 'bridgeville', county: 'Allegheny County', primary: false, zip: '15017' },
+  { name: 'Scott Township', slug: 'scott-township', county: 'Allegheny County', primary: false, zip: '15106' },
+  { name: 'Carnegie', slug: 'carnegie', county: 'Allegheny County', primary: false, zip: '15106' },
+  { name: 'Green Tree', slug: 'green-tree', county: 'Allegheny County', primary: false, zip: '15220' },
+  { name: 'Collier Township', slug: 'collier-township', county: 'Allegheny County', primary: false, zip: '15106' },
+  { name: 'Finleyville', slug: 'finleyville', county: 'Washington County', primary: false, zip: '15332' },
+  { name: 'Venetia', slug: 'venetia', county: 'Washington County', primary: false, zip: '15367' },
+  { name: 'Eighty Four', slug: 'eighty-four', county: 'Washington County', primary: false, zip: '15330' },
+  { name: 'Cecil Township', slug: 'cecil-township', county: 'Washington County', primary: false, zip: '15321' },
+  { name: 'South Fayette', slug: 'south-fayette', county: 'Allegheny County', primary: false, zip: '15017' },
+  { name: 'Pittsburgh (South Side & City)', slug: 'pittsburgh', county: 'Allegheny County', primary: false, zip: '15203' },
+] as const;
+
+export const primaryAreas = serviceAreas.filter((a) => a.primary);
+
+export type ServiceArea = (typeof serviceAreas)[number];

@@ -1,0 +1,219 @@
+---
+import Icon from './Icon.astro';
+import Stars from './Stars.astro';
+import { verifiedReviews, ratingSummary, type Review } from '../data/reviews.ts';
+import { site } from '../data/site.ts';
+
+interface Props {
+  heading?: string;
+  sub?: string;
+  /** Show only reviews tagged with this service slug, falling back to all. */
+  service?: string;
+  limit?: number;
+  showAllLink?: boolean;
+  variant?: 'light' | 'alt' | 'dark';
+}
+
+const {
+  heading = 'What Pittsburgh Homeowners Say',
+  sub = '5-star rated on Google and Facebook, BBB accredited, and reviewed by real customers across the South Hills.',
+  service,
+  limit = 6,
+  showAllLink = true,
+  variant = 'alt',
+} = Astro.props;
+
+const scoped = service ? verifiedReviews.filter((r) => r.service === service) : [];
+const pool: Review[] = scoped.length > 0 ? scoped : verifiedReviews;
+const shown = pool.slice(0, limit);
+
+const sectionClass =
+  variant === 'dark' ? 'section section--dark' : variant === 'alt' ? 'section section--alt' : 'section';
+---
+
+<section class={sectionClass} aria-labelledby="reviews-heading">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Reviews</span>
+      <h2 id="reviews-heading">{heading}</h2>
+      <p class="lede" style="margin-inline:auto">{sub}</p>
+    </div>
+
+    <!-- Platform ratings. Links go to the live listings so anyone can verify. -->
+    <ul class="rv-platforms">
+      {
+        ratingSummary.platforms.map((p) => (
+          <li>
+            <a href={p.url} target="_blank" rel="noopener noreferrer" class="rv-platform">
+              <span class="rv-platform__name">{p.source}</span>
+              {p.rating !== null ? (
+                <>
+                  <Stars rating={p.rating} size={16} label={`${p.rating} out of 5 on ${p.source}`} />
+                  <span class="rv-platform__score">{p.rating.toFixed(1)}</span>
+                </>
+              ) : (
+                <span class="rv-platform__score rv-platform__score--text">{p.note}</span>
+              )}
+              {p.count !== null && <span class="rv-platform__count">{p.count} reviews</span>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      shown.length > 0 ? (
+        <ul class="rv-grid">
+          {shown.map((r, i) => (
+            <li class="rv-card reveal" data-reveal-delay={Math.min(i, 5) * 60}>
+              <Icon name="quote" size={26} class="rv-card__mark" />
+              <Stars rating={r.rating} size={17} />
+              <blockquote class="rv-card__quote">{r.quote}</blockquote>
+              <footer class="rv-card__foot">
+                <cite class="rv-card__author">{r.author}</cite>
+                <span class="rv-card__meta">
+                  {r.location && <>{r.location} · </>}
+                  Verified on {r.source}
+                </span>
+              </footer>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="rv-empty">
+          Our latest reviews live on <a href={site.social.google}>Google</a>,{' '}
+          <a href={site.social.facebook}>Facebook</a> and{' '}
+          <a href={site.social.bbb}>the BBB</a>.
+        </p>
+      )
+    }
+
+    <div class="rv-actions">
+      {showAllLink && <a href="/reviews" class="btn btn--outline">Read all reviews</a>}
+      <a href={site.social.google} class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+        <Icon name="star" size={18} /> Leave us a review
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rv-platforms {
+    list-style: none;
+    margin: 0 0 var(--sp-7);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3);
+  }
+  .rv-platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 1.1rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--t), box-shadow var(--t), transform var(--t-fast);
+  }
+  .rv-platform:hover {
+    border-color: var(--brand-500);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+    color: var(--text);
+  }
+  .rv-platform__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+  .rv-platform__score {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+  .rv-platform__score--text { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+  .rv-platform__count { font-size: 0.8rem; color: var(--text-subtle); }
+
+  .rv-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: var(--sp-5);
+  }
+
+  .rv-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-600);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .rv-card__mark {
+    position: absolute;
+    top: var(--sp-5);
+    right: var(--sp-5);
+    color: var(--n-200);
+  }
+
+  .rv-card__quote {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: 1.68;
+    color: var(--n-800);
+    flex: 1;
+  }
+  .rv-card__quote::before { content: '“'; }
+  .rv-card__quote::after { content: '”'; }
+
+  .rv-card__foot {
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--border);
+  }
+  .rv-card__author {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.92rem;
+    font-style: normal;
+    color: var(--n-900);
+  }
+  .rv-card__meta {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.78rem;
+    color: var(--text-subtle);
+  }
+
+  .rv-empty { text-align: center; color: var(--text-muted); }
+
+  .rv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-7);
+  }
+
+  .section--dark .rv-card {
+    background: var(--n-850);
+    border-color: var(--n-700);
+    border-left-color: var(--brand-500);
+  }
+  .section--dark .rv-card__quote { color: var(--n-300); }
+  .section--dark .rv-card__author { color: #fff; }
+  .section--dark .rv-card__mark { color: var(--n-700); }
+  .section--dark .rv-platform { background: var(--n-850); border-color: var(--n-700); color: var(--n-200); }
+</style>

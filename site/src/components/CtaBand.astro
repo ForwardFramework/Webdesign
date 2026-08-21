@@ -1,0 +1,108 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.ts';
+
+interface Props {
+  heading?: string;
+  body?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  showPhone?: boolean;
+}
+
+const {
+  heading = 'Ready for a Straight Answer and a Real Number?',
+  body = 'Free estimates, no obligation, and nobody camping in your living room for three hours. Tell us what you need and we will tell you what it costs.',
+  primaryLabel = 'Get My Free Estimate',
+  primaryHref = '/contact',
+  secondaryLabel = 'Instant Roof Quote',
+  secondaryHref = '/instant-roof-quote',
+  showPhone = true,
+} = Astro.props;
+---
+
+<section class="cta-band texture-diagonal" aria-labelledby="cta-band-heading">
+  <div class="container cta-band__inner">
+    <div class="cta-band__text">
+      <h2 id="cta-band-heading">{heading}</h2>
+      <p>{body}</p>
+      {
+        showPhone && (
+          <a href={`tel:${site.phoneRaw}`} class="cta-band__phone">
+            <Icon name="phone" size={20} />
+            {site.phone}
+          </a>
+        )
+      }
+    </div>
+    <div class="cta-band__actions">
+      <a href={primaryHref} class="btn btn--primary btn--lg">{primaryLabel}</a>
+      {secondaryLabel && <a href={secondaryHref} class="btn btn--ghost-light btn--lg">{secondaryLabel}</a>}
+      <p class="cta-band__note">
+        <Icon name="clock" size={15} /> Most estimates returned within 24 hours
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    background: linear-gradient(150deg, var(--steel-900) 0%, var(--n-900) 62%, var(--n-950) 100%);
+    color: var(--n-300);
+    padding-block: var(--section-y);
+    border-top: 4px solid var(--brand-600);
+  }
+
+  .cta-band__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--sp-8);
+  }
+
+  .cta-band h2 {
+    color: #fff;
+    font-size: var(--fs-2xl);
+    max-width: 20ch;
+  }
+
+  .cta-band p {
+    margin-top: var(--sp-4);
+    max-width: 56ch;
+    line-height: 1.65;
+    color: var(--n-400);
+  }
+
+  .cta-band__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: var(--sp-5);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+    text-decoration: none;
+  }
+  .cta-band__phone:hover { color: var(--brand-400); }
+  .cta-band__phone svg { color: var(--brand-500); }
+
+  .cta-band__actions { display: grid; gap: var(--sp-3); }
+
+  .cta-band__note {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: var(--sp-1) !important;
+    font-size: 0.82rem;
+    color: var(--n-500);
+  }
+  .cta-band__note svg { color: var(--brand-500); flex: none; }
+
+  @media (max-width: 860px) {
+    .cta-band__inner { grid-template-columns: 1fr; gap: var(--sp-6); }
+  }
+</style>

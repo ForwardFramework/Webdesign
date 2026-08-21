@@ -1,0 +1,211 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import TrustBar from '../components/TrustBar.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+];
+
+const values = [
+  {
+    icon: 'shield',
+    title: 'We show up when we said we would',
+    body: 'This should not be a differentiator in the trades. It is. Military habits are hard to break, and scheduling is the one thing homeowners tell us other contractors got wrong.',
+  },
+  {
+    icon: 'document',
+    title: 'Everything in writing, itemised',
+    body: 'Line-item proposals so you can see what you are buying and compare us fairly against anyone else. No single lump-sum number, no expiring-tonight pricing, no deductible games.',
+  },
+  {
+    icon: 'users',
+    title: 'The owner is on your job',
+    body: 'You deal with Tyler, not a commissioned closer working from a script. When something needs a decision, the person making it has actually seen your house.',
+  },
+  {
+    icon: 'wrench',
+    title: 'We warranty our labor, not just the box it came in',
+    body: 'Materials rarely fail. Installations fail constantly. That is why our 5-year workmanship warranty is written, transferable, and covers the part that actually breaks.',
+  },
+];
+---
+
+<Base
+  title="About Us | Veteran-Owned Pittsburgh Contractor | Top Dog"
+  description="Veteran-owned, family-operated exterior contractor in Bethel Park, PA. Owens Corning Preferred, BBB accredited, PA193451, with Amish deck crews."
+  canonical="/about"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    eyebrow="About us"
+    title="Veteran Owned. Family Operated. Pittsburgh Built."
+    lede="Top Dog Exteriors is a Bethel Park exterior contractor run by people who still climb the ladder. We do roofs, decks, siding, windows, doors, gutters, concrete, additions and site work — and we self-perform all of it."
+    breadcrumbs={breadcrumbs}
+  />
+
+  <TrustBar />
+
+  <!-- ══ STORY ═════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container story">
+      <div class="prose">
+        <span class="eyebrow">Our story</span>
+        <h2>Started because the bar was on the floor</h2>
+        <p>
+          Anyone who has hired an exterior contractor in the Greater Pittsburgh area knows the
+          pattern. The crew that never shows on the day they promised. The quote scribbled on the
+          back of a business card with one number on it. The salesperson who will not leave your
+          kitchen table until you sign tonight, because tonight the price is special.
+        </p>
+        <p>
+          <strong>{site.owner}</strong> started Top Dog Exteriors because homeowners deserve
+          better than that, and because the standard for what "professional" means in this trade
+          had drifted a very long way from what it means in the military.
+        </p>
+        <p>
+          What that turned into is a company organised around three unusual decisions. First, we
+          self-perform nine trades instead of subcontracting eight of them — so when the roof
+          meets the siding and the siding meets the gutters, there is exactly one company to hold
+          responsible. Second, our decks are built by <strong>Amish crews</strong> whose framing
+          standard is simply higher than what a rotating labor pool produces; it costs us more per
+          day and it shows in the finished work. Third, we bought our own iron — a new
+          <strong>Bobcat T595</strong> and <strong>E35 excavator</strong> — so base prep, drainage
+          and footings never depend on a rental yard's schedule, and so we can rent those machines
+          to you with or without an operator.
+        </p>
+        <h2>What "Owens Corning Preferred Contractor" actually buys you</h2>
+        <p>
+          It is not a sticker. Owens Corning vets contractors on credentials, insurance and
+          workmanship history before granting the designation, and only Preferred and Platinum
+          contractors can register the <strong>Preferred Protection Roofing System Limited
+          Warranty</strong> — the only tier that includes contractor workmanship coverage. If your
+          roof was installed wrong, Owens Corning stands behind fixing it. A non-credentialed
+          roofer cannot offer you that at any price.
+        </p>
+        <h2>Licensed, insured, and happy to prove it</h2>
+        <p>
+          We are registered with the Pennsylvania Attorney General as contractor
+          <strong>{site.license}</strong>, accredited by the Better Business Bureau, and we carry
+          general liability and workers' compensation on every job. Ask us for certificates — and
+          ask every other contractor you are considering for theirs. If they hesitate, you have
+          learned something important for free.
+        </p>
+      </div>
+
+      <aside class="story__side">
+        <div class="story__card">
+          <h3>At a glance</h3>
+          <dl>
+            <div><dt>Owner</dt><dd>{site.owner}</dd></div>
+            <div><dt>Based in</dt><dd>{site.address.city}, {site.address.state}</dd></div>
+            <div><dt>PA registration</dt><dd>{site.license}</dd></div>
+            <div><dt>BBB</dt><dd>Accredited since 2025</dd></div>
+            <div><dt>Roofing credential</dt><dd>Owens Corning Preferred Contractor</dd></div>
+            <div><dt>Workmanship warranty</dt><dd>5 years, written &amp; transferable</dd></div>
+            <div><dt>Trades self-performed</dt><dd>9</dd></div>
+            <div><dt>Service area</dt><dd>Allegheny &amp; Washington counties</dd></div>
+          </dl>
+          <a href="/contact" class="btn btn--primary btn--block">Get a Free Estimate</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══ VALUES ════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="values-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">How we operate</span>
+        <h2 id="values-heading">Four Things We Refuse to Compromise On</h2>
+      </div>
+      <ul class="values">
+        {
+          values.map((v, i) => (
+            <li class="reveal" data-reveal-delay={Math.min(i, 4) * 60}>
+              <span class="icon-tile"><Icon name={v.icon} size={26} /></span>
+              <h3>{v.title}</h3>
+              <p>{v.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <BrandStrip />
+
+  <ReviewsSection heading="What Our Customers Say About Working With Us" />
+
+  <CtaBand
+    heading="Let’s See If We’re a Fit"
+    body="Free estimate, honest assessment, and a written proposal you can actually compare. If we are not the right company for your project, we will tell you that too."
+  />
+</Base>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .story .prose h2 { font-size: var(--fs-2xl); }
+  .story .prose h2:first-of-type { margin-top: var(--sp-3); }
+
+  .story__side { position: sticky; top: calc(var(--header-h) + 1.5rem); }
+  .story__card {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .story__card h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-4); }
+  .story__card dl { margin: 0 0 var(--sp-5); display: grid; gap: 0; }
+  .story__card dl > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-3);
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .story__card dt { font-size: 0.78rem; color: var(--text-subtle); }
+  .story__card dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: right;
+    color: var(--n-900);
+  }
+
+  .values {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--sp-5);
+  }
+  .values li {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .values h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-2); }
+  .values p { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+
+  @media (max-width: 940px) {
+    .story { grid-template-columns: 1fr; }
+    .story__side { position: static; }
+  }
+</style>

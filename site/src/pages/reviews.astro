@@ -1,0 +1,291 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Stars from '../components/Stars.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site.ts';
+import { verifiedReviews, ratingSummary } from '../data/reviews.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Reviews', href: '/reviews' },
+];
+
+/* Review schema is emitted only for reviews we can point to a public source for.
+   Marking up testimonials that do not exist on a real platform is exactly the
+   kind of thing that earns a manual action — and an FTC problem. */
+const schema =
+  verifiedReviews.length > 0
+    ? [
+        {
+          '@type': 'ItemList',
+          name: 'Top Dog Exteriors customer reviews',
+          itemListElement: verifiedReviews.map((r, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            item: {
+              '@type': 'Review',
+              reviewBody: r.quote,
+              author: { '@type': 'Person', name: r.author },
+              reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+              itemReviewed: { '@id': `${site.domain}/#organization` },
+              ...(r.date ? { datePublished: r.date } : {}),
+            },
+          })),
+        },
+      ]
+    : [];
+---
+
+<Base
+  title="Reviews | Top Dog Exteriors Pittsburgh PA"
+  description="Verified customer reviews for Top Dog Exteriors in Bethel Park, PA. 5-star rated on Google and Facebook, BBB accredited, reviewed on HomeAdvisor."
+  canonical="/reviews"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Reviews"
+    title="Reviewed by the Neighbors, Not by Us"
+    lede="5-star rated on Google and Facebook, BBB accredited, and reviewed publicly on HomeAdvisor and Nextdoor. Every review below is reproduced exactly as the customer wrote it, and every platform links straight to the live listing so you can check for yourself."
+    breadcrumbs={breadcrumbs}
+    align="center"
+  />
+
+  <!-- ══ PLATFORMS ═════════════════════════════════════════════════════ -->
+  <section class="section section--tight section--alt">
+    <div class="container">
+      <ul class="platforms">
+        {
+          ratingSummary.platforms.map((p) => (
+            <li>
+              <a href={p.url} target="_blank" rel="noopener noreferrer" class="platform">
+                <span class="platform__name">{p.source}</span>
+                {p.rating !== null ? (
+                  <>
+                    <span class="platform__score">{p.rating.toFixed(1)}</span>
+                    <Stars rating={p.rating} size={18} label={`${p.rating} out of 5 on ${p.source}`} />
+                  </>
+                ) : (
+                  <span class="platform__note">{p.note}</span>
+                )}
+                <span class="platform__link">
+                  View on {p.source} <Icon name="arrow_right" size={14} />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ REVIEWS ═══════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="all-reviews-heading">
+    <div class="container">
+      <h2 id="all-reviews-heading" class="sr-only">All customer reviews</h2>
+
+      {
+        verifiedReviews.length > 0 ? (
+          <ul class="rlist">
+            {verifiedReviews.map((r, i) => (
+              <li class="rcard reveal" data-reveal-delay={Math.min(i, 5) * 55}>
+                <div class="rcard__top">
+                  <Stars rating={r.rating} size={18} />
+                  <span class="rcard__source">{r.source}</span>
+                </div>
+                <blockquote class="rcard__quote">{r.quote}</blockquote>
+                <footer class="rcard__foot">
+                  <cite>{r.author}</cite>
+                  {r.location && <span>{r.location}</span>}
+                </footer>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="center lede" style="margin-inline:auto">
+            Our reviews live on the platforms above.
+          </p>
+        )
+      }
+
+      <!-- Honest framing: we show what we can verify and point to the rest. -->
+      <div class="rnote">
+        <Icon name="shield-check" size={22} />
+        <div>
+          <h3>Why this page is shorter than most</h3>
+          <p>
+            We only publish reviews we can point to a live, public listing for — reproduced word
+            for word, never edited for flattery and never written by us. Plenty of contractor
+            sites are full of glowing testimonials attributed to first names and initials that
+            appear nowhere else on the internet. Ours link out so you can check.
+          </p>
+          <p>
+            The fullest picture is on the platforms themselves:
+            <a href={site.social.google} target="_blank" rel="noopener noreferrer">Google</a>,
+            <a href={site.social.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>,
+            <a href={site.social.bbb} target="_blank" rel="noopener noreferrer">the BBB</a> and
+            <a href={site.social.nextdoor} target="_blank" rel="noopener noreferrer">Nextdoor</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="ractions">
+        <a href={site.social.google} class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+          <Icon name="star" size={18} /> Leave a Google review
+        </a>
+        <a href={site.social.facebook} class="btn btn--outline" target="_blank" rel="noopener noreferrer">
+          <Icon name="facebook" size={18} /> Review us on Facebook
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Want to Be the Next One?"
+    body="Free estimate, honest number, and work we are happy to have reviewed publicly."
+  />
+</Base>
+
+<style>
+  .platforms {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: var(--sp-4);
+  }
+  .platform {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--t), box-shadow var(--t), transform var(--t-fast);
+  }
+  .platform:hover {
+    border-color: var(--brand-500);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    color: var(--text);
+  }
+  .platform__name {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .platform__score {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--n-900);
+  }
+  .platform__note {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--n-900);
+    padding-block: 0.5rem;
+  }
+  .platform__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--brand-700);
+  }
+
+  .rlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: var(--sp-5);
+  }
+  .rcard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-600);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .rcard__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+  .rcard__source {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .rcard__quote {
+    margin: 0;
+    flex: 1;
+    font-size: var(--fs-sm);
+    line-height: 1.68;
+    color: var(--n-800);
+  }
+  .rcard__quote::before { content: '“'; }
+  .rcard__quote::after { content: '”'; }
+  .rcard__foot {
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--border);
+  }
+  .rcard__foot cite {
+    display: block;
+    font-family: var(--font-display);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .rcard__foot span { font-size: 0.78rem; color: var(--text-subtle); }
+
+  .rnote {
+    display: flex;
+    gap: var(--sp-4);
+    max-width: 820px;
+    margin: var(--sp-8) auto 0;
+    padding: var(--sp-6);
+    background: var(--n-50);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .rnote svg { color: var(--success-700); flex: none; margin-top: 3px; }
+  .rnote h3 { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+  .rnote p { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+  .rnote p + p { margin-top: var(--sp-3); }
+  .rnote a { font-weight: 600; }
+
+  .ractions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-7);
+  }
+</style>

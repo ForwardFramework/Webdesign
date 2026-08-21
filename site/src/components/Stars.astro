@@ -1,0 +1,29 @@
+---
+interface Props {
+  rating?: number;
+  size?: number;
+  label?: string;
+}
+const { rating = 5, size = 18, label, ...rest } = Astro.props;
+const full = Math.round(rating);
+const accessible = label ?? `${rating} out of 5 stars`;
+---
+
+<span class="stars" role="img" aria-label={accessible} {...rest}>
+  {
+    Array.from({ length: 5 }).map((_, i) => (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill={i < full ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1Z" />
+      </svg>
+    ))
+  }
+</span>

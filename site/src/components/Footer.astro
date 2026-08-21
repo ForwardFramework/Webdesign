@@ -1,0 +1,239 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { site, serviceAreas, primaryAreas } from '../data/site.ts';
+import { allServices } from '../data/services.ts';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer texture-diagonal">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <Logo tone="light" />
+        <p class="site-footer__blurb">
+          Veteran owned and family operated. Roofing, decks, siding, windows, doors, gutters,
+          concrete, additions and site work across the Greater Pittsburgh area — backed by a
+          written 5-year workmanship warranty.
+        </p>
+        <ul class="site-footer__contact">
+          <li>
+            <Icon name="phone" size={18} />
+            <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>
+          </li>
+          <li>
+            <Icon name="mail" size={18} />
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </li>
+          <li>
+            <Icon name="map-pin" size={18} />
+            <address>
+              {site.address.street}<br />
+              {site.address.city}, {site.address.state} {site.address.zip}
+            </address>
+          </li>
+          <li>
+            <Icon name="clock" size={18} />
+            <span>{site.hoursLabel}</span>
+          </li>
+        </ul>
+        <div class="site-footer__social">
+          <a href={site.social.facebook} aria-label="Top Dog Exteriors on Facebook" rel="noopener noreferrer" target="_blank">
+            <Icon name="facebook" size={20} />
+          </a>
+          <a href={site.social.instagram} aria-label="Top Dog Exteriors on Instagram" rel="noopener noreferrer" target="_blank">
+            <Icon name="instagram" size={20} />
+          </a>
+          <a href={site.social.bbb} aria-label="Top Dog Exteriors BBB profile" rel="noopener noreferrer" target="_blank">
+            <Icon name="shield-check" size={20} />
+          </a>
+        </div>
+      </div>
+
+      <nav class="site-footer__col" aria-label="Services">
+        <h2 class="site-footer__heading">Services</h2>
+        <ul>
+          {allServices.map((s) => <li><a href={`/services/${s.slug}`}>{s.name}</a></li>)}
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col" aria-label="Company">
+        <h2 class="site-footer__heading">Company</h2>
+        <ul>
+          <li><a href="/about">About Top Dog</a></li>
+          <li><a href="/reviews">Customer Reviews</a></li>
+          <li><a href="/offers">Current Offers</a></li>
+          <li><a href="/financing">Financing</a></li>
+          <li><a href="/warranties">Our Warranties</a></li>
+          <li><a href="/equipment-rental">Equipment Rental</a></li>
+          <li><a href="/instant-roof-quote">Instant Roof Quote</a></li>
+          <li><a href="/faq">FAQs</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__col" aria-label="Service areas">
+        <h2 class="site-footer__heading">Service Areas</h2>
+        <ul>
+          {primaryAreas.map((a) => <li><a href={`/service-areas/${a.slug}`}>{a.name}, PA</a></li>)}
+          <li><a href="/service-areas" class="site-footer__more">All service areas <Icon name="arrow_right" size={14} /></a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="site-footer__areas">
+      <h2 class="site-footer__heading">Proudly serving Allegheny &amp; Washington County</h2>
+      <p>
+        {serviceAreas.map((a, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> · </span>}
+            <span>{a.name}</span>
+          </>
+        ))}
+      </p>
+    </div>
+
+    <div class="site-footer__legal">
+      <p>
+        &copy; {year} {site.legalName}. All rights reserved. PA Contractor Registration
+        {' '}{site.license}. Fully licensed and insured.
+      </p>
+      <ul>
+        <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/accessibility">Accessibility</a></li>
+        <li><a href="/sitemap-index.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--n-950);
+    color: var(--n-400);
+    font-size: var(--fs-sm);
+    padding-block: var(--sp-9) var(--sp-6);
+    border-top: 4px solid var(--brand-600);
+  }
+
+  .site-footer__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+    gap: var(--sp-7) var(--sp-6);
+  }
+
+  .site-footer__blurb {
+    margin-top: var(--sp-4);
+    max-width: 42ch;
+    line-height: 1.65;
+    color: var(--n-400);
+  }
+
+  .site-footer__contact {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-3);
+  }
+  .site-footer__contact li {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+  }
+  .site-footer__contact svg { color: var(--brand-500); flex: none; margin-top: 2px; }
+  .site-footer__contact address { font-style: normal; }
+  .site-footer__contact a { color: var(--n-200); text-decoration: none; font-weight: 600; }
+  .site-footer__contact a:hover { color: var(--brand-400); text-decoration: underline; }
+
+  .site-footer__social {
+    display: flex;
+    gap: var(--sp-2);
+    margin-top: var(--sp-5);
+  }
+  .site-footer__social a {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--n-700);
+    border-radius: var(--radius);
+    color: var(--n-300);
+    transition: background var(--t), border-color var(--t), color var(--t);
+  }
+  .site-footer__social a:hover {
+    background: var(--brand-600);
+    border-color: var(--brand-600);
+    color: #fff;
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: var(--sp-4);
+  }
+
+  .site-footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  .site-footer__col a {
+    color: var(--n-400);
+    text-decoration: none;
+    transition: color var(--t-fast);
+  }
+  .site-footer__col a:hover { color: var(--brand-400); }
+  .site-footer__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--brand-400) !important;
+    font-weight: 600;
+  }
+
+  .site-footer__areas {
+    margin-top: var(--sp-8);
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--n-800);
+  }
+  .site-footer__areas p {
+    font-size: var(--fs-xs);
+    line-height: 2;
+    /* --n-500 on --n-950 is only 4.12:1; --n-400 clears AA at 6.8:1. */
+    color: var(--n-400);
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-top: var(--sp-6);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--n-800);
+    font-size: var(--fs-xs);
+    color: var(--n-400);
+  }
+  .site-footer__legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .site-footer__legal a { color: var(--n-400); text-decoration: none; }
+  .site-footer__legal a:hover { color: var(--brand-400); }
+
+  @media (max-width: 940px) {
+    .site-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .site-footer__brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) {
+    .site-footer__top { grid-template-columns: 1fr; }
+  }
+</style>

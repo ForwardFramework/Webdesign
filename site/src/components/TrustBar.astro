@@ -1,0 +1,83 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.ts';
+
+interface Props {
+  variant?: 'light' | 'dark';
+}
+const { variant = 'light' } = Astro.props;
+---
+
+<section class={`trustbar trustbar--${variant}`} aria-label="Credentials and certifications">
+  <div class="container">
+    <ul class="trustbar__list">
+      {
+        site.credentials.map((c) => (
+          <li class="trustbar__item">
+            <span class="trustbar__icon"><Icon name={c.icon} size={22} /></span>
+            <span class="trustbar__text">
+              <span class="trustbar__label">{c.label}</span>
+              <span class="trustbar__detail">{c.detail}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trustbar { padding-block: var(--sp-7); border-block: 1px solid var(--border); }
+  .trustbar--light { background: var(--n-50); }
+  .trustbar--dark {
+    background: var(--n-900);
+    border-color: var(--n-800);
+    color: var(--n-300);
+  }
+
+  .trustbar__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: var(--sp-5) var(--sp-6);
+  }
+
+  .trustbar__item { display: flex; gap: 0.75rem; align-items: flex-start; }
+
+  .trustbar__icon {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius);
+    background: var(--brand-50);
+    color: var(--brand-700);
+  }
+  .trustbar--dark .trustbar__icon {
+    background: rgba(234, 88, 12, 0.16);
+    color: var(--brand-400);
+  }
+
+  .trustbar__label {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    line-height: 1.28;
+    letter-spacing: -0.012em;
+    color: var(--n-900);
+  }
+  .trustbar--dark .trustbar__label { color: #fff; }
+
+  .trustbar__detail {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--text-subtle);
+  }
+  .trustbar--dark .trustbar__detail { color: var(--n-400); }
+</style>

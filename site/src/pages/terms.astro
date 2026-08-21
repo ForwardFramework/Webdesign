@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Terms', href: '/terms' },
+];
+const updated = 'August 2026';
+---
+
+<Base
+  title="Terms of Use | Top Dog Exteriors"
+  description="Terms governing use of topdogexteriors.com, including estimate accuracy, promotional offers and warranty references."
+  canonical="/terms"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero eyebrow="Legal" title="Terms of Use" breadcrumbs={breadcrumbs} />
+
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="prose legal">
+        <p class="legal__updated">Last updated: {updated}</p>
+
+        <h2>About this site</h2>
+        <p>
+          This website is operated by {site.legalName}, {site.address.street},
+          {site.address.city}, {site.address.state} {site.address.zip}. By using it you agree to
+          these terms.
+        </p>
+
+        <h2>Estimates are estimates</h2>
+        <p>
+          Pricing shown anywhere on this site — including the instant roof quote tool and every
+          cost range in our FAQs — is a good-faith budget estimate, not an offer and not a
+          contract. Actual pricing depends on conditions that can only be confirmed on site:
+          decking and sheathing condition, ventilation, flashing details, layer counts, access,
+          permit requirements and current material costs. The only binding number is the one in a
+          signed written proposal.
+        </p>
+
+        <h2>Promotional offers</h2>
+        <p>
+          Offers are subject to the qualifying terms published alongside them, cannot be combined
+          except where stated, and may be modified or withdrawn. Financing is provided by a
+          third-party lender and is subject to credit approval; rates and terms are set by the
+          lender and disclosed in your loan documents. {site.legalName} is not a lender.
+        </p>
+
+        <h2>Warranty information</h2>
+        <p>
+          Manufacturer warranty terms described on this site reflect published coverage at the
+          time of writing and are summarised for readability. Manufacturers change their terms.
+          Your actual warranty certificate governs in every case, and we provide it at project
+          completion. Our own workmanship warranty is defined in your written contract.
+        </p>
+
+        <h2>Trademarks</h2>
+        <p>
+          Owens Corning, TruDefinition, Duration, SureNail, TimberTech, AZEK, Trex, Transcend,
+          Select, Enhance, James Hardie, HardiePlank, HardiePanel, HardieShingle, ColorPlus, LP,
+          SmartSide, SmartGuard, Alside, ASCEND, Mezzo, Vero, Everlast, ProVia, Embarq, Signet,
+          Heritage, Legacy, Endura and Bobcat are trademarks of their respective owners. They are
+          referenced here to identify products we install and rent. Use of these names does not
+          imply endorsement beyond the specific certifications we hold and state.
+        </p>
+
+        <h2>Content</h2>
+        <p>
+          Text, layout and code on this site are the property of {site.legalName}. You may not
+          reproduce substantial portions of it for commercial purposes without permission.
+        </p>
+
+        <h2>Limitation of liability</h2>
+        <p>
+          This site is provided as-is for informational purposes. We take care to keep it
+          accurate, but we do not warrant that every figure is current, and we are not liable for
+          decisions made solely on information published here rather than on a written proposal.
+          Nothing in these terms limits any liability that cannot lawfully be limited.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions about these terms: <a href={`mailto:${site.email}`}>{site.email}</a> or
+          <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal__updated {
+    font-size: 0.85rem;
+    color: var(--text-subtle);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--border);
+  }
+  .legal h2 { font-size: var(--fs-xl); }
+</style>

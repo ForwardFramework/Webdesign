@@ -1,0 +1,237 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site.ts';
+import { allServices } from '../data/services.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'FAQs', href: '/faq' },
+];
+
+const general = [
+  {
+    q: 'Who is Top Dog Exteriors?',
+    a: `Top Dog Exteriors is a veteran-owned, family-operated exterior contracting company based at ${site.address.street}, ${site.address.city}, PA ${site.address.zip}, serving the Greater Pittsburgh area. We self-perform roofing, decks, siding, windows, doors, gutters, concrete, additions, excavation and painting. We are an Owens Corning Preferred Contractor, BBB accredited, and registered in Pennsylvania as contractor ${site.license}.`,
+  },
+  {
+    q: 'What areas do you serve?',
+    a: 'Allegheny and Washington counties, centered on the South Hills: Bethel Park, Mt. Lebanon, Upper St. Clair, Peters Township, McMurray, Canonsburg, South Park, Washington, Whitehall, Castle Shannon, Dormont, Baldwin, Brentwood, Pleasant Hills, Jefferson Hills, Bridgeville, Carnegie and surrounding communities.',
+  },
+  {
+    q: 'Are estimates really free?',
+    a: 'Yes, and there is no obligation. We also send you the inspection photographs whether you hire us or not. For roofing, our instant roof quote tool gives you a real price range online in about 60 seconds before anyone comes to the house.',
+  },
+  {
+    q: 'How soon can you start?',
+    a: 'Estimates typically come back within 24 hours. Scheduling depends on the trade and the season — roofing and gutters move fastest, decks and additions book further out, and storm damage gets triaged the same day. We give you a real date rather than a season.',
+  },
+  {
+    q: 'Are you licensed and insured?',
+    a: `Yes. Registered with the Pennsylvania Attorney General as contractor ${site.license}, with general liability and workers' compensation carried on every job. Certificates are furnished on request — and you should ask every contractor you consider for theirs.`,
+  },
+  {
+    q: 'Do you require a large deposit?',
+    a: 'No. We do not ask for half the job in cash before work begins. A contractor who needs your money to buy the materials for your job is telling you something important about their cash position, and Pennsylvania caps home improvement deposits for good reason.',
+  },
+  {
+    q: 'Do you handle insurance claims?',
+    a: 'Yes. We document storm damage with dated photographs, meet your adjuster on site, and provide a line-item scope that speaks the same language as the insurance estimate. We will not waive or absorb your deductible — that is illegal in Pennsylvania and any contractor offering it is showing you how they do business.',
+  },
+  {
+    q: 'What payment methods do you accept?',
+    a: 'Cash, check, credit card, and financing through our lending partner including 0% APR promotional terms, subject to credit approval.',
+  },
+  {
+    q: 'Do you offer discounts?',
+    a: 'Always 5% off for active duty, veterans, police, firefighters, EMS, teachers and seniors 65+, which stacks with the current seasonal offer for your service. We also take 10% off when you bundle two or more services on one project.',
+  },
+  {
+    q: 'Why should I choose you over a cheaper quote?',
+    a: 'Sometimes you should not — if the cheaper quote is from a licensed, insured contractor writing the same scope, take it. What we would ask you to compare is the scope itself: is tear-off included, what underlayment, how much ice-and-water, is the ventilation being corrected, who pulls the permit, and what is the workmanship warranty. Our proposals are line-itemed specifically so you can run that comparison honestly.',
+  },
+];
+
+/* Every service FAQ is aggregated here, so the page is a genuine single source
+   for AI retrieval rather than a thin duplicate of the service pages. */
+const grouped = allServices.map((s) => ({ service: s, faqs: s.faqs }));
+
+const allQuestions = [...general, ...grouped.flatMap((g) => g.faqs)];
+
+const schema = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: allQuestions.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<Base
+  title="FAQs | Top Dog Exteriors Pittsburgh PA"
+  description="Answers to what Pittsburgh homeowners ask about roofing, decks, siding, windows, gutters and concrete — real cost ranges, warranties and how we work."
+  canonical="/faq"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="FAQs"
+    title="Every Question, Answered Straight"
+    lede="Real cost ranges, real warranty terms, and honest answers to the questions most contractor sites dodge. If yours is not here, call us — we would rather answer it than have you guess."
+    breadcrumbs={breadcrumbs}
+  />
+
+  <!-- ══ JUMP NAV ══════════════════════════════════════════════════════ -->
+  <section class="section section--tight section--alt">
+    <div class="container">
+      <nav class="jump" aria-label="Jump to section">
+        <a href="#general" class="pill">General</a>
+        {allServices.map((s) => <a href={`#${s.slug}`} class="pill">{s.navLabel}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <!-- ══ GENERAL ═══════════════════════════════════════════════════════ -->
+  <section class="section" id="general" aria-labelledby="general-heading">
+    <div class="container">
+      <h2 id="general-heading" class="fq__title">
+        <span class="icon-tile"><Icon name="home" size={22} /></span>
+        General questions
+      </h2>
+      <div class="fq">
+        {
+          general.map((f, i) => (
+            <details class="fq__item" open={i === 0}>
+              <summary class="fq__q">
+                <span>{f.q}</span>
+                <Icon name="chevron-down" size={20} class="fq__caret" />
+              </summary>
+              <div class="fq__a"><p>{f.a}</p></div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BY SERVICE ════════════════════════════════════════════════════ -->
+  {
+    grouped.map(({ service, faqs }, index) => (
+      <section
+        class={`section ${index % 2 === 0 ? 'section--alt' : ''}`}
+        id={service.slug}
+        aria-labelledby={`${service.slug}-heading`}
+      >
+        <div class="container">
+          <h2 id={`${service.slug}-heading`} class="fq__title">
+            <span class="icon-tile"><Icon name={service.icon} size={22} /></span>
+            {service.name}
+            <a href={`/services/${service.slug}`} class="fq__link">
+              Service details <Icon name="arrow_right" size={15} />
+            </a>
+          </h2>
+          <div class="fq">
+            {faqs.map((f) => (
+              <details class="fq__item">
+                <summary class="fq__q">
+                  <span>{f.q}</span>
+                  <Icon name="chevron-down" size={20} class="fq__caret" />
+                </summary>
+                <div class="fq__a"><p>{f.a}</p></div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <CtaBand
+    heading="Still Have a Question?"
+    body="Call, text or email. We would rather spend ten minutes answering than have you make a five-figure decision on a guess."
+  />
+</Base>
+
+<style>
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.45rem;
+  }
+  .jump a {
+    text-decoration: none;
+    background: #fff;
+    transition: all var(--t-fast);
+  }
+  .jump a:hover { border-color: var(--brand-600); color: var(--brand-700); }
+
+  .fq__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-2xl);
+    margin-bottom: var(--sp-5);
+    scroll-margin-top: calc(var(--header-h) + 2rem);
+  }
+  .fq__title .icon-tile { margin-bottom: 0; width: 42px; height: 42px; }
+  .fq__link {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .fq {
+    max-width: 920px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #fff;
+  }
+  .fq__item + .fq__item { border-top: 1px solid var(--border); }
+  .fq__q {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding: var(--sp-5) var(--sp-6);
+    min-height: 56px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-base);
+    line-height: 1.4;
+    color: var(--n-900);
+    cursor: pointer;
+    list-style: none;
+    transition: background var(--t-fast), color var(--t-fast);
+  }
+  .fq__q::-webkit-details-marker { display: none; }
+  .fq__q:hover { background: var(--n-50); color: var(--brand-700); }
+  .fq__caret { flex: none; margin-top: 2px; color: var(--brand-600); transition: transform var(--t); }
+  .fq__item[open] .fq__caret { transform: rotate(180deg); }
+  .fq__item[open] .fq__q { color: var(--brand-700); }
+  .fq__a {
+    padding: 0 var(--sp-6) var(--sp-5);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+  }
+  .fq__a p { max-width: 74ch; }
+
+  @media (max-width: 560px) {
+    .fq__q { padding: var(--sp-4); font-size: 0.98rem; }
+    .fq__a { padding: 0 var(--sp-4) var(--sp-4); }
+    .fq__link { margin-left: 0; }
+  }
+</style>

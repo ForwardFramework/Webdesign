@@ -1,0 +1,115 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  items: { q: string; a: string }[];
+  heading?: string;
+  sub?: string;
+  /** Set false when a parent page already emits the FAQPage node. */
+  emitSchema?: boolean;
+  id?: string;
+}
+
+const {
+  items,
+  heading = 'Questions Pittsburgh Homeowners Ask Us',
+  sub,
+  emitSchema = true,
+  id = 'faq',
+} = Astro.props;
+
+/* FAQPage markup — this is the single highest-leverage schema for AEO. It is
+   what feeds "People also ask", voice answers and LLM citations. */
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<section class="section" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Straight answers</span>
+      <h2 id={`${id}-heading`}>{heading}</h2>
+      {sub && <p class="lede" style="margin-inline:auto">{sub}</p>}
+    </div>
+
+    <div class="faq">
+      {
+        items.map((item, i) => (
+          <details class="faq__item" name={id} open={i === 0}>
+            <summary class="faq__q">
+              <span>{item.q}</span>
+              <Icon name="chevron-down" size={20} class="faq__caret" />
+            </summary>
+            <div class="faq__a">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{emitSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />}
+
+<style>
+  .faq {
+    max-width: 880px;
+    margin-inline: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .faq__item + .faq__item { border-top: 1px solid var(--border); }
+
+  .faq__q {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding: var(--sp-5) var(--sp-6);
+    min-height: 56px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-base);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--n-900);
+    cursor: pointer;
+    list-style: none;
+    transition: background var(--t-fast), color var(--t-fast);
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q:hover { background: var(--n-50); color: var(--brand-700); }
+
+  .faq__caret {
+    flex: none;
+    margin-top: 2px;
+    color: var(--brand-600);
+    transition: transform var(--t);
+  }
+  .faq__item[open] .faq__caret { transform: rotate(180deg); }
+  .faq__item[open] .faq__q { color: var(--brand-700); }
+
+  .faq__a {
+    padding: 0 var(--sp-6) var(--sp-5);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.7;
+  }
+  .faq__a p { max-width: 72ch; }
+
+  @media (max-width: 560px) {
+    .faq__q { padding: var(--sp-4); font-size: 0.98rem; }
+    .faq__a { padding: 0 var(--sp-4) var(--sp-4); }
+  }
+</style>

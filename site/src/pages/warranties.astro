@@ -1,0 +1,233 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.ts';
+import { allServices } from '../data/services.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Warranties', href: '/warranties' },
+];
+
+const faqs = [
+  {
+    q: 'What is the difference between a material warranty and a workmanship warranty?',
+    a: 'A material warranty comes from the manufacturer and covers defects in the product itself — a shingle that delaminates, a board that splits, a window seal that fails. A workmanship warranty comes from the contractor and covers the installation. This distinction matters enormously, because material defects are rare and installation defects are common. A lifetime material warranty on a roof installed wrong is close to worthless, which is exactly why we put our workmanship in writing for 5 years.',
+  },
+  {
+    q: 'Is your 5-year workmanship warranty transferable?',
+    a: 'Yes. It transfers to the next owner if you sell the house, which is a genuine line item on a listing sheet. Bring us the closing date and we will reissue the certificate in the buyer’s name.',
+  },
+  {
+    q: 'What does "non-prorated" mean and why should I care?',
+    a: 'A non-prorated warranty pays the same in year 25 as it does in year 2. A prorated warranty shrinks its payout every year you own the product — so a "lifetime" prorated vinyl siding warranty may cover 15% of replacement cost by the time you actually need it. James Hardie’s 30-year substrate warranty and LP SmartSide’s 50-year substrate warranty are non-prorated, which is why we call that out specifically.',
+  },
+  {
+    q: 'How do I make a warranty claim?',
+    a: `Call us first at ${site.phone} or email ${site.email}. If it is a workmanship issue we handle it directly. If it is a material defect we file the manufacturer claim on your behalf — we registered the warranty in your name when we finished, so the paperwork is already on file. You should not have to argue with a manufacturer’s claims department by yourself.`,
+  },
+  {
+    q: 'What voids a warranty?',
+    a: 'Most commonly: improper installation (which is what certification and workmanship coverage protect you from), inadequate attic ventilation on roofing, pressure-washing composite decking at the wrong PSI, painting products that were never meant to be painted, and structural movement or storm damage — which is an insurance matter, not a warranty matter. We walk through the specific exclusions for your product at handover rather than leaving you to find them later.',
+  },
+  {
+    q: 'Do you register the manufacturer warranty for me?',
+    a: 'Yes, on every project, in your name, before we leave. Manufacturer warranties frequently require registration within a fixed window after installation, and an unregistered warranty is a warranty you do not actually have. This is one of the most common ways homeowners lose coverage they paid for.',
+  },
+];
+
+const highlights = [
+  {
+    icon: 'shield-check',
+    title: 'Owens Corning Preferred Protection',
+    body: 'As a Preferred Contractor we can register the Preferred Protection Roofing System Limited Warranty — lifetime shingle coverage with a 50-year TRU PROtection® period, 10 years non-prorated, 15-year blow-off coverage, 10-year StreakGuard® algae resistance, and contractor workmanship coverage available only through Preferred and Platinum contractors.',
+  },
+  {
+    icon: 'wrench',
+    title: 'Our 5-Year Workmanship Warranty',
+    body: 'Written, transferable, and covering our installation labor on roofing and siding — separate from and on top of the manufacturer’s material coverage. Repairs carry a 1-year leak-free guarantee; concrete and site work carry a 1-year workmanship guarantee.',
+  },
+  {
+    icon: 'document',
+    title: 'Registered in Your Name',
+    body: 'Every manufacturer warranty is registered before we leave your property. Unregistered warranties expire quietly and homeowners find out at the worst possible moment.',
+  },
+];
+---
+
+<Base
+  title="Warranties | Roofing, Siding & Deck Coverage | Top Dog"
+  description="Every warranty we offer in plain language: our 5-year workmanship warranty plus Owens Corning, TimberTech, Trex, James Hardie, LP, Alside and ProVia coverage."
+  canonical="/warranties"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    eyebrow="Warranties"
+    title="Every Warranty We Offer, in Plain English"
+    lede="Warranty coverage is where contractors get deliberately vague. Here is ours laid out product by product, so you can compare it line for line against anyone else’s proposal."
+    breadcrumbs={breadcrumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="hl">
+        {
+          highlights.map((h) => (
+            <li>
+              <span class="icon-tile"><Icon name={h.icon} size={26} /></span>
+              <h2>{h.title}</h2>
+              <p>{h.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ FULL TABLE ════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="table-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Product by product</span>
+        <h2 id="table-heading">Manufacturer Coverage on Everything We Install</h2>
+        <p class="lede">
+          Warranty terms are set by the manufacturer and can change. These reflect current
+          published coverage at the time of writing — your actual certificate governs, and we
+          hand it to you at completion.
+        </p>
+      </div>
+
+      {
+        allServices.map((s) => (
+          <div class="wgroup">
+            <h3 class="wgroup__title">
+              <span class="icon-tile"><Icon name={s.icon} size={22} /></span>
+              <a href={`/services/${s.slug}`}>{s.name}</a>
+            </h3>
+            <div class="wtable-wrap">
+              <table class="wtable">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Warranty coverage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {s.products.map((p) => (
+                    <tr>
+                      <th scope="row">{p.name}</th>
+                      <td>{p.warranty}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {s.workmanship && (
+              <p class="wgroup__note">
+                <Icon name="shield-check" size={17} /> {s.workmanship}
+              </p>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <Faq items={faqs} heading="Warranty Questions" id="faq-warranty" />
+
+  <CtaBand
+    heading="Want the Warranty Details for Your Specific Project?"
+    body="We will walk you through exactly what is covered, what is excluded, and what keeps it valid — before you sign anything."
+  />
+</Base>
+
+<style>
+  .hl {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--sp-5);
+  }
+  .hl li {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--brand-600);
+    border-radius: var(--radius-lg);
+  }
+  .hl h2 { font-size: var(--fs-lg); margin-bottom: var(--sp-3); }
+  .hl p { font-size: var(--fs-sm); line-height: 1.68; color: var(--text-muted); }
+
+  .wgroup + .wgroup { margin-top: var(--sp-8); }
+  .wgroup__title {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-xl);
+    margin-bottom: var(--sp-4);
+  }
+  .wgroup__title .icon-tile { margin-bottom: 0; width: 42px; height: 42px; }
+  .wgroup__title a { color: inherit; text-decoration: none; }
+  .wgroup__title a:hover { color: var(--brand-700); }
+
+  .wtable-wrap {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .wtable {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+  }
+  .wtable thead th {
+    text-align: left;
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--n-50);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+  .wtable tbody th {
+    text-align: left;
+    padding: var(--sp-4) var(--sp-5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--n-900);
+    width: 34%;
+    vertical-align: top;
+  }
+  .wtable td {
+    padding: var(--sp-4) var(--sp-5);
+    line-height: 1.65;
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+  .wtable tbody tr + tr th,
+  .wtable tbody tr + tr td { border-top: 1px solid var(--border); }
+
+  .wgroup__note {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: var(--sp-4);
+    padding: var(--sp-4);
+    background: var(--success-50);
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #14532d;
+  }
+  .wgroup__note svg { flex: none; margin-top: 2px; color: var(--success-700); }
+</style>

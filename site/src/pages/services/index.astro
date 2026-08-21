@@ -1,0 +1,157 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site } from '../../data/site.ts';
+import { allServices } from '../../data/services.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+];
+
+const schema = [
+  {
+    '@type': 'ItemList',
+    name: 'Top Dog Exteriors services',
+    itemListElement: allServices.map((s, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: s.name,
+      url: `${site.domain}/services/${s.slug}`,
+    })),
+  },
+];
+---
+
+<Base
+  title="Services | Roofing, Decks, Siding & Windows | Top Dog"
+  description="Every exterior service we offer in Greater Pittsburgh: roofing, decks, siding, windows, doors, gutters, concrete, additions, excavation and painting."
+  canonical="/services"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <section class="page-hero texture-diagonal">
+    <div class="container">
+      <span class="eyebrow">Our services</span>
+      <h1>Nine Trades. One Contractor. One Phone Number.</h1>
+      <p class="lede">
+        Most exterior companies sell one thing and subcontract the rest. We self-perform all
+        of it — which is why nobody is pointing fingers when the roof meets the siding, or the
+        deck meets the concrete.
+      </p>
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <section class="section">
+    <div class="container">
+      <ul class="svc-list">
+        {
+          allServices.map((s, i) => (
+            <li class="svc reveal" data-reveal-delay={Math.min(i, 5) * 50}>
+              <div class="svc__main">
+                <span class="icon-tile"><Icon name={s.icon} size={26} /></span>
+                <div>
+                  <h2><a href={`/services/${s.slug}`}>{s.name}</a></h2>
+                  <p class="svc__blurb">{s.cardBlurb}</p>
+                  <ul class="svc__products">
+                    {s.products.slice(0, 5).map((p) => (
+                      <li><Icon name="check" size={14} /> {p.name}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <div class="svc__side">
+                <ul class="svc__highlights">
+                  {s.highlights.map((h) => <li class="pill">{h}</li>)}
+                </ul>
+                <a href={`/services/${s.slug}`} class="btn btn--primary svc__cta">
+                  {s.navLabel} details <Icon name="arrow_right" size={17} />
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .page-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 12% 0%, rgba(194, 65, 12, 0.2), transparent 60%),
+      linear-gradient(155deg, var(--steel-900), var(--n-900) 60%, var(--n-950));
+    color: var(--n-300);
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .page-hero h1 { color: #fff; max-width: 18ch; }
+  .page-hero .eyebrow { color: var(--brand-400); }
+  .page-hero .lede { margin-top: var(--sp-5); color: var(--n-300); }
+
+  .svc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-5); }
+
+  .svc {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.8fr);
+    gap: var(--sp-6);
+    align-items: center;
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--t), box-shadow var(--t);
+  }
+  .svc:hover { border-color: var(--brand-500); box-shadow: var(--shadow); }
+
+  .svc__main { display: flex; gap: var(--sp-4); }
+  .svc__main .icon-tile { margin-bottom: 0; }
+  .svc h2 { font-size: var(--fs-xl); margin-bottom: var(--sp-2); }
+  .svc h2 a { color: inherit; text-decoration: none; }
+  .svc h2 a:hover { color: var(--brand-700); }
+  .svc__blurb { font-size: var(--fs-sm); line-height: 1.62; color: var(--text-muted); }
+
+  .svc__products {
+    list-style: none;
+    margin: var(--sp-4) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+  }
+  .svc__products li {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: var(--n-700);
+    font-weight: 500;
+  }
+  .svc__products svg { color: var(--success-700); flex: none; }
+
+  .svc__side { display: grid; gap: var(--sp-4); justify-items: start; }
+  .svc__highlights {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .svc__highlights .pill { font-size: 0.7rem; padding: 0.28rem 0.6rem; }
+  .svc__cta { width: 100%; }
+
+  @media (max-width: 900px) {
+    .svc { grid-template-columns: 1fr; }
+    .svc__side { justify-items: stretch; }
+  }
+  @media (max-width: 520px) {
+    .svc__main { flex-direction: column; }
+  }
+</style>

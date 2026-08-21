@@ -1,0 +1,253 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import RoofEstimator from '../components/RoofEstimator.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Instant Roof Quote', href: '/instant-roof-quote' },
+];
+
+const faqs = [
+  {
+    q: 'How does the instant roof quote work?',
+    a: 'You enter your address and answer three questions about your roof — how steep it is, how cut up it is, and how many layers of roofing are on it now. The tool estimates your roof surface area from your home’s footprint and slope, applies current Greater Pittsburgh installed pricing for the system you pick, and returns a real budget range in about 60 seconds. You see the price before you give us your contact information.',
+  },
+  {
+    q: 'Is the instant estimate accurate?',
+    a: 'It is an honest budget range, not a contract. It is built from the same pricing we use to write real proposals, so most homeowners find their final number lands inside the range. What it cannot see from a screen is the condition of your decking, your ventilation, and how your chimney and skylights are flashed — and those are exactly what we check on the free on-roof inspection before writing your firm, line-itemed proposal.',
+  },
+  {
+    q: 'Do I have to give you my phone number to see the price?',
+    a: 'No. The price appears on screen as soon as you finish the three questions. We ask for contact information afterward, only if you want to book the free inspection — because giving you something before asking for anything is the whole point.',
+  },
+  {
+    q: 'Which roofing systems can I price?',
+    a: 'All five that we install: architectural asphalt shingles, designer/premium shingles, exposed fastener metal, standing seam metal, TPO membrane and EPDM rubber. On the results screen you can switch between them and watch the number change, which is the fastest way to understand what each system actually costs on your specific roof.',
+  },
+  {
+    q: 'What is included in the price range?',
+    a: 'Tear-off and disposal of your existing roofing, the complete new roofing system, underlayment, flashing, ventilation, cleanup and haul-off. What it does not assume is replacement of rotted decking, chimney rebuilds, skylight replacement, or structural repairs — those are found on inspection and priced separately so nothing is buried in a lump sum.',
+  },
+  {
+    q: 'What if my home is outside your service area?',
+    a: 'We serve the Greater Pittsburgh area — Allegheny and Washington counties, centered on the South Hills. If you are outside it, we will tell you honestly rather than driving out and quoting a price inflated by travel. Call (412) 438-8364 and we will point you somewhere reputable.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'WebApplication',
+    name: 'Top Dog Exteriors Instant Roof Quote',
+    url: `${site.domain}/instant-roof-quote`,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Any modern web browser',
+    description:
+      'Free instant roof replacement estimate for Greater Pittsburgh homeowners. Enter your address, answer three questions and see a real price range for asphalt shingle, standing seam metal, exposed fastener metal, TPO and EPDM roofing in about 60 seconds.',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    provider: { '@id': `${site.domain}/#organization` },
+  },
+];
+---
+
+<Base
+  title="Instant Roof Quote Pittsburgh PA | Free 60-Second Estimate"
+  description="Free instant roof replacement estimate for your Pittsburgh home in 60 seconds. Price shingle, standing seam metal, TPO and EPDM side by side. No salesperson."
+  canonical="/instant-roof-quote"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+  stickyCta={false}
+>
+  <section class="irq-hero texture-diagonal">
+    <div class="container">
+      <div class="irq-hero__inner">
+        <div class="irq-hero__copy">
+          <span class="eyebrow">Free · No obligation · 60 seconds</span>
+          <h1>Your Roof Price. Right Now. Without Talking to Anybody.</h1>
+          <p class="lede">
+            Enter your address, answer three questions, and see a real Greater Pittsburgh price
+            range for your roof — before you give us a phone number, and before anyone knocks
+            on your door.
+          </p>
+          <ul class="irq-hero__list">
+            <li><Icon name="satellite" size={19} /> Sized from your address and roof slope</li>
+            <li><Icon name="ruler" size={19} /> Compare all five roofing systems instantly</li>
+            <li><Icon name="dollar" size={19} /> Monthly payment shown with approved financing</li>
+            <li><Icon name="shield-check" size={19} /> Priced by an Owens Corning Preferred Contractor</li>
+          </ul>
+          <p class="irq-hero__phone">
+            Rather just talk? <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>
+          </p>
+        </div>
+
+        <div class="irq-hero__tool">
+          <RoofEstimator />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW IT WORKS ══════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">How it works</span>
+        <h2 id="how-heading">Price First. Salesperson Never.</h2>
+        <p class="lede" style="margin-inline:auto">
+          The industry norm is to hold the number hostage until a rep has been in your living
+          room for three hours. We think that is backwards.
+        </p>
+      </div>
+      <ol class="how">
+        <li>
+          <span class="how__num">01</span>
+          <h3>Tell us where</h3>
+          <p>Your address and approximate living area. We confirm you are inside our service area at the same time.</p>
+        </li>
+        <li>
+          <span class="how__num">02</span>
+          <h3>Describe the roof</h3>
+          <p>Steepness, complexity, and how many layers are up there. Best guess is fine — we verify it on the inspection.</p>
+        </li>
+        <li>
+          <span class="how__num">03</span>
+          <h3>Pick a system</h3>
+          <p>Shingle, designer shingle, exposed fastener metal, standing seam, TPO or EPDM. Switch between them freely.</p>
+        </li>
+        <li>
+          <span class="how__num">04</span>
+          <h3>See your range</h3>
+          <p>A real budget range and a monthly payment figure. Book the free on-roof inspection only if you want to.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ WHAT THE INSPECTION ADDS ══════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="insp-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">The next step</span>
+        <h2 id="insp-heading">What the Free On-Roof Inspection Adds</h2>
+        <p class="lede" style="margin-inline:auto">
+          An instant estimate is an honest starting range. These are the five things nobody can
+          determine from satellite imagery — and all five move the price.
+        </p>
+      </div>
+      <ul class="insp">
+        <li><h3>Decking condition</h3><p>Soft or delaminated sheathing has to be replaced. We price it per sheet so it is never a surprise line item.</p></li>
+        <li><h3>Ventilation</h3><p>Under-ventilated attics cook shingles from below and void warranties. We measure intake and exhaust.</p></li>
+        <li><h3>Flashing details</h3><p>Chimneys, skylights, sidewalls and valleys. Most leaks are flashing failures, not shingle failures.</p></li>
+        <li><h3>Layer count</h3><p>We confirm what is actually up there. Two layers roughly doubles tear-off and disposal cost.</p></li>
+        <li><h3>Access and staging</h3><p>Steep pitch, tight lots and landscaping change labor and protection requirements.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <ReviewsSection service="roofing" heading="Roofing Customers on Working With Us" limit={3} variant="light" />
+
+  <Faq items={faqs} heading="Instant Roof Quote — Questions" id="faq-irq" />
+</Base>
+
+<style>
+  .irq-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 8% 0%, rgba(194, 65, 12, 0.22), transparent 60%),
+      linear-gradient(155deg, var(--steel-900), var(--n-900) 58%, var(--n-950));
+    color: var(--n-300);
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .irq-hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .irq-hero h1 { color: #fff; max-width: 15ch; }
+  .irq-hero .eyebrow { color: var(--brand-400); }
+  .irq-hero .lede { margin-top: var(--sp-5); color: var(--n-300); }
+
+  .irq-hero__list {
+    list-style: none;
+    margin: var(--sp-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .irq-hero__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: var(--fs-sm);
+    color: var(--n-300);
+  }
+  .irq-hero__list svg { color: var(--brand-500); flex: none; margin-top: 1px; }
+
+  .irq-hero__phone { margin-top: var(--sp-6); font-size: var(--fs-sm); color: var(--n-400); }
+  .irq-hero__phone a {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  .irq-hero__phone a:hover { color: var(--brand-400); }
+
+  .irq-hero__tool { position: sticky; top: calc(var(--header-h) + 1rem); }
+
+  @media (max-width: 1060px) {
+    .irq-hero__inner { grid-template-columns: 1fr; }
+    .irq-hero__tool { position: static; }
+    .irq-hero h1 { max-width: 20ch; }
+  }
+
+  /* ── How it works ─────────────────────────────────────────────────── */
+  .how {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    gap: var(--sp-5);
+  }
+  .how li {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .how__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--brand-600);
+    line-height: 1;
+    margin-bottom: var(--sp-3);
+  }
+  .how h3 { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+  .how p { font-size: 0.86rem; line-height: 1.62; color: var(--text-muted); }
+
+  /* ── Inspection list ──────────────────────────────────────────────── */
+  .insp {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: var(--sp-4);
+  }
+  .insp li {
+    padding: var(--sp-5);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-600);
+    border-radius: var(--radius);
+  }
+  .insp h3 { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+  .insp p { font-size: 0.85rem; line-height: 1.6; color: var(--text-muted); }
+</style>

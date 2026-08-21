@@ -1,0 +1,245 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import { site, serviceAreas, primaryAreas } from '../../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Service Areas', href: '/service-areas' },
+];
+
+const allegheny = serviceAreas.filter((a) => a.county === 'Allegheny County');
+const washington = serviceAreas.filter((a) => a.county === 'Washington County');
+
+const schema = [
+  {
+    '@type': 'ItemList',
+    name: 'Top Dog Exteriors service areas',
+    itemListElement: primaryAreas.map((a, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${a.name}, PA`,
+      url: `${site.domain}/service-areas/${a.slug}`,
+    })),
+  },
+];
+---
+
+<Base
+  title="Service Areas | Greater Pittsburgh Contractor | Top Dog"
+  description="Serving Bethel Park, Mt. Lebanon, Upper St. Clair, Peters Township, McMurray, Canonsburg, South Park and Washington County, PA."
+  canonical="/service-areas"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Where we work"
+    title="Serving the South Hills and Greater Pittsburgh"
+    lede={`Based at ${site.address.street} in ${site.address.city}, we work throughout Allegheny and Washington counties — roughly a 40-minute radius. Close enough that estimates come back fast and warranty calls get answered.`}
+    breadcrumbs={breadcrumbs}
+  />
+
+  <TrustBar />
+
+  <!-- ══ PRIMARY AREAS ═════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="primary-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Core service area</span>
+        <h2 id="primary-heading">Communities We Work In Every Week</h2>
+        <p class="lede">
+          Each of these has its own page covering what we see on local homes, how the municipality
+          handles permits, and what projects cost in that market.
+        </p>
+      </div>
+
+      <ul class="areas">
+        {
+          primaryAreas.map((a, i) => (
+            <li class="reveal" data-reveal-delay={Math.min(i, 5) * 50}>
+              <a href={`/service-areas/${a.slug}`} class="area">
+                <span class="area__icon"><Icon name="map-pin" size={22} /></span>
+                <span class="area__body">
+                  <span class="area__name">{a.name}, PA</span>
+                  <span class="area__county">{a.county} · {a.zip}</span>
+                  {a.note && <span class="area__note">{a.note}</span>}
+                </span>
+                <Icon name="chevron-right" size={20} class="area__caret" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ FULL LIST ═════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="all-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Full coverage</span>
+        <h2 id="all-heading">Every Community We Serve</h2>
+      </div>
+
+      <div class="counties">
+        <div class="county">
+          <h3><Icon name="map-pin" size={19} /> Allegheny County</h3>
+          <ul>
+            {
+              allegheny.map((a) => (
+                <li>
+                  {a.primary ? <a href={`/service-areas/${a.slug}`}>{a.name}</a> : <span>{a.name}</span>}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="county">
+          <h3><Icon name="map-pin" size={19} /> Washington County</h3>
+          <ul>
+            {
+              washington.map((a) => (
+                <li>
+                  {a.primary ? <a href={`/service-areas/${a.slug}`}>{a.name}</a> : <span>{a.name}</span>}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="outside">
+        <Icon name="phone" size={22} />
+        <div>
+          <h3>Not on the list?</h3>
+          <p>
+            Call <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>. If you are within reasonable
+            reach we will come look. If you are not, we will tell you straight rather than driving
+            out and quoting a price inflated by travel time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .areas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: var(--sp-4);
+  }
+  .area {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    height: 100%;
+    padding: var(--sp-5);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color var(--t), box-shadow var(--t), transform var(--t-fast);
+  }
+  .area:hover {
+    border-color: var(--brand-500);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    color: var(--text);
+  }
+  .area__icon {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius);
+    background: var(--brand-50);
+    color: var(--brand-700);
+  }
+  .area__body { flex: 1; }
+  .area__name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.015em;
+  }
+  .area__county {
+    display: block;
+    margin-top: 1px;
+    font-size: 0.76rem;
+    color: var(--text-subtle);
+  }
+  .area__note {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .area__caret { flex: none; color: var(--n-400); }
+  .area:hover .area__caret { color: var(--brand-600); }
+
+  .counties {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--sp-6);
+  }
+  .county {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .county h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: var(--fs-lg);
+    margin-bottom: var(--sp-4);
+  }
+  .county h3 svg { color: var(--brand-600); }
+  .county ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: var(--sp-5);
+  }
+  .county li {
+    break-inside: avoid;
+    padding-block: 0.4rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .county a { text-decoration: none; font-weight: 600; }
+  .county a:hover { text-decoration: underline; }
+
+  .outside {
+    display: flex;
+    gap: var(--sp-4);
+    margin-top: var(--sp-6);
+    padding: var(--sp-6);
+    background: var(--n-900);
+    border-radius: var(--radius-lg);
+    color: var(--n-400);
+  }
+  .outside svg { color: var(--brand-500); flex: none; margin-top: 3px; }
+  .outside h3 { color: #fff; font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+  .outside p { font-size: var(--fs-sm); line-height: 1.65; }
+  .outside a { color: var(--brand-400); font-weight: 700; }
+
+  @media (max-width: 520px) {
+    .county ul { columns: 1; }
+  }
+</style>

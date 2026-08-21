@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import PromoGrid from '../components/PromoGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site.ts';
+import { activePromos, sitewidePromos } from '../data/promos.ts';
+import { allServices } from '../data/services.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Offers', href: '/offers' },
+];
+
+/* Group offers by service, skipping the site-wide ones already shown up top. */
+const byService = allServices
+  .map((s) => ({
+    service: s,
+    promos: activePromos
+      .filter((p) => p.services.includes(s.slug) && !p.services.includes('all'))
+      .sort((a, b) => a.order - b.order),
+  }))
+  .filter((g) => g.promos.length > 0);
+
+const schema = activePromos.map((p) => ({
+  '@type': 'Offer',
+  name: p.headline,
+  description: p.detail,
+  url: `${site.domain}/offers`,
+  seller: { '@id': `${site.domain}/#organization` },
+  areaServed: { '@type': 'AdministrativeArea', name: 'Greater Pittsburgh, PA' },
+  availability: 'https://schema.org/InStock',
+}));
+---
+
+<Base
+  title="Current Offers & Promotions | Top Dog Exteriors Pittsburgh PA"
+  description="Current savings: 0% APR financing, free roof and gutter upgrades, free deck lighting, buy-5-get-1 windows, and 5% off for military and first responders."
+  canonical="/offers"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Current offers"
+    title="Real Savings, Real Terms, No Fine-Print Games"
+    lede="Every offer on this page shows its qualifying terms up front. We do not run expiring-tonight pricing, and we do not absorb your insurance deductible — that is illegal in Pennsylvania and any contractor offering it is telling you something about how they operate."
+    breadcrumbs={breadcrumbs}
+  />
+
+  <!-- ══ SITE-WIDE ═════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="anchor-heading">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Available on any project</span>
+        <h2 id="anchor-heading">Financing &amp; Site-Wide Savings</h2>
+      </div>
+      <PromoGrid promos={sitewidePromos} columns={3} />
+    </div>
+  </section>
+
+  <!-- ══ BY SERVICE ════════════════════════════════════════════════════ -->
+  {
+    byService.map(({ service, promos }, index) => (
+      <section class={`section ${index % 2 === 0 ? 'section--alt' : ''}`} aria-labelledby={`offer-${service.slug}`}>
+        <div class="container">
+          <div class="offer-head">
+            <span class="icon-tile"><Icon name={service.icon} size={26} /></span>
+            <div>
+              <h2 id={`offer-${service.slug}`}>{service.name}</h2>
+              <p><a href={`/services/${service.slug}`}>See all {service.navLabel.toLowerCase()} services and warranties</a></p>
+            </div>
+          </div>
+          <PromoGrid promos={promos} columns={promos.length >= 3 ? 3 : 2} />
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- ══ TERMS ═════════════════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="terms">
+        <h2>How our offers work</h2>
+        <ul>
+          <li>
+            <strong>One seasonal offer plus one service discount.</strong> Our military, first
+            responder and senior discount stacks with the current seasonal offer for your service.
+            Two percentage discounts do not stack with each other.
+          </li>
+          <li>
+            <strong>Full replacements, not repairs.</strong> Most offers require a full
+            replacement project above a stated dollar threshold, because that is where the
+            efficiencies that fund the offer actually exist.
+          </li>
+          <li>
+            <strong>Financing is subject to credit approval</strong> through our lending partner.
+            Rates, terms and qualifying amounts are set by the lender and disclosed in your loan
+            documents before you sign anything.
+          </li>
+          <li>
+            <strong>Insurance claims are quoted at scope.</strong> We will document damage,
+            meet your adjuster and write a line-item scope — but we will not discount a job to
+            cover your deductible. Pennsylvania law prohibits it, and a contractor willing to
+            break that law will break others.
+          </li>
+          <li>
+            <strong>Ask us.</strong> If an offer nearly fits your project, call
+            <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>. We would rather make it work than
+            lose the job over a technicality.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Claim an Offer on Your Project"
+    body="Tell us which one you want and what you are working on. We will confirm it qualifies before you commit to anything."
+  />
+</Base>
+
+<style>
+  .offer-head {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
+  }
+  .offer-head .icon-tile { margin-bottom: 0; }
+  .offer-head h2 { font-size: var(--fs-2xl); }
+  .offer-head p { margin-top: 0.2rem; font-size: 0.85rem; }
+
+  .terms {
+    max-width: 820px;
+    margin-inline: auto;
+    padding: var(--sp-7);
+    background: var(--n-50);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .terms h2 { font-size: var(--fs-xl); margin-bottom: var(--sp-5); }
+  .terms ul { margin: 0; padding-left: 1.2em; display: grid; gap: var(--sp-4); }
+  .terms li { font-size: var(--fs-sm); line-height: 1.68; color: var(--text-muted); }
+  .terms strong { color: var(--n-900); }
+</style>

@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * Manufacturer strip. Names are rendered as styled text rather than logos —
+ * every one of these is a trademark we do not have redistribution rights to,
+ * and a wordmark referenced factually is both safer and faster. Swap in real
+ * logo files once Top Dog has the co-branding assets from each rep.
+ */
+const brands = [
+  { name: 'Owens Corning', note: 'Preferred Contractor' },
+  { name: 'TimberTech', note: 'Composite & PVC decking' },
+  { name: 'Trex', note: 'Composite decking' },
+  { name: 'James Hardie', note: 'Fiber cement siding' },
+  { name: 'LP SmartSide', note: 'Engineered wood siding' },
+  { name: 'Alside', note: 'ASCEND cladding & windows' },
+  { name: 'Everlast', note: 'Composite siding' },
+  { name: 'ProVia', note: 'Entry & patio doors' },
+  { name: 'Bobcat', note: 'T595 & E35 owned equipment' },
+];
+---
+
+<section class="brands" aria-labelledby="brands-heading">
+  <div class="container">
+    <h2 id="brands-heading" class="brands__heading">
+      <Icon name="award" size={18} /> The systems we install and stand behind
+    </h2>
+    <ul class="brands__list">
+      {
+        brands.map((b) => (
+          <li class="brands__item">
+            <span class="brands__name">{b.name}</span>
+            <span class="brands__note">{b.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .brands { padding-block: var(--sp-8); background: #fff; border-bottom: 1px solid var(--border); }
+
+  .brands__heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: var(--sp-6);
+    text-align: center;
+  }
+  .brands__heading svg { color: var(--brand-600); }
+
+  .brands__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+    gap: var(--sp-4) var(--sp-5);
+  }
+
+  .brands__item {
+    text-align: center;
+    padding: var(--sp-3) var(--sp-2);
+    border-radius: var(--radius);
+    transition: background var(--t-fast);
+  }
+  .brands__item:hover { background: var(--n-50); }
+
+  .brands__name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.02rem;
+    letter-spacing: -0.02em;
+    color: var(--n-800);
+  }
+  .brands__note {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.74rem;
+    line-height: 1.4;
+    color: var(--text-subtle);
+  }
+</style>

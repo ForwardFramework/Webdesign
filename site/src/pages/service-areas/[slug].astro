@@ -1,0 +1,238 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import ReviewsSection from '../../components/ReviewsSection.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Faq from '../../components/Faq.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { site, serviceAreas, primaryAreas } from '../../data/site.ts';
+import { featuredServices } from '../../data/services.ts';
+
+export function getStaticPaths() {
+  return primaryAreas.map((area) => ({ params: { slug: area.slug }, props: { area } }));
+}
+
+const { area } = Astro.props;
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Service Areas', href: '/service-areas' },
+  { name: area.name, href: `/service-areas/${area.slug}` },
+];
+
+const nearby = serviceAreas
+  .filter((a) => a.slug !== area.slug && a.county === area.county)
+  .slice(0, 8);
+
+const faqs = [
+  {
+    q: `Do you serve ${area.name}, PA?`,
+    a: `Yes. ${area.name} in ${area.county} is inside our core service area. We are based at ${site.address.street} in ${site.address.city}, so ${area.name} is a short drive — which means faster estimates, faster scheduling and faster warranty response than a contractor coming from across the county.`,
+  },
+  {
+    q: `How fast can you get to a ${area.name} property?`,
+    a: `Estimates in ${area.name} are typically scheduled within a few days and returned within 24 hours of the visit. Emergency roofing and storm damage calls are triaged the same day. Project scheduling depends on the trade and the season — roofing and gutters move fastest, decks and additions book further out.`,
+  },
+  {
+    q: `Do you pull permits in ${area.name}?`,
+    a: `Yes. We pull the municipal permit and meet the inspector on any project that requires one — decks, additions, and structural work all typically do. Every municipality in ${area.county} handles setbacks, footing inspections and framing sign-off a little differently, and knowing that in advance is most of the job.`,
+  },
+  {
+    q: `What does a roof replacement cost in ${area.name}?`,
+    a: `Most full architectural shingle replacements in the ${area.name} area run between $9,000 and $22,000 depending on square footage, pitch, layers of tear-off and decking condition. Standing seam metal typically runs two to three times an asphalt roof. Our instant roof quote tool gives you a real range for your specific ${area.name} address in about 60 seconds.`,
+  },
+  {
+    q: 'Are you licensed and insured in Pennsylvania?',
+    a: `Yes. We are registered with the Pennsylvania Attorney General as contractor ${site.license} and carry general liability and workers' compensation insurance on every job. Certificates are furnished on request.`,
+  },
+];
+
+const schema = [
+  {
+    '@type': 'Service',
+    name: `Exterior contracting in ${area.name}, PA`,
+    description: `Roofing, decks, siding, windows, doors, gutters, concrete, additions and excavation in ${area.name}, ${area.county}, Pennsylvania.`,
+    provider: { '@id': `${site.domain}/#organization` },
+    areaServed: {
+      '@type': 'City',
+      name: area.name,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: area.name,
+        addressRegion: 'PA',
+        postalCode: area.zip,
+        addressCountry: 'US',
+      },
+    },
+  },
+];
+---
+
+<Base
+  title={`Roofing, Decks & Siding in ${area.name}, PA | Top Dog`}
+  description={`Veteran-owned exterior contractor serving ${area.name}, PA. Roofing, decks, siding, windows, doors, gutters and concrete with a 5-year workmanship warranty.`}
+  canonical={`/service-areas/${area.slug}`}
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <PageHero
+    eyebrow={`${area.county} · Pennsylvania`}
+    title={`Your ${area.name} Roofing, Deck & Exterior Contractor`}
+    lede={`Top Dog Exteriors serves ${area.name} from our shop on Library Road in Bethel Park — close enough that estimates come back fast and warranty calls do not sit in a queue. Roofing, decks, siding, windows, doors, gutters, concrete, additions and site work, all self-performed.`}
+    breadcrumbs={breadcrumbs}
+  >
+    <div class="btn-row" style="margin-top:var(--sp-6)">
+      <a href="/contact" class="btn btn--primary btn--lg">Get a Free {area.name} Estimate</a>
+      <a href={`tel:${site.phoneRaw}`} class="btn btn--ghost-light btn--lg">
+        <Icon name="phone" size={19} /> {site.phone}
+      </a>
+    </div>
+  </PageHero>
+
+  <TrustBar />
+
+  <!-- ══ LOCAL CONTEXT + FORM ══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container local">
+      <div class="prose">
+        <span class="eyebrow">Working in {area.name}</span>
+        <h2>What we see on {area.name} homes</h2>
+        {area.note && <p class="local__note">{area.note}</p>}
+        <p>
+          Western Pennsylvania is hard on the outside of a house. Freeze-thaw cycling works at
+          every seam and every slab. Heavy wet snow loads valleys. Summer storms come through with
+          enough wind to lift a poorly nailed shingle course, and the mature oak and maple canopy
+          across {area.county} fills gutters faster than almost anywhere else in the state.
+        </p>
+        <p>
+          That is the environment we build for. It is why we detail flashing and kick-outs before
+          we hang siding, why we size gutters to actual drainage area instead of defaulting to
+          5-inch everywhere, why we specify air-entrained concrete mixes, and why we dig footings
+          below frost line rather than to whatever depth is convenient.
+        </p>
+
+        <h2>Every trade, one contractor</h2>
+        <p>
+          Most exterior companies in the {area.name} area sell one trade and subcontract the rest.
+          We self-perform nine — roofing, decks, siding, windows, doors, gutters, concrete,
+          additions and excavation. When your roof meets your siding, and your siding meets your
+          gutters, there is exactly one company responsible for the seams.
+        </p>
+
+        <h2>Credentials that matter in {area.name}</h2>
+        <ul>
+          <li>
+            <strong>Owens Corning Preferred Contractor</strong> — the credential that lets us
+            register the Preferred Protection Roofing System Limited Warranty, the only Owens
+            Corning tier including contractor workmanship coverage.
+          </li>
+          <li>
+            <strong>Pennsylvania contractor {site.license}</strong> — registered with the PA
+            Attorney General, with general liability and workers’ compensation on every job.
+          </li>
+          <li>
+            <strong>BBB accredited</strong> and 5-star rated on Google and Facebook.
+          </li>
+          <li>
+            <strong>5-year written workmanship warranty</strong> on roofing and siding —
+            transferable if you sell the house.
+          </li>
+        </ul>
+      </div>
+
+      <div class="local__form">
+        <QuoteForm
+          id={`quote-${area.slug}`}
+          heading={`Free ${area.name} Estimate`}
+          sub="We reply within one business day. No obligation."
+          source={`area-${area.slug}`}
+          compact
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICES ══════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="area-services">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Services in {area.name}</span>
+        <h2 id="area-services">Everything We Do for {area.name} Homeowners</h2>
+      </div>
+      <ServiceGrid services={featuredServices} columns={3} />
+    </div>
+  </section>
+
+  <ReviewsSection limit={3} variant="light" />
+
+  <Faq items={faqs} heading={`${area.name} Homeowner Questions`} id={`faq-${area.slug}`} />
+
+  <!-- ══ NEARBY ════════════════════════════════════════════════════════ -->
+  <section class="section section--alt">
+    <div class="container center">
+      <span class="eyebrow">Nearby</span>
+      <h2>We Also Serve These {area.county} Communities</h2>
+      <ul class="nearby">
+        {
+          nearby.map((n) => (
+            <li>
+              {'primary' in n && n.primary ? (
+                <a href={`/service-areas/${n.slug}`} class="pill">{n.name}</a>
+              ) : (
+                <span class="pill">{n.name}</span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+      <p style="margin-top:var(--sp-6)">
+        <a href="/service-areas" class="btn btn--outline">All service areas</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand
+    heading={`Ready to Start Your ${area.name} Project?`}
+    body="Free estimate, honest number, written line-item proposal. Most estimates back within 24 hours."
+  />
+</Base>
+
+<style>
+  .local {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .local .prose h2 { font-size: var(--fs-2xl); }
+  .local .prose h2:first-of-type { margin-top: var(--sp-3); }
+  .local__note {
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--brand-50);
+    border-left: 4px solid var(--brand-600);
+    border-radius: var(--radius);
+    font-size: var(--fs-md);
+    color: var(--n-800);
+  }
+  .local__form { position: sticky; top: calc(var(--header-h) + 1.5rem); }
+
+  .nearby {
+    list-style: none;
+    margin: var(--sp-6) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .nearby a { background: #fff; text-decoration: none; transition: all var(--t-fast); }
+  .nearby a:hover { border-color: var(--brand-600); color: var(--brand-700); }
+
+  @media (max-width: 980px) {
+    .local { grid-template-columns: 1fr; }
+    .local__form { position: static; }
+  }
+</style>

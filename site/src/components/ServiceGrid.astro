@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import type { Service } from '../data/services.ts';
+
+interface Props {
+  services: Service[];
+  /** Hide the service currently being viewed. */
+  exclude?: string;
+  columns?: 2 | 3 | 4;
+}
+const { services, exclude, columns = 3 } = Astro.props;
+const list = exclude ? services.filter((s) => s.slug !== exclude) : services;
+---
+
+<ul class={`svc-grid svc-grid--${columns}`}>
+  {
+    list.map((s, i) => (
+      <li class="reveal" data-reveal-delay={Math.min(i, 5) * 55}>
+        <a href={`/services/${s.slug}`} class="card card--link svc-card">
+          <span class="icon-tile"><Icon name={s.icon} size={26} /></span>
+          <h3 class="card__title">{s.name}</h3>
+          <p class="card__body">{s.cardBlurb}</p>
+          <span class="card__more">
+            Explore {s.navLabel.toLowerCase()} <Icon name="arrow_right" size={16} />
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .svc-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-5);
+  }
+  .svc-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+  .svc-grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+  .svc-grid--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+  .svc-grid > li { display: flex; }
+  .svc-card { width: 100%; }
+</style>

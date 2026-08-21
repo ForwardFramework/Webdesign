@@ -1,0 +1,604 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Stars from '../components/Stars.astro';
+import TrustBar from '../components/TrustBar.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import PromoGrid from '../components/PromoGrid.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, primaryAreas } from '../data/site.ts';
+import { featuredServices, allServices } from '../data/services.ts';
+import { sitewidePromos } from '../data/promos.ts';
+
+const title = 'Roofing, Decks & Siding Contractor Pittsburgh | Top Dog';
+const description =
+  'Veteran-owned Pittsburgh exterior contractor. Owens Corning Preferred roofing, TimberTech & Trex decks, James Hardie siding. 5-year workmanship warranty.';
+
+const differentiators = [
+  {
+    icon: 'shield-check',
+    title: 'Owens Corning Preferred Contractor',
+    body: 'The credential that unlocks the Preferred Protection Roofing System Limited Warranty — the only Owens Corning tier that covers contractor workmanship. Most roofers cannot register it at all.',
+  },
+  {
+    icon: 'users',
+    title: 'Decks Built by Amish Crews',
+    body: 'Our decks are framed and finished by Amish craftsmen who came up through a real apprenticeship. It costs us more per day. You can see it in every miter and fastener line.',
+  },
+  {
+    icon: 'truck',
+    title: 'We Own Our Iron',
+    body: 'A new Bobcat T595 and E35 excavator on our own trailer. No rental-yard scheduling, proper base prep on every concrete pour, and machines you can rent from us with or without an operator.',
+  },
+  {
+    icon: 'wrench',
+    title: '5-Year Workmanship Warranty',
+    body: 'Written and transferable, on top of every manufacturer warranty. Materials fail rarely. Installations fail often. We cover the part that actually breaks.',
+  },
+  {
+    icon: 'star',
+    title: 'Veteran Owned, Family Operated',
+    body: 'You deal with Tyler, the owner — not a commissioned closer working from a script. Military discipline about showing up when we said we would.',
+  },
+  {
+    icon: 'document',
+    title: 'Line-Item Proposals',
+    body: 'Every proposal is itemised so you can see exactly what you are buying and compare us honestly against anyone else. No single number scrawled on the back of a card.',
+  },
+];
+
+const process = [
+  { n: '01', title: 'Tell us what you need', body: 'Call, text, or use the form. Roof? Get a real price range online in about 60 seconds before you talk to anybody.' },
+  { n: '02', title: 'We come look at it', body: 'On the roof, under the deck, behind the siding. We photograph what we find and send it to you — hire us or not.' },
+  { n: '03', title: 'A written, itemised proposal', body: 'Options priced side by side so the trade-offs are visible. No pressure, no expiring-tonight pricing.' },
+  { n: '04', title: 'We build it', body: 'Property protected first. Crews who show up when we said. Daily communication about what happens tomorrow.' },
+  { n: '05', title: 'Walkthrough and warranty', body: 'Full cleanup and magnet sweep, a walkthrough with the owner, and your warranties registered in your name.' },
+];
+
+const homeFaqs = [
+  {
+    q: 'Who is Top Dog Exteriors?',
+    a: 'Top Dog Exteriors is a veteran-owned, family-operated exterior contracting company based at 4607 Library Rd in Bethel Park, PA, serving the Greater Pittsburgh area including Allegheny and Washington counties. We install roofing, decks, siding, windows, doors, gutters, concrete, additions and site work. We are an Owens Corning Preferred Contractor, BBB accredited, and registered in Pennsylvania under PA193451.',
+  },
+  {
+    q: 'What areas does Top Dog Exteriors serve?',
+    a: 'We serve the Greater Pittsburgh area with a focus on the South Hills: Bethel Park, Mt. Lebanon, Upper St. Clair, Peters Township, McMurray, Canonsburg, South Park, Washington, Whitehall, Castle Shannon, Dormont, Baldwin, Brentwood, Pleasant Hills, Jefferson Hills, Bridgeville, Carnegie and surrounding communities in Allegheny and Washington counties.',
+  },
+  {
+    q: 'Do you charge for estimates?',
+    a: 'No. Estimates and inspections are free with no obligation, and we send you the inspection photographs whether you hire us or not. For roofing you can also get a real price range online in about 60 seconds with our instant roof quote tool, before anyone comes to your house.',
+  },
+  {
+    q: 'What is the 5-year workmanship warranty?',
+    a: 'It is a written, transferable warranty covering our installation labor on roofing and siding projects — separate from, and on top of, whatever the manufacturer warrants on the material itself. Material defects are rare. Installation defects are the common cause of failure, so that is the part we put in writing.',
+  },
+  {
+    q: 'Are you licensed and insured?',
+    a: 'Yes. We are registered with the Pennsylvania Attorney General as contractor PA193451 and carry general liability and workers’ compensation insurance on every job. Certificates are furnished on request — and you should ask every contractor you consider for them.',
+  },
+  {
+    q: 'Do you offer financing?',
+    a: 'Yes, through our lending partner, including 0% APR promotional terms and low fixed monthly payment options on full replacement projects, subject to credit approval. Applying takes about two minutes and does not affect your credit score.',
+  },
+  {
+    q: 'How fast can you get to my project?',
+    a: 'Estimates are typically returned within 24 hours. Scheduling depends on the trade and the season — roofing and gutters move fastest, decks and additions are booked further out, and storm damage gets triaged the same day. We give you a real date rather than a season.',
+  },
+];
+
+/* Service nodes so each trade is individually retrievable by search and by LLMs. */
+const serviceSchema = allServices.map((s) => ({
+  '@type': 'Service',
+  '@id': `${site.domain}/services/${s.slug}#service`,
+  name: s.name,
+  description: s.summary,
+  url: `${site.domain}/services/${s.slug}`,
+  serviceType: s.name,
+  provider: { '@id': `${site.domain}/#organization` },
+  areaServed: { '@type': 'GeoCircle', geoMidpoint: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng }, geoRadius: '40000' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `${s.name} options`,
+    itemListElement: s.products.map((p) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: p.name, description: p.blurb },
+    })),
+  },
+}));
+---
+
+<Base title={title} description={description} canonical="/" schema={serviceSchema}>
+  <!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+  <section class="hero texture-diagonal">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <p class="hero__badges">
+          <span class="pill pill--light"><Icon name="shield-check" size={15} /> Owens Corning Preferred</span>
+          <span class="pill pill--light"><Icon name="star" size={15} /> Veteran Owned</span>
+          <span class="pill pill--light"><Icon name="badge" size={15} /> BBB Accredited</span>
+        </p>
+
+        <h1 class="hero__title">
+          Pittsburgh’s <span class="hero__accent">Top Dog</span> for Roofing, Decks &amp; Exteriors
+        </h1>
+
+        <p class="hero__sub">
+          Roofs, decks, siding, windows, doors, gutters, concrete, additions and site work —
+          one veteran-owned crew for the whole outside of your house. Every roofing and siding
+          installation carries a written <strong>5-year workmanship warranty</strong>.
+        </p>
+
+        <div class="hero__cta">
+          <a href="/instant-roof-quote" class="btn btn--primary btn--lg">
+            <Icon name="satellite" size={20} /> Get My Instant Roof Price
+          </a>
+          <a href={`tel:${site.phoneRaw}`} class="btn btn--ghost-light btn--lg">
+            <Icon name="phone" size={19} /> {site.phone}
+          </a>
+        </div>
+
+        <p class="hero__proof">
+          <Stars rating={5} size={17} />
+          <span>5-star rated on Google &amp; Facebook · Free estimates · No high-pressure sales</span>
+        </p>
+
+        <ul class="hero__stats">
+          {
+            site.stats.map((s) => (
+              <li>
+                <span class="hero__stat-value">{s.value}</span>
+                <span class="hero__stat-label">{s.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="hero__form">
+        <QuoteForm
+          id="hero-quote"
+          heading="Free Estimate in 24 Hours"
+          sub="Six fields. No obligation, no sales visit unless you want one."
+          source="homepage-hero"
+          compact
+        />
+      </div>
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <!-- ══ SERVICES ══════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">What we do</span>
+        <h2 id="services-heading">Everything Outside Your House, Under One Contract</h2>
+        <p class="lede" style="margin-inline:auto">
+          Nine trades, self-performed. When the roof, the gutters and the siding are all ours,
+          nobody is pointing fingers at the seams — because there is only one company to point at.
+        </p>
+      </div>
+      <ServiceGrid services={featuredServices} columns={3} />
+      <p class="center" style="margin-top:var(--sp-7)">
+        <a href="/services" class="btn btn--outline">See all services and products</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ INSTANT ROOF QUOTE ════════════════════════════════════════════ -->
+  <section class="section section--steel irq" aria-labelledby="irq-heading">
+    <div class="container irq__inner">
+      <div>
+        <span class="eyebrow">Instant roof estimate</span>
+        <h2 id="irq-heading">Know What Your Roof Costs Before Anyone Knocks on the Door</h2>
+        <p class="lede">
+          Enter your address, answer three questions about your roof, and see a real Pittsburgh
+          price range in about 60 seconds — for shingle, standing seam metal, exposed fastener
+          metal, TPO or EPDM. Compare all five side by side and watch the number move.
+        </p>
+        <ul class="irq__list">
+          <li><Icon name="check-circle" size={20} /> No salesperson, no phone call, no waiting</li>
+          <li><Icon name="check-circle" size={20} /> See the price before you give us anything</li>
+          <li><Icon name="check-circle" size={20} /> Compare all five roofing systems instantly</li>
+          <li><Icon name="check-circle" size={20} /> Monthly payment shown with approved financing</li>
+        </ul>
+        <div class="btn-row" style="margin-top:var(--sp-6)">
+          <a href="/instant-roof-quote" class="btn btn--primary btn--lg">
+            <Icon name="calculator" size={20} /> Start My Instant Quote
+          </a>
+        </div>
+      </div>
+
+      <div class="irq__visual" aria-hidden="true">
+        <div class="irq__card">
+          <div class="irq__card-head">
+            <Icon name="satellite" size={20} />
+            <span>Instant estimate</span>
+          </div>
+          <div class="irq__card-price">$14,200 – $19,800</div>
+          <div class="irq__card-meta">Architectural shingle · about 28 squares</div>
+          <div class="irq__card-bar"><span></span></div>
+          <div class="irq__card-foot">
+            <span>Standing seam</span><span>$31,400 – $46,900</span>
+          </div>
+          <div class="irq__card-foot">
+            <span>Exposed fastener</span><span>$19,600 – $29,300</span>
+          </div>
+          <p class="irq__card-note">Example output. Your range is built from your address.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHY US ════════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Why Top Dog</span>
+        <h2 id="why-heading">Six Reasons Homeowners Pick Us Over the Truck With the Magnet Sign</h2>
+      </div>
+      <ul class="why-grid">
+        {
+          differentiators.map((d, i) => (
+            <li class="why reveal" data-reveal-delay={Math.min(i, 5) * 55}>
+              <span class="icon-tile"><Icon name={d.icon} size={26} /></span>
+              <h3>{d.title}</h3>
+              <p>{d.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <BrandStrip />
+
+  <!-- ══ OFFERS ════════════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="offers-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Current offers</span>
+        <h2 id="offers-heading">Save on Your Project Right Now</h2>
+        <p class="lede" style="margin-inline:auto">
+          Financing, service-specific upgrades, and a discount that never expires for the people
+          who serve. Every offer shows its terms up front.
+        </p>
+      </div>
+      <PromoGrid promos={sitewidePromos} columns={3} />
+      <p class="center" style="margin-top:var(--sp-7)">
+        <a href="/offers" class="btn btn--outline">See every offer by service</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ PROCESS ═══════════════════════════════════════════════════════ -->
+  <section class="section section--dark" aria-labelledby="process-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">How it works</span>
+        <h2 id="process-heading">Five Steps. No Surprises.</h2>
+      </div>
+      <ol class="steps">
+        {
+          process.map((p, i) => (
+            <li class="step reveal" data-reveal-delay={Math.min(i, 5) * 60}>
+              <span class="step__num">{p.n}</span>
+              <h3 class="step__title">{p.title}</h3>
+              <p class="step__body">{p.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <ReviewsSection />
+
+  <!-- ══ SERVICE AREAS ═════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="areas-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Where we work</span>
+        <h2 id="areas-heading">Serving the South Hills and Greater Pittsburgh</h2>
+        <p class="lede" style="margin-inline:auto">
+          Based on Library Road in Bethel Park, working throughout Allegheny and Washington counties.
+        </p>
+      </div>
+      <ul class="areas">
+        {
+          primaryAreas.map((a) => (
+            <li>
+              <a href={`/service-areas/${a.slug}`} class="area">
+                <Icon name="map-pin" size={18} />
+                <span>
+                  <strong>{a.name}, PA</strong>
+                  <span>{a.county}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="center" style="margin-top:var(--sp-6)">
+        <a href="/service-areas" class="btn btn--outline">All service areas</a>
+      </p>
+    </div>
+  </section>
+
+  <Faq items={homeFaqs} heading="Questions Homeowners Ask Before They Hire Anyone" />
+
+  <CtaBand />
+</Base>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(ellipse 90% 70% at 15% 0%, rgba(194, 65, 12, 0.22), transparent 62%),
+      linear-gradient(155deg, var(--steel-900) 0%, var(--n-900) 55%, var(--n-950) 100%);
+    color: var(--n-300);
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+    overflow: hidden;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+
+  .hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: var(--sp-5);
+  }
+
+  .hero__title {
+    color: #fff;
+    font-size: var(--fs-4xl);
+    font-weight: 900;
+    letter-spacing: -0.032em;
+    line-height: 1.02;
+    max-width: 15ch;
+  }
+  .hero__accent {
+    color: var(--brand-500);
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .hero__sub {
+    margin-top: var(--sp-5);
+    max-width: 54ch;
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--n-300);
+  }
+  .hero__sub strong { color: #fff; font-weight: 700; }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-top: var(--sp-6);
+  }
+
+  .hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: var(--sp-5);
+    font-size: 0.88rem;
+    color: var(--n-400);
+  }
+
+  .hero__stats {
+    list-style: none;
+    margin: var(--sp-7) 0 0;
+    padding: var(--sp-5) 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--sp-4);
+  }
+  .hero__stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1.1;
+  }
+  .hero__stat-label {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    /* --n-500 is only 3.33:1 on the steel hero; --n-400 clears AA. */
+    color: var(--n-400);
+  }
+
+  .hero__form { position: sticky; top: calc(var(--header-h) + 1.25rem); }
+
+  @media (max-width: 1000px) {
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__form { position: static; }
+    .hero__title { max-width: 18ch; }
+  }
+
+  /* ── Instant roof quote band ──────────────────────────────────────── */
+  .irq__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--sp-8);
+    align-items: center;
+  }
+  .irq__list {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .irq__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    color: var(--n-300);
+    font-size: var(--fs-sm);
+  }
+  .irq__list svg { color: var(--brand-500); flex: none; margin-top: 1px; }
+
+  .irq__card {
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-xl);
+  }
+  .irq__card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-400);
+  }
+  .irq__card-price {
+    margin-top: var(--sp-4);
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 1rem + 2.6vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1.05;
+  }
+  .irq__card-meta { margin-top: 0.35rem; font-size: 0.83rem; color: var(--n-400); }
+  .irq__card-bar {
+    height: 6px;
+    margin-block: var(--sp-5);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+  .irq__card-bar span {
+    display: block;
+    height: 100%;
+    width: 62%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--brand-600), var(--brand-400));
+  }
+  .irq__card-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding-block: 0.55rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+    color: var(--n-400);
+  }
+  .irq__card-foot span:last-child { color: #fff; font-weight: 600; }
+  .irq__card-note { margin-top: var(--sp-4); font-size: 0.72rem; color: var(--n-400); font-style: italic; }
+
+  @media (max-width: 900px) {
+    .irq__inner { grid-template-columns: 1fr; }
+  }
+
+  /* ── Why grid ─────────────────────────────────────────────────────── */
+  .why-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--sp-5);
+  }
+  .why {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+  }
+  .why h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-2); }
+  .why p { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+
+  /* ── Process steps ────────────────────────────────────────────────── */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: var(--sp-5);
+    counter-reset: step;
+  }
+  .step {
+    padding: var(--sp-5);
+    background: var(--n-850);
+    border: 1px solid var(--n-700);
+    border-radius: var(--radius-lg);
+    position: relative;
+  }
+  .step__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--brand-500);
+    line-height: 1;
+    margin-bottom: var(--sp-3);
+  }
+  .step__title { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+  .step__body { font-size: 0.86rem; line-height: 1.6; color: var(--n-400); }
+
+  /* ── Areas ────────────────────────────────────────────────────────── */
+  .areas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: var(--sp-3);
+  }
+  .area {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: var(--sp-4);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color var(--t), box-shadow var(--t), transform var(--t-fast);
+  }
+  .area:hover {
+    border-color: var(--brand-500);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+    color: var(--text);
+  }
+  .area svg { color: var(--brand-600); flex: none; }
+  .area strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .area span span { font-size: 0.76rem; color: var(--text-subtle); }
+</style>

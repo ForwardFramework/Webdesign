@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import { site } from '../data/site.ts';
+import { featuredServices } from '../data/services.ts';
+---
+
+<Base
+  title="Thank You | Top Dog Exteriors"
+  description="Your request has been received. Top Dog Exteriors replies within one business day."
+  canonical="/thank-you"
+  noindex
+>
+  <section class="ty">
+    <div class="container ty__inner">
+      <span class="ty__mark"><Icon name="check" size={44} stroke={2.5} /></span>
+      <h1>Got It. Thank You.</h1>
+      <p class="lede">
+        Your request is in and headed to our team. We reply within one business day — usually a
+        lot sooner. Watch for a call or email from {site.address.city}.
+      </p>
+
+      <ol class="ty__next">
+        <li><strong>1.</strong> We review what you sent and check your address against our service area.</li>
+        <li><strong>2.</strong> We call or email to ask anything we need and schedule a look at the project.</li>
+        <li><strong>3.</strong> You get a written, line-item proposal you can actually compare.</li>
+      </ol>
+
+      <div class="btn-row ty__actions">
+        <a href={`tel:${site.phoneRaw}`} class="btn btn--primary btn--lg">
+          <Icon name="phone" size={19} /> Need us sooner? {site.phone}
+        </a>
+        <a href="/" class="btn btn--outline btn--lg">Back to home</a>
+      </div>
+
+      <p class="ty__note">
+        Nothing in your inbox within a business day? Check spam, then email us directly at
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">While you wait</span>
+        <h2>Everything Else We Do</h2>
+        <p class="lede" style="margin-inline:auto">Bundle two services and save 10% on the combined project.</p>
+      </div>
+      <ServiceGrid services={featuredServices} columns={4} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ty { padding-block: clamp(4rem, 8vw, 7rem); }
+  .ty__inner { max-width: 660px; margin-inline: auto; text-align: center; }
+  .ty__mark {
+    width: 88px;
+    height: 88px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto var(--sp-6);
+    border-radius: 50%;
+    background: var(--success-50);
+    color: var(--success-700);
+    border: 3px solid #bbf7d0;
+  }
+  .ty h1 { margin-bottom: var(--sp-4); }
+  .ty .lede { margin-inline: auto; }
+
+  .ty__next {
+    list-style: none;
+    margin: var(--sp-7) 0 0;
+    padding: var(--sp-6);
+    background: var(--n-50);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: left;
+    display: grid;
+    gap: var(--sp-3);
+  }
+  .ty__next li { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+  .ty__next strong { color: var(--brand-700); font-family: var(--font-display); margin-right: 0.3rem; }
+
+  .ty__actions { justify-content: center; margin-top: var(--sp-7); }
+  .ty__note { margin-top: var(--sp-6); font-size: 0.85rem; color: var(--text-subtle); }
+</style>

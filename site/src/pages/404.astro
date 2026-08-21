@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import { site } from '../data/site.ts';
+import { featuredServices } from '../data/services.ts';
+---
+
+<Base
+  title="Page Not Found | Top Dog Exteriors"
+  description="That page does not exist. Find our roofing, deck, siding, window, door, gutter, concrete and excavation services here."
+  canonical="/404"
+  noindex
+>
+  <section class="nf">
+    <div class="container nf__inner">
+      <p class="nf__code">404</p>
+      <h1>That Page Slid Off the Roof</h1>
+      <p class="lede">
+        The page you were looking for is not here. It may have moved, or the link may have been
+        mistyped. Here is everything we actually do.
+      </p>
+      <div class="btn-row nf__actions">
+        <a href="/" class="btn btn--primary btn--lg">Back to home</a>
+        <a href="/services" class="btn btn--outline btn--lg">See all services</a>
+        <a href={`tel:${site.phoneRaw}`} class="btn btn--outline btn--lg">
+          <Icon name="phone" size={19} /> {site.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <ServiceGrid services={featuredServices} columns={4} />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding-block: clamp(4rem, 8vw, 7rem); }
+  .nf__inner { max-width: 640px; margin-inline: auto; text-align: center; }
+  .nf__code {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 3rem + 8vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--brand-600);
+    margin-bottom: var(--sp-3);
+  }
+  .nf h1 { margin-bottom: var(--sp-4); }
+  .nf .lede { margin-inline: auto; }
+  .nf__actions { justify-content: center; margin-top: var(--sp-7); }
+</style>

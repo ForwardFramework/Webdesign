@@ -1,0 +1,300 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import TrustBar from '../components/TrustBar.astro';
+import { site, serviceAreas } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Contact', href: '/contact' },
+];
+
+/* A topic in the query string pre-selects the right service and headline —
+   every promo CTA on the site lands here with one attached. */
+const topic = Astro.url.searchParams.get('topic') ?? '';
+const hadError = Astro.url.searchParams.get('error') === '1';
+
+const topicMap: Record<string, { heading: string; service: string }> = {
+  financing: { heading: 'Check Your Financing Options', service: 'other' },
+  'military-discount': { heading: 'Claim Your Service Discount', service: 'other' },
+  bundle: { heading: 'Price a Bundled Project', service: 'bundle' },
+  'roof-inspection': { heading: 'Book Your Free Roof Inspection', service: 'roofing' },
+  roofing: { heading: 'Get Your Roofing Quote', service: 'roofing' },
+  deck: { heading: 'Start Your Deck Project', service: 'decks' },
+  'deck-design': { heading: 'Book Your Free 3D Deck Design', service: 'decks' },
+  siding: { heading: 'Get Your Siding Quote', service: 'siding' },
+  windows: { heading: 'Price Your Replacement Windows', service: 'windows' },
+  doors: { heading: 'Design Your ProVia Door', service: 'doors' },
+  gutters: { heading: 'Get Your Seamless Gutter Quote', service: 'gutters' },
+  concrete: { heading: 'Get Your Concrete Quote', service: 'concrete' },
+  additions: { heading: 'Start Your Addition', service: 'additions' },
+  painting: { heading: 'Get Your Painting Quote', service: 'painting' },
+  'equipment-rental': { heading: 'Check Machine Availability', service: 'equipment-rental' },
+  drainage: { heading: 'Book Your Free Drainage Assessment', service: 'excavation' },
+};
+
+const selected = topicMap[topic];
+const heading = selected?.heading ?? 'Tell Us About Your Project';
+
+const schema = [
+  {
+    '@type': 'ContactPage',
+    name: 'Contact Top Dog Exteriors',
+    url: `${site.domain}/contact`,
+    mainEntity: { '@id': `${site.domain}/#organization` },
+  },
+];
+---
+
+<Base
+  title="Contact Top Dog Exteriors | Free Estimates in Greater Pittsburgh"
+  description="Contact Top Dog Exteriors in Bethel Park, PA. Call (412) 438-8364 or email info@topdogexteriors.com for a free, no-obligation estimate."
+  canonical="/contact"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <section class="page-hero texture-diagonal">
+    <div class="container">
+      <span class="eyebrow">Contact</span>
+      <h1>Let’s Talk About Your Project</h1>
+      <p class="lede">
+        Free estimates, straight answers, and nobody camping in your living room for three hours.
+        Most estimates are back to you within 24 hours.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact">
+      <div class="contact__form">
+        {
+          hadError && (
+            <div class="contact__error" role="alert">
+              <Icon name="alert" size={20} />
+              <p>
+                Something went wrong sending your last message. Please try again, or call
+                <a href={`tel:${site.phoneRaw}`}> {site.phone}</a> — we will take care of you right away.
+              </p>
+            </div>
+          )
+        }
+        <QuoteForm
+          id="contact-form"
+          heading={heading}
+          sub="Six fields. We reply within one business day, and usually a lot sooner."
+          service={selected?.service ?? ''}
+          source={topic ? `contact-${topic}` : 'contact-page'}
+        />
+      </div>
+
+      <aside class="contact__side">
+        <div class="contact__card">
+          <h2>Reach us directly</h2>
+          <ul class="contact__list">
+            <li>
+              <span class="contact__icon"><Icon name="phone" size={20} /></span>
+              <span>
+                <span class="contact__label">Call or text</span>
+                <a href={`tel:${site.phoneRaw}`} class="contact__value">{site.phone}</a>
+              </span>
+            </li>
+            <li>
+              <span class="contact__icon"><Icon name="mail" size={20} /></span>
+              <span>
+                <span class="contact__label">Email</span>
+                <a href={`mailto:${site.email}`} class="contact__value contact__value--sm">{site.email}</a>
+              </span>
+            </li>
+            <li>
+              <span class="contact__icon"><Icon name="map-pin" size={20} /></span>
+              <span>
+                <span class="contact__label">Office</span>
+                <address class="contact__value contact__value--sm">
+                  {site.address.street}<br />
+                  {site.address.city}, {site.address.state} {site.address.zip}
+                </address>
+              </span>
+            </li>
+            <li>
+              <span class="contact__icon"><Icon name="clock" size={20} /></span>
+              <span>
+                <span class="contact__label">Hours</span>
+                <span class="contact__value contact__value--sm">
+                  Mon–Fri 7:00am – 6:00pm<br />
+                  Saturday 8:00am – 2:00pm<br />
+                  Emergency service 24/7
+                </span>
+              </span>
+            </li>
+          </ul>
+
+          <div class="contact__creds">
+            <p><Icon name="document" size={16} /> PA Contractor {site.license}</p>
+            <p><Icon name="shield-check" size={16} /> Licensed &amp; fully insured</p>
+            <p><Icon name="star" size={16} /> Veteran owned &amp; family operated</p>
+          </div>
+        </div>
+
+        <div class="contact__card contact__card--dark">
+          <h2>Need us today?</h2>
+          <p>
+            Active leak, storm damage, or a tree on the roof? Call — do not use the form. We
+            triage emergency calls the same day.
+          </p>
+          <a href={`tel:${site.phoneRaw}`} class="btn btn--primary btn--block">
+            <Icon name="phone" size={19} /> {site.phone}
+          </a>
+        </div>
+
+        <div class="contact__card">
+          <h2>Service area</h2>
+          <p class="contact__areas-note">
+            Based in Bethel Park, working across Allegheny and Washington counties.
+          </p>
+          <ul class="contact__areas">
+            {serviceAreas.slice(0, 14).map((a) => <li>{a.name}</li>)}
+          </ul>
+          <a href="/service-areas" class="contact__more">
+            See all service areas <Icon name="arrow_right" size={15} />
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <TrustBar />
+</Base>
+
+<style>
+  .page-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 12% 0%, rgba(194, 65, 12, 0.2), transparent 60%),
+      linear-gradient(155deg, var(--steel-900), var(--n-900) 60%, var(--n-950));
+    color: var(--n-300);
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+  .page-hero h1 { color: #fff; max-width: 16ch; }
+  .page-hero .eyebrow { color: var(--brand-400); }
+  .page-hero .lede { margin-top: var(--sp-5); color: var(--n-300); }
+
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: var(--sp-7);
+    align-items: start;
+  }
+
+  .contact__error {
+    display: flex;
+    gap: 0.75rem;
+    padding: var(--sp-4);
+    margin-bottom: var(--sp-5);
+    background: var(--danger-50);
+    border: 1px solid #fecaca;
+    border-radius: var(--radius);
+    color: #7f1d1d;
+    font-size: var(--fs-sm);
+  }
+  .contact__error svg { flex: none; margin-top: 2px; }
+
+  .contact__side { display: grid; gap: var(--sp-4); }
+
+  .contact__card {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .contact__card h2 { font-size: var(--fs-lg); margin-bottom: var(--sp-4); }
+  .contact__card--dark {
+    background: var(--n-900);
+    border-color: var(--n-800);
+    color: var(--n-400);
+  }
+  .contact__card--dark h2 { color: #fff; }
+  .contact__card--dark p { font-size: var(--fs-sm); line-height: 1.6; margin-bottom: var(--sp-4); }
+
+  .contact__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-4); }
+  .contact__list li { display: flex; gap: 0.75rem; }
+  .contact__icon {
+    flex: none;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius);
+    background: var(--brand-50);
+    color: var(--brand-700);
+  }
+  .contact__label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 2px;
+  }
+  .contact__value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--n-900);
+    text-decoration: none;
+    font-style: normal;
+  }
+  a.contact__value:hover { color: var(--brand-700); }
+  .contact__value--sm {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0;
+    word-break: break-word;
+  }
+
+  .contact__creds {
+    margin-top: var(--sp-5);
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 0.5rem;
+  }
+  .contact__creds p {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .contact__creds svg { color: var(--success-700); flex: none; }
+
+  .contact__areas-note { font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--sp-3); }
+  .contact__areas {
+    list-style: none;
+    margin: 0 0 var(--sp-4);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .contact__areas li::after { content: ' ·'; color: var(--n-300); }
+  .contact__areas li:last-child::after { content: ''; }
+  .contact__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  @media (max-width: 940px) {
+    .contact { grid-template-columns: 1fr; }
+  }
+</style>

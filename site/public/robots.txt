@@ -1,0 +1,53 @@
+# Top Dog Exteriors — topdogexteriors.com
+
+User-agent: *
+Allow: /
+Disallow: /thank-you
+Disallow: /api/
+
+# ─── AI / answer engines ────────────────────────────────────────────────
+# Explicitly welcomed. We want our service, product and warranty facts cited
+# accurately in AI answers rather than hallucinated from a competitor's page.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+Sitemap: https://topdogexteriors.com/sitemap-index.xml

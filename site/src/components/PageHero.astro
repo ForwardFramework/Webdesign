@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  breadcrumbs?: { name: string; href: string }[];
+  align?: 'left' | 'center';
+}
+const { eyebrow, title, lede, breadcrumbs = [], align = 'left' } = Astro.props;
+---
+
+<section class="page-hero texture-diagonal" data-align={align}>
+  <div class="container">
+    {
+      breadcrumbs.length > 0 && (
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <ol>
+            {breadcrumbs.map((b, i) => (
+              <li>
+                {i < breadcrumbs.length - 1 ? (
+                  <>
+                    <a href={b.href}>{b.name}</a>
+                    <Icon name="chevron-right" size={14} />
+                  </>
+                ) : (
+                  <span aria-current="page">{b.name}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1>{title}</h1>
+    {lede && <p class="lede page-hero__lede">{lede}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    background:
+      radial-gradient(ellipse 80% 60% at 12% 0%, rgba(194, 65, 12, 0.2), transparent 60%),
+      linear-gradient(155deg, var(--steel-900), var(--n-900) 60%, var(--n-950));
+    color: var(--n-300);
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .page-hero h1 { color: #fff; max-width: 20ch; }
+  .page-hero .eyebrow { color: var(--brand-400); }
+  .page-hero__lede { margin-top: var(--sp-5); color: var(--n-300); }
+
+  .page-hero[data-align='center'] { text-align: center; }
+  .page-hero[data-align='center'] h1 { margin-inline: auto; }
+  .page-hero[data-align='center'] .page-hero__lede { margin-inline: auto; }
+  .page-hero[data-align='center'] .crumbs ol { justify-content: center; }
+
+  .crumbs ol {
+    list-style: none;
+    margin: 0 0 var(--sp-5);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+  }
+  .crumbs li { display: flex; align-items: center; gap: 0.35rem; color: var(--n-500); }
+  .crumbs a { color: var(--n-400); text-decoration: none; }
+  .crumbs a:hover { color: var(--brand-400); text-decoration: underline; }
+  .crumbs [aria-current='page'] { color: var(--n-200); font-weight: 600; }
+</style>

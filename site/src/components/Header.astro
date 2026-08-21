@@ -1,0 +1,569 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { site } from '../data/site.ts';
+import { allServices } from '../data/services.ts';
+import { headlinePromo } from '../data/promos.ts';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href));
+---
+
+<!-- Announcement bar: one offer, one action. More than one and neither gets read. -->
+<div class="promo-bar">
+  <div class="container promo-bar__inner">
+    <Icon name="sparkle" size={17} class="promo-bar__icon" />
+    <p class="promo-bar__text">
+      <strong>{headlinePromo.headline}</strong>
+      <span class="promo-bar__sep" aria-hidden="true">—</span>
+      <a href="/offers">See all current offers</a>
+    </p>
+  </div>
+</div>
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__logo" aria-label={`${site.name} — home`}>
+      <Logo />
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <ul class="nav__list">
+        <li class="nav__item nav__item--has-menu">
+          <button
+            type="button"
+            class="nav__link nav__trigger"
+            aria-expanded="false"
+            aria-controls="services-menu"
+            data-dropdown-trigger
+          >
+            Services
+            <Icon name="chevron-down" size={16} class="nav__caret" />
+          </button>
+          <div class="mega" id="services-menu" data-dropdown-panel hidden>
+            <div class="mega__inner">
+              <ul class="mega__grid">
+                {
+                  allServices.map((s) => (
+                    <li>
+                      <a href={`/services/${s.slug}`} class="mega__link">
+                        <span class="mega__icon">
+                          <Icon name={s.icon} size={20} />
+                        </span>
+                        <span>
+                          <span class="mega__title">{s.name}</span>
+                          <span class="mega__desc">{s.cardBlurb}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+              <div class="mega__foot">
+                <a href="/services" class="mega__all">
+                  View all services <Icon name="arrow_right" size={16} />
+                </a>
+                <a href="/instant-roof-quote" class="btn btn--primary mega__cta">
+                  <Icon name="satellite" size={18} /> Instant Roof Quote
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item">
+          <a href="/instant-roof-quote" class="nav__link" aria-current={isActive('/instant-roof-quote') ? 'page' : undefined}>Instant Quote</a>
+        </li>
+        <li class="nav__item">
+          <a href="/offers" class="nav__link" aria-current={isActive('/offers') ? 'page' : undefined}>Offers</a>
+        </li>
+        <li class="nav__item">
+          <a href="/reviews" class="nav__link" aria-current={isActive('/reviews') ? 'page' : undefined}>Reviews</a>
+        </li>
+        <li class="nav__item">
+          <a href="/service-areas" class="nav__link" aria-current={isActive('/service-areas') ? 'page' : undefined}>Service Areas</a>
+        </li>
+        <li class="nav__item">
+          <a href="/about" class="nav__link" aria-current={isActive('/about') ? 'page' : undefined}>About</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        href={`tel:${site.phoneRaw}`}
+        class="site-header__phone"
+        aria-label={`Call or text ${site.phone}`}
+        data-track="header-call"
+      >
+        <Icon name="phone" size={19} />
+        <span>
+          <span class="site-header__phone-label">Call or text</span>
+          <span class="site-header__phone-num">{site.phone}</span>
+        </span>
+      </a>
+      <a href="/contact" class="btn btn--primary site-header__cta">Free Estimate</a>
+      <button
+        type="button"
+        class="site-header__burger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer. Deliberately a sibling of <header>, not a child: the
+     header's backdrop-filter establishes a containing block for fixed-position
+     descendants, which would collapse this drawer to the header's height. -->
+<div class="drawer" id="mobile-menu" hidden>
+  <div class="drawer__head">
+    <Logo />
+    <button type="button" class="drawer__close" aria-label="Close menu" data-menu-close>
+      <Icon name="close" size={26} />
+    </button>
+  </div>
+  <nav class="drawer__nav" aria-label="Mobile">
+    <p class="drawer__label">Services</p>
+    <ul class="drawer__list">
+      {
+        allServices.map((s) => (
+          <li>
+            <a href={`/services/${s.slug}`}>
+              <Icon name={s.icon} size={20} />
+              {s.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="drawer__label">Company</p>
+    <ul class="drawer__list">
+      <li><a href="/instant-roof-quote"><Icon name="satellite" size={20} />Instant Roof Quote</a></li>
+      <li><a href="/offers"><Icon name="sparkle" size={20} />Current Offers</a></li>
+      <li><a href="/reviews"><Icon name="star" size={20} />Reviews</a></li>
+      <li><a href="/service-areas"><Icon name="map-pin" size={20} />Service Areas</a></li>
+      <li><a href="/about"><Icon name="users" size={20} />About Us</a></li>
+      <li><a href="/financing"><Icon name="dollar" size={20} />Financing</a></li>
+      <li><a href="/contact"><Icon name="mail" size={20} />Contact</a></li>
+    </ul>
+  </nav>
+  <div class="drawer__foot">
+    <a href={`tel:${site.phoneRaw}`} class="btn btn--dark btn--block">
+      <Icon name="phone" size={19} /> {site.phone}
+    </a>
+    <a href="/contact" class="btn btn--primary btn--block">Get My Free Estimate</a>
+  </div>
+</div>
+
+
+<style>
+  /* ── Announcement bar ─────────────────────────────────────────────────── */
+  .promo-bar {
+    background: linear-gradient(90deg, var(--brand-700), var(--brand-600) 55%, var(--brand-500));
+    color: #fff;
+    font-size: var(--fs-xs);
+  }
+  .promo-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 40px;
+    padding-block: 0.4rem;
+    text-align: center;
+  }
+  .promo-bar__icon { flex: none; opacity: 0.9; }
+  .promo-bar__text { margin: 0; line-height: 1.35; }
+  .promo-bar__text strong { font-weight: 700; }
+  .promo-bar__sep { margin-inline: 0.4rem; opacity: 0.6; }
+  .promo-bar a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .promo-bar a:hover { color: var(--brand-100); }
+
+  /* ── Header shell ─────────────────────────────────────────────────────── */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow var(--t);
+  }
+  .site-header[data-scrolled='true'] { box-shadow: var(--shadow); }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    min-height: var(--header-h);
+  }
+
+  .site-header__logo { text-decoration: none; flex: none; }
+
+  /* ── Desktop nav ──────────────────────────────────────────────────────── */
+  .nav { margin-left: auto; }
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__item { position: relative; }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.6rem 0.75rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--n-700);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition: color var(--t-fast), background var(--t-fast);
+  }
+  .nav__link:hover,
+  .nav__link[aria-expanded='true'] {
+    color: var(--brand-700);
+    background: var(--brand-50);
+  }
+  .nav__link[aria-current='page'] { color: var(--brand-700); }
+  .nav__caret { transition: transform var(--t); }
+  .nav__link[aria-expanded='true'] .nav__caret { transform: rotate(180deg); }
+
+  /* ── Mega menu ────────────────────────────────────────────────────────── */
+  .mega {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(94vw, 720px);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    padding: var(--sp-5);
+    z-index: 60;
+  }
+  .mega[hidden] { display: none; }
+  .mega__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mega__link {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.7rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition: background var(--t-fast);
+  }
+  .mega__link:hover { background: var(--n-50); color: var(--text); }
+  .mega__icon {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    background: var(--brand-50);
+    color: var(--brand-700);
+  }
+  .mega__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.3;
+  }
+  .mega__desc {
+    display: block;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--text-subtle);
+    margin-top: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mega__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-4);
+    border-top: 1px solid var(--border);
+  }
+  .mega__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .mega__cta { min-height: 44px; padding: 0.6rem 1.1rem; font-size: 0.9rem; }
+
+  /* ── Header actions ───────────────────────────────────────────────────── */
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    flex: none;
+  }
+
+  .site-header__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--n-900);
+    padding: 0.35rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--t-fast);
+  }
+  .site-header__phone:hover { color: var(--brand-700); }
+  .site-header__phone-label {
+    display: block;
+    font-size: 0.68rem;
+    line-height: 1.1;
+    color: var(--text-subtle);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .site-header__phone-num {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.02rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .site-header__cta { min-height: 46px; padding: 0.6rem 1.25rem; font-size: 0.95rem; }
+
+  .site-header__burger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background: none;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    color: var(--n-900);
+  }
+
+  /* ── Mobile drawer ────────────────────────────────────────────────────── */
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .drawer[hidden] { display: none; }
+  .drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-4) var(--sp-5);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: #fff;
+  }
+  .drawer__close {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+  }
+  .drawer__nav { padding: var(--sp-5); flex: 1; }
+  .drawer__label {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin: var(--sp-5) 0 var(--sp-2);
+  }
+  .drawer__label:first-child { margin-top: 0; }
+  .drawer__list { list-style: none; margin: 0; padding: 0; }
+  .drawer__list a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 52px;
+    padding: 0.5rem 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--n-900);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .drawer__list a:hover { color: var(--brand-700); }
+  .drawer__list svg { color: var(--brand-600); flex: none; }
+  .drawer__foot {
+    position: sticky;
+    bottom: 0;
+    display: grid;
+    gap: var(--sp-3);
+    padding: var(--sp-5);
+    background: var(--n-50);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Breakpoints ──────────────────────────────────────────────────────── */
+  @media (max-width: 1120px) {
+    .nav { display: none; }
+    .site-header__actions { margin-left: auto; }
+    .site-header__burger { display: inline-flex; }
+  }
+  @media (max-width: 760px) {
+    .site-header__cta { display: none; }
+    .site-header__phone-label { display: none; }
+  }
+
+  /* Below ~440px the logo, number and burger no longer fit on one line, so the
+     phone link collapses to an icon button. The number stays permanently
+     visible in the sticky bottom bar on these widths, so nothing is lost. */
+  @media (max-width: 440px) {
+    .site-header__inner { gap: var(--sp-3); }
+    .site-header__phone-num { display: none; }
+    .site-header__phone {
+      width: 46px;
+      height: 46px;
+      justify-content: center;
+      padding: 0;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+    }
+  }
+  @media (max-width: 560px) {
+    .promo-bar__text strong { display: block; }
+    .promo-bar__sep { display: none; }
+  }
+</style>
+
+<script>
+  // ── Sticky header shadow ────────────────────────────────────────────────
+  const header = document.getElementById('site-header');
+  const onScroll = () => header?.setAttribute('data-scrolled', String(window.scrollY > 8));
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Services dropdown (click + keyboard; hover is an enhancement only) ──
+  const trigger = document.querySelector<HTMLButtonElement>('[data-dropdown-trigger]');
+  const panel = document.querySelector<HTMLElement>('[data-dropdown-panel]');
+  const wrap = trigger?.closest('.nav__item');
+
+  const setOpen = (open: boolean) => {
+    if (!trigger || !panel) return;
+    trigger.setAttribute('aria-expanded', String(open));
+    panel.hidden = !open;
+  };
+
+  trigger?.addEventListener('click', () => setOpen(trigger.getAttribute('aria-expanded') !== 'true'));
+
+  // Hover-open for pointer users, with a close delay so diagonal travel works.
+  let hoverTimer: number | undefined;
+  wrap?.addEventListener('mouseenter', () => {
+    if (window.matchMedia('(hover: hover)').matches) {
+      window.clearTimeout(hoverTimer);
+      setOpen(true);
+    }
+  });
+  wrap?.addEventListener('mouseleave', () => {
+    if (window.matchMedia('(hover: hover)').matches) {
+      hoverTimer = window.setTimeout(() => setOpen(false), 180);
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (wrap && !wrap.contains(e.target as Node)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      setOpen(false);
+      trigger?.focus();
+    }
+  });
+  // Focus leaving the whole dropdown closes it — keyboard parity with mouseleave.
+  wrap?.addEventListener('focusout', (e) => {
+    if (!wrap.contains(e.relatedTarget as Node)) setOpen(false);
+  });
+
+  // ── Mobile drawer with focus trap ───────────────────────────────────────
+  const burger = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const drawer = document.getElementById('mobile-menu');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+  let lastFocused: HTMLElement | null = null;
+
+  const openDrawer = () => {
+    if (!drawer || !burger) return;
+    lastFocused = document.activeElement as HTMLElement;
+    drawer.hidden = false;
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    closeBtn?.focus();
+  };
+
+  const closeDrawer = () => {
+    if (!drawer || !burger) return;
+    drawer.hidden = true;
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    (lastFocused ?? burger).focus();
+  };
+
+  burger?.addEventListener('click', openDrawer);
+  closeBtn?.addEventListener('click', closeDrawer);
+  drawer?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) closeDrawer();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!drawer || drawer.hidden) return;
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const items = drawer.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+</script>

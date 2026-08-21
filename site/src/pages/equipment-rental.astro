@@ -1,0 +1,339 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Equipment Rental', href: '/equipment-rental' },
+];
+
+const machines = [
+  {
+    name: 'Bobcat T595 Compact Track Loader',
+    icon: 'truck',
+    specs: [
+      ['Engine', '74 HP, Tier 4 compliant without a DPF'],
+      ['Rated operating capacity', '2,200 lb (SAE)'],
+      ['Tipping load', '6,285 lb'],
+      ['Operating weight', '8,055 lb'],
+      ['Ground pressure', '5.1 psi on rubber tracks'],
+      ['Travel speed', '7.1 mph (10.4 mph with 2-speed)'],
+      ['Auxiliary flow', '17.1 gpm standard'],
+    ],
+    good: 'Grading, backfill, material handling, demolition cleanup, hauling across finished lawns.',
+    attachments: 'Bucket, pallet forks, auger, grapple, breaker',
+  },
+  {
+    name: 'Bobcat E35 Mini Excavator',
+    icon: 'excavator',
+    specs: [
+      ['Max digging depth', '10 ft 2 in standard arm · 11 ft 2 in long arm'],
+      ['Operating weight', '≈8,590 lb'],
+      ['Machine width', '5 ft 9 in — fits most gates and side yards'],
+      ['Operating length', '15 ft 10 in'],
+      ['Engine', '24.8 HP standard, 33 HP available'],
+      ['Configuration', 'Compact radius, rubber tracks'],
+    ],
+    good: 'Footings, drainage trenches, utility runs, stump removal, tight-access digging.',
+    attachments: 'Digging buckets, grading bucket, thumb, auger, breaker',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Can I rent the Bobcat without an operator?',
+    a: 'Yes. Both the T595 track loader and the E35 mini excavator are available bare, on daily, weekly and monthly terms, delivered on our trailer. We require operator qualification and proof of insurance before release — call and we will tell you exactly what we need, usually a certificate of insurance naming us as additional insured.',
+  },
+  {
+    q: 'What does machine-with-operator cost?',
+    a: 'Machine plus our 40-year-experienced operator is quoted hourly, half-day or full-day depending on the work, with delivery and trailer time stated up front. For most residential drainage, grading and footing jobs, a half day or a full day covers it. Call (412) 438-8364 for current rates.',
+  },
+  {
+    q: 'Do you deliver, or do I pick it up?',
+    a: 'We deliver and pick up on our own trailer throughout the Greater Pittsburgh area — and delivery and pickup are free on weekly rentals within 25 miles of Bethel Park. Machines arrive fueled, greased and inspected, with a documented condition report signed at drop-off and again at pickup.',
+  },
+  {
+    q: 'How much space do I need?',
+    a: 'The E35 is 5 ft 9 in wide, which clears most standard South Hills side yards and gates. The T595 is wider and needs a driveway or side-yard path. We confirm access before scheduling so nobody discovers a problem the morning of delivery — send us a photo of the tightest point and we will tell you honestly.',
+  },
+  {
+    q: 'Will the tracks damage my lawn?',
+    a: 'Far less than you would expect. The T595 rides at about 5.1 psi ground pressure on rubber tracks — lower than a person standing on one foot. That is precisely why we bought a track machine rather than a wheeled skid steer. On soft or saturated ground we also mat the travel path.',
+  },
+  {
+    q: 'Is fuel included?',
+    a: 'Machines are delivered full and returned at the delivered level, same as a rental car. If it comes back short, we refuel it and bill the difference at cost — no inflated refueling penalty.',
+  },
+  {
+    q: 'What if the machine breaks down during my rental?',
+    a: 'Call us immediately. Mechanical failure is our problem, not yours — we will get it running or swap the machine, and we do not bill for downtime that was not caused by misuse. Damage from misuse or from operating outside the machine’s rated capacity is the renter’s responsibility, which is why we require proof of insurance.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'Service',
+    name: 'Bobcat equipment rental — Greater Pittsburgh',
+    description:
+      'Bobcat T595 compact track loader and Bobcat E35 mini excavator available for rent in the Greater Pittsburgh area, bare or with a 40-year-experienced operator. Delivery on our trailer.',
+    provider: { '@id': `${site.domain}/#organization` },
+    serviceType: 'Construction equipment rental',
+    areaServed: { '@type': 'AdministrativeArea', name: 'Greater Pittsburgh, PA' },
+  },
+];
+---
+
+<Base
+  title="Bobcat Rental Pittsburgh PA | T595 & E35 | Top Dog Exteriors"
+  description="Rent a Bobcat T595 track loader or E35 mini excavator in Greater Pittsburgh — bare, or with a 40-year-experienced operator. Delivered on our trailer."
+  canonical="/equipment-rental"
+  breadcrumbs={breadcrumbs}
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Equipment rental"
+    title="Rent Our Iron. With or Without the Operator."
+    lede="We own a new Bobcat T595 compact track loader and a Bobcat E35 mini excavator. Rent either one bare on daily, weekly or monthly terms — or hire it with an operator carrying 40 years of seat time. Delivered on our trailer, fueled and inspected."
+    breadcrumbs={breadcrumbs}
+  >
+    <div class="btn-row" style="margin-top:var(--sp-6)">
+      <a href="#rental-quote" class="btn btn--primary btn--lg">Check Availability</a>
+      <a href={`tel:${site.phoneRaw}`} class="btn btn--ghost-light btn--lg">
+        <Icon name="phone" size={19} /> {site.phone}
+      </a>
+    </div>
+  </PageHero>
+
+  <!-- ══ TWO WAYS TO RENT ══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">Two ways to rent</span>
+        <h2>Take the Machine, or Take the Machine and the Skill</h2>
+      </div>
+      <div class="ways">
+        <div class="way">
+          <span class="icon-tile"><Icon name="truck" size={26} /></span>
+          <h3>Machine only</h3>
+          <p>
+            You run it. Daily, weekly and monthly rates, delivered to your site on our trailer.
+            Operator qualification and proof of insurance required — call and we will walk you
+            through exactly what we need.
+          </p>
+          <ul>
+            <li><Icon name="check" size={16} /> Daily, weekly, monthly terms</li>
+            <li><Icon name="check" size={16} /> Delivered fueled, greased and inspected</li>
+            <li><Icon name="check" size={16} /> Free delivery on weekly rentals within 25 miles</li>
+            <li><Icon name="check" size={16} /> Documented condition report both ways</li>
+          </ul>
+        </div>
+
+        <div class="way way--feature">
+          <span class="pill pill--accent way__badge">Most requested</span>
+          <span class="icon-tile"><Icon name="users" size={26} /></span>
+          <h3>Machine + 40-year operator</h3>
+          <p>
+            We run it. Forty years on the sticks means grade gets read by eye, utilities get
+            respected, and the finished work does not need to be redone by somebody else next
+            month. Hourly, half-day and full-day rates.
+          </p>
+          <ul>
+            <li><Icon name="check" size={16} /> 40 years of operating experience</li>
+            <li><Icon name="check" size={16} /> Fully insured — certificates before mobilization</li>
+            <li><Icon name="check" size={16} /> PA One Call ticket pulled on every dig</li>
+            <li><Icon name="check" size={16} /> Hourly, half-day or full-day</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MACHINES ══════════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="machines-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">The fleet</span>
+        <h2 id="machines-heading">What You’re Renting</h2>
+        <p class="lede" style="margin-inline:auto">
+          Company-owned and dealer-maintained. Not sublet from a yard, not a twelve-year-old
+          auction machine with the hour meter disconnected.
+        </p>
+      </div>
+
+      <div class="machines">
+        {
+          machines.map((m) => (
+            <article class="machine">
+              <header class="machine__head">
+                <span class="icon-tile"><Icon name={m.icon} size={26} /></span>
+                <h3>{m.name}</h3>
+              </header>
+              <dl class="machine__specs">
+                {m.specs.map(([label, value]) => (
+                  <div>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div class="machine__foot">
+                <p><strong>Good for:</strong> {m.good}</p>
+                <p><strong>Attachments:</strong> {m.attachments}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FORM ══════════════════════════════════════════════════════════ -->
+  <section class="section" id="rental-quote">
+    <div class="container rental-form">
+      <div>
+        <span class="eyebrow">Check availability</span>
+        <h2>Tell Us What You’re Digging</h2>
+        <p class="lede">
+          Give us the dates, the site and what you are trying to accomplish. We will confirm
+          the machine is free, quote the rate, and tell you honestly whether bare rental or
+          machine-with-operator is the better value for the job.
+        </p>
+        <ul class="rental-form__list">
+          <li><Icon name="check-circle" size={19} /> Same-day response during business hours</li>
+          <li><Icon name="check-circle" size={19} /> We confirm site access before scheduling</li>
+          <li><Icon name="check-circle" size={19} /> No hidden trailer, fuel or environmental fees</li>
+        </ul>
+        <p class="rental-form__call">
+          Need it tomorrow? Call <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>.
+        </p>
+      </div>
+      <QuoteForm
+        id="rental-form"
+        heading="Machine Availability Request"
+        sub="Include your dates and what the job is in the details field."
+        service="equipment-rental"
+        source="equipment-rental"
+        submitLabel="Check Availability"
+      />
+    </div>
+  </section>
+
+  <Faq items={faqs} heading="Rental Questions" id="faq-rental" />
+
+  <CtaBand
+    heading="Need the Work Done Instead?"
+    body="We also self-perform grading, drainage, footings and demolition — often on the same visit as your concrete or deck project."
+    primaryLabel="Get a Site Work Quote"
+    primaryHref="/services/excavation"
+    secondaryLabel="See All Services"
+    secondaryHref="/services"
+  />
+</Base>
+
+<style>
+  .ways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: var(--sp-5);
+  }
+  .way {
+    position: relative;
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .way--feature { border-color: var(--brand-500); box-shadow: var(--shadow-lg); }
+  .way__badge { position: absolute; top: var(--sp-5); right: var(--sp-5); }
+  .way h3 { font-size: var(--fs-xl); margin-bottom: var(--sp-3); }
+  .way > p { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+  .way ul {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: var(--sp-4) 0 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: 0.6rem;
+  }
+  .way li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.86rem;
+    color: var(--n-800);
+  }
+  .way li svg { color: var(--success-700); flex: none; margin-top: 3px; }
+
+  .machines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: var(--sp-5);
+  }
+  .machine {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .machine__head {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-5);
+  }
+  .machine__head .icon-tile { margin-bottom: 0; }
+  .machine__head h3 { font-size: var(--fs-lg); }
+
+  .machine__specs { margin: 0; display: grid; gap: 0; }
+  .machine__specs > div {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--sp-3);
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .machine__specs dt { font-size: 0.8rem; color: var(--text-subtle); }
+  .machine__specs dd {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--n-900);
+  }
+
+  .machine__foot { margin-top: var(--sp-4); display: grid; gap: var(--sp-2); }
+  .machine__foot p { font-size: 0.83rem; line-height: 1.6; color: var(--text-muted); }
+  .machine__foot strong { color: var(--n-900); }
+
+  .rental-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .rental-form__list {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+  .rental-form__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: var(--fs-sm);
+    color: var(--n-800);
+  }
+  .rental-form__list svg { color: var(--brand-600); flex: none; margin-top: 2px; }
+  .rental-form__call { margin-top: var(--sp-5); font-size: var(--fs-sm); color: var(--text-muted); }
+  .rental-form__call a { font-weight: 700; }
+
+  @media (max-width: 940px) {
+    .rental-form { grid-template-columns: 1fr; }
+  }
+</style>

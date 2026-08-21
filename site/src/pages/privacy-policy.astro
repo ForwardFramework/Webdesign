@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
+];
+const updated = 'August 2026';
+---
+
+<Base
+  title="Privacy Policy | Top Dog Exteriors"
+  description="How Top Dog Exteriors collects, uses and protects the information you submit through topdogexteriors.com."
+  canonical="/privacy-policy"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero eyebrow="Legal" title="Privacy Policy" breadcrumbs={breadcrumbs} />
+
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="prose legal">
+        <p class="legal__updated">Last updated: {updated}</p>
+
+        <h2>The short version</h2>
+        <p>
+          We collect the information you give us so we can quote and complete your project. We do
+          not sell it, rent it, or trade it to lead brokers. If you want it deleted, email
+          <a href={`mailto:${site.email}`}>{site.email}</a> and we will delete it.
+        </p>
+
+        <h2>What we collect</h2>
+        <ul>
+          <li>
+            <strong>Information you submit.</strong> Name, phone number, email address, property
+            address, ZIP code, the service you are interested in, and anything you type into a
+            message or estimate field.
+          </li>
+          <li>
+            <strong>Instant roof quote inputs.</strong> The address and roof details you enter,
+            plus the estimate the tool produced, so our team can pick up where you left off.
+          </li>
+          <li>
+            <strong>Basic technical data.</strong> Your browser type, device type, referring page
+            and the pages you viewed. This is standard web-server and analytics information.
+          </li>
+        </ul>
+        <p>
+          We do not knowingly collect information from anyone under 18, and we do not collect
+          payment card details through this website.
+        </p>
+
+        <h2>How we use it</h2>
+        <ul>
+          <li>To respond to your request and prepare an estimate.</li>
+          <li>To schedule and complete work you have hired us for.</li>
+          <li>To register manufacturer warranties in your name.</li>
+          <li>To follow up about your project, and — only if you asked us to — to send occasional offers.</li>
+          <li>To improve the website and understand which pages are useful.</li>
+        </ul>
+
+        <h2>Text messages</h2>
+        <p>
+          If you check the consent box on a form, you agree to receive text messages from us about
+          your estimate and project. Message and data rates may apply. Message frequency varies.
+          Reply <strong>STOP</strong> to opt out at any time or <strong>HELP</strong> for help.
+          Consent is not a condition of purchase, and we do not share your number with third
+          parties for their own marketing.
+        </p>
+
+        <h2>Who we share it with</h2>
+        <p>We share your information only with:</p>
+        <ul>
+          <li>
+            <strong>Service providers who help us operate.</strong> Our email delivery provider,
+            website host, and — if you request it — our third-party financing partner. Each
+            receives only what it needs to perform its function.
+          </li>
+          <li>
+            <strong>Manufacturers</strong>, when registering a warranty in your name.
+          </li>
+          <li>
+            <strong>Your insurance carrier</strong>, when you have asked us to assist with a claim.
+          </li>
+          <li>
+            <strong>Authorities</strong>, when required by law.
+          </li>
+        </ul>
+        <p><strong>We do not sell your personal information to anyone, ever.</strong></p>
+
+        <h2>Cookies and analytics</h2>
+        <p>
+          This site uses only what it needs to function. If analytics are enabled, they are used
+          to understand aggregate traffic patterns, not to build a profile of you. You can block
+          or delete cookies in your browser settings; the site will continue to work.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <p>
+          Inquiries that do not become projects are retained for up to three years so we can pick
+          up a conversation you restart. Project records — contracts, photographs, warranty
+          registrations — are kept as long as the warranty runs, plus the period required by
+          Pennsylvania law.
+        </p>
+
+        <h2>Your choices</h2>
+        <p>
+          You can ask us to show you what we hold, correct it, delete it, or stop contacting you.
+          Email <a href={`mailto:${site.email}`}>{site.email}</a> or call
+          <a href={`tel:${site.phoneRaw}`}>{site.phone}</a> and we will handle it. There is no form
+          to fill out and no fee.
+        </p>
+
+        <h2>Security</h2>
+        <p>
+          Form submissions are transmitted over HTTPS. We limit access to customer information to
+          people who need it to do their job. No system is perfectly secure, and we will not claim
+          otherwise — but we do not retain anything we do not need.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          If this policy changes materially, we will update the date at the top of this page.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          {site.legalName}<br />
+          {site.address.street}, {site.address.city}, {site.address.state} {site.address.zip}<br />
+          <a href={`tel:${site.phoneRaw}`}>{site.phone}</a> ·
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal__updated {
+    font-size: 0.85rem;
+    color: var(--text-subtle);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--border);
+  }
+  .legal h2 { font-size: var(--fs-xl); }
+</style>

@@ -1,0 +1,139 @@
+---
+import Icon from './Icon.astro';
+import { expiresLabel, type Promo } from '../data/promos.ts';
+
+interface Props {
+  promos: Promo[];
+  columns?: 2 | 3;
+  showTerms?: boolean;
+}
+const { promos, columns = 3, showTerms = true } = Astro.props;
+---
+
+<ul class={`promo-grid promo-grid--${columns}`}>
+  {
+    promos.map((p, i) => (
+      <li class="promo reveal" data-reveal-delay={Math.min(i, 5) * 55}>
+        <span class="promo__eyebrow">
+          <Icon name="sparkle" size={14} /> {p.eyebrow}
+        </span>
+        <h3 class="promo__headline">{p.headline}</h3>
+        <p class="promo__detail">{p.detail}</p>
+        <a href={p.ctaHref} class="btn btn--primary promo__cta">
+          {p.cta} <Icon name="arrow_right" size={17} />
+        </a>
+        {showTerms && (
+          <details class="promo__terms">
+            <summary>Offer details &amp; terms</summary>
+            <p>{p.terms}</p>
+            <p class="promo__expiry">{expiresLabel}</p>
+          </details>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .promo-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-5);
+  }
+  .promo-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); }
+  .promo-grid--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+
+  .promo {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: border-color var(--t), box-shadow var(--t), transform var(--t);
+  }
+  .promo::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-600), var(--brand-400));
+  }
+  .promo:hover {
+    border-color: var(--brand-500);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  .promo__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    align-self: flex-start;
+    padding: 0.3rem 0.7rem;
+    margin-bottom: var(--sp-4);
+    border-radius: var(--radius-pill);
+    background: var(--brand-50);
+    color: var(--brand-800);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .promo__headline {
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--sp-3);
+  }
+
+  .promo__detail {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.62;
+    flex: 1;
+  }
+
+  .promo__cta {
+    margin-top: var(--sp-5);
+    align-self: flex-start;
+    min-height: 48px;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .promo__terms {
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-3);
+    border-top: 1px dashed var(--border-strong);
+    font-size: 0.78rem;
+    color: var(--text-subtle);
+  }
+  .promo__terms summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-muted);
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 32px;
+  }
+  .promo__terms summary::-webkit-details-marker { display: none; }
+  .promo__terms summary::after {
+    content: '+';
+    font-weight: 700;
+    color: var(--brand-600);
+  }
+  .promo__terms[open] summary::after { content: '−'; }
+  .promo__terms p { margin-top: var(--sp-2); line-height: 1.6; }
+  .promo__expiry { font-style: italic; }
+</style>

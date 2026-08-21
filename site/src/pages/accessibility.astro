@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site.ts';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Accessibility', href: '/accessibility' },
+];
+---
+
+<Base
+  title="Accessibility Statement | Top Dog Exteriors"
+  description="Our commitment to keeping topdogexteriors.com usable for everyone, and how to tell us when something is not working."
+  canonical="/accessibility"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero eyebrow="Accessibility" title="Accessibility Statement" breadcrumbs={breadcrumbs} />
+
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="prose legal">
+        <h2>Our commitment</h2>
+        <p>
+          We want every homeowner to be able to use this site — including people using screen
+          readers, keyboard navigation, magnification, or reduced-motion settings. We built it
+          targeting <strong>WCAG 2.2 Level AA</strong>.
+        </p>
+
+        <h2>What that means here</h2>
+        <ul>
+          <li>Every interactive element is reachable and operable by keyboard alone, with a visible focus indicator.</li>
+          <li>Text and interface colours meet or exceed a 4.5:1 contrast ratio against their background.</li>
+          <li>All controls and touch targets are at least 44×44 pixels.</li>
+          <li>Form fields have visible, persistent labels — not placeholder text standing in for a label — and errors appear next to the field they belong to.</li>
+          <li>Animation is suppressed automatically when your system requests reduced motion, and no content is hidden behind an animation that never runs.</li>
+          <li>Icons that carry meaning have accessible names; purely decorative ones are hidden from assistive technology.</li>
+          <li>Page structure uses real headings and landmarks, with a skip link to main content.</li>
+          <li>The site works at 200% zoom and reflows to a single column without horizontal scrolling.</li>
+        </ul>
+
+        <h2>Known limitations</h2>
+        <p>
+          Content embedded from third parties — mapping, review widgets or financing applications
+          — is outside our direct control and may not meet the same standard. If you hit a barrier
+          in one of those, tell us and we will complete the task with you directly by phone or
+          email.
+        </p>
+
+        <h2>Tell us when something does not work</h2>
+        <p>
+          If any part of this site is difficult or impossible for you to use, we want to know, and
+          we will fix it. More immediately, we will make sure you get what you came for.
+        </p>
+        <p>
+          Email <a href={`mailto:${site.email}`}>{site.email}</a> or call
+          <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>. Describe the page and what happened,
+          and we will respond within two business days.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal h2 { font-size: var(--fs-xl); }
+</style>

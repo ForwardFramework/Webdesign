@@ -1,0 +1,59 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.ts';
+---
+
+<!--
+  Mobile action bar. Two taps only — call and quote. Homeowners on phones convert
+  on the phone number; homeowners on desktop convert on the form. This is the
+  mobile half of that split, and it is hidden from print and from wide viewports.
+-->
+<div class="sticky-cta" aria-label="Quick contact">
+  <a href={`tel:${site.phoneRaw}`} class="sticky-cta__btn sticky-cta__btn--call" data-track="sticky-call">
+    <Icon name="phone" size={20} />
+    <span>Call {site.phone}</span>
+  </a>
+  <a href="/contact" class="sticky-cta__btn sticky-cta__btn--quote" data-track="sticky-quote">
+    <Icon name="calculator" size={20} />
+    <span>Free Estimate</span>
+  </a>
+</div>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    display: none;
+    gap: 1px;
+    background: var(--n-800);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    box-shadow: 0 -6px 20px rgba(8, 12, 17, 0.22);
+  }
+
+  .sticky-cta__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 58px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.98rem;
+    text-decoration: none;
+    color: #fff;
+    transition: filter var(--t-fast);
+  }
+  .sticky-cta__btn:active { filter: brightness(0.9); }
+  .sticky-cta__btn--call { background: var(--n-900); }
+  .sticky-cta__btn--quote { background: var(--brand-600); }
+
+  @media (max-width: 760px) {
+    .sticky-cta { display: flex; }
+    /* Keep the last section clear of the bar so nothing is permanently covered. */
+    :global(body) { padding-bottom: 58px; }
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+/**
+ * Wordmark + shield lockup, drawn as SVG so it stays sharp and costs no request.
+ * `tone` switches the wordmark for dark backgrounds.
+ */
+interface Props {
+  tone?: 'dark' | 'light';
+  compact?: boolean;
+}
+const { tone = 'dark', compact = false } = Astro.props;
+const wordColor = tone === 'light' ? '#ffffff' : '#12181f';
+const subColor = tone === 'light' ? 'rgba(255,255,255,.68)' : '#4a5866';
+---
+
+<span class="logo" data-compact={compact ? 'true' : 'false'}>
+  <svg class="logo__mark" viewBox="0 0 44 48" width="38" height="42" aria-hidden="true">
+    <path d="M22 1.8 42 8.6v14.9c0 12.4-8.4 19.4-20 22.7C10.4 42.9 2 35.9 2 23.5V8.6Z" fill="#c2410c" />
+    <path d="M22 5.6 38.4 11v12.5c0 10-6.6 15.8-16.4 18.8C12.2 39.3 5.6 33.5 5.6 23.5V11Z" fill="#9a3412" />
+    <path d="m11.5 24.5 10.5-9 10.5 9" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M14.6 22.2V33h14.8V22.2" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M19.6 33v-5.6h4.8V33" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+  <span class="logo__type">
+    <span class="logo__word" style={`color:${wordColor}`}>TOP DOG</span>
+    <span class="logo__sub" style={`color:${subColor}`}>EXTERIORS</span>
+  </span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    line-height: 1;
+  }
+  .logo__mark { flex: none; }
+  .logo__type {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .logo__word {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.32rem;
+    letter-spacing: -0.02em;
+  }
+  .logo__sub {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+  }
+  .logo[data-compact='true'] .logo__type { display: none; }
+
+  @media (max-width: 400px) {
+    .logo__word { font-size: 1.12rem; }
+    .logo__sub { font-size: 0.55rem; letter-spacing: 0.22em; }
+  }
+</style>
