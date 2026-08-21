@@ -69,11 +69,21 @@ Inside `_src/*.html` these tokens expand at build time:
 | `{{icon:check}}` | inline SVG (names are the keys of `I` in `build.py`) |
 | `{{stars:5}}` | a 5-star rating row |
 
-## Wiring up the form
+## Where the leads go
 
-**Submissions currently go nowhere.** With no `action` attribute, `site.js` intercepts the
-submit and shows an inline thank-you — deliberately, so a live form never posts to a dead URL.
-Pick one:
+Everything routes through one config block at the top of `build.py`:
+
+```python
+FORM_ACTION = ""    # the endpoint every form posts to
+LEAD_EMAIL  = ""    # the inbox shown to visitors / used for mailto: links
+```
+
+**Submissions currently go nowhere.** With `FORM_ACTION` blank, no form gets an `action`
+attribute, and `site.js` intercepts the submit and confirms inline — deliberately, so a live
+form never posts at a dead URL. Set `FORM_ACTION`, run `python3 build.py`, and all five forms
+(estimate, homepage quick form, offer page, and both guide capture points) pick it up at once.
+
+Pick a provider:
 
 **Netlify** — add `netlify` and a honeypot to the `<form>` tags in `_src/estimate.html`,
 `_src/offer.html` and `_src/home.html`:
@@ -95,8 +105,82 @@ Pick one:
 endpoint. Field names are already sensible: `name`, `phone`, `email`, `address`, `project`,
 `property_type`, `size`, `stories`, `timeline`, `heard`, `notes`, `consent`.
 
-Once an `action` is set, the JS stops intercepting and the browser posts normally. Add a
-honeypot field whichever route you choose — a public contractor form gets scraped fast.
+Once `FORM_ACTION` is set, the JS stops intercepting and the browser posts normally. The two
+guide-capture forms already carry a `company` honeypot that is dropped silently when filled;
+add the same to the estimate forms if your provider doesn't supply its own spam handling.
+
+Every submission carries a `lead_type` field (`guide_download`, `guide_download_nudge`,
+`guide_download_page`) or, for quote requests, the full project detail — so one inbox can be
+filtered into "wants a quote" and "downloaded the guide" without a second endpoint.
+
+## The lead magnet
+
+`assets/pittsburgh-exterior-paint-checklist.pdf` is a real 6-page guide — the 12 questions a
+homeowner should ask any painter, Pittsburgh price ranges, a season table, five red flags, and
+our full prep spec. Source is `tools/guide.html`; regenerate the PDF with:
+
+```bash
+python3 tools/render-guide.py       # HTML → PDF + refreshes the cover thumbnail
+```
+
+It's offered in three places, deliberately spaced:
+
+| Placement | Where | Behaviour |
+|---|---|---|
+| **Inline band** | Homepage, exterior page, gallery | Always visible, one field |
+| **Dedicated page** | `/guide.html` | Ranks on its own; also the ad destination for top-of-funnel traffic |
+| **Slide-in** | Any content page, desktop only | Appears once past 50% scroll depth, dismissible, remembered for the session |
+
+The slide-in never fires on mobile (the sticky call bar owns that space), never returns in the
+same session after dismissal, and retires permanently once anyone claims the guide from any
+placement (`localStorage`). On submit the visitor gets the download immediately *and* the
+email is captured — waiting for an email to arrive is where these funnels leak.
+
+## SEO, GEO and AEO
+
+**Classic SEO.** One page per service, unique title and meta description on every page (all
+within length limits), canonical URLs, `lang="en-US"`, semantic headings with exactly one `h1`
+per page, breadcrumbs, descriptive alt text, internal cross-linking between services, generated
+`sitemap.xml` and `robots.txt`, Open Graph and Twitter cards, and Core Web Vitals that are
+already where they need to be (CLS 0, sub-second FCP).
+
+**Structured data.** One JSON-LD `@graph` per page, generated in `build.py`, containing
+`HomeAndConstructionBusiness`/`PaintingContractor` (with `areaServed`, `knowsAbout`,
+`hasOfferCatalog`, hours and the current promo), `WebSite`, `WebPage`, `BreadcrumbList`,
+per-service `Service` nodes with real price ranges, and `FAQPage`.
+
+The FAQ schema is **extracted from the page's own accordion markup at build time**, so the
+structured data can never drift from what a visitor actually reads. Add an FAQ to a page and
+its schema appears automatically.
+
+`aggregateRating` is deliberately absent — see `CONTENT-CHECKLIST.md`.
+
+**AEO (answer engines / featured snippets).** Every money page opens with a self-contained
+40–60 word direct answer in a `.answer` block, positioned above the fold, phrased so it can be
+lifted verbatim. Service pages carry a "at a glance" facts table (cost, duration, season,
+lifespan) — the format snippets and AI answers both prefer. Headings are question-shaped where
+natural, and `speakable` markup points voice assistants at the `h1` and lead paragraph.
+
+**GEO (being cited by ChatGPT, Perplexity, Claude, AI Overviews).** `llms.txt` states the
+business facts, price ranges, service list and the Western-PA climate explanation in plain
+prose an agent can quote. `robots.txt` explicitly welcomes the answer-engine crawlers
+(`OAI-SearchBot`, `ChatGPT-User`, `Claude-SearchBot`, `Claude-User`, `PerplexityBot`,
+`Applebot`, `DuckAssistBot` and others) — for a local contractor these are a growth channel,
+not a threat. Model-training crawlers (`GPTBot`, `ClaudeBot`, `Google-Extended`, `CCBot`) are
+also allowed; flip `ALLOW_AI_CRAWLERS = False` in `build.py` to block just those while keeping
+the answer engines.
+
+The other half of GEO isn't code: consistent name, address and phone everywhere online, a
+maintained Google Business Profile, and real reviews. The site states the business facts
+identically in the footer, the JSON-LD and `llms.txt` so there's nothing for a crawler to
+disagree with.
+
+## Preview bundle
+
+`python3 tools/build-preview.py` bundles all 15 pages plus the generated files into a single
+self-contained `preview.html` (~3.8 MB) for sharing. Each page runs inside an iframe with its
+real CSS and JavaScript, so it's the actual site rather than a mock-up; images are base64'd
+once and substituted at inject time.
 
 ## Tracking
 
@@ -104,7 +188,8 @@ honeypot field whichever route you choose — a public contractor form gets scra
 and no-ops safely when neither exists. Already wired:
 
 `call_click` · `text_click` · `estimate_start` · `estimate_step_2/3/4` · `estimate_submit` ·
-`gallery_filter` · `quick_lead` · `offer_lead` · `lead_confirmed`
+`gallery_filter` · `quick_lead` · `offer_lead` · `lead_confirmed` · `guide_download` ·
+`guide_nudge_shown` · `guide_nudge_dismiss`
 
 To turn these on, add your GA4 / Ads / Meta snippet to `head()` in `build.py` and rebuild.
 Mark `estimate_submit` and `lead_confirmed` as conversions in GA4, and put the Ads and Meta
@@ -166,7 +251,9 @@ Verified against the built pages, not just intended:
 - All tap targets ≥44 px, visible focus rings everywhere.
 - **`prefers-reduced-motion: reduce` disables every animation** and shows final states.
 - Reveal animations are scoped to `.js`, so if the script fails to load the whole page still
-  renders. A lead-gen site must never be blank because of one failed request.
+  renders — and a second safety net reveals everything if `IntersectionObserver` never reports
+  (it doesn't, in some embedded webviews). A lead-gen site must never be blank because of one
+  failed request.
 
 One rule to keep if you touch the palette: **`#F7B32B` on white is ~1.9:1 and must never carry
 text.** Bright gold is for fills and rules only. Gold-toned text on light backgrounds uses

@@ -1,0 +1,134 @@
+<section class="hero">
+ <div class="wrap hero-in">
+  <div>
+    <p class="eyebrow on-dark" data-reveal>Free download &middot; No cost, no catch</p>
+    <h1 class="mt-5" data-reveal data-delay="60">The Pittsburgh homeowner&rsquo;s exterior paint checklist</h1>
+    <!-- AEO: a self-contained ~55-word answer directly under the H1 -->
+    <p class="lede mt-5" data-reveal data-delay="120">
+      A free 6&#8209;page PDF covering the 12 things Western Pennsylvania weather does to a paint
+      job &mdash; freeze&ndash;thaw, wet springs, mildew on shaded elevations, road salt, soft
+      century&#8209;old brick &mdash; and the exact question to ask every contractor bidding your
+      house about each one. Written for homeowners collecting quotes, not for painters.
+    </p>
+    <ul class="hero-badges" data-reveal data-delay="180">
+      <li class="pill">{{icon:check}} 12 questions to ask any bidder</li>
+      <li class="pill">{{icon:check}} Pittsburgh price ranges</li>
+      <li class="pill">{{icon:check}} 5 red flags on a bid</li>
+    </ul>
+    <div class="form-card mt-6" data-reveal data-delay="240" style="max-width:480px">
+      <form data-guide="g" {{form_attrs}}novalidate>
+        <div class="field">
+          <label for="g-email">Where should we send it? <span class="req">*</span></label>
+          <input id="g-email" name="email" type="email" autocomplete="email" required
+                 placeholder="you@example.com">
+          <span class="err">Check that email address.</span>
+        </div>
+        <input type="hidden" name="lead_type" value="guide_download_page">
+        <p hidden><label>Leave this blank <input name="company" tabindex="-1" autocomplete="off"></label></p>
+        <button class="btn btn-lg btn-block" type="submit">Send me the checklist {{icon:arrow}}</button>
+        <p class="form-note">{{icon:lock}} One email with the PDF. No spam, unsubscribe anytime.</p>
+      </form>
+      <div data-guide-done hidden>
+        <h3>Done &mdash; check your inbox.</h3>
+        <p class="mt-4" style="font-size:.95rem">Or grab it right now:</p>
+        <a class="btn btn-lg btn-block mt-4" href="{{guide_pdf}}" download>
+          {{icon:file}} Download the checklist (PDF)</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-media" data-reveal="zoom" data-delay="120">
+    <img src="{{base}}assets/img/guide-cover.jpg" width="800" height="1000" fetchpriority="high"
+         decoding="async" style="aspect-ratio:4/5;max-height:min(66vh,580px);margin-inline:auto;width:auto"
+         alt="Cover of the free Pittsburgh Homeowner's Exterior Paint Checklist">
+  </div>
+ </div>
+</section>
+
+<div class="trust-strip"><div class="wrap"><ul>
+  <li>{{icon:file}} 6 pages, no fluff</li>
+  <li>{{icon:pin}} Written for Western PA specifically</li>
+  <li>{{icon:lock}} We never sell or share your email</li>
+  <li>{{icon:users}} Useful even if you hire someone else</li>
+</ul></div></div>
+
+<section>
+ <div class="wrap">
+  <div class="sec-head is-centred" data-reveal>
+   <p class="eyebrow is-centred">What&rsquo;s inside</p>
+   <h2 class="mt-5"><span class="swipe">Six pages, no filler</span></h2>
+   <p>We wrote this because the same four questions come up on every walk&#8209;through, and because
+      a homeowner who understands prep gets a better job from whoever they hire.</p>
+  </div>
+  <div class="grid g-3" data-stagger="80">
+   <div class="card" data-reveal><div class="card-b"><span class="feat-ico">{{icon:drop}}</span>
+     <h3>What this climate does</h3>
+     <p>Freeze&ndash;thaw cycling, wet springs, mildew on north elevations, road salt, and why soft
+        century&#8209;old Pittsburgh brick spalls when it&rsquo;s sealed with the wrong coating.</p></div></div>
+   <div class="card" data-reveal><div class="card-b"><span class="feat-ico">{{icon:file}}</span>
+     <h3>The 12 questions</h3>
+     <p>One per page spread, each with the specific thing to ask. Wash and dry time, scraping
+        scope, rot repair, priming, caulking, coat count, spread rate, masonry systems, shaded
+        elevations, weather rules, crew consistency, warranty and insurance.</p></div></div>
+   <div class="card" data-reveal><div class="card-b"><span class="feat-ico">{{icon:cal}}</span>
+     <h3>When to paint here</h3>
+     <p>A month&#8209;by&#8209;month table for Western PA, and why August to October is the window
+        everybody who knows books first.</p></div></div>
+   <div class="card" data-reveal><div class="card-b"><span class="feat-ico">{{icon:ruler}}</span>
+     <h3>What things cost</h3>
+     <p>Honest Pittsburgh ranges for exteriors, interiors per room, and cabinet refinishing &mdash;
+        so you can tell when a bid is suspiciously low.</p></div></div>
+   <div class="card" data-reveal><div class="card-b"><span class="feat-ico">{{icon:shield}}</span>
+     <h3>Five red flags on a bid</h3>
+     <p>Lump&#8209;sum pricing, no mention of primer or caulk, big deposits, pressure to sign today,
+        and hesitation about insurance.</p></div></div>
+   <div class="card" data-reveal><div class="card-b"><span class="feat-ico">{{icon:brush}}</span>
+     <h3>Our full prep spec</h3>
+     <p>All eight steps we put in writing on every estimate &mdash; so you have something concrete
+        to hold the other two bids against.</p></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="sec-alt">
+ <div class="wrap" style="max-width:840px">
+  <div class="sec-head is-centred" data-reveal>
+   <p class="eyebrow is-centred">Common questions</p>
+   <h2 class="mt-5"><span class="swipe">About the checklist</span></h2>
+  </div>
+  <div class="faq" data-reveal>
+   <div class="faq-item"><button class="faq-q" type="button" aria-expanded="true">
+     Is it actually free? <span class="chev">{{icon:chev}}</span></button>
+     <div class="faq-a"><div><p>Yes. One email with the PDF attached, and you can download it
+       straight away on this page after you submit. We&rsquo;ll occasionally send seasonal maintenance
+       reminders; unsubscribe in one click whenever you like.</p></div></div></div>
+   <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">
+     Is this just a sales pitch? <span class="chev">{{icon:chev}}</span></button>
+     <div class="faq-a"><div><p>Five and a half of the six pages are questions to ask <em>any</em>
+       painter. We&rsquo;d obviously like to be one of the bids you get &mdash; but the checklist works
+       exactly as well if you hire someone else, which is rather the point of publishing it.</p></div></div></div>
+   <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">
+     Will I get sales calls? <span class="chev">{{icon:chev}}</span></button>
+     <div class="faq-a"><div><p>No. Downloading the guide gets you the guide. If you want a quote,
+       there&rsquo;s a form for that and you have to fill it in yourself.</p></div></div></div>
+   <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">
+     Do you sell my email address? <span class="chev">{{icon:chev}}</span></button>
+     <div class="faq-a"><div><p>Never &mdash; not to lead networks, not to other contractors, not to
+       anyone. See our <a href="{{base}}privacy.html" style="color:var(--gold-ink);font-weight:600">privacy
+       policy</a>.</p></div></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="cta-band on-dark">
+ <div class="wrap center" style="max-width:720px">
+  <p class="eyebrow on-dark is-centred" data-reveal>Ready for a real number?</p>
+  <h2 class="mt-5" style="color:#fff" data-reveal data-delay="60">Skip the reading &mdash; just get a quote</h2>
+  <p class="lede mt-5" data-reveal data-delay="120" style="color:#B9C1CC">
+    Free walk&#8209;through, itemized written quote within 24 hours, and a digital rendering of
+    your house in your colors. No pressure either way.</p>
+  <div class="btn-row mt-6" style="justify-content:center" data-reveal data-delay="180">
+    <a class="btn btn-lg" href="{{base}}estimate.html">Get my free estimate {{icon:arrow}}</a>
+    <a class="btn btn-lg btn-ghost on-dark" href="tel:{{tel}}" data-loc="guide-cta">{{icon:phone}} {{phone}}</a>
+  </div>
+ </div>
+</section>

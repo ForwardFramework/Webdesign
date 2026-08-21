@@ -1,0 +1,265 @@
+<title>Paint Goat Site Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* ── tokens ───────────────────────────────────────────────────────────────
+   Chrome deliberately uses IBM Plex, not the site's Barlow/Inter, so the
+   instrument never reads as part of the thing being inspected.            */
+:root{
+  --ground:#F2F4F7; --panel:#FFFFFF; --panel-2:#E9ECF1;
+  --edge:#D8DDE5; --edge-soft:#E7EBF0;
+  --text:#161B22; --muted:#5A6472; --faint:#8C95A3;
+  --accent:#F7B32B; --accent-ink:#8A5A00; --on-accent:#171207;
+  --shadow:0 1px 2px rgba(16,20,26,.05), 0 10px 28px rgba(16,20,26,.08);
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --ground:#0C1014; --panel:#151A21; --panel-2:#1D242D;
+    --edge:#28303A; --edge-soft:#212934;
+    --text:#E9EDF3; --muted:#98A2B0; --faint:#6C7684;
+    --accent:#F7B32B; --accent-ink:#F7B32B; --on-accent:#171207;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.42);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1014; --panel:#151A21; --panel-2:#1D242D;
+  --edge:#28303A; --edge-soft:#212934;
+  --text:#E9EDF3; --muted:#98A2B0; --faint:#6C7684;
+  --accent:#F7B32B; --accent-ink:#F7B32B; --on-accent:#171207;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px rgba(0,0,0,.42);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+body{
+  font:15px/1.5 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--text); background:var(--ground);
+  height:100dvh; overflow:hidden;
+  display:grid; grid-template-columns:262px 1fr;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:5px}
+
+/* ── rail ─────────────────────────────────────────────────────────────── */
+.rail{
+  background:var(--panel); border-right:1px solid var(--edge);
+  display:flex; flex-direction:column; min-height:0;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  padding:16px 18px; border-bottom:1px solid var(--edge-soft);
+}
+.brand .dot{
+  width:30px;height:30px;border-radius:8px;background:var(--accent);
+  display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--on-accent);
+  letter-spacing:-.5px; flex:none;
+}
+.brand b{font-size:14px;font-weight:600;display:block;line-height:1.25}
+.brand span{font-size:11px;color:var(--faint);letter-spacing:.04em}
+.rail-scroll{overflow-y:auto; padding:12px 10px 20px; flex:1; min-height:0}
+.grp{margin-bottom:14px}
+.grp h2{
+  font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--faint); padding:6px 8px 5px;
+}
+.grp button{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  padding:7px 9px; border-radius:7px; font-size:13.5px; color:var(--muted);
+  transition:background-color .13s linear, color .13s linear;
+}
+.grp button:hover{background:var(--panel-2); color:var(--text)}
+.grp button[aria-current="true"]{background:var(--panel-2); color:var(--text); font-weight:600}
+.grp button .bar{
+  width:3px; height:15px; border-radius:2px; background:transparent; flex:none;
+  transition:background-color .13s linear;
+}
+.grp button[aria-current="true"] .bar{background:var(--accent)}
+.note{
+  margin:0 10px; padding:11px 12px; border-radius:9px;
+  background:var(--panel-2); font-size:11.5px; line-height:1.5; color:var(--muted);
+}
+.note b{color:var(--text); font-weight:600}
+
+/* ── stage ────────────────────────────────────────────────────────────── */
+.stage{display:flex; flex-direction:column; min-width:0; min-height:0}
+.bar{
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:10px 16px; border-bottom:1px solid var(--edge); background:var(--panel);
+}
+.crumb{font-size:13px; color:var(--muted); margin-right:auto; min-width:0}
+.crumb b{color:var(--text); font-weight:600}
+.crumb code{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11.5px;
+  color:var(--faint); margin-left:8px;
+}
+.seg{display:flex; background:var(--panel-2); border-radius:8px; padding:3px; gap:2px}
+.seg button{
+  padding:5px 11px; border-radius:6px; font-size:12.5px; color:var(--muted);
+  transition:background-color .13s linear, color .13s linear;
+}
+.seg button:hover{color:var(--text)}
+.seg button[aria-pressed="true"]{background:var(--panel); color:var(--text); font-weight:600; box-shadow:var(--shadow)}
+.dims{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11.5px;
+  color:var(--faint); font-variant-numeric:tabular-nums; min-width:74px; text-align:right;
+}
+.ghost{
+  padding:6px 11px; border-radius:7px; border:1px solid var(--edge);
+  font-size:12.5px; color:var(--muted);
+  transition:border-color .13s linear, color .13s linear, background-color .13s linear;
+}
+.ghost:hover{border-color:var(--faint); color:var(--text); background:var(--panel-2)}
+
+.canvas{flex:1; min-height:0; overflow:auto; padding:18px; display:flex; justify-content:center}
+.frame{
+  width:100%; max-width:100%; background:var(--panel); border:1px solid var(--edge);
+  border-radius:12px; overflow:hidden; box-shadow:var(--shadow);
+  transition:max-width .28s cubic-bezier(.16,1,.3,1);
+  align-self:flex-start; height:100%;
+}
+.frame.narrow{border-radius:22px}
+iframe{width:100%; height:100%; border:0; display:block; background:#fff}
+pre.raw{
+  margin:0; padding:26px 30px; height:100%; overflow:auto; background:var(--panel);
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:12.5px; line-height:1.65;
+  color:var(--text); white-space:pre-wrap; word-break:break-word;
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important}}
+@media (max-width:880px){
+  body{grid-template-columns:1fr; grid-template-rows:auto 1fr}
+  .rail{border-right:0; border-bottom:1px solid var(--edge); max-height:44vh}
+  .canvas{padding:10px}
+  .crumb{width:100%; order:-1}
+}
+</style>
+
+<nav class="rail" aria-label="Pages">
+  <div class="brand">
+    <span class="dot">PP</span>
+    <span><b>Pittsburgh Painting</b><span>Site preview &middot; 15 pages</span></span>
+  </div>
+  <div class="rail-scroll">
+    <div id="nav"></div>
+    <p class="note"><b>This is the live site</b>, running its real CSS and JavaScript inside a
+      frame &mdash; click through it as you would the real thing. Photos and testimonials are
+      still marked placeholders; see CONTENT-CHECKLIST.md in the repo.</p>
+    <p class="note" style="margin-top:8px"><b>Two things only the deployed site can do:</b>
+      the guide PDF won't download from inside this frame, and forms confirm on-screen rather
+      than sending anywhere until a lead inbox is wired up.</p>
+  </div>
+</nav>
+
+<div class="stage">
+  <div class="bar">
+    <p class="crumb"><b id="crumb-title">Home</b><code id="crumb-path">index.html</code></p>
+    <div class="seg" role="group" aria-label="Viewport width">
+      <button type="button" data-w="0"    aria-pressed="true">Fit</button>
+      <button type="button" data-w="1280" aria-pressed="false">Laptop</button>
+      <button type="button" data-w="820"  aria-pressed="false">Tablet</button>
+      <button type="button" data-w="390"  aria-pressed="false">Phone</button>
+    </div>
+    <span class="dims" id="dims">&mdash;</span>
+    <button class="ghost" type="button" id="theme">Theme</button>
+  </div>
+  <div class="canvas"><div class="frame" id="frame"><iframe id="view" title="Site preview"></iframe></div></div>
+</div>
+
+<script>
+const NAV    = /*__NAV__*/;
+const DOCS   = /*__DOCS__*/;
+const ASSETS = /*__ASSETS__*/;
+const TEXTS  = /*__TEXTS__*/;
+
+const $ = s => document.querySelector(s);
+const frame = $('#frame'), canvas = document.querySelector('.canvas');
+let current = 'index.html', width = 0;
+
+/* Build the rail from the real sitemap, grouped by the job each page does. */
+const navEl = $('#nav');
+const groups = NAV.concat([['Generated files', TEXTS]]);
+navEl.innerHTML = groups.map(([sec, items]) => `
+  <div class="grp"><h2>${sec}</h2>${items.map(([f, t]) =>
+    `<button type="button" data-f="${f}" aria-current="false"><span class="bar"></span>${t}</button>`
+  ).join('')}</div>`).join('');
+
+/* Swap the @@path@@ tokens for the base64 payloads, one page at a time, so
+   each image is stored once in the bundle rather than per page. */
+function hydrate(html){
+  return html.replace(/@@([^@"]+)@@/g, (m, p) => ASSETS[p] || m);
+}
+
+function show(file){
+  if (!DOCS[file]) return;
+  current = file;
+  document.querySelectorAll('#nav button').forEach(b =>
+    b.setAttribute('aria-current', String(b.dataset.f === file)));
+  const label = (groups.flatMap(g => g[1]).find(x => x[0] === file) || [file, file])[1];
+  $('#crumb-title').textContent = label;
+  $('#crumb-path').textContent  = file;
+
+  if (/\.(txt|xml)$/.test(file)) {
+    frame.innerHTML = '<pre class="raw"></pre>';
+    frame.querySelector('pre').textContent = DOCS[file];
+  } else {
+    frame.innerHTML = '<iframe id="view" title="Site preview"></iframe>';
+    frame.querySelector('iframe').srcdoc = hydrate(DOCS[file]);
+  }
+  measure();
+}
+
+function setWidth(w){
+  width = w;
+  document.querySelectorAll('.seg button').forEach(b =>
+    b.setAttribute('aria-pressed', String(+b.dataset.w === w)));
+  frame.style.maxWidth = w ? w + 'px' : '100%';
+  frame.classList.toggle('narrow', w > 0 && w <= 820);
+  measure();
+}
+
+function measure(){
+  // max-width is transitioned, so a single rAF reads a mid-animation value.
+  // \u00d7 is escaped rather than literal so the readout survives any charset.
+  const write = () => {
+    const r = frame.getBoundingClientRect();
+    $('#dims').textContent = Math.round(r.width) + ' \u00d7 ' + Math.round(r.height);
+  };
+  requestAnimationFrame(write);
+  frame.addEventListener('transitionend', write, { once: true });
+  setTimeout(write, 340);
+}
+
+navEl.addEventListener('click', e => {
+  const b = e.target.closest('button[data-f]');
+  if (b) show(b.dataset.f);
+});
+document.querySelector('.seg').addEventListener('click', e => {
+  const b = e.target.closest('button[data-w]');
+  if (b) setWidth(+b.dataset.w);
+});
+
+/* Links clicked inside the frame navigate the preview, not the artifact. */
+addEventListener('message', e => {
+  const d = e.data || {};
+  if (d.pps !== 'nav') return;
+  let href = String(d.href).replace(/^\.\//, '');
+  while (href.startsWith('../')) href = href.slice(3);
+  if (DOCS[href]) show(href);
+});
+
+/* Theme: cycle system → light → dark, matching how the host stamps the root. */
+const order = [null, 'light', 'dark'];
+let ti = 0;
+$('#theme').addEventListener('click', () => {
+  ti = (ti + 1) % order.length;
+  const v = order[ti];
+  if (v) document.documentElement.setAttribute('data-theme', v);
+  else document.documentElement.removeAttribute('data-theme');
+  $('#theme').textContent = v ? v[0].toUpperCase() + v.slice(1) : 'Theme';
+});
+
+addEventListener('resize', measure);
+canvas.addEventListener('scroll', () => {}, { passive: true });
+show('index.html');
+setWidth(0);
+</script>

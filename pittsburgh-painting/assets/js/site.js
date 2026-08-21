@@ -125,6 +125,22 @@
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
       revealables.forEach(function (el) { io.observe(el); });
+
+      // Safety net. IntersectionObserver can fail to report in some embedded
+      // webviews and in frames that never get a render opportunity — which
+      // would leave the whole page invisible. If nothing has revealed shortly
+      // after load while something is plainly on screen, assume the observer
+      // is not working and show everything.
+      window.setTimeout(function () {
+        if (document.querySelector('[data-reveal].is-in')) return;
+        var onScreen = revealables.some(function (el) {
+          var r = el.getBoundingClientRect();
+          return r.top < window.innerHeight && r.bottom > 0 && r.height > 0;
+        });
+        if (!onScreen) return;
+        io.disconnect();
+        revealables.forEach(function (el) { el.classList.add('is-in'); });
+      }, 1400);
     }
     // auto-stagger direct children of [data-stagger]
     $$('[data-stagger]').forEach(function (group) {
@@ -353,6 +369,89 @@
       if (field) field.classList.remove('is-bad');
     });
   });
+
+  /* --- 10b. lead magnet: guide email capture ------------------------------ */
+  var GUIDE_SEEN = 'pps_guide';                 // set once the guide is claimed
+
+  function guideClaimed() {
+    try { return localStorage.getItem(GUIDE_SEEN) === '1'; } catch (e) { return false; }
+  }
+  function markClaimed() {
+    try { localStorage.setItem(GUIDE_SEEN, '1'); } catch (e) { /* private mode */ }
+  }
+
+  $$('form[data-guide]').forEach(function (f) {
+    var done = f.parentElement.querySelector('[data-guide-done]');
+    f.addEventListener('submit', function (e) {
+      var field = $('.field', f);
+      var input = $('input[type="email"]', f);
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim());
+      if (field) field.classList.toggle('is-bad', !ok);
+      if (!ok) { e.preventDefault(); input.focus(); return; }
+      // honeypot: a filled hidden field means a bot, so drop it silently
+      var pot = f.querySelector('input[name="company"]');
+      if (pot && pot.value) { e.preventDefault(); return; }
+
+      track('guide_download', { placement: f.dataset.guide });
+      markClaimed();
+
+      if (!f.getAttribute('action')) {          // no endpoint yet — confirm inline
+        e.preventDefault();
+        if (done) { f.hidden = true; done.hidden = false; }
+      }
+    });
+    f.addEventListener('input', function (e) {
+      var field = e.target.closest('.field');
+      if (field) field.classList.remove('is-bad');
+    });
+  });
+
+  /* --- 10c. scroll-triggered guide slide-in -------------------------------- */
+  var nudgeEl = $('.nudge');
+  if (nudgeEl && !guideClaimed()) {
+    var dismissed = false;
+    try { dismissed = sessionStorage.getItem('pps_nudge') === '1'; } catch (e) {}
+
+    var closeNudge = function (remember) {
+      nudgeEl.classList.remove('is-on');
+      window.setTimeout(function () { nudgeEl.hidden = true; }, 460);
+      if (remember) { try { sessionStorage.setItem('pps_nudge', '1'); } catch (e) {} }
+    };
+
+    $$('[data-nudge-close]', nudgeEl).forEach(function (btn) {
+      btn.addEventListener('click', function () { closeNudge(true); track('guide_nudge_dismiss', {}); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nudgeEl.classList.contains('is-on')) closeNudge(true);
+    });
+    // claiming it from anywhere on the page retires the prompt
+    $$('form[data-guide]').forEach(function (f) {
+      if (nudgeEl.contains(f)) return;
+      f.addEventListener('submit', function () { closeNudge(true); });
+    });
+
+    if (!dismissed && window.matchMedia('(min-width: 961px)').matches) {
+      var shown = false, nTick = false;
+      var maybeShow = function () {
+        nTick = false;
+        if (shown) return;
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        if (h <= 0 || (window.scrollY / h) < 0.5) return;
+        shown = true;
+        nudgeEl.hidden = false;
+        // next frame, so the transition runs from the hidden state
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () { nudgeEl.classList.add('is-on'); });
+        });
+        track('guide_nudge_shown', {});
+        window.removeEventListener('scroll', onNudgeScroll);
+      };
+      var onNudgeScroll = function () {
+        if (!nTick) { nTick = true; window.requestAnimationFrame(maybeShow); }
+      };
+      window.addEventListener('scroll', onNudgeScroll, { passive: true });
+    }
+  }
 
   /* --- 11. phone input mask ------------------------------------------------ */
   $$('input[type="tel"]').forEach(function (el) {

@@ -22,7 +22,7 @@
    <!-- Wire `action` to your form handler (Netlify Forms, Formspree, ServiceTitan,
         Jobber, etc.) — see README §Wiring up the form. With no action set, the form
         confirms inline instead of posting to a dead URL. -->
-   <form data-multistep novalidate>
+   <form data-multistep {{form_attrs}}novalidate>
     <div class="prog">
       <div class="prog-txt"><span data-step-num>Step 1 of 4</span><span>Free &amp; no obligation</span></div>
       <div class="prog-bar"><i></i></div>

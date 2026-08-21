@@ -25,26 +25,33 @@ grep -rn "VERIFY" _src/ build.py
 | 7 | **Insurance / licensing** | footer, About, FAQs | Add carrier, coverage amounts and your PA Home Improvement Contractor (HIC) registration number. PA requires the HIC number on advertising. |
 | 8 | **Brian's bio** | `_src/about.html` | Written generically. Replace with his real story, years in the trade, and background. This is one of the highest-read blocks on any contractor site. |
 | 9 | **All 33 photos are placeholders** | `assets/img/` | See `assets/img/README.md`. The before/after pairs matter most. |
-| 10 | **Form goes nowhere** | `estimate.html`, `offer.html`, homepage form | No endpoint is configured — submissions currently show an inline thank-you and are **not delivered anywhere**. See README § *Wiring up the form*. |
+| 10 | **Forms go nowhere** | all five forms | `FORM_ACTION` and `LEAD_EMAIL` are blank in `build.py`, so submissions show an inline thank-you and are **not delivered anywhere**. Send the inbox address and preferred provider and this is a two-line change. See README § *Where the leads go*. |
+| 11 | **Lead-magnet claims** | `guide.html`, capture bands | The forms promise "one email with the PDF attached" and "unsubscribe anytime". That needs an actual email tool behind it before launch, or the copy needs to change to download-only. |
 
 ## 🟡 Should fix before you spend money on ads
 
 | # | Item | Where |
 |---|---|---|
-| 11 | **Domain** — `pittsburghpaintingpps.com` is a placeholder in canonical URLs, sitemap and JSON-LD | `build.py` → `SITE` |
-| 12 | **Facebook URL** is the generic facebook.com | `build.py` → `footer()` and JSON-LD `sameAs` |
-| 13 | **Google Business Profile link** — the Reviews page says "read our Google reviews" with no link | `_src/reviews.html` |
-| 14 | **Service-area list** — 64 neighborhoods listed; confirm crews actually travel to all of them | `_src/areas.html`, `_src/home.html` |
-| 15 | **SMS consent wording** on the estimate form must match your carrier's compliance requirements if you text leads | `_src/estimate.html` |
-| 16 | **Privacy policy** is a sensible template, not legal advice. Have it checked if you run Google Ads lead forms or an SMS program. | `_src/privacy.html` |
-| 17 | **Referral bonus** is referenced on the thank-you page but never defined | `_src/thankyou.html` |
-| 18 | **Volume terms for investors** are implied on the renovations page | `_src/renovations.html` |
-| 19 | **Permitting practice** — the renovations FAQ says you pull permits; confirm | `_src/renovations.html` |
-| 20 | **Payment schedule** — the renovations FAQ describes milestone billing; confirm | `_src/renovations.html` |
-| 21 | **Analytics + conversion tracking** are stubbed and fire nothing | See README § *Tracking* |
+| 12 | **Domain** — `pittsburghpaintingpps.com` is a placeholder in canonical URLs, sitemap and JSON-LD | `build.py` → `SITE` |
+| 13 | **Facebook URL** is the generic facebook.com | `build.py` → `footer()` and JSON-LD `sameAs` |
+| 14 | **Google Business Profile link** — the Reviews page says "read our Google reviews" with no link | `_src/reviews.html` |
+| 15 | **Service-area list** — 64 neighborhoods listed; confirm crews actually travel to all of them | `_src/areas.html`, `_src/home.html` |
+| 16 | **SMS consent wording** on the estimate form must match your carrier's compliance requirements if you text leads | `_src/estimate.html` |
+| 17 | **Privacy policy** is a sensible template, not legal advice. Have it checked if you run Google Ads lead forms or an SMS program. | `_src/privacy.html` |
+| 18 | **Referral bonus** is referenced on the thank-you page but never defined | `_src/thankyou.html` |
+| 19 | **Volume terms for investors** are implied on the renovations page | `_src/renovations.html` |
+| 20 | **Permitting practice** — the renovations FAQ says you pull permits; confirm | `_src/renovations.html` |
+| 21 | **Payment schedule** — the renovations FAQ describes milestone billing; confirm | `_src/renovations.html` |
+| 22 | **Analytics + conversion tracking** are stubbed and fire nothing | See README § *Tracking* |
+
+### GEO / AEO items that need you, not code
+
+| # | Item | Why |
+|---|---|---|
+| 23 | **Claim and fill out the Google Business Profile** | The single highest-leverage thing for both local SEO and AI citations. The site's JSON-LD, footer and `llms.txt` all state the same business facts — the profile has to match them exactly. |
+| 24 | **Get real reviews flowing** | Answer engines lean heavily on review volume and recency when deciding which local business to name. |
+| 25 | **Consistent NAP everywhere** | Same name, phone and service area on Facebook, Instagram, Yelp, Angi, Nextdoor and the truck. Inconsistency is the most common reason a local business gets skipped. |
 
 ## 🟢 Nice to have
-
-- Build the lead magnet PDF (*The Pittsburgh Homeowner's Exterior Paint Checklist*) referenced in `PLAN.md`. The email-capture UI isn't built yet — it's the obvious next addition, and it catches the ~60% of visitors who won't book today.
 - Replace `assets/logo-mark.svg` with a vectorised version of the real goat logo. The current mark is a hand-drawn approximation for favicon and header use.
 - Add real Google review markup (`AggregateRating`) to the JSON-LD **only once you have real counts** — Google penalises invented ratings.

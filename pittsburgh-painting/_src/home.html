@@ -44,6 +44,20 @@
  </div>
 </div>
 
+<!-- AEO: self-contained ~55-word answer to the core query, high on the page -->
+<section class="sec-tight">
+ <div class="wrap">
+  <div class="answer" data-reveal>
+   <p><strong>Pittsburgh Painting &amp; Property Solutions</strong> is a family&#8209;owned,
+      fully insured painting contractor serving Greater Pittsburgh, Pennsylvania. We handle
+      exterior and interior house painting, kitchen cabinet refinishing, basement coatings and
+      full property renovations. Every job gets a written prep spec and two full coats of
+      Sherwin&#8209;Williams. Free written estimates within 24 hours &mdash; call Brian at
+      <a href="tel:{{tel}}" data-loc="answer-block" style="color:var(--gold-ink);font-weight:700">{{phone}}</a>.</p>
+  </div>
+ </div>
+</section>
+
 <!-- ======================= STATS ======================= -->
 <section class="sec-tight">
  <div class="wrap">
@@ -335,6 +349,12 @@
  </div>
 </section>
 
+<section class="sec-tight">
+ <div class="wrap">
+  {{magnet:home}}
+ </div>
+</section>
+
 <!-- ======================= AREAS ======================= -->
 <section class="sec-alt">
  <div class="wrap">
@@ -453,7 +473,7 @@
    <div class="form-card" data-reveal="right">
     <h3>Start your free estimate</h3>
     <p style="font-size:.92rem;margin:.4rem 0 1.4rem">Takes about 40 seconds. No obligation.</p>
-    <form data-simple="quick_lead" novalidate>
+    <form data-simple="quick_lead" {{form_attrs}}novalidate>
       <div class="field">
         <label for="q-name">Your name <span class="req">*</span></label>
         <input id="q-name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe">
@@ -497,50 +517,3 @@
  </div>
 </section>
 
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"HomeAndConstructionBusiness",
-  "@id":"https://pittsburghpaintingpps.com/#business",
-  "name":"Pittsburgh Painting & Property Solutions",
-  "description":"Family-owned painting contractor serving Greater Pittsburgh. Exterior and interior painting, cabinet refinishing, basements and full property renovations.",
-  "telephone":"+1-412-537-4866",
-  "url":"https://pittsburghpaintingpps.com/",
-  "image":"https://pittsburghpaintingpps.com/assets/img/og-image.jpg",
-  "logo":"https://pittsburghpaintingpps.com/assets/logo-mark.svg",
-  "priceRange":"$$",
-  "areaServed":[
-    {"@type":"City","name":"Pittsburgh","addressRegion":"PA"},
-    {"@type":"AdministrativeArea","name":"Allegheny County, PA"},
-    {"@type":"AdministrativeArea","name":"Washington County, PA"},
-    {"@type":"AdministrativeArea","name":"Butler County, PA"}
-  ],
-  "openingHoursSpecification":[{
-    "@type":"OpeningHoursSpecification",
-    "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    "opens":"07:00","closes":"19:00"
-  }],
-  "sameAs":[
-    "https://www.instagram.com/pittsburgh_paint_goat",
-    "https://www.facebook.com/"
-  ],
-  "makesOffer":[
-    {"@type":"Offer","name":"Exterior house painting","itemOffered":{"@type":"Service","name":"Exterior Painting"}},
-    {"@type":"Offer","name":"Interior house painting","itemOffered":{"@type":"Service","name":"Interior Painting"}},
-    {"@type":"Offer","name":"Kitchen cabinet refinishing","itemOffered":{"@type":"Service","name":"Cabinet Refinishing"}},
-    {"@type":"Offer","name":"Home renovations and cosmetic flips","itemOffered":{"@type":"Service","name":"Home Renovation"}}
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org","@type":"FAQPage",
-  "mainEntity":[
-   {"@type":"Question","name":"What does it cost to paint a house in Pittsburgh?","acceptedAnswer":{"@type":"Answer","text":"A full exterior repaint on a typical Pittsburgh two-story generally runs $4,500 to $12,000 depending on square footage, substrate, story height, prep and carpentry required, and number of colors. Interiors usually run $450 to $900 per room for walls, ceiling and trim."}},
-   {"@type":"Question","name":"How long does an exterior painting job take?","acceptedAnswer":{"@type":"Answer","text":"Most exteriors take 4 to 8 working days with a full crew, plus allowance for weather."}},
-   {"@type":"Question","name":"Are you insured?","acceptedAnswer":{"@type":"Answer","text":"Yes. Pittsburgh Painting & Property Solutions is fully insured and provides the certificate of insurance before work begins."}},
-   {"@type":"Question","name":"Can you paint brick?","acceptedAnswer":{"@type":"Answer","text":"Yes, with a masonry-specific breathable coating over cleaned, repointed and dry brick. Painted brick fails when a non-breathable system traps moisture, so the substrate is assessed at the walk-through first."}},
-   {"@type":"Question","name":"What time of year should I paint my house in Pittsburgh?","acceptedAnswer":{"@type":"Answer","text":"Exteriors need surface temperatures consistently above 50F and dry substrate, which in Western Pennsylvania means late April through late October. August to October is ideal. Interiors, cabinets and basements are done year-round."}}
-  ]
-}
-</script>
