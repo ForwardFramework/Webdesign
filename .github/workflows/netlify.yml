@@ -1,0 +1,53 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - main
+      - claude/forward-framework-website-qwe3cg
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: netlify
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@v4
+
+      # Rewrites links and canonicals to the extensionless form and emits
+      # _redirects, so only one URL per page is ever live.
+      - name: Build the Netlify bundle
+        run: python3 tools/build_netlify.py
+
+      - name: Check for credentials
+        id: creds
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [ -n "$NETLIFY_AUTH_TOKEN" ] && [ -n "$NETLIFY_SITE_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Netlify secrets not set — bundle built but not deployed. Add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID under Settings → Secrets and variables → Actions."
+          fi
+
+      - name: Deploy to Netlify
+        if: steps.creds.outputs.ready == 'true'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx --yes netlify-cli@latest deploy --dir=dist/netlify --prod --message "${{ github.event.head_commit.message }}"
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: netlify-bundle
+          path: dist/netlify

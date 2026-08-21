@@ -17,7 +17,7 @@ SKIP_DIRS = {".git", ".github", ".claude", "dist", "docs", "tools", "__pycache__
 SKIP_FILES = {"README.md", ".gitignore", "DEPLOY.md"}
 
 # Host-specific files, excluded from the generic bundle.
-HOST_ONLY = {"vercel.json", ".vercelignore"}
+HOST_ONLY = {"vercel.json", ".vercelignore", "netlify.toml"}
 
 
 def main():

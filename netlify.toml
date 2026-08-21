@@ -1,0 +1,23 @@
+# Netlify build configuration.
+#
+# The publish directory is generated rather than the repo root: the site's
+# source uses .html URLs, and the Netlify build rewrites them to the
+# extensionless form plus a _redirects file that enforces it. See DEPLOY.md.
+
+[build]
+  command = "python3 tools/build_netlify.py"
+  publish = "dist/netlify"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+# Deploy previews and branch deploys must not be indexed.
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex"
+
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex"
