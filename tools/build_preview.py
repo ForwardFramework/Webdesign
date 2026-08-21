@@ -50,6 +50,25 @@ shell_bottom = re.search(r"</main>(.*?)<script src=", index, re.S).group(1)
 css = read("assets/css/styles.css")
 js = read("assets/js/main.js")
 
+
+def inline_css_assets(sheet):
+    """Fold every url(/assets/...) in the stylesheet into a data URI.
+
+    The single-file build has no filesystem beside it, so a root-absolute
+    background reference — the prism artifact — would silently resolve to
+    nothing. Base64 keeps the payload valid regardless of the SVG's contents.
+    """
+
+    def sub(m):
+        rel = m.group(1).lstrip("/")
+        data = base64.b64encode(read(rel).encode()).decode()
+        return f'url("data:image/svg+xml;base64,{data}")'
+
+    return re.sub(r'url\(["\']?(/assets/[^"\')]+\.svg)["\']?\)', sub, sheet)
+
+
+css = inline_css_assets(css)
+
 favicon = base64.b64encode(read("assets/img/favicon.svg").encode()).decode()
 
 blocks = []
