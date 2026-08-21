@@ -6,13 +6,13 @@ Forward Framework serves owner-led and mid-market companies across the United St
 
 ## Services
 
-- [Web Design & Development](https://forwardframework.com/services/web-design.html): Conversion-focused web design is the practice of building a website around a single measurable business outcome instead of around aesthetics. It combines clear positioning, one dominant call to action, proof placed above the fold, sub-2.5-second load times and forms engineered to be finished rather than abandoned.
-- [AI Consulting](https://forwardframework.com/services/ai-consulting.html): AI consulting is the work of identifying where artificial intelligence will actually make or save money in a specific business, then sequencing those opportunities by value, effort and risk. A good engagement produces a ranked use-case roadmap with dollar estimates and clear buy-versus-build decisions — not a technology demonstration.
-- [Automation](https://forwardframework.com/services/automation.html): Business process automation replaces the manual steps people take to move information between systems — copying leads into a CRM, chasing quotes, assembling reports, onboarding a customer. Done properly it removes roughly 65% of the identified manual hours and cuts response times from hours to seconds.
-- [Marketing, SEO & AI Search](https://forwardframework.com/services/marketing.html): Modern search marketing has two jobs: earn the classic organic ranking, and earn the citation inside AI-generated answers. The second — Generative Engine Optimization — rewards direct answers in the first 40 to 60 words, structured data, entity clarity, crawler access and freshness rather than keyword density.
-- [Ad Management](https://forwardframework.com/services/ad-management.html): Effective ad management optimises toward closed revenue rather than clicks or form fills. That requires conversion tracking wired back to your CRM, offline conversion imports so the platforms learn which leads actually became customers, and a willingness to turn off spend that looks good in the dashboard.
-- [Social Media Marketing](https://forwardframework.com/services/social-media-marketing.html): Effective social media marketing for a business is a demand-building programme, not a posting schedule. It produces a consistent point of view, short-form video and proof content that reaches buyers before they are searching, and it is measured against pipeline influence rather than follower count.
-- [Scaffold — Business Systems](https://forwardframework.com/services/business-systems.html): Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.
+- [Web Design & Development](https://www.forward-framework.com/services/web-design.html): Conversion-focused web design is the practice of building a website around a single measurable business outcome instead of around aesthetics. It combines clear positioning, one dominant call to action, proof placed above the fold, sub-2.5-second load times and forms engineered to be finished rather than abandoned.
+- [AI Consulting](https://www.forward-framework.com/services/ai-consulting.html): AI consulting is the work of identifying where artificial intelligence will actually make or save money in a specific business, then sequencing those opportunities by value, effort and risk. A good engagement produces a ranked use-case roadmap with dollar estimates and clear buy-versus-build decisions — not a technology demonstration.
+- [Automation](https://www.forward-framework.com/services/automation.html): Business process automation replaces the manual steps people take to move information between systems — copying leads into a CRM, chasing quotes, assembling reports, onboarding a customer. Done properly it removes roughly 65% of the identified manual hours and cuts response times from hours to seconds.
+- [Marketing, SEO & AI Search](https://www.forward-framework.com/services/marketing.html): Modern search marketing has two jobs: earn the classic organic ranking, and earn the citation inside AI-generated answers. The second — Generative Engine Optimization — rewards direct answers in the first 40 to 60 words, structured data, entity clarity, crawler access and freshness rather than keyword density.
+- [Ad Management](https://www.forward-framework.com/services/ad-management.html): Effective ad management optimises toward closed revenue rather than clicks or form fills. That requires conversion tracking wired back to your CRM, offline conversion imports so the platforms learn which leads actually became customers, and a willingness to turn off spend that looks good in the dashboard.
+- [Social Media Marketing](https://www.forward-framework.com/services/social-media-marketing.html): Effective social media marketing for a business is a demand-building programme, not a posting schedule. It produces a consistent point of view, short-form video and proof content that reaches buyers before they are searching, and it is measured against pipeline influence rather than follower count.
+- [Scaffold — Business Systems](https://www.forward-framework.com/services/business-systems.html): Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.
 
 ## Pricing (published starting points, USD)
 
@@ -32,12 +32,12 @@ Forward Framework serves owner-led and mid-market companies across the United St
 
 ## Key pages
 
-- [Home](https://forwardframework.com/): overview, method and the free Growth Plan offer
-- [Services](https://forwardframework.com/services/): all seven services with their free deliverables
-- [Pricing](https://forwardframework.com/pricing.html): published starting prices for every service
-- [Results](https://forwardframework.com/results.html): case studies with baselines and methods
-- [About](https://forwardframework.com/about.html): operating principles and the five-phase method
-- [Contact](https://forwardframework.com/contact.html): request a written Growth Plan in 48 hours
+- [Home](https://www.forward-framework.com/): overview, method and the free Growth Plan offer
+- [Services](https://www.forward-framework.com/services/): all seven services with their free deliverables
+- [Pricing](https://www.forward-framework.com/pricing.html): published starting prices for every service
+- [Results](https://www.forward-framework.com/results.html): case studies with baselines and methods
+- [About](https://www.forward-framework.com/about.html): operating principles and the five-phase method
+- [Contact](https://www.forward-framework.com/contact.html): request a written Growth Plan in 48 hours
 
 ## Method — The Forward Framework
 
@@ -57,6 +57,6 @@ Forward Framework serves owner-led and mid-market companies across the United St
 
 ## Contact
 
-- Email: hello@forwardframework.com
+- Email: hello@forward-framework.com
 - Phone: +1-555-012-3456
 - Area served: United States (remote-first)

@@ -25,11 +25,17 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "dist", "cloudflare")
-SOURCE_DOMAIN = "https://forwardframework.com"
+
 
 SKIP_DIRS = {".git", ".github", ".claude", "dist", "tools", "__pycache__", ".vercel", "_site", "node_modules", "docs"}
 SKIP_FILES = {"README.md", "DEPLOY.md", ".gitignore", "vercel.json", ".vercelignore"}
 REWRITE_EXT = {".html", ".xml", ".txt", ".webmanifest", ".json", ".js"}
+
+
+def source_domain():
+    """The domain the site is currently built with, read from build.py's SITE."""
+    build = open(os.path.join(ROOT, "tools", "build.py"), encoding="utf-8").read()
+    return re.search(r'^SITE = "([^"]+)"', build, re.M).group(1)
 
 HEADERS = """# Cloudflare Pages response headers.
 /*
@@ -63,7 +69,8 @@ def clean_urls(text):
 
 
 def main():
-    domain = (sys.argv[1].rstrip("/") if len(sys.argv) > 1 else SOURCE_DOMAIN)
+    SRC = source_domain()
+    domain = (sys.argv[1].rstrip("/") if len(sys.argv) > 1 else SRC)
 
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
@@ -82,8 +89,8 @@ def main():
 
             if os.path.splitext(f)[1].lower() in REWRITE_EXT:
                 text = original = open(src, encoding="utf-8").read()
-                if domain != SOURCE_DOMAIN:
-                    text = text.replace(SOURCE_DOMAIN, domain)
+                if domain != SRC:
+                    text = text.replace(SRC, domain)
                 text = clean_urls(text)
                 open(dest, "w", encoding="utf-8").write(text)
                 if text != original:

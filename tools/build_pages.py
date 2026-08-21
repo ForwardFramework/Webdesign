@@ -4,7 +4,7 @@ Stage the site into _site/ for GitHub Pages.
 
     python3 tools/build_pages.py <base_path> <base_url>
     python3 tools/build_pages.py /Webdesign https://forwardframework.github.io/Webdesign
-    python3 tools/build_pages.py "" https://forwardframework.com
+    python3 tools/build_pages.py "" https://www.forward-framework.com
 
 GitHub Pages serves a *project* site from a subpath (/<repo>/), but every link
 and asset reference in the source is root-absolute — correct for the real
@@ -22,11 +22,17 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "_site")
-SOURCE_DOMAIN = "https://forwardframework.com"
+
 
 SKIP_DIRS = {".git", ".github", ".claude", "dist", "tools", "__pycache__", ".vercel", "_site", "node_modules"}
 SKIP_FILES = {"README.md", "DEPLOY.md", ".gitignore", "vercel.json", ".vercelignore"}
 REWRITE_EXT = {".html", ".xml", ".txt", ".webmanifest", ".json"}
+
+
+def source_domain():
+    """The domain the site is currently built with, read from build.py's SITE."""
+    build = open(os.path.join(ROOT, "tools", "build.py"), encoding="utf-8").read()
+    return re.search(r'^SITE = "([^"]+)"', build, re.M).group(1)
 
 
 def main():
@@ -36,6 +42,7 @@ def main():
 
     base_path = sys.argv[1].rstrip("/")          # "" or "/Webdesign"
     base_url = sys.argv[2].rstrip("/")           # "https://…"
+    SRC = source_domain()
 
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
@@ -57,8 +64,8 @@ def main():
                 before = text
 
                 # 1. Absolute URLs: canonicals, Open Graph, JSON-LD, sitemap, robots, llms.
-                if base_url != SOURCE_DOMAIN:
-                    text = text.replace(SOURCE_DOMAIN, base_url)
+                if base_url != SRC:
+                    text = text.replace(SRC, base_url)
 
                 # 2. Root-relative paths, only when serving from a subpath.
                 #    The negative lookahead leaves protocol-relative //host alone.

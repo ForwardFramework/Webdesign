@@ -221,8 +221,8 @@ Everything below is a placeholder and is marked in the source.
 | What | Current value |
 |---|---|
 | **Phone** | `(555) 012-3456` — reserved fictional range |
-| **Email** | `hello@forwardframework.com` |
-| **Domain** | `https://forwardframework.com` — change with `tools/set_domain.py` |
+| **Email** | `hello@forward-framework.com` |
+| **Domain** | `https://www.forward-framework.com` — change with `tools/set_domain.py` |
 | **Form endpoint** | `REPLACE_WITH_YOUR_FORM_ENDPOINT` on every `data-endpoint` |
 | **Case studies** | Illustrative examples, marked `PLACEHOLDER` in HTML comments |
 | **Testimonials** | Illustrative, marked `PLACEHOLDER` |

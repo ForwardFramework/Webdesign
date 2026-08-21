@@ -308,7 +308,7 @@
             body: JSON.stringify(payload)
           }).then(finish).catch(function () {
             if (btn) { btn.disabled = false; btn.innerHTML = original; }
-            alert('Something went wrong sending your request. Please email hello@forwardframework.com and we will pick it up right away.');
+            alert('Something went wrong sending your request. Please email hello@forward-framework.com and we will pick it up right away.');
           });
         } else {
           // No endpoint wired yet — log locally so the flow is testable end to end.

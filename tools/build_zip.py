@@ -13,7 +13,7 @@ import sys
 import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SKIP_DIRS = {".git", ".claude", "dist", "tools", "__pycache__", ".vercel"}
+SKIP_DIRS = {".git", ".github", ".claude", "dist", "docs", "tools", "__pycache__", ".vercel", "_site"}
 SKIP_FILES = {"README.md", ".gitignore", "DEPLOY.md"}
 
 # Host-specific files, excluded from the generic bundle.

@@ -60,4 +60,4 @@ User-agent: *
 Allow: /
 Disallow: /thank-you.html
 
-Sitemap: https://forwardframework.com/sitemap.xml
+Sitemap: https://www.forward-framework.com/sitemap.xml

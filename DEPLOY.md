@@ -255,7 +255,7 @@ Or drag the folder onto [vercel.com/new](https://vercel.com/new).
 
 Every page carries an absolute URL in its canonical tag, Open Graph tags,
 JSON-LD entity graph, `sitemap.xml`, `robots.txt` and `llms.txt`. Those
-currently say `https://forwardframework.com`.
+currently say `https://www.forward-framework.com`.
 
 If the site goes live on a `*.vercel.app` URL while the canonicals point
 somewhere else, search engines are told the real page lives at a domain that
@@ -273,7 +273,7 @@ git commit -am "Point site at the Vercel domain" && git push
 And when the real domain is connected:
 
 ```bash
-python3 tools/set_domain.py https://forwardframework.com
+python3 tools/set_domain.py https://www.forward-framework.com
 git commit -am "Point site at the production domain" && git push
 ```
 
