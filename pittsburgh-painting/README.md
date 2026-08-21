@@ -217,19 +217,44 @@ Google Business Profile and costs you local rankings.
 The publish directory is **`pittsburgh-painting/dist`** and there is **no build step** — `dist/`
 is committed, so CI has nothing to run.
 
-### Option A — connect the repo (recommended, ~2 minutes)
+### Option A — deploy on push, via GitHub Actions (recommended)
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. Pick the `ForwardFramework/Webdesign` repo and the branch you want to publish
-3. Build settings:
-   - **Framework preset:** `None`
-   - **Build command:** *(leave empty)*
-   - **Build output directory:** `pittsburgh-painting/dist`
-4. **Save and Deploy**
+`.github/workflows/deploy-cloudflare.yml` is already in the repo. It needs two secrets once,
+then every push deploys.
 
-Every push to that branch redeploys. Pull requests get their own preview URL.
+1. **Cloudflare → My Profile → API Tokens → Create Token.** Use the *Edit Cloudflare Workers*
+   template, or a custom token with **Account ▸ Cloudflare Pages ▸ Edit**.
+2. **Copy your Account ID** — Cloudflare dashboard → *Workers & Pages*, right-hand sidebar.
+3. **GitHub → this repo → Settings → Secrets and variables → Actions → New repository secret.**
+   Add both:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+4. Push anything under `pittsburgh-painting/`, or hit **Run workflow** on the Actions tab.
 
-### Option B — direct upload from your machine
+The workflow creates the Pages project on first run, so there's nothing to set up in the
+Cloudflare dashboard. Pushing `main` publishes production; any other branch gets its own
+preview URL. To publish the current branch as production without merging, use **Run workflow**
+and tick *Publish as production*.
+
+Before deploying it also checks two things worth keeping:
+
+- **`dist/` is current** — catches an edit to `_src/` that was never rebuilt, which would
+  otherwise silently ship the old pages.
+- **nothing private leaked into `dist/`** — `build.py` holds `LEAD_EMAIL`, so it must never
+  reach the CDN.
+
+### Option B — connect the repo in the Cloudflare dashboard
+
+No secrets, no Actions. Cloudflare → **Workers & Pages** → **Create** → **Pages** →
+**Connect to Git** → pick `ForwardFramework/Webdesign` and a branch, then:
+
+- **Framework preset:** `None`
+- **Build command:** *(leave empty)*
+- **Build output directory:** `pittsburgh-painting/dist`
+
+`dist/` is committed, so there is nothing to build. You lose the two safety checks above.
+
+### Option C — direct upload from your machine
 
 ```bash
 cd pittsburgh-painting

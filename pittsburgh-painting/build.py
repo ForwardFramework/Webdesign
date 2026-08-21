@@ -8,7 +8,7 @@ bodies in `_src/` and writes plain HTML to the site root. No dependencies —
 
 Edit `_src/<page>.html` for content, this file for chrome, then re-run.
 """
-import os, re, html, json, datetime
+import os, re, html, json, datetime, subprocess
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC  = os.path.join(ROOT, "_src")
@@ -561,6 +561,20 @@ def page_schema(p, base, body):
                          ensure_ascii=False, separators=(",", ":"))
             + "</script>")
 
+def last_modified(src_file):
+    """When this page's content actually changed, from git. Stamping every page
+    with today's date would be untrue and would make dist/ churn on every build."""
+    try:
+        r = subprocess.run(["git", "log", "-1", "--format=%cs", "--",
+                            os.path.join("_src", src_file)],
+                           cwd=ROOT, capture_output=True, text=True, timeout=5)
+        if r.returncode == 0 and r.stdout.strip():
+            return r.stdout.strip()
+    except Exception:
+        pass                                    # no git, shallow clone, new file
+    return datetime.date.today().isoformat()
+
+
 def page_url(f):
     """Public URL for a built page. Directory-style: /about/ rather than
     /about.html, because Cloudflare Pages 308-redirects .html to extensionless
@@ -675,10 +689,9 @@ def build():
         written.append((p["file"], len(out)))
 
     # sitemap
-    today = datetime.date.today().isoformat()
     urls = "".join(
         f'  <url><loc>{SITE}{page_url(p["file"])}</loc>'
-        f'<lastmod>{today}</lastmod>'
+        f'<lastmod>{last_modified(p["src"])}</lastmod>'
         f'<priority>{"1.0" if p["file"]=="index.html" else "0.8"}</priority></url>\n'
         for p in PAGES if not p.get("noindex"))
     open(os.path.join(OUT, "sitemap.xml"), "w").write(
