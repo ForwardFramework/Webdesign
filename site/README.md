@@ -42,9 +42,9 @@ these, not the pages.
 | File | Controls |
 |---|---|
 | `src/data/site.ts` | Name, address, phone, email, hours, licence, credentials, social links, **service areas** |
-| `src/data/services.ts` | All nine services: copy, products, warranties, process steps, FAQs |
+| `src/data/services.ts` | All ten services: copy, products, warranties, process steps, FAQs |
 | `src/data/promos.ts` | Every offer, its terms, and which services it appears on |
-| `src/data/reviews.ts` | Customer reviews and platform ratings |
+| `src/data/reviews.ts` | Customer reviews and the Google / Facebook / BBB platform ratings |
 | `src/data/financing.ts` | Acorn pre-qualify link, published APR/amount/term ranges, calculator defaults |
 
 Changing the phone number in `site.ts` updates the header, footer, every CTA, the
@@ -60,10 +60,22 @@ In `src/data/promos.ts`, set `active: false`. Inactive offers render nowhere.
 
 ### Replacing the logo
 
-`src/components/LogoMark.astro` is a redraw of the supplied artwork, not the original
-file. If you have the vector from whoever designed it, the component header explains the
-two-file swap. `node gen-assets.mjs` regenerates the favicon, app icons and OG card from
-whatever the mark becomes.
+The source of truth is **`brand/TDE_Logo.jpg`** — the official lockup, white artwork on a
+solid `#38b6ff` field. Everything else is derived from it:
+
+```bash
+node gen-assets.mjs
+```
+
+That keys the blue ground out into an alpha mask, re-tints the artwork in both colourways,
+splits the stacked lockup into its mark and wordmark, and writes
+`public/brand/*.png` plus the favicon, app icons and the Open Graph card. `Logo.astro`
+sets the mark and wordmark side by side so the type stays readable at header sizes.
+
+To swap in new artwork: replace `brand/TDE_Logo.jpg`, re-run the script, and rebuild. No
+component changes are needed as long as the new file keeps the same two-tone structure
+(artwork light, ground `#38b6ff`). If the ground colour changes, update `BRAND` at the top
+of `gen-assets.mjs`.
 
 ### Adding a service area
 
@@ -138,6 +150,7 @@ Any static host works for the pages; only `/api/lead` needs a serverless runtime
 Requires `npm run preview` on port 4321:
 
 ```bash
-node qa.mjs   # crawls every route: SEO, headings, labels, schema, links,
-              # mobile overflow and WCAG AA text contrast
+node qa.mjs      # crawls every route: SEO, headings, labels, schema, links,
+                 # mobile overflow and WCAG AA text contrast
+node shots.mjs <dir>   # screenshots the key pages at desktop and mobile widths
 ```

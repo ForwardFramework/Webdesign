@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Stars from './Stars.astro';
-import { verifiedReviews, ratingSummary, type Review } from '../data/reviews.ts';
+import { ratingSummary, reviewsForDisplay, reviewCount } from '../data/reviews.ts';
 import { site } from '../data/site.ts';
 
 interface Props {
@@ -16,16 +16,14 @@ interface Props {
 
 const {
   heading = 'What Pittsburgh Homeowners Say',
-  sub = '5-star rated on Google and Facebook, BBB accredited, and reviewed by real customers across the South Hills.',
+  sub = `5.0 on Google, 100% recommended on Facebook, and an A rating with the BBB — across ${reviewCount} verified reviews from homeowners in the South Hills.`,
   service,
   limit = 6,
   showAllLink = true,
   variant = 'alt',
 } = Astro.props;
 
-const scoped = service ? verifiedReviews.filter((r) => r.service === service) : [];
-const pool: Review[] = scoped.length > 0 ? scoped : verifiedReviews;
-const shown = pool.slice(0, limit);
+const shown = reviewsForDisplay(service, limit);
 
 const sectionClass =
   variant === 'dark' ? 'section section--dark' : variant === 'alt' ? 'section section--alt' : 'section';
@@ -46,15 +44,12 @@ const sectionClass =
           <li>
             <a href={p.url} target="_blank" rel="noopener noreferrer" class="rv-platform">
               <span class="rv-platform__name">{p.source}</span>
-              {p.rating !== null ? (
-                <>
-                  <Stars rating={p.rating} size={16} label={`${p.rating} out of 5 on ${p.source}`} />
-                  <span class="rv-platform__score">{p.rating.toFixed(1)}</span>
-                </>
-              ) : (
-                <span class="rv-platform__score rv-platform__score--text">{p.note}</span>
+              <span class="rv-platform__score">{p.display}</span>
+              <span class="rv-platform__label">{p.label}</span>
+              {p.rating !== null && (
+                <Stars rating={p.rating} size={15} label={`${p.display} ${p.label} on ${p.source}`} />
               )}
-              {p.count !== null && <span class="rv-platform__count">{p.count} reviews</span>}
+              {p.note && <span class="rv-platform__count">{p.note}</span>}
             </a>
           </li>
         ))
@@ -68,12 +63,15 @@ const sectionClass =
             <li class="rv-card reveal" data-reveal-delay={Math.min(i, 5) * 60}>
               <Icon name="quote" size={26} class="rv-card__mark" />
               <Stars rating={r.rating} size={17} />
-              <blockquote class="rv-card__quote">{r.quote}</blockquote>
+              <blockquote class="rv-card__quote">
+                {r.quote}{r.truncated && <span class="rv-card__more">…</span>}
+              </blockquote>
               <footer class="rv-card__foot">
                 <cite class="rv-card__author">{r.author}</cite>
                 <span class="rv-card__meta">
-                  {r.location && <>{r.location} · </>}
-                  Verified on {r.source}
+                  {r.source}
+                  {r.alsoOn && r.alsoOn.length > 0 && <> · also on {r.alsoOn.join(', ')}</>}
+                  {' · '}{r.date}
                 </span>
               </footer>
             </li>
@@ -109,6 +107,9 @@ const sectionClass =
   }
   .rv-platform {
     display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
     align-items: center;
     gap: 0.55rem;
     padding: 0.7rem 1.1rem;
@@ -136,7 +137,7 @@ const sectionClass =
     font-weight: 800;
     font-size: 0.95rem;
   }
-  .rv-platform__score--text { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+  .rv-platform__label { font-size: 0.78rem; color: var(--text-muted); }
   .rv-platform__count { font-size: 0.8rem; color: var(--text-subtle); }
 
   .rv-grid {
@@ -177,6 +178,8 @@ const sectionClass =
   }
   .rv-card__quote::before { content: '“'; }
   .rv-card__quote::after { content: '”'; }
+  /* Platform-truncated text gets an ellipsis rather than being invented forward. */
+  .rv-card__more { color: var(--text-subtle); }
 
   .rv-card__foot {
     padding-top: var(--sp-3);

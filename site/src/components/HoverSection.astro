@@ -1,0 +1,439 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.ts';
+
+/**
+ * The Hover app section, used on the roofing and siding pages.
+ *
+ * The visual is a small interactive demonstration rather than a screenshot: a
+ * house drawn in SVG whose roof, siding and trim recolour as the visitor taps
+ * swatches. It shows what Hover *does* — see the change on the house before you
+ * commit — without passing off a mock as a real render of anyone's home.
+ *
+ * When Top Dog has Hover exports of their own completed jobs, swapping this
+ * panel for real before/after 3D renders is the obvious upgrade, and the copy
+ * around it needs no changes.
+ */
+interface Props {
+  /** Tunes the copy and which swatch group leads. */
+  service: 'roofing' | 'siding';
+}
+const { service } = Astro.props;
+
+const isRoof = service === 'roofing';
+
+const roofColors = [
+  { name: 'Estate Gray', hex: '#4b5259' },
+  { name: 'Onyx Black', hex: '#2b2f33' },
+  { name: 'Driftwood', hex: '#6f6a5f' },
+  { name: 'Teak', hex: '#7a5c42' },
+  { name: 'Aged Copper', hex: '#4f6b5e' },
+  { name: 'Sierra Gray', hex: '#8a8b86' },
+];
+
+const sidingColors = [
+  { name: 'Arctic White', hex: '#f2f3f0' },
+  { name: 'Pearl Gray', hex: '#c9cbc6' },
+  { name: 'Sailcloth', hex: '#dcd6c8' },
+  { name: 'Iron Gray', hex: '#6d7278' },
+  { name: 'Deep Ocean', hex: '#2f4a5c' },
+  { name: 'Cedar', hex: '#8b6a4f' },
+];
+
+const trimColors = [
+  { name: 'White', hex: '#ffffff' },
+  { name: 'Almond', hex: '#e8dfcd' },
+  { name: 'Black', hex: '#23262a' },
+];
+
+const steps = [
+  {
+    icon: 'phone',
+    title: 'We photograph your house',
+    body: 'Eight photos from the ground on a phone — that is the whole capture. No drone, no ladder, nobody on your roof.',
+  },
+  {
+    icon: 'home',
+    title: 'Hover builds a 3D model',
+    body: 'Those photos become an accurate, measured 3D model of your actual home, with real square footage for every elevation and roof facet.',
+  },
+  {
+    icon: 'sparkle',
+    title: 'You try options on your own house',
+    body: isRoof
+      ? 'Swap shingle colours and profiles and see them on your roof, in your light, next to your existing trim and siding — not on a stock photo of somebody else’s house.'
+      : 'Swap siding, trim, stone and roof colours and see the combination on your house before a single panel is ordered.',
+  },
+  {
+    icon: 'document',
+    title: 'The measurements price the job',
+    body: 'The same model produces the material take-off, so the quote is built from measured reality rather than an estimate of your square footage.',
+  },
+];
+---
+
+<section class="hover-sec" aria-labelledby="hover-heading">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">
+        <Icon name="sparkle" size={14} /> Powered by Hover
+      </span>
+      <h2 id="hover-heading">
+        {isRoof ? 'See Your New Roof on Your Actual Roof' : 'See Your New Siding on Your Actual House'}
+      </h2>
+      <p class="lede" style="margin-inline:auto">
+        {
+          isRoof
+            ? 'Choosing shingle colour off a two-inch sample board in a driveway is guesswork. We use Hover to build a true 3D model of your home from a handful of phone photos, then put real shingle colours on your real roof so you can see the decision before you make it.'
+            : 'Siding colour looks completely different on a sample chip than it does on a whole house in Pittsburgh daylight. We use Hover to build a true 3D model of your home from a handful of phone photos, then try siding, trim and roof combinations on your actual house before anything is ordered.'
+        }
+      </p>
+    </div>
+
+    <div class="hover-sec__grid">
+      <!-- ── Interactive visualiser ─────────────────────────────────── -->
+      <div class="viz" data-viz>
+        <div class="viz__stage">
+          <svg viewBox="0 0 520 360" class="viz__house" role="img" aria-labelledby="viz-title">
+            <title id="viz-title">Illustration of a house with selectable roof, siding and trim colours</title>
+
+            <!-- Sky and ground -->
+            <rect width="520" height="360" fill="#dbeefc" />
+            <rect y="300" width="520" height="60" fill="#cfe0cd" />
+
+            <!-- Main body -->
+            <rect x="96" y="168" width="248" height="134" data-part="siding" fill="#dcd6c8" />
+            <!-- Gable -->
+            <path d="M96 168 220 82 344 168Z" data-part="siding" fill="#dcd6c8" />
+            <!-- Roof over main body -->
+            <path d="M220 70 366 176h-24L220 96 98 176H74Z" data-part="roof" fill="#4b5259" />
+
+            <!-- Right wing -->
+            <rect x="344" y="212" width="106" height="90" data-part="siding" fill="#dcd6c8" />
+            <path d="M397 200 462 218v10H332v-10Z" data-part="roof" fill="#4b5259" />
+
+            <!-- Chimney -->
+            <rect x="288" y="92" width="26" height="52" data-part="roof" fill="#4b5259" />
+
+            <!-- Windows -->
+            <g data-part="trim" fill="#ffffff">
+              <rect x="128" y="200" width="44" height="56" rx="3" />
+              <rect x="196" y="200" width="44" height="56" rx="3" />
+              <rect x="268" y="200" width="44" height="56" rx="3" />
+              <rect x="196" y="120" width="48" height="34" rx="3" />
+              <rect x="368" y="240" width="58" height="44" rx="3" />
+            </g>
+            <g fill="#9dc6e0">
+              <rect x="133" y="205" width="34" height="46" rx="2" />
+              <rect x="201" y="205" width="34" height="46" rx="2" />
+              <rect x="273" y="205" width="34" height="46" rx="2" />
+              <rect x="201" y="125" width="38" height="24" rx="2" />
+              <rect x="373" y="245" width="48" height="34" rx="2" />
+            </g>
+
+            <!-- Door -->
+            <rect x="152" y="242" width="40" height="60" rx="3" data-part="trim" fill="#ffffff" />
+            <rect x="157" y="247" width="30" height="55" rx="2" fill="#4a3a2c" />
+
+            <!-- Corner and fascia trim -->
+            <g data-part="trim" fill="#ffffff">
+              <rect x="96" y="168" width="9" height="134" />
+              <rect x="335" y="168" width="9" height="134" />
+              <rect x="441" y="212" width="9" height="90" />
+              <rect x="96" y="296" width="354" height="8" />
+            </g>
+
+            <!-- Shrubs -->
+            <g fill="#7ba36f">
+              <ellipse cx="112" cy="298" rx="20" ry="14" />
+              <ellipse cx="330" cy="298" rx="18" ry="12" />
+              <ellipse cx="466" cy="300" rx="22" ry="14" />
+            </g>
+          </svg>
+
+          <p class="viz__badge">
+            <Icon name="alert" size={13} /> Illustration — in Hover this is your actual home
+          </p>
+        </div>
+
+        <div class="viz__controls">
+          <fieldset class="viz__group">
+            <legend>Roof</legend>
+            <div class="viz__swatches">
+              {
+                roofColors.map((c, i) => (
+                  <label class="sw" title={c.name}>
+                    <input type="radio" name="viz-roof" value={c.hex} checked={i === 0} data-part-input="roof" />
+                    <span class="sw__chip" style={`--sw:${c.hex}`}></span>
+                    <span class="sr-only">{c.name}</span>
+                  </label>
+                ))
+              }
+            </div>
+            <p class="viz__name" data-name-for="roof">Estate Gray</p>
+          </fieldset>
+
+          <fieldset class="viz__group">
+            <legend>Siding</legend>
+            <div class="viz__swatches">
+              {
+                sidingColors.map((c, i) => (
+                  <label class="sw" title={c.name}>
+                    <input type="radio" name="viz-siding" value={c.hex} checked={i === 2} data-part-input="siding" />
+                    <span class="sw__chip" style={`--sw:${c.hex}`}></span>
+                    <span class="sr-only">{c.name}</span>
+                  </label>
+                ))
+              }
+            </div>
+            <p class="viz__name" data-name-for="siding">Sailcloth</p>
+          </fieldset>
+
+          <fieldset class="viz__group">
+            <legend>Trim</legend>
+            <div class="viz__swatches">
+              {
+                trimColors.map((c, i) => (
+                  <label class="sw" title={c.name}>
+                    <input type="radio" name="viz-trim" value={c.hex} checked={i === 0} data-part-input="trim" />
+                    <span class="sw__chip" style={`--sw:${c.hex}`}></span>
+                    <span class="sr-only">{c.name}</span>
+                  </label>
+                ))
+              }
+            </div>
+            <p class="viz__name" data-name-for="trim">White</p>
+          </fieldset>
+        </div>
+      </div>
+
+      <!-- ── Steps ──────────────────────────────────────────────────── -->
+      <ol class="hover-steps">
+        {
+          steps.map((s, i) => (
+            <li>
+              <span class="hover-steps__icon"><Icon name={s.icon} size={20} /></span>
+              <div>
+                <h3>
+                  <span class="hover-steps__num">{String(i + 1).padStart(2, '0')}</span>
+                  {s.title}
+                </h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="hover-cta">
+      <p>
+        <strong>Want to see it on your house?</strong> Ask for a Hover model when you book your free
+        estimate — it costs you nothing and it is the single best way to avoid the
+        {isRoof ? ' "I thought it would look darker" ' : ' "it looked different on the sample" '}
+        conversation after the job is done.
+      </p>
+      <div class="btn-row">
+        <a href="#service-quote" class="btn btn--primary">Book a Free Estimate with a Hover Model</a>
+        <a href={`tel:${site.phoneRaw}`} class="btn btn--outline">
+          <Icon name="phone" size={18} /> {site.phone}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hover-sec {
+    padding-block: var(--section-y);
+    background:
+      radial-gradient(ellipse 70% 50% at 80% 0%, rgba(56, 182, 255, 0.1), transparent 60%),
+      var(--n-50);
+    border-block: 1px solid var(--border);
+  }
+  .hover-sec .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .hover-sec__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--sp-7);
+    align-items: start;
+  }
+
+  /* ── Visualiser ───────────────────────────────────────────────────── */
+  .viz {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .viz__stage { position: relative; }
+  .viz__house { display: block; width: 100%; height: auto; }
+  .viz__house [data-part] { transition: fill var(--t); }
+
+  .viz__badge {
+    position: absolute;
+    left: var(--sp-3);
+    bottom: var(--sp-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.32rem 0.6rem;
+    border-radius: var(--radius-pill);
+    /* Solid, not translucent: the illustration behind it changes colour as the
+       visitor clicks swatches, and a see-through pill can land on a light roof
+       and fall under 4.5:1. */
+    background: var(--n-950);
+    color: #fff;
+    font-size: 0.68rem;
+  }
+
+  .viz__controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    border-top: 1px solid var(--border);
+  }
+  .viz__group { border: 0; margin: 0; padding: 0; }
+  .viz__group legend {
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    margin-bottom: 0.5rem;
+  }
+  .viz__swatches { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .sw { position: relative; display: inline-flex; }
+  .sw input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .sw__chip {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--sw);
+    border: 2px solid var(--border-strong);
+    cursor: pointer;
+    transition: transform var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+  }
+  .sw input:hover + .sw__chip { transform: scale(1.08); }
+  .sw input:checked + .sw__chip {
+    border-color: var(--brand-600);
+    box-shadow: 0 0 0 3px rgba(56, 182, 255, 0.35);
+  }
+  .sw input:focus-visible + .sw__chip { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+  .viz__name {
+    margin-top: 0.45rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* ── Steps ────────────────────────────────────────────────────────── */
+  .hover-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-4);
+  }
+  .hover-steps li {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .hover-steps__icon {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius);
+    background: var(--brand-50);
+    color: var(--brand-600);
+  }
+  .hover-steps h3 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: var(--fs-base);
+    margin-bottom: 0.3rem;
+  }
+  .hover-steps__num {
+    font-size: 0.78rem;
+    font-weight: 900;
+    color: var(--brand-600);
+    letter-spacing: -0.02em;
+  }
+  .hover-steps p { font-size: 0.87rem; line-height: 1.62; color: var(--text-muted); }
+
+  /* ── Closing CTA ──────────────────────────────────────────────────── */
+  .hover-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    margin-top: var(--sp-6);
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-400);
+    border-radius: var(--radius-lg);
+  }
+  .hover-cta p {
+    flex: 1 1 340px;
+    font-size: var(--fs-sm);
+    line-height: 1.62;
+    color: var(--text-muted);
+  }
+  .hover-cta strong { color: var(--n-900); }
+
+  @media (max-width: 980px) {
+    .hover-sec__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // Recolour the illustration as swatches are chosen. Every `data-part` shape in
+  // the SVG shares a fill, so one query per part keeps this trivial.
+  const viz = document.querySelector<HTMLElement>('[data-viz]');
+
+  if (viz) {
+    const apply = (input: HTMLInputElement) => {
+      const part = input.dataset.partInput!;
+      viz.querySelectorAll<SVGElement>(`[data-part="${part}"]`).forEach((el) => {
+        el.setAttribute('fill', input.value);
+      });
+
+      const label = viz.querySelector<HTMLElement>(`[data-name-for="${part}"]`);
+      const name = input.closest('label')?.getAttribute('title');
+      if (label && name) label.textContent = name;
+    };
+
+    viz.querySelectorAll<HTMLInputElement>('[data-part-input]').forEach((input) => {
+      input.addEventListener('change', () => apply(input));
+      if (input.checked) apply(input);
+    });
+  }
+</script>

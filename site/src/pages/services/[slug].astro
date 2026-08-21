@@ -7,6 +7,7 @@ import PromoGrid from '../../components/PromoGrid.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Faq from '../../components/Faq.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
+import HoverSection from '../../components/HoverSection.astro';
 import { site, primaryAreas } from '../../data/site.ts';
 import { services, allServices, productSlug } from '../../data/services.ts';
 import { promosForService } from '../../data/promos.ts';
@@ -204,6 +205,13 @@ const schema = [
       </ul>
     </div>
   </section>
+
+  <!-- ══ HOVER ═════════════════════════════════════════════════════════
+       Only on the two trades where colour and material choice is the hard part
+       of the decision. -->
+  {(service.slug === 'roofing' || service.slug === 'siding') && (
+    <HoverSection service={service.slug as 'roofing' | 'siding'} />
+  )}
 
   <!-- ══ PROCESS ═══════════════════════════════════════════════════════ -->
   <section class="section section--dark" aria-labelledby="process-heading">

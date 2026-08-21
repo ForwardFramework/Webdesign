@@ -1,4 +1,4 @@
-# Reviews — adding your Google, Facebook and BBB reviews
+# Reviews — how the review data works
 
 Reviews live in **`src/data/reviews.ts`**. They render on `/reviews`, on the homepage,
 and on service pages (filtered by trade where a review is tagged with one).
@@ -19,42 +19,67 @@ real legal exposure. Don't.
 
 ## What is in there now
 
-Three verbatim reviews located on the public HomeAdvisor listing. Everything else is
-represented by the platform links, which is deliberate rather than a gap to be papered
-over.
+53 reviews, taken verbatim from the live Google, Facebook and BBB listings.
 
-## Adding a review
-
-Copy the text **exactly** as the customer wrote it — including typos. Do not tidy it up,
-shorten it, or combine two reviews into one.
+## The shape
 
 ```ts
 {
   quote: 'Paste the review exactly as the customer wrote it.',
   author: 'Name exactly as it appears publicly',   // e.g. 'Sarah M.'
-  source: 'Google',                                // Google | Facebook | BBB | HomeAdvisor | Angi | Nextdoor
+  source: 'Google',                                // the platform the text was taken from
+  alsoOn: ['Facebook'],                            // optional — see "Deduplication"
   rating: 5,
-  date: '2026-05-14',                              // ISO, or null if the platform hides it
+  date: 'May 2026',                                // as the platform displays it
+  truncated: true,                                 // optional — see "Truncated text"
   service: 'roofing',                              // optional — a slug from services.ts
-  location: 'Mt. Lebanon, PA',                     // optional
   verified: true,
 },
 ```
 
-Tagging `service` makes the review appear on that trade's page, which is where it does
-the most work.
+Tagging `service` makes the review appear on that trade's page and in the
+`/reviews` filter chips, which is where it does the most work.
 
-## Filling in the rating counts
+### Deduplication
 
-In `ratingSummary.platforms`, `count` is `null` until you supply the real number:
+Plenty of customers left the same review on more than one platform — a Google review and
+a Facebook recommendation, or a Google review and a BBB review. Each customer appears in
+the data **once**, and the entry is attributed to whichever platform carries the fullest
+text. The other platforms go in `alsoOn`, which renders as
+"Google · also on Facebook · May 2026".
+
+When adding a review, search `reviews.ts` for the author's name first. If they are
+already there, add the new platform to their `alsoOn` rather than creating a second
+entry — a repeated testimonial reads as padding and inflates the count dishonestly.
+
+### Truncated text
+
+Google and BBB cut long reviews off behind a "More" link. Where the full text was not
+available, the entry keeps the platform's truncation and sets `truncated: true`, which
+renders a trailing ellipsis. The text is never invented forward to make a card look
+complete.
+
+## The platform ratings
+
+`ratingSummary.platforms` drives the three rating cards on `/reviews` and the pill row in
+the homepage reviews section. The three platforms do not use the same scale, so each
+entry carries a `display` string and a `label` rather than a single number:
 
 ```ts
-{ source: 'Google', rating: 5.0, count: 47, url: '…' },
+{ source: 'Google',   rating: 5.0,  display: '5.0',  label: 'out of 5',    note: null },
+{ source: 'Facebook', rating: 5.0,  display: '100%', label: 'recommend',   note: '29 recommendations' },
+{ source: 'BBB',      rating: null, display: 'A',    label: 'BBB rating',  note: 'Accredited since 2025' },
 ```
 
-A `null` count renders the badge without a number rather than publishing a figure that
-cannot be substantiated. Update these when the counts change — a visibly stale count is
-worse than no count.
+- **`display` / `label`** are what the visitor reads. Facebook reports a recommend
+  percentage, not a star average; the BBB issues a letter grade. Rendering either as
+  "5.0 stars" would misstate what the platform actually publishes.
+- **`rating`** is the numeric star value, used for the star row and for structured data.
+  It is `null` for the BBB, whose letter grade has no star equivalent — the card renders
+  an award icon instead of stars.
+- **`note`** is the supporting count or credential, shown small underneath.
+
+Update these when the real numbers change. A visibly stale count is worse than no count.
 
 ## Live Google reviews instead of pasting
 

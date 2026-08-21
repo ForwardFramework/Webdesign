@@ -61,7 +61,7 @@ export const services: Service[] = [
     order: 1,
     featured: true,
     summary:
-      'Top Dog Exteriors installs asphalt shingle, exposed fastener metal, standing seam metal, TPO and EPDM roofing across the Greater Pittsburgh area. We are an Owens Corning Preferred Contractor and every roof carries a 5-year workmanship warranty.',
+      'Top Dog Exteriors installs asphalt shingle, exposed fastener metal, standing seam metal, TPO and EPDM roofing across the Greater Pittsburgh area. We are an Owens Corning Preferred Contractor, every roof carries a 5-year workmanship warranty, and we use the Hover app to build a 3D model of your home so you can see shingle colours on your actual roof before you choose.',
     cardBlurb:
       'Shingle, standing seam, exposed fastener metal, TPO and EPDM — installed by an Owens Corning Preferred Contractor and backed by 5 years of workmanship coverage.',
     heroHeadline: 'Pittsburgh Roof Replacement Done Once, Done Right',
@@ -77,8 +77,8 @@ export const services: Service[] = [
     highlights: [
       'Owens Corning Preferred Contractor',
       '5-Year Workmanship Warranty',
+      'See It On Your Roof With Hover',
       'Instant Satellite Roof Quote',
-      'Insurance Claim Support',
     ],
     products: [
       {
@@ -262,7 +262,7 @@ export const services: Service[] = [
     order: 3,
     featured: true,
     summary:
-      'Top Dog Exteriors installs vinyl, Alside ASCEND composite, Everlast composite, James Hardie fiber cement and LP SmartSide engineered wood siding across the Greater Pittsburgh area, each with its own manufacturer warranty plus our 5-year workmanship warranty.',
+      'Top Dog Exteriors installs vinyl, Alside ASCEND composite, Everlast composite, James Hardie fiber cement and LP SmartSide engineered wood siding across the Greater Pittsburgh area, each with its own manufacturer warranty plus our 5-year workmanship warranty. We use the Hover app to build a 3D model of your home so you can see siding, trim and roof combinations on your actual house before anything is ordered.',
     cardBlurb:
       'Vinyl, ASCEND, Everlast, James Hardie and LP SmartSide — five siding systems, five warranties, one 5-year workmanship guarantee.',
     heroHeadline: 'Siding That Outlives the Mortgage',
@@ -278,8 +278,8 @@ export const services: Service[] = [
     highlights: [
       '5 Siding Systems',
       '5-Year Workmanship Warranty',
+      'See It On Your House With Hover',
       'Full House Wrap & Flashing Detail',
-      'Insulated Options Available',
     ],
     products: [
       {

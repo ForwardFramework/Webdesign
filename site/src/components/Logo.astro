@@ -1,27 +1,57 @@
 ---
-import LogoMark from './LogoMark.astro';
-
 /**
- * Full lockup: mark + "TOP DOG EXTERIORS" wordmark.
+ * The official Top Dog Exteriors lockup.
  *
- * `tone="brand"` renders the mark in #38b6ff on a light page (the header).
- * `tone="light"` renders it in white for navy sections (the footer).
- * `markOnly` drops the wordmark for tight spaces.
+ * Assets are derived from `brand/TDE_Logo.jpg` by `gen-assets.mjs`, which keys
+ * out the solid brand-blue ground and re-tints the artwork. Two colourways,
+ * both on transparency:
+ *
+ *   tone="brand" → #38b6ff artwork, for white pages (the header)
+ *   tone="light" → white artwork, for navy sections (the footer, the drawer)
+ *
+ * The source artwork stacks the mark above the wordmark. At header sizes that
+ * would render the wordmark unreadably small, so the two are split into
+ * separate files and set side by side here — the real house, the real dog, the
+ * real typeface, just laid out horizontally.
+ *
+ * To update the logo: replace `brand/TDE_Logo.jpg` and re-run
+ * `node gen-assets.mjs`. Nothing in the components needs to change.
  */
 interface Props {
   tone?: 'brand' | 'light';
+  /** Drop the wordmark — used where horizontal space is tight. */
   markOnly?: boolean;
+  /** Drop the wordmark automatically on small screens (the header). */
+  responsive?: boolean;
+  /** Height of the mark in px. The wordmark scales with it. */
   size?: number;
 }
-const { tone = 'brand', markOnly = false, size = 42 } = Astro.props;
+const { tone = 'brand', markOnly = false, responsive = false, size = 46 } = Astro.props;
+const suffix = tone === 'light' ? 'white' : 'blue';
 ---
 
-<span class="logo" data-tone={tone} data-mark-only={markOnly ? 'true' : 'false'}>
-  <LogoMark size={size} paper={tone === 'light' ? 'var(--n-950)' : '#ffffff'} class="logo__mark" />
-  <span class="logo__type">
-    <span class="logo__word">TOP DOG</span>
-    <span class="logo__sub">EXTERIORS</span>
-  </span>
+<span
+  class="logo"
+  style={`--mark-h:${size}px`}
+  data-mark-only={markOnly ? 'true' : 'false'}
+  data-responsive={responsive ? 'true' : 'false'}
+>
+  <img
+    class="logo__mark"
+    src={`/brand/mark-${suffix}.png`}
+    alt=""
+    width="512"
+    height="497"
+    decoding="async"
+  />
+  <img
+    class="logo__word"
+    src={`/brand/word-${suffix}.png`}
+    alt="Top Dog Exteriors"
+    width="1116"
+    height="83"
+    decoding="async"
+  />
 </span>
 
 <style>
@@ -29,45 +59,33 @@ const { tone = 'brand', markOnly = false, size = 42 } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: 0.62rem;
-    text-decoration: none;
     line-height: 1;
   }
 
-  /* The mark inherits colour; the wordmark splits weight the way the original
-     artwork does — "TOP DOG" heavy, "EXTERIORS" light and letterspaced. */
-  .logo[data-tone='brand'] { color: var(--brand-400); }
-  .logo[data-tone='brand'] .logo__word { color: var(--n-900); }
-  .logo[data-tone='brand'] .logo__sub { color: var(--n-600); }
-
-  .logo[data-tone='light'] { color: #fff; }
-  .logo[data-tone='light'] .logo__word { color: #fff; }
-  .logo[data-tone='light'] .logo__sub { color: rgba(255, 255, 255, 0.72); }
-
-  .logo__mark { flex: none; }
-
-  .logo__type {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+  .logo__mark {
+    height: var(--mark-h);
+    width: auto;
+    flex: none;
   }
+
+  /* The wordmark is a long, short strip; tying it to the mark height keeps the
+     lockup proportional at every size without hard-coding a width. */
   .logo__word {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 1.24rem;
-    letter-spacing: -0.015em;
-  }
-  .logo__sub {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 0.6rem;
-    letter-spacing: 0.28em;
+    height: calc(var(--mark-h) * 0.38);
+    width: auto;
+    flex: none;
   }
 
-  .logo[data-mark-only='true'] .logo__type { display: none; }
+  .logo[data-mark-only='true'] .logo__word { display: none; }
 
-  @media (max-width: 400px) {
-    .logo { gap: 0.45rem; }
-    .logo__word { font-size: 1.06rem; }
-    .logo__sub { font-size: 0.53rem; letter-spacing: 0.2em; }
+  /* The wordmark is ~13x wider than it is tall. Beside a phone button and a
+     burger there is not room for it under ~560px, so the mark carries the brand
+     there instead of the lockup overflowing the viewport. */
+  .logo[data-responsive='true'] {
+    --mark-h: 42px;
+  }
+  @media (max-width: 560px) {
+    .logo[data-responsive='true'] .logo__word { display: none; }
+    .logo[data-responsive='true'] { --mark-h: 40px; }
   }
 </style>

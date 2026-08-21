@@ -61,13 +61,13 @@ export const site = {
       icon: 'star',
     },
     {
-      label: 'BBB Accredited Since 2025',
-      detail: 'Accredited by the Better Business Bureau of Western Pennsylvania.',
+      label: 'A Rating with the BBB',
+      detail: 'Accredited by the Better Business Bureau of Western Pennsylvania since 2025, carrying an A rating.',
       icon: 'badge',
     },
     {
-      label: '5-Star Rated on Google & Facebook',
-      detail: 'Verified homeowner reviews across Google, Facebook, BBB and HomeAdvisor.',
+      label: '5★ Google · 100% Recommended on Facebook',
+      detail: 'Verified homeowner reviews across Google, Facebook and the BBB — every one published on our reviews page word for word.',
       icon: 'stars',
     },
     {
@@ -84,10 +84,10 @@ export const site = {
 
   /** Headline proof points used in the hero stat strip. */
   stats: [
-    { value: '5.0★', label: 'Google & Facebook rating' },
+    { value: '5.0★', label: 'Google rating' },
+    { value: '100%', label: 'Recommended on Facebook' },
+    { value: 'A', label: 'Rating with the BBB' },
     { value: '5-Year', label: 'Workmanship warranty' },
-    { value: '24 Hr', label: 'Estimate turnaround' },
-    { value: '100%', label: 'Veteran owned & operated' },
   ],
 } as const;
 
