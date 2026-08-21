@@ -4,5 +4,3 @@
 # Local environment files
 .env
 .env.local
-
-# Generated single-file bundle — rebuild with `node talent-signal/build.mjs`
