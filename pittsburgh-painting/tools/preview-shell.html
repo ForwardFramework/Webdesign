@@ -173,7 +173,7 @@ const TEXTS  = /*__TEXTS__*/;
 
 const $ = s => document.querySelector(s);
 const frame = $('#frame'), canvas = document.querySelector('.canvas');
-let current = 'index.html', width = 0;
+let current = '/', width = 0;
 
 /* Build the rail from the real sitemap, grouped by the job each page does. */
 const navEl = $('#nav');
@@ -242,8 +242,7 @@ document.querySelector('.seg').addEventListener('click', e => {
 addEventListener('message', e => {
   const d = e.data || {};
   if (d.pps !== 'nav') return;
-  let href = String(d.href).replace(/^\.\//, '');
-  while (href.startsWith('../')) href = href.slice(3);
+  const href = String(d.href).split('?')[0];
   if (DOCS[href]) show(href);
 });
 
@@ -260,6 +259,6 @@ $('#theme').addEventListener('click', () => {
 
 addEventListener('resize', measure);
 canvas.addEventListener('scroll', () => {}, { passive: true });
-show('index.html');
+show('/');
 setWidth(0);
 </script>

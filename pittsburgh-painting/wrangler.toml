@@ -1,0 +1,9 @@
+# Cloudflare Pages — direct upload.
+#   npx wrangler pages deploy            (run from this directory)
+#
+# For the Git integration you don't need this file at all; set the project's
+# build output directory to `pittsburgh-painting/dist` and leave the build
+# command empty. dist/ is committed, so there is nothing to build in CI.
+name = "pittsburgh-painting"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-08-21"

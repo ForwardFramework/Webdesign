@@ -12,8 +12,8 @@ from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC  = "file://" + os.path.join(ROOT, "tools", "guide.html")
-PDF  = os.path.join(ROOT, "assets", "pittsburgh-exterior-paint-checklist.pdf")
-JPG  = os.path.join(ROOT, "assets", "img", "guide-cover.jpg")
+PDF  = os.path.join(ROOT, "dist", "assets", "pittsburgh-exterior-paint-checklist.pdf")
+JPG  = os.path.join(ROOT, "dist", "assets", "img", "guide-cover.jpg")
 TMP  = "/tmp/pps-guide-cover.png"
 
 def browser_path():

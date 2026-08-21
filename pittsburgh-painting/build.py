@@ -13,6 +13,11 @@ import os, re, html, json, datetime
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC  = os.path.join(ROOT, "_src")
 
+# Everything public lands in dist/ and nothing else does. That directory is the
+# deploy target, so build.py (which holds LEAD_EMAIL) and the _src fragments
+# never reach a CDN. assets/ already lives inside dist/ — it isn't copied.
+OUT  = os.path.join(ROOT, "dist")
+
 # ==========================================================================
 #  CONFIG — the only block you need to touch to point leads somewhere real
 # ==========================================================================
@@ -171,7 +176,7 @@ def related(base, current):
     every service is two clicks from every other one."""
     items = [(h, n, d) for h, n, d in SERVICES if not h.endswith(current)]
     cards = "".join(
-        f'''<a class="card" href="{base}{h}" data-reveal><div class="card-b">
+        f'''<a class="card" href="{page_url(h)}" data-reveal><div class="card-b">
         <h3 style="font-size:1.15rem">{n}</h3><p style="font-size:.92rem">{d}</p>
         <span class="card-link">Learn more {ico("arrow")}</span></div></a>'''
         for h, n, d in items)
@@ -193,14 +198,14 @@ def crumbs_html(p, base):
     for i, (href, name) in enumerate(c):
         last = i == len(c) - 1
         parts.append(f'<li aria-current="page">{name}</li>' if last
-                     else f'<li><a href="{base}{href}">{name}</a></li>'
+                     else f'<li><a href="{page_url(href)}">{name}</a></li>'
                           f'<li aria-hidden="true" class="sep">/</li>')
     return ('<nav class="crumbs" aria-label="Breadcrumb"><div class="wrap"><ol>'
             + "".join(parts) + "</ol></div></nav>")
 
 
 def head(p, base):
-    canonical = SITE + "/" + ("" if p["file"] == "index.html" else p["file"])
+    canonical = SITE + page_url(p["file"])
     return f'''<!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -241,7 +246,7 @@ def head(p, base):
 def header(p, base):
     if p.get("bare"):
         return f'''<header class="site-header"><div class="wrap hdr">
-  <a class="brand" href="{base}index.html">
+  <a class="brand" href="{page_url("index.html")}">
     <img src="{base}assets/logo-mark.svg" alt="" width="46" height="46">
     <span class="brand-txt"><b>Pittsburgh</b><span>Painting &amp; Property Solutions</span></span>
   </a>
@@ -254,19 +259,19 @@ def header(p, base):
     cur = p["file"]
     def a(href, label, extra=""):
         mark = ' aria-current="page"' if href == cur else ""
-        return f'<a href="{base}{href}"{mark}{extra}>{label}</a>'
-    svc = "".join(f'<a href="{base}{h}">{n}<small>{d}</small></a>' for h, n, d in SERVICES)
+        return f'<a href="{page_url(href)}"{mark}{extra}>{label}</a>'
+    svc = "".join(f'<a href="{page_url(h)}">{n}<small>{d}</small></a>' for h, n, d in SERVICES)
     nav = "".join(a(h, n) for h, n in NAV)
-    msvc = "".join(f'<a class="sub" href="{base}{h}">{n}</a>' for h, n, _ in SERVICES)
-    mnav = "".join(f'<a href="{base}{h}">{n}</a>' for h, n in NAV)
+    msvc = "".join(f'<a class="sub" href="{page_url(h)}">{n}</a>' for h, n, _ in SERVICES)
+    mnav = "".join(f'<a href="{page_url(h)}">{n}</a>' for h, n in NAV)
     svc_open = ' aria-current="page"' if cur.startswith("services/") else ""
     return f'''<div class="promo">
   <b>$1,000 OFF</b> full exterior repaints booked for Aug &middot; Sept &middot; Oct &nbsp;
-  <a href="{base}offer.html">See the offer &rarr;</a>
+  <a href="{page_url("offer.html")}">See the offer &rarr;</a>
 </div>
 <header class="site-header">
  <div class="wrap hdr">
-  <a class="brand" href="{base}index.html">
+  <a class="brand" href="{page_url("index.html")}">
     <img src="{base}assets/logo-mark.svg" alt="{BRAND}" width="46" height="46">
     <span class="brand-txt"><b>Pittsburgh</b><span>Painting &amp; Property Solutions</span></span>
   </a>
@@ -280,7 +285,7 @@ def header(p, base):
   <div class="hdr-cta">
     <a class="hdr-phone" href="tel:{TEL}" data-loc="header">{ico("phone")}
       <span>{PHONE}<small>Call or text Brian</small></span></a>
-    <a class="btn" href="{base}estimate.html">Free Estimate</a>
+    <a class="btn" href="{page_url("estimate.html")}">Free Estimate</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span></span></button>
   </div>
  </div>
@@ -291,11 +296,11 @@ def header(p, base):
     <img src="{base}assets/logo-mark.svg" alt="" width="44" height="44">
     <button class="burger" type="button" aria-expanded="true" aria-label="Close menu"><span></span></button>
   </div>
-  <a href="{base}index.html">Home</a>
-  <a href="{base}estimate.html">Get a Free Estimate</a>
+  <a href="{page_url("index.html")}">Home</a>
+  <a href="{page_url("estimate.html")}">Get a Free Estimate</a>
   {msvc}
   {mnav}
-  <a href="{base}offer.html">$1,000 Off Offer</a>
+  <a href="{page_url("offer.html")}">$1,000 Off Offer</a>
   <a class="btn btn-lg" href="tel:{TEL}" data-loc="mobile-nav">{ico("phone")} {PHONE}</a>
 </nav>
 '''
@@ -304,19 +309,19 @@ def footer(p, base):
     if p.get("bare"):
         return f'''<footer class="site-footer"><div class="wrap center">
   <p style="font-size:.85rem">&copy; <span data-year></span> {BRAND}. Fully insured. Serving Greater Pittsburgh.
-  &nbsp;&middot;&nbsp; <a href="{base}privacy.html">Privacy</a></p>
+  &nbsp;&middot;&nbsp; <a href="{page_url("privacy.html")}">Privacy</a></p>
 </div></footer>
 <div class="mobile-bar">
   <a class="btn" href="tel:{TEL}" data-loc="mobile-bar-offer">{ico("phone")} Call Brian &mdash; {PHONE}</a>
 </div>
 </body></html>'''
-    svc = "".join(f'<li><a href="{base}{h}">{n}</a></li>' for h, n, _ in SERVICES)
-    nav = "".join(f'<li><a href="{base}{h}">{n}</a></li>' for h, n in NAV)
+    svc = "".join(f'<li><a href="{page_url(h)}">{n}</a></li>' for h, n, _ in SERVICES)
+    nav = "".join(f'<li><a href="{page_url(h)}">{n}</a></li>' for h, n in NAV)
     return f'''<footer class="site-footer">
  <div class="wrap">
   <div class="foot-grid">
    <div>
-    <a class="foot-brand" href="{base}index.html">
+    <a class="foot-brand" href="{page_url("index.html")}">
       <img src="{base}assets/logo-mark.svg" alt="" width="52" height="52">
       <span><b>Pittsburgh</b><span>Painting &amp; Property Solutions</span></span>
     </a>
@@ -329,8 +334,8 @@ def footer(p, base):
     </div>
    </div>
    <div><h4>Services</h4><ul>{svc}</ul></div>
-   <div><h4>Company</h4><ul>{nav}<li><a href="{base}estimate.html">Free Estimate</a></li>
-        <li><a href="{base}offer.html">Current Offer</a></li></ul></div>
+   <div><h4>Company</h4><ul>{nav}<li><a href="{page_url("estimate.html")}">Free Estimate</a></li>
+        <li><a href="{page_url("offer.html")}">Current Offer</a></li></ul></div>
    <div>
     <h4>Get in touch</h4>
     <ul>
@@ -340,7 +345,7 @@ def footer(p, base):
       <li style="margin-top:1rem">Serving Greater Pittsburgh<br>and the surrounding suburbs</li>
       <li>Allegheny &middot; Washington &middot; Butler<br>&amp; Westmoreland counties, PA</li>
     </ul>
-    <a class="btn mt-5" href="{base}estimate.html">Get My Free Estimate</a>
+    <a class="btn mt-5" href="{page_url("estimate.html")}">Get My Free Estimate</a>
    </div>
   </div>
   <div class="foot-bot">
@@ -348,16 +353,16 @@ def footer(p, base):
       Fully insured &middot; Pittsburgh, PA &middot; {PHONE}
       <!-- VERIFY: add PA HIC registration number + insurance carrier here --></p>
    <ul>
-     <li><a href="{base}privacy.html">Privacy Policy</a></li>
-     <li><a href="{base}service-areas.html">Service Areas</a></li>
-     <li><a href="{base}gallery.html">Our Work</a></li>
+     <li><a href="{page_url("privacy.html")}">Privacy Policy</a></li>
+     <li><a href="{page_url('service-areas.html')}">Service Areas</a></li>
+     <li><a href="{page_url("gallery.html")}">Our Work</a></li>
    </ul>
   </div>
  </div>
 </footer>
 <div class="mobile-bar">
   <a class="btn" href="tel:{TEL}" data-loc="mobile-bar">{ico("phone")} Call Brian</a>
-  <a class="btn btn-dark" href="{base}estimate.html">Free Estimate</a>
+  <a class="btn btn-dark" href="{page_url("estimate.html")}">Free Estimate</a>
 </div>
 {nudge(base) if p.get("nudge", True) else ""}
 </body>
@@ -501,7 +506,7 @@ def business_node():
     return node
 
 def page_schema(p, base, body):
-    canonical = SITE + "/" + ("" if p["file"] == "index.html" else p["file"])
+    canonical = SITE + page_url(p["file"])
     graph = [business_node(), {
         "@type": "WebSite", "@id": SITE_ID, "url": SITE + "/",
         "name": "Pittsburgh Painting & Property Solutions",
@@ -521,7 +526,7 @@ def page_schema(p, base, body):
             "@type": "BreadcrumbList", "@id": canonical + "#crumbs",
             "itemListElement": [
                 {"@type": "ListItem", "position": i + 1, "name": name,
-                 "item": SITE + "/" + href}
+                 "item": SITE + page_url(href)}
                 for i, (href, name) in enumerate(crumbs)]})
 
     # AEO: mark the page's lead answer as speakable for voice assistants
@@ -556,6 +561,36 @@ def page_schema(p, base, body):
                          ensure_ascii=False, separators=(",", ":"))
             + "</script>")
 
+def page_url(f):
+    """Public URL for a built page. Directory-style: /about/ rather than
+    /about.html, because Cloudflare Pages 308-redirects .html to extensionless
+    and that hop would invalidate every canonical, sitemap entry and @id."""
+    if f == "index.html":
+        return "/"
+    if f == "404.html":
+        return "/404.html"
+    return "/" + f[:-len(".html")] + "/"
+
+
+def out_path(f):
+    """Where that page is written inside dist/. Every page becomes a directory
+    except the homepage and 404.html — hosts look for 404.html at the root."""
+    if f in ("index.html", "404.html"):
+        return f
+    return f[:-len(".html")] + "/index.html"
+
+
+ALL_PAGE_FILES = None   # populated in build() once PAGES is known
+
+def linkify(html_str):
+    """Rewrite any remaining foo.html reference to its directory URL."""
+    def sub(m):
+        attr, path, frag = m.group(1), m.group(2), m.group(3) or ""
+        f = path.lstrip("/")
+        return f'{attr}="{page_url(f)}{frag}"' if f in ALL_PAGE_FILES else m.group(0)
+    return re.sub(r'(href|src)="/?([\w/-]+\.html)(#[\w-]+)?"', sub, html_str)
+
+
 TOKEN = re.compile(r"\{\{(\w+)(?::([^}]*))?\}\}")
 
 def expand(text, base):
@@ -566,37 +601,87 @@ def expand(text, base):
         if k == "stars": return star_row(int(arg or 5))
         if k == "phone": return PHONE
         if k == "tel":   return TEL
-        if k == "base":       return base
+        if k == "base":       return "/"
         if k == "magnet":     return magnet(base, arg or "m")
         if k == "form_attrs": return form_attrs()
-        if k == "guide_pdf":  return base + GUIDE_PDF
+        if k == "guide_pdf":  return "/" + GUIDE_PDF
         if k == "email":      return LEAD_EMAIL
         if k == "related":    return related(base, arg or "")
         return m.group(0)
     return TOKEN.sub(sub, text)
 
+# ---------------------------------------------------------- host config ----
+HEADERS = """/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+/assets/img/*
+  Cache-Control: public, max-age=2592000
+
+/assets/css/*
+  Cache-Control: public, max-age=604800
+
+/assets/js/*
+  Cache-Control: public, max-age=604800
+
+/assets/*.pdf
+  Cache-Control: public, max-age=604800
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/thank-you.html
+  X-Robots-Tag: noindex
+"""
+
+REDIRECTS = """# Short URLs worth putting on business cards, yard signs and ad copy.
+/quote            /estimate/    301
+/free-estimate    /estimate/    301
+/offer            /offer/       301
+/checklist        /guide/       301
+/services         /services/exterior-painting/   301
+/exterior         /services/exterior-painting/   301
+/interior         /services/interior-painting/   301
+/cabinets         /services/cabinet-refinishing/ 301
+
+# Anything that ever shipped with a .html extension keeps working.
+/index.html       /             301
+/:page.html       /:page/       301
+/services/:page.html  /services/:page/  301
+"""
+
+
 def build():
+    global ALL_PAGE_FILES
+    ALL_PAGE_FILES = {p["file"] for p in PAGES}
+    os.makedirs(OUT, exist_ok=True)
     written = []
     for p in PAGES:
-        base = p.get("base", "")
+        base = "/"   # links and assets are root-absolute at every depth
         body = open(os.path.join(SRC, p["src"]), encoding="utf-8").read()
-        expanded = expand(body, base)
+        expanded = linkify(expand(body, base))
         out = (head(p, base) + header(p, base) + crumbs_html(p, base)
                + '<main id="main">\n' + expanded + '\n</main>\n'
                + page_schema(p, base, expanded) + "\n" + footer(p, base))
-        dest = os.path.join(ROOT, p["file"])
-        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        dest = os.path.join(OUT, out_path(p["file"]))
+        os.makedirs(os.path.dirname(dest) or OUT, exist_ok=True)
         open(dest, "w", encoding="utf-8").write(out)
         written.append((p["file"], len(out)))
 
     # sitemap
     today = datetime.date.today().isoformat()
     urls = "".join(
-        f'  <url><loc>{SITE}/{"" if p["file"]=="index.html" else p["file"]}</loc>'
+        f'  <url><loc>{SITE}{page_url(p["file"])}</loc>'
         f'<lastmod>{today}</lastmod>'
         f'<priority>{"1.0" if p["file"]=="index.html" else "0.8"}</priority></url>\n'
         for p in PAGES if not p.get("noindex"))
-    open(os.path.join(ROOT, "sitemap.xml"), "w").write(
+    open(os.path.join(OUT, "sitemap.xml"), "w").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n')
     # robots.txt — AI answer engines are a growth channel for a local contractor,
@@ -617,7 +702,7 @@ def build():
     for bot in training_bots:
         lines += [f"User-agent: {bot}", "Allow: /" if ALLOW_AI_CRAWLERS else "Disallow: /", ""]
     lines += [f"Sitemap: {SITE}/sitemap.xml", ""]
-    open(os.path.join(ROOT, "robots.txt"), "w").write("\n".join(lines))
+    open(os.path.join(OUT, "robots.txt"), "w").write("\n".join(lines))
 
     # llms.txt — an emerging convention that points AI agents at the pages worth
     # reading and states the business facts plainly. Cheap to publish, and the
@@ -689,11 +774,17 @@ exterior paint failure is prep failure rather than product failure.
 Call or text Brian at {PHONE}, Monday to Saturday 7am to 7pm, or request a free written
 estimate at {SITE}/estimate.html
 """
-    open(os.path.join(ROOT, "llms.txt"), "w").write(llms)
+    open(os.path.join(OUT, "llms.txt"), "w").write(llms)
+
+    # _headers and _redirects are the portable pair — Cloudflare Pages and
+    # Netlify both read them, so there is no host-specific config to keep in sync.
+    open(os.path.join(OUT, "_headers"), "w").write(HEADERS)
+    open(os.path.join(OUT, "_redirects"), "w").write(REDIRECTS)
 
     for f, n in written:
         print(f"  {f:<38} {n/1024:6.1f} KB")
-    print(f"\n{len(written)} pages + sitemap.xml + robots.txt + llms.txt")
+    print(f"\n{len(written)} pages + sitemap.xml + robots.txt + llms.txt"
+          f" + _headers + _redirects  ->  dist/")
 
 if __name__ == "__main__":
     build()

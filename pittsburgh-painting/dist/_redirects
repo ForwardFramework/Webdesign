@@ -1,0 +1,14 @@
+# Short URLs worth putting on business cards, yard signs and ad copy.
+/quote            /estimate/    301
+/free-estimate    /estimate/    301
+/offer            /offer/       301
+/checklist        /guide/       301
+/services         /services/exterior-painting/   301
+/exterior         /services/exterior-painting/   301
+/interior         /services/interior-painting/   301
+/cabinets         /services/cabinet-refinishing/ 301
+
+# Anything that ever shipped with a .html extension keeps working.
+/index.html       /             301
+/:page.html       /:page/       301
+/services/:page.html  /services/:page/  301

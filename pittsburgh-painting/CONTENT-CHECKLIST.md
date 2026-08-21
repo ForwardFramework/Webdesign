@@ -32,7 +32,7 @@ grep -rn "VERIFY" _src/ build.py
 
 | # | Item | Where |
 |---|---|---|
-| 12 | **Domain** — `pittsburghpaintingpps.com` is a placeholder in canonical URLs, sitemap and JSON-LD | `build.py` → `SITE` |
+| 12 | **Domain** — `pittsburghpaintingpps.com` is a placeholder in canonical URLs, sitemap, `llms.txt` and JSON-LD. Set it *before* Google crawls the site. | `build.py` → `SITE` |
 | 13 | **Facebook URL** is the generic facebook.com | `build.py` → `footer()` and JSON-LD `sameAs` |
 | 14 | **Google Business Profile link** — the Reviews page says "read our Google reviews" with no link | `_src/reviews.html` |
 | 15 | **Service-area list** — 64 neighborhoods listed; confirm crews actually travel to all of them | `_src/areas.html`, `_src/home.html` |

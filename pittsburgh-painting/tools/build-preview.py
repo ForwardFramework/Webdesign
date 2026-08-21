@@ -12,37 +12,39 @@ Usage:  python3 tools/build-preview.py   →  preview.html
 import base64, json, mimetypes, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT  = os.path.join(ROOT, "preview.html")
+SITE = os.path.join(ROOT, "dist")          # the built site
+OUT  = os.path.join(ROOT, "preview.html")  # the shareable bundle (not deployed)
 
+# (url, file on disk, label) — the site uses directory-style URLs, so the two differ
 PAGES = [
   ("Main", [
-    ("index.html",                          "Home"),
-    ("about.html",                          "About"),
-    ("gallery.html",                        "Before & After"),
-    ("reviews.html",                        "Reviews"),
-    ("service-areas.html",                  "Service Areas"),
+    ("/",                              "index.html",                                  "Home"),
+    ("/about/",                        "about/index.html",                            "About"),
+    ("/gallery/",                      "gallery/index.html",                          "Before & After"),
+    ("/reviews/",                      "reviews/index.html",                          "Reviews"),
+    ("/service-areas/",                "service-areas/index.html",                    "Service Areas"),
   ]),
   ("Services", [
-    ("services/exterior-painting.html",     "Exterior Painting"),
-    ("services/interior-painting.html",     "Interior Painting"),
-    ("services/cabinet-refinishing.html",   "Cabinet Refinishing"),
-    ("services/renovations.html",           "Renovations & Flips"),
+    ("/services/exterior-painting/",   "services/exterior-painting/index.html",       "Exterior Painting"),
+    ("/services/interior-painting/",   "services/interior-painting/index.html",       "Interior Painting"),
+    ("/services/cabinet-refinishing/", "services/cabinet-refinishing/index.html",     "Cabinet Refinishing"),
+    ("/services/renovations/",         "services/renovations/index.html",             "Renovations & Flips"),
   ]),
   ("Conversion", [
-    ("estimate.html",                       "Free Estimate"),
-    ("offer.html",                          "$1,000 Off landing"),
-    ("guide.html",                          "Lead magnet"),
-    ("thank-you.html",                      "Thank You"),
+    ("/estimate/",                     "estimate/index.html",                         "Free Estimate"),
+    ("/offer/",                        "offer/index.html",                            "$1,000 Off landing"),
+    ("/guide/",                        "guide/index.html",                            "Lead magnet"),
+    ("/thank-you/",                    "thank-you/index.html",                        "Thank You"),
   ]),
   ("Utility", [
-    ("privacy.html",                        "Privacy Policy"),
-    ("404.html",                            "404"),
+    ("/privacy/",                      "privacy/index.html",                          "Privacy Policy"),
+    ("/404.html",                      "404.html",                                    "404"),
   ]),
 ]
 TEXT_FILES = [("robots.txt", "robots.txt"), ("llms.txt", "llms.txt"), ("sitemap.xml", "sitemap.xml")]
 
-def read(p):    return open(os.path.join(ROOT, p), encoding="utf-8").read()
-def rb(p):      return open(os.path.join(ROOT, p), "rb").read()
+def read(p):    return open(os.path.join(SITE, p), encoding="utf-8").read()
+def rb(p):      return open(os.path.join(SITE, p), "rb").read()
 
 def data_uri(path):
     mime = mimetypes.guess_type(path)[0] or "application/octet-stream"
@@ -52,15 +54,14 @@ def data_uri(path):
 asset_paths = set()
 raw = {}
 for _, group in PAGES:
-    for f, _ in group:
-        raw[f] = read(f)
-        base = os.path.dirname(f)
-        for m in re.findall(r'(?:src|href)="([^"]+)"', raw[f]):
+    for url, disk, _ in group:
+        raw[url] = read(disk)
+        for m in re.findall(r'(?:src|href)="([^"]+)"', raw[url]):
             if m.startswith(("http", "tel:", "sms:", "mailto:", "data:", "#", "//")):
                 continue
-            rel = os.path.normpath(os.path.join(base, m.split("#")[0]))
-            if rel.endswith((".jpg", ".png", ".svg", ".webp", ".pdf")) and os.path.exists(os.path.join(ROOT, rel)):
-                asset_paths.add(rel.replace(os.sep, "/"))
+            rel = m.split("#")[0].lstrip("/")     # links and assets are root-absolute
+            if rel.endswith((".jpg", ".png", ".svg", ".webp", ".pdf")) and os.path.exists(os.path.join(SITE, rel)):
+                asset_paths.add(rel)
 
 assets = {p: data_uri(p) for p in sorted(asset_paths)}
 
@@ -93,46 +94,35 @@ BRIDGE = """<script>
 })();
 </script>"""
 
-def prepare(path, html):
-    """Strip the real <head> asset links, inline CSS/JS, tokenise asset URLs."""
-    depth = path.count("/")
-    prefix = "../" * depth
-
-    # drop the links the bundle replaces
+def prepare(html):
+    """Strip the head asset links, inline the real CSS/JS, tokenise asset URLs."""
     html = re.sub(r'<link rel="preload" as="font"[^>]*>', "", html)
-    # lambda replacements: the CSS/JS payloads contain \d, \s etc. and would
-    # otherwise be parsed as regex backreference templates
-    html = re.sub(r'<link rel="stylesheet" href="[^"]*fonts\.css">',
-                  lambda _: FONTS, html, count=1)
+    html = re.sub(r'<link rel="stylesheet" href="[^"]*fonts\.css">', lambda _: FONTS, html, count=1)
     html = re.sub(r'<link rel="stylesheet" href="[^"]*site\.css">',
                   lambda _: "<style>" + CSS.replace("</style>", "<\\/style>") + "</style>",
                   html, count=1)
-    # `defer` has no effect on an inline script, so the bundled JS must move to
-    # the end of <body> — inlined where the original <script defer src> sat, it
-    # would run before the DOM exists and bind to nothing.
+    # `defer` has no effect on an inline script, so the bundled JS moves to the
+    # end of <body>; left where the <script defer src> sat it would run before
+    # the DOM exists and bind to nothing.
     html = re.sub(r'<script defer src="[^"]*site\.js"></script>', "", html, count=1)
 
-    # rewrite every remaining local asset reference to a lookup token
     def sub(m):
         attr, val = m.group(1), m.group(2)
         if val.startswith(("http", "tel:", "sms:", "mailto:", "data:", "#", "//")):
             return m.group(0)
-        rel = os.path.normpath(os.path.join(os.path.dirname(path), val.split("#")[0])).replace(os.sep, "/")
-        if rel in assets:
-            return f'{attr}="@@{rel}@@"'
-        return m.group(0)
+        rel = val.split("#")[0].lstrip("/")
+        return f'{attr}="@@{rel}@@"' if rel in assets else m.group(0)
     html = re.sub(r'(src|href)="([^"]+)"', sub, html)
 
     inline_js = "<script>" + JS.replace("</script>", "<\\/script>") + "</script>"
-    html = html.replace("</body>", inline_js + BRIDGE + "</body>")
-    return html
+    return html.replace("</body>", inline_js + BRIDGE + "</body>")
 
-docs = {f: prepare(f, raw[f]) for _, g in PAGES for f, _ in g}
+
+docs = {url: prepare(raw[url]) for _, g in PAGES for url, _, _ in g}
 for f, _ in TEXT_FILES:
-    docs[f] = read(f)
+    docs["/" + f] = read(f)
 
-TITLES = {f: t for _, g in PAGES for f, t in g}
-NAV = [[sec, [[f, t] for f, t in g]] for sec, g in PAGES]
+NAV = [[sec, [[url, label] for url, _, label in g]] for sec, g in PAGES]
 
 def js(obj):
     """JSON for embedding inside a <script> block. The page payloads contain
@@ -140,12 +130,12 @@ def js(obj):
     the parser inside a JS string and invisible to JSON.parse."""
     return json.dumps(obj).replace("</", "<\\/").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
 
-shell = read("tools/preview-shell.html")
+shell = open(os.path.join(ROOT, "tools", "preview-shell.html"), encoding="utf-8").read()
 shell = (shell
   .replace("/*__NAV__*/",    js(NAV))
   .replace("/*__DOCS__*/",   js(docs))
   .replace("/*__ASSETS__*/", js(assets))
-  .replace("/*__TEXTS__*/",  js([[f, t] for f, t in TEXT_FILES])))
+  .replace("/*__TEXTS__*/",  js([["/" + f, t] for f, t in TEXT_FILES])))
 
 open(OUT, "w", encoding="utf-8").write(shell)
 print(f"preview.html  {os.path.getsize(OUT)/1024/1024:.2f} MB"
