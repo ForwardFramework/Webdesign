@@ -1,6 +1,19 @@
 # Netlify deployment for topdogexteriors.com
 
+# ─────────────────────────────────────────────────────────────────────────────
+#  This file MUST live at the repository root.
+#
+#  Netlify reads netlify.toml from the root of the repo and nowhere else. The
+#  Astro project sits one level down in site/, so `base` points at it; every
+#  other path here is then resolved relative to that base — `publish = "dist"`
+#  means site/dist.
+#
+#  Only relevant to a git-connected deploy. A drag-and-drop deploy of site/dist
+#  runs no build and carries its own headers in site/public/_headers.
+# ─────────────────────────────────────────────────────────────────────────────
+
 [build]
+  base = "site"
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
