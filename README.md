@@ -55,17 +55,21 @@ python3 tools/build.py
 
 Full walkthroughs for each host are in **[DEPLOY.md](DEPLOY.md)**.
 
-| Host | Command | Notes |
-|---|---|---|
-| **Netlify** | automatic on push | `tools/build_netlify.py` — clean URLs, `_redirects`, `netlify.toml` |
-| **Cloudflare Pages** | automatic on push | `tools/build_cloudflare.py` — clean URLs, `_headers` |
-| **GitHub Pages** | automatic on push | Requires one setting — see below |
-| **Vercel** | connect the repo | `vercel.json` included |
-| **static.app** | `python3 tools/build_zip.py --portable` | Drag the zip into the dashboard |
-| **Anything else** | `python3 tools/build_zip.py` | Plain static files |
-
 > [!IMPORTANT]
-> **GitHub Pages needs one manual step before it will publish.**
+> **Netlify is the live host.** Every push to the working branch builds and
+> deploys automatically via `.github/workflows/netlify.yml`. The other hosts are
+> kept as alternatives and their workflows are manual-only.
+
+| Host | Status | Notes |
+|---|---|---|
+| **Netlify** | **live — deploys on push** | `tools/build_netlify.py` — clean URLs, `_redirects`, `netlify.toml` |
+| Cloudflare Pages | alternative, manual | `tools/build_cloudflare.py` — clean URLs, `_headers` |
+| Vercel | alternative | `vercel.json` included |
+| GitHub Pages | alternative, manual | `tools/build_pages.py` — rewrites paths for the subpath |
+| Anything else | `python3 tools/build_zip.py --portable` | Plain static files |
+
+> [!NOTE]
+> **GitHub Pages, if you ever enable it, needs one manual step.**
 > Go to **Settings → Pages → Build and deployment → Source: `GitHub Actions`**, then re-run the
 > workflow. This cannot be automated — creating a Pages site requires admin rights the workflow
 > token does not carry, so every run fails at *Configure Pages* until it is set.

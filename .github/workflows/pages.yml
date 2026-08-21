@@ -1,10 +1,9 @@
 name: Deploy to GitHub Pages
 
+# Netlify is the live host (see CLAUDE.md). This one is manual-only so it
+# neither deploys nor reports failures on every push. Run it from the
+# Actions tab if you want to publish here as well.
 on:
-  push:
-    branches:
-      - main
-      - claude/forward-framework-website-qwe3cg
   workflow_dispatch:
 
 # Least privilege needed to publish Pages.

@@ -57,7 +57,14 @@ page. Ask and the attribute can be added to all of them in one pass.
 
 ---
 
-# Netlify
+# Netlify — the live host
+
+**Every push to `claude/forward-framework-website-qwe3cg` builds and deploys to
+production**, via `.github/workflows/netlify.yml`. Nothing else needs running.
+
+The one prerequisite is two repository secrets, below. Until they exist the
+workflow builds and uploads an artifact but skips the deploy — pushes stay safe,
+they simply are not live.
 
 ### Why this host needs its own build
 
