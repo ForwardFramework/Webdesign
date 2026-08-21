@@ -57,6 +57,7 @@ Full walkthroughs for each host are in **[DEPLOY.md](DEPLOY.md)**.
 
 | Host | Command | Notes |
 |---|---|---|
+| **Cloudflare Pages** | automatic on push | `tools/build_cloudflare.py` — clean URLs, `_headers` |
 | **GitHub Pages** | automatic on push | Requires one setting — see below |
 | **Vercel** | connect the repo | `vercel.json` included |
 | **static.app** | `python3 tools/build_zip.py --portable` | Drag the zip into the dashboard |

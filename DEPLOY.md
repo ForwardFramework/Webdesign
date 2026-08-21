@@ -57,6 +57,79 @@ page. Ask and the attribute can be added to all of them in one pass.
 
 ---
 
+# Cloudflare Pages
+
+### Why this host needs its own build
+
+Cloudflare Pages serves HTML **without the extension** and 308-redirects the
+extension back: `/pricing.html` permanently redirects to `/pricing`. Uploading
+the source unchanged would mean every internal link costs a redirect hop, and —
+the real problem — every canonical tag would point at a URL that redirects.
+Google treats that as a conflicting signal and it is a documented cause of pages
+not being indexed.
+
+So `tools/build_cloudflare.py` produces a Cloudflare-correct copy: `.html`
+stripped from links, canonicals, Open Graph URLs, the JSON-LD graph,
+`sitemap.xml`, `llms.txt`, `robots.txt` and the JS redirect. Files stay named
+`*.html` on disk for Cloudflare to map, and directory indexes keep their
+trailing slash (`/services/`). It also writes a `_headers` file, which is
+Cloudflare's mechanism for response headers.
+
+```bash
+python3 tools/build_cloudflare.py                       # -> dist/cloudflare/ + a zip
+python3 tools/build_cloudflare.py https://your-domain.com   # set the domain at the same time
+```
+
+Verified against a local emulation of Cloudflare's routing: 16 routes, **zero
+redirect hops**, zero 4xx, all 19 internal links resolving directly, canonicals
+extensionless.
+
+### Option 1 — Automatic on every push
+
+`.github/workflows/cloudflare.yml` builds and deploys on every push. Add two
+secrets under **Settings → Secrets and variables → Actions**:
+
+| Secret | Where to get it |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare dashboard → My Profile → API Tokens → Create Token → *Edit Cloudflare Workers* template (or a custom token with `Account · Cloudflare Pages · Edit`) |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard → Workers & Pages → the ID in the right sidebar (also in the URL) |
+
+Create the Pages project once, named `forward-framework` — or change
+`--project-name` in the workflow to match a name you prefer.
+
+Until the secrets exist the workflow still runs, builds the bundle and uploads
+it as a downloadable artifact, then skips the deploy with a notice rather than
+failing.
+
+### Option 2 — Connect the Git repo
+
+**Workers & Pages → Create → Pages → Connect to Git** → pick the repository.
+
+| Setting | Value |
+|---|---|
+| Framework preset | `None` |
+| Build command | `python3 tools/build_cloudflare.py` |
+| Build output directory | `dist/cloudflare` |
+| Production branch | `claude/forward-framework-website-qwe3cg` (this repo has no `main`) |
+
+### Option 3 — Direct upload
+
+**Workers & Pages → Create → Pages → Upload assets**, then drag
+`dist/forward-framework-cloudflare.zip` in.
+
+### After it is live
+
+Point the site at the domain actually serving it, then rebuild:
+
+```bash
+python3 tools/build_cloudflare.py https://forward-framework.pages.dev
+```
+
+Add a custom domain under the project's **Custom domains** tab, then rebuild
+again with the real domain.
+
+---
+
 # GitHub Pages
 
 A workflow at `.github/workflows/pages.yml` builds and publishes the site on
