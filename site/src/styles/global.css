@@ -12,44 +12,65 @@
 
 /* ─── 1. TOKENS ─────────────────────────────────────────────────────────── */
 :root {
-  /* Neutrals — cool graphite, the colour of wet slate and galvanised steel */
-  --n-950: #080c11;
-  --n-900: #12181f;
-  --n-850: #18212a;
-  --n-800: #1c242d;
-  --n-700: #2e3a46;
-  --n-600: #4a5866;
+  /* ── Brand ──────────────────────────────────────────────────────────────
+     Anchored on #38b6ff, the Top Dog Exteriors blue. The scale runs from a
+     near-white tint up to a deep navy so the whole site is one hue family.
+     #38b6ff itself is a SURFACE colour, not a text colour: white on it is only
+     2.24:1. Anything that has to be *read* uses --brand-600 or darker.        */
+  --brand-50: #eff8ff;
+  --brand-100: #d9f0ff;
+  --brand-200: #b8e4ff;
+  --brand-300: #7fd2ff;
+  --brand-400: #38b6ff; /* ★ the brand colour — logo, accents, primary CTA    */
+  --brand-500: #12a1f5; /* pressed / hover state of the CTA                   */
+  --brand-600: #0873b0; /* readable on white (5.1:1) — links, eyebrows, icons */
+  --brand-700: #065c8e; /* link hover (7.1:1)                                 */
+  --brand-800: #05456b;
+  --brand-900: #04324e;
+
+  /* Ink that sits on top of --brand-400. 6.7:1 — comfortably AA. */
+  --brand-ink: #04283c;
+
+  /* ── Primary call to action ─────────────────────────────────────────────
+     Swap these three lines to flip every button on the site at once. The
+     conventional alternative is a deep blue with white text:
+       --cta-bg: var(--brand-600);  --cta-fg: #fff;  --cta-bg-hover: var(--brand-700);
+     The default below puts the exact brand hex on the most prominent element. */
+  --cta-bg: var(--brand-400);
+  --cta-fg: var(--brand-ink);
+  --cta-bg-hover: var(--brand-500);
+
+  /* ── Neutrals ───────────────────────────────────────────────────────────
+     Cool, blue-leaning slate. The 900s are a true navy so dark sections read
+     as part of the brand rather than as generic black.                       */
+  --n-950: #04202f;
+  --n-900: #062c42;
+  --n-850: #083753;
+  --n-800: #0a4263;
+  --n-700: #1d5878;
+  --n-600: #47657a;
   --n-500: #64748b;
-  --n-400: #94a2ae;
-  --n-300: #c3ccd4;
-  --n-200: #dfe5ea;
-  --n-100: #eff2f5;
-  --n-50: #f7f9fa;
+  --n-400: #8ea6b8;
+  --n-300: #bdd0dd;
+  --n-200: #dbe7ef;
+  --n-100: #eaf1f6;
+  --n-50: #f5f9fc;
   --white: #ffffff;
 
-  /* Brand — safety orange, darkened for AA text contrast */
-  --brand-800: #7c2d12;
-  --brand-700: #9a3412;
-  --brand-600: #c2410c; /* CTA surface — white text = 4.6:1 */
-  --brand-500: #ea580c; /* accents, icons, non-text graphics */
-  --brand-400: #f97316;
-  --brand-100: #ffe6d5;
-  --brand-50: #fff5ee;
+  /* Deeper navy used as the start of hero and CTA-band gradients. */
+  --steel-900: #073a58;
+  --steel-800: #0a4c72;
+  --steel-700: #0d5e8d;
+  --steel-100: #e3f1fa;
 
-  /* Steel — trust blue for secondary surfaces */
-  --steel-900: #0f2436;
-  --steel-800: #16324a;
-  --steel-700: #1d4266;
-  --steel-100: #e3edf5;
-
-  /* Status */
+  /* ── Status ─────────────────────────────────────────────────────────── */
   --success-700: #15803d;
   --success-50: #f0fdf4;
   --danger-700: #b91c1c;
   --danger-50: #fef2f2;
   --star: #f59e0b;
 
-  /* Semantic aliases — components reference these, never raw scale values */
+  /* ── Semantic aliases — components reference these, never raw scale ──── */
   --bg: var(--white);
   --bg-alt: var(--n-50);
   --surface: var(--white);
@@ -99,10 +120,10 @@
   --radius-xl: 22px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(8, 12, 17, 0.06), 0 1px 3px rgba(8, 12, 17, 0.08);
-  --shadow: 0 4px 6px -1px rgba(8, 12, 17, 0.08), 0 2px 4px -2px rgba(8, 12, 17, 0.06);
-  --shadow-lg: 0 12px 24px -8px rgba(8, 12, 17, 0.16), 0 4px 8px -4px rgba(8, 12, 17, 0.08);
-  --shadow-xl: 0 28px 56px -16px rgba(8, 12, 17, 0.28);
+  --shadow-sm: 0 1px 2px rgba(4, 32, 47, 0.06), 0 1px 3px rgba(4, 32, 47, 0.08);
+  --shadow: 0 4px 6px -1px rgba(4, 32, 47, 0.08), 0 2px 4px -2px rgba(4, 32, 47, 0.06);
+  --shadow-lg: 0 12px 24px -8px rgba(4, 32, 47, 0.16), 0 4px 8px -4px rgba(4, 32, 47, 0.08);
+  --shadow-xl: 0 28px 56px -16px rgba(4, 32, 47, 0.24);
 
   --t-fast: 140ms cubic-bezier(0.4, 0, 0.2, 1);
   --t: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -199,8 +220,8 @@ ul, ol { padding-left: 1.25em; }
 }
 
 ::selection {
-  background: var(--brand-500);
-  color: var(--white);
+  background: var(--brand-300);
+  color: var(--brand-ink);
 }
 
 /* ─── 3. LAYOUT PRIMITIVES ──────────────────────────────────────────────── */
@@ -225,8 +246,11 @@ ul, ol { padding-left: 1.25em; }
 .section--dark h2,
 .section--dark h3,
 .section--dark h4 { color: var(--white); }
-.section--dark a { color: var(--brand-400); }
-.section--dark a:hover { color: var(--brand-100); }
+/* Exclude buttons: these link rules are more specific than `.btn--primary`,
+   and without the guard a primary button on a dark section renders its label
+   in the same colour as its own background. */
+.section--dark a:not(.btn) { color: var(--brand-400); }
+.section--dark a:not(.btn):hover { color: var(--brand-100); }
 
 .section--steel {
   background: linear-gradient(160deg, var(--steel-900) 0%, var(--n-900) 100%);
@@ -262,7 +286,7 @@ ul, ol { padding-left: 1.25em; }
   left: var(--sp-4);
   z-index: 200;
   padding: var(--sp-3) var(--sp-5);
-  background: var(--brand-600);
+  background: var(--brand-700);
   color: var(--white);
   font-weight: 700;
   border-radius: 0 0 var(--radius) var(--radius);
@@ -329,13 +353,13 @@ ul, ol { padding-left: 1.25em; }
 .btn:active { transform: translateY(1px); }
 
 .btn--primary {
-  background: var(--brand-600);
-  color: var(--white);
+  background: var(--cta-bg);
+  color: var(--cta-fg);
   box-shadow: var(--shadow);
 }
 .btn--primary:hover {
-  background: var(--brand-700);
-  color: var(--white);
+  background: var(--cta-bg-hover);
+  color: var(--cta-fg);
   box-shadow: var(--shadow-lg);
 }
 
@@ -452,7 +476,7 @@ ul, ol { padding-left: 1.25em; }
   margin-bottom: var(--sp-4);
   flex: none;
 }
-.card--dark .icon-tile { background: rgba(234, 88, 12, 0.16); color: var(--brand-400); }
+.card--dark .icon-tile { background: rgba(56, 182, 255, 0.16); color: var(--brand-400); }
 
 /* ─── 7. BADGES & PILLS ─────────────────────────────────────────────────── */
 .pill {

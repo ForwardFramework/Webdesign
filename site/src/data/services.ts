@@ -11,9 +11,14 @@
  */
 
 export type Product = {
+  /** URL segment. Generated from `name` when omitted — see `productSlug`. */
+  slug?: string;
   name: string;
   blurb: string;
+  /** Full warranty statement, shown on the service page and its own page. */
   warranty: string;
+  /** Short warranty headline for cards and page heroes, e.g. "50-Year Limited". */
+  warrantyShort?: string;
   bestFor: string;
   badge?: string;
 };
@@ -78,6 +83,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Architectural Asphalt Shingles',
+        warrantyShort: 'Lifetime shingle + workmanship coverage',
         badge: 'Most popular',
         blurb:
           'Owens Corning Duration® and TruDefinition® laminate shingles with SureNail® technology, installed as a complete system — starter, ice-and-water shield, synthetic underlayment, ventilation and hip-and-ridge cap.',
@@ -87,6 +93,7 @@ export const services: Service[] = [
       },
       {
         name: 'Standing Seam Metal Roofing',
+        warrantyShort: '30–40 yr paint finish',
         badge: 'Longest life',
         blurb:
           'Concealed-fastener panels with mechanically seamed or snap-lock ribs. No exposed screws means no gaskets to dry out and no fastener backing-out ten years down the line. Ideal on low-slope-to-steep transitions and modern farmhouse elevations.',
@@ -96,6 +103,7 @@ export const services: Service[] = [
       },
       {
         name: 'Exposed Fastener Metal Roofing',
+        warrantyShort: '25–40 yr paint finish',
         blurb:
           'Ag-panel and R-panel steel screwed through the face into purlins or solid deck. The most cost-effective metal system available — a fraction of standing seam cost with the same steel substrate and paint system.',
         warranty:
@@ -104,6 +112,7 @@ export const services: Service[] = [
       },
       {
         name: 'TPO Single-Ply Membrane',
+        warrantyShort: '15–25 yr membrane',
         blurb:
           'Heat-welded thermoplastic polyolefin in a reflective white that cuts summer heat gain. Fully adhered or mechanically attached over rigid insulation. Seams are welded, not glued — which is why TPO outlasts the rolled roofing it usually replaces.',
         warranty:
@@ -112,6 +121,7 @@ export const services: Service[] = [
       },
       {
         name: 'EPDM Rubber Roofing',
+        warrantyShort: '10–30 yr membrane',
         blurb:
           'Fully adhered black or white synthetic rubber membrane. Proven for decades on Pittsburgh flat roofs, exceptionally forgiving of thermal movement and ponding, and easy to detail around the pipes and curbs older homes are full of.',
         warranty:
@@ -120,6 +130,7 @@ export const services: Service[] = [
       },
       {
         name: 'Roof Repair & Storm Damage',
+        warrantyShort: '1 yr leak-free guarantee',
         blurb:
           'Leak diagnosis, flashing rebuilds, chimney and skylight re-flashing, valley repairs, and full documentation for insurance claims. We photograph and report before anything gets torn off.',
         warranty: 'Repairs carry a 1-year leak-free guarantee; full replacements carry the 5-year workmanship warranty.',
@@ -175,6 +186,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'TimberTech Advanced PVC',
+        warrantyShort: 'Lifetime + 50 yr fade & stain',
         badge: 'Best warranty',
         blurb:
           'The AZEK-family Vintage, Harvest and Landmark collections. 100% PVC — no wood flour at all — so there is nothing in the board for mold to eat. Runs noticeably cooler underfoot than capped composite and is the most stain-resistant decking made.',
@@ -184,6 +196,7 @@ export const services: Service[] = [
       },
       {
         name: 'TimberTech Composite (Terrain, Prime+, Edge)',
+        warrantyShort: '25–30 yr product & fade',
         blurb:
           'Capped wood-composite boards with the deepest, most convincing woodgrain in the category and multi-tonal streaking that reads as real lumber from the yard.',
         warranty:
@@ -192,6 +205,7 @@ export const services: Service[] = [
       },
       {
         name: 'Trex Transcend®',
+        warrantyShort: '50 yr product & fade',
         badge: 'Flagship',
         blurb:
           'Trex’s top tier — the deepest embossing, the richest tropical hardwood tones, and the highest scratch and fade resistance in the Trex line. Pairs with Transcend railing for a fully matched system.',
@@ -200,18 +214,21 @@ export const services: Service[] = [
       },
       {
         name: 'Trex Select®',
+        warrantyShort: '35 yr product & fade',
         blurb: 'Mid-tier Trex with a refined grain and a tighter, more uniform color palette. The value pick that still carries serious coverage.',
         warranty: '35-Year Limited Residential Warranty and a 35-Year Limited Fade & Stain Warranty.',
         bestFor: 'Mid-size decks where budget matters but you still want a 35-year board.',
       },
       {
         name: 'Trex Enhance®',
+        warrantyShort: '25 yr product & fade',
         blurb: 'Trex’s entry line, available in Basics and Naturals. Scalloped underside keeps the board light and the price down without giving up the capped shell.',
         warranty: '25-Year Limited Residential Warranty and a 25-Year Limited Fade & Stain Warranty.',
         bestFor: 'Replacing a failing pressure-treated deck on a budget, or large square-footage builds.',
       },
       {
         name: 'Railing, Lighting & Screened Porches',
+        warrantyShort: '10–25 yr by component',
         blurb:
           'Composite, aluminum and cable railing systems; recessed riser and post-cap lighting; pergolas, roofed porches and full three-season rooms framed to match the house.',
         warranty: 'Railing and lighting carry their own manufacturer warranties, typically 10–25 years.',
@@ -267,6 +284,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Vinyl Siding',
+        warrantyShort: 'Lifetime limited, transferable once',
         blurb:
           'Modern vinyl in double-4, double-5, Dutch lap and board-and-batten profiles, with insulated backing available for a meaningful bump in R-value and a far flatter, more rigid wall.',
         warranty:
@@ -275,6 +293,7 @@ export const services: Service[] = [
       },
       {
         name: 'Alside ASCEND® Composite Cladding',
+        warrantyShort: 'Lifetime, transferable',
         badge: 'Best of both',
         blurb:
           'Glass-reinforced polymer over graphite-infused polystyrene using Alside’s (GP)² technology. It looks and cuts like fiber cement, weighs a fraction as much, and outperforms it on wind load and impact. 21 designer colors with real woodgrain texture.',
@@ -284,6 +303,7 @@ export const services: Service[] = [
       },
       {
         name: 'Everlast® Composite Siding',
+        warrantyShort: 'Lifetime, transferable',
         blurb:
           'Solid-core composite of crushed stone, polymer resin and acrylic. The color goes all the way through the board rather than sitting on top of it, so scratches and cut ends do not read white. Never needs painting.',
         warranty: 'Transferable lifetime limited warranty.',
@@ -291,6 +311,7 @@ export const services: Service[] = [
       },
       {
         name: 'James Hardie® Fiber Cement',
+        warrantyShort: '30 yr non-prorated + 15 yr finish',
         badge: 'Most requested',
         blurb:
           'HardiePlank® lap, HardiePanel® vertical and HardieShingle® siding with the ColorPlus® factory finish. Engineered for the HZ5® climate zone — which is exactly what Western Pennsylvania freeze-thaw is. Non-combustible and completely immune to woodpeckers and rot.',
@@ -300,6 +321,7 @@ export const services: Service[] = [
       },
       {
         name: 'LP® SmartSide® Engineered Wood',
+        warrantyShort: '50 yr substrate',
         blurb:
           'Treated engineered-wood strand substrate with SmartGuard® processing. Real wood texture, holds a fastener like lumber, cuts with a standard saw, and takes impact without the cracking fiber cement is prone to.',
         warranty: '50-year limited substrate warranty — the longest substrate coverage in the siding category.',
@@ -307,6 +329,7 @@ export const services: Service[] = [
       },
       {
         name: 'Soffit, Fascia, Trim & Wraps',
+        warrantyShort: '20–40 yr finish',
         blurb:
           'Vented aluminum and vinyl soffit, aluminum-wrapped fascia, PVC and composite corner and window trim, column wraps and shutters. The details that decide whether a siding job looks finished or looks cheap.',
         warranty: 'Aluminum and PVC trim components carry manufacturer finish warranties, typically 20–40 years.',
@@ -360,6 +383,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Alside Mezzo®',
+        warrantyShort: 'Lifetime limited',
         badge: 'Best seller',
         blurb:
           'Narrowline frames with fusion-welded corners, insulated glass with double-strength glass and structural foam spacers, low-conductive composite reinforcement in the meeting rail, a true sloped sill for drainage, and a constant-force balance system that makes a heavy sash feel light. The narrow frame is the point — you get more daylight opening than a typical replacement window.',
@@ -368,6 +392,7 @@ export const services: Service[] = [
       },
       {
         name: 'Alside Vero®',
+        warrantyShort: 'Lifetime limited',
         badge: 'Premium',
         blurb:
           'Alside’s premium replacement line — heavier extrusions, upgraded hardware, expanded interior and exterior color options including dark exterior finishes, and higher-performing glass packages. The one to pick when the windows are visible from the street.',
@@ -376,6 +401,7 @@ export const services: Service[] = [
       },
       {
         name: 'Specialty & Custom Shapes',
+        warrantyShort: 'Lifetime limited',
         blurb:
           'Double hung, slider, casement, awning, picture, bay, bow, garden and geometric shapes — every unit built to the measured opening rather than shimmed into a stock size.',
         warranty: 'Covered under the same Alside Lifetime Limited Warranty as the corresponding product line.',
@@ -383,6 +409,7 @@ export const services: Service[] = [
       },
       {
         name: 'Patio & Sliding Glass Doors',
+        warrantyShort: 'Lifetime limited',
         blurb:
           'Alside sliding patio doors with the same welded-frame construction and glass packages as the window lines, plus ProVia hinged and sliding patio systems when the opening deserves an upgrade.',
         warranty: 'Alside Lifetime Limited Warranty; ProVia patio doors carry a Lifetime Limited Transferable Warranty.',
@@ -435,6 +462,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'ProVia Embarq® Fiberglass',
+        warrantyShort: 'Lifetime limited, transferable',
         badge: 'Most energy efficient',
         blurb:
           'ProVia’s flagship. A polyurethane-core fiberglass door with an insulated composite frame — the highest-performing entry system ProVia builds, and one of the most energy-efficient doors available anywhere.',
@@ -444,6 +472,7 @@ export const services: Service[] = [
       },
       {
         name: 'ProVia Signet® Fiberglass',
+        warrantyShort: 'Lifetime limited, transferable',
         blurb:
           'Furniture-grade fiberglass with the most convincing woodgrain in the industry — genuine mahogany, oak, cherry and knotty alder textures with matching stain finishes applied at the factory.',
         warranty:
@@ -452,6 +481,7 @@ export const services: Service[] = [
       },
       {
         name: 'ProVia Heritage™ Fiberglass & Legacy™ Steel',
+        warrantyShort: 'Lifetime limited, transferable',
         blurb:
           'Heritage brings smooth and woodgrain-textured fiberglass at a more accessible price. Legacy is 20-gauge steel — heavier gauge than most competitors’ entry doors — with a factory paint finish and the same Endura threshold.',
         warranty:
@@ -460,6 +490,7 @@ export const services: Service[] = [
       },
       {
         name: 'ProVia Storm Doors',
+        warrantyShort: 'ProVia limited warranty',
         blurb:
           'Spectrum, Deluxe and Duraguard series with full-view, retractable-screen and ventilating configurations. Aluminum frames with real corner welds instead of plastic corner keys.',
         warranty: 'ProVia limited warranty coverage on frame, glass and hardware components.',
@@ -467,6 +498,7 @@ export const services: Service[] = [
       },
       {
         name: 'Patio & Sliding Doors',
+        warrantyShort: 'Lifetime limited, transferable',
         blurb:
           'ProVia hinged French, sliding and multi-slide patio doors with matching decorative glass and hardware — sized to a deck or patio opening and finished to match the entry door.',
         warranty: 'Lifetime Limited Transferable Warranty on ProVia patio door systems.',
@@ -518,6 +550,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Seamless 5" K-Style Aluminum',
+        warrantyShort: '20+ yr baked-enamel finish',
         badge: 'Standard',
         blurb:
           'The residential standard. .027 or heavier .032 gauge aluminum rolled continuously on site, hung on hidden hangers screwed into the fascia — not spike-and-ferrule, which works loose.',
@@ -526,6 +559,7 @@ export const services: Service[] = [
       },
       {
         name: 'Seamless 6" Oversized K-Style',
+        warrantyShort: '20+ yr baked-enamel finish',
         badge: 'High capacity',
         blurb:
           'Roughly 40% more water capacity than 5-inch, paired with 3×4 downspouts instead of 2×3. If your gutters overflow in a hard summer storm, the answer is almost always capacity, not cleaning.',
@@ -534,6 +568,7 @@ export const services: Service[] = [
       },
       {
         name: 'Color Matching',
+        warrantyShort: '20+ yr finish',
         blurb:
           'A full range of baked-enamel aluminum colors — white, almond, clay, musket brown, royal brown, black, bronze, wicker, ivy green, terratone, pearl grey, and more — plus copper for historic and accent applications.',
         warranty: 'Finish warranty per coil manufacturer, typically 20+ years.',
@@ -541,6 +576,7 @@ export const services: Service[] = [
       },
       {
         name: 'Gutter Guards & Leaf Protection',
+        warrantyShort: 'Up to lifetime clog-free',
         blurb:
           'Micro-mesh and reverse-curve guard systems sized to the gutter profile. Under the oak and maple canopy across the South Hills, guards are the difference between an annual chore and a system you can forget about.',
         warranty: 'Guard system warranties vary by manufacturer; most premium micro-mesh carries lifetime clog-free coverage.',
@@ -548,6 +584,7 @@ export const services: Service[] = [
       },
       {
         name: 'Downspouts & Underground Drainage',
+        warrantyShort: '1 yr workmanship',
         blurb:
           '2×3 and 3×4 downspouts, kick-outs, splash blocks, and buried solid-wall drainage carrying discharge away from the foundation — often paired with our excavation crew on the same visit.',
         warranty: 'Covered under the same finish warranties; buried drainage carries a 1-year workmanship guarantee.',
@@ -600,6 +637,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Bobcat T595 Compact Track Loader',
+        warrantyShort: 'Dealer-maintained & insured',
         badge: 'Owned, not rented',
         blurb:
           '74 HP, 2,200 lb rated operating capacity, 8,055 lb operating weight, and just 5.1 psi ground pressure on rubber tracks — low enough to work across a finished lawn with far less damage than a wheeled machine. Attachment-ready for bucket, pallet forks, auger, grapple and breaker.',
@@ -608,6 +646,7 @@ export const services: Service[] = [
       },
       {
         name: 'Bobcat E35 Mini Excavator',
+        warrantyShort: 'Dealer-maintained & insured',
         badge: 'Owned, not rented',
         blurb:
           'Compact excavator with 10.2 ft standard digging depth (11.2 ft with the long arm), roughly 8,600 lb operating weight and a 5 ft 9 in width — narrow enough to fit between houses and through most gates in the South Hills.',
@@ -616,6 +655,7 @@ export const services: Service[] = [
       },
       {
         name: 'Machine-Only Rental',
+        warrantyShort: 'Inspected in and out',
         blurb:
           'Rent the T595 or the E35 bare. Daily, weekly and monthly rates, delivered to your site on our trailer. Operator qualification and proof of insurance required — we will walk you through exactly what we need.',
         warranty: 'Machines delivered fueled, greased and inspected, with a documented condition report at drop-off and pickup.',
@@ -623,6 +663,7 @@ export const services: Service[] = [
       },
       {
         name: 'Machine + Operator',
+        warrantyShort: 'Fully insured',
         badge: 'Most requested',
         blurb:
           'The machine with a 40-year-experienced operator on the sticks. Hourly, half-day and full-day rates. Forty years means grade is read by eye, utilities are respected, and finished work does not need to be redone.',
@@ -631,6 +672,7 @@ export const services: Service[] = [
       },
       {
         name: 'Grading, Drainage & Demolition',
+        warrantyShort: '1 yr workmanship',
         blurb:
           'Lot grading and finish grading, French drains and downspout burial, foundation drainage, driveway base prep, footing excavation, pad prep for sheds and additions, stump and shrub removal, and small structure demolition with haul-off.',
         warranty: 'Site work carries a 1-year workmanship guarantee against settlement and drainage failure.',
@@ -684,6 +726,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Driveways',
+        warrantyShort: '1 yr workmanship',
         blurb:
           'Full tear-out, excavation to depth, compacted stone base, 4,000 PSI air-entrained mix with fiber and rebar or mesh as the application requires, and control joints cut at the right spacing while the slab is still green.',
         warranty: '1-year workmanship guarantee against installation defects. Air-entrained mix specified for Western PA freeze-thaw.',
@@ -691,6 +734,7 @@ export const services: Service[] = [
       },
       {
         name: 'Patios & Walkways',
+        warrantyShort: '1 yr workmanship',
         blurb:
           'Broom, exposed aggregate and stamped finishes, with integral or release-color options. Poured to drain away from the house, which is where a surprising number of basement water problems begin.',
         warranty: '1-year workmanship guarantee. Sealer recommended and available at pour.',
@@ -698,6 +742,7 @@ export const services: Service[] = [
       },
       {
         name: 'Sidewalks, Steps & Stoops',
+        warrantyShort: '1 yr workmanship',
         blurb:
           'Municipal-spec sidewalk replacement, poured steps with proper riser consistency, and stoops rebuilt with the right footing depth so they stop pulling away from the house.',
         warranty: '1-year workmanship guarantee. Built to municipal specification where applicable.',
@@ -705,6 +750,7 @@ export const services: Service[] = [
       },
       {
         name: 'Garage Floors & Slabs',
+        warrantyShort: '1 yr workmanship',
         blurb:
           'Slab-on-grade pours for garages, sheds, additions and equipment pads, with vapor barrier, insulation and thickened edges where the structure calls for it.',
         warranty: '1-year workmanship guarantee.',
@@ -712,6 +758,7 @@ export const services: Service[] = [
       },
       {
         name: 'Footings & Foundations',
+        warrantyShort: '1 yr workmanship',
         blurb:
           'Excavated and poured footings for decks, additions, porches and retaining walls — dug below the Western Pennsylvania frost line so nothing heaves.',
         warranty: '1-year workmanship guarantee. Inspected by the municipality before pour where required.',
@@ -764,6 +811,7 @@ export const services: Service[] = [
     products: [
       {
         name: 'Room Additions',
+        warrantyShort: '5 yr on roofing & siding',
         blurb:
           'Bump-outs, full-width rear additions, primary suite additions and second-story additions. Footings dug below frost line, framed to code, tied into the existing structure and roof plane properly.',
         warranty: 'Structural workmanship guaranteed; roofing and siding components carry their own 5-year workmanship warranties.',
@@ -771,6 +819,7 @@ export const services: Service[] = [
       },
       {
         name: 'Garages & Outbuildings',
+        warrantyShort: '5 yr on roofing & siding',
         blurb:
           'Detached and attached garages, workshops and storage buildings — slab, framing, roof, siding, doors and electrical rough-in coordination, all on one contract.',
         warranty: 'Roofing and siding carry the 5-year workmanship warranty; slab carries a 1-year guarantee.',
@@ -778,6 +827,7 @@ export const services: Service[] = [
       },
       {
         name: 'Sunrooms & Three-Season Rooms',
+        warrantyShort: 'By component + workmanship',
         blurb:
           'Converting a deck or patio into enclosed living space, with glass, screen and knee-wall configurations, insulated roofs and matching exterior finishes.',
         warranty: 'Component warranties by manufacturer; installation covered by our workmanship guarantee.',
@@ -785,6 +835,7 @@ export const services: Service[] = [
       },
       {
         name: 'Dormers & Roofline Changes',
+        warrantyShort: '5 yr workmanship',
         blurb:
           'Shed and gable dormers to open up attic space and add headroom and daylight, with the new roof and siding blended into the existing planes.',
         warranty: 'Covered by our 5-year roofing and siding workmanship warranty.',
@@ -792,6 +843,7 @@ export const services: Service[] = [
       },
       {
         name: 'Covered Porches & Pavilions',
+        warrantyShort: '5 yr on roofing',
         blurb:
           'Roofed porches, pavilions and pergolas built on proper footings and tied into the house structure — not lag-bolted to the rim joist and hoped for.',
         warranty: 'Roofing covered by the 5-year workmanship warranty.',
@@ -835,9 +887,9 @@ export const services: Service[] = [
       'We prep like the coating matters: wash, scrape, sand, prime bare wood, caulk the joints, then paint. Anyone can spray a house. Making it still look right in year six is the trick.',
     highlights: ['Full Prep & Priming', 'Premium Coatings', 'Deck & Railing Staining', 'Clean, Protected Job Site'],
     products: [
-      { name: 'House Body & Trim', blurb: 'Pressure wash, scrape, sand, spot-prime bare wood, caulk joints, then two finish coats of premium exterior acrylic.', warranty: 'Workmanship guaranteed for 2 years against peeling and blistering on properly prepped substrate.', bestFor: 'Wood, fiber cement and previously painted aluminum siding.' },
-      { name: 'Deck & Railing Staining', blurb: 'Cleaning, brightening, sanding as needed, and semi-transparent or solid stain applied at the right spread rate.', warranty: 'Workmanship guaranteed for 1 year; horizontal surfaces wear faster than vertical by nature.', bestFor: 'Pressure-treated and cedar decks that are not ready for composite replacement.' },
-      { name: 'Doors, Shutters & Accents', blurb: 'Front door refinishing, shutter painting and accent color work — often the highest-impact, lowest-cost curb appeal change available.', warranty: '2-year workmanship guarantee.', bestFor: 'A fast, dramatic facelift before listing a house.' },
+      { name: 'House Body & Trim', warrantyShort: '2 yr workmanship', blurb: 'Pressure wash, scrape, sand, spot-prime bare wood, caulk joints, then two finish coats of premium exterior acrylic.', warranty: 'Workmanship guaranteed for 2 years against peeling and blistering on properly prepped substrate.', bestFor: 'Wood, fiber cement and previously painted aluminum siding.' },
+      { name: 'Deck & Railing Staining', warrantyShort: '1 yr workmanship', blurb: 'Cleaning, brightening, sanding as needed, and semi-transparent or solid stain applied at the right spread rate.', warranty: 'Workmanship guaranteed for 1 year; horizontal surfaces wear faster than vertical by nature.', bestFor: 'Pressure-treated and cedar decks that are not ready for composite replacement.' },
+      { name: 'Doors, Shutters & Accents', warrantyShort: '2 yr workmanship', blurb: 'Front door refinishing, shutter painting and accent color work — often the highest-impact, lowest-cost curb appeal change available.', warranty: '2-year workmanship guarantee.', bestFor: 'A fast, dramatic facelift before listing a house.' },
     ],
     process: [
       { title: 'Surface assessment', body: 'We identify failing coatings, rot and moisture sources. Painting over a water problem just hides it for a year.' },
@@ -853,6 +905,24 @@ export const services: Service[] = [
     ],
   },
 ];
+
+/** Kebab-case slug for a product, derived from its name unless one is set. */
+export const productSlug = (p: Product) =>
+  p.slug ??
+  p.name
+    .toLowerCase()
+    .replace(/[®™]/g, '')
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+/** Every product across every service, paired with its parent. */
+export const allProducts = services.flatMap((service) =>
+  service.products.map((product) => ({ service, product, slug: productSlug(product) }))
+);
+
+export const getProduct = (serviceSlug: string, slug: string) =>
+  allProducts.find((e) => e.service.slug === serviceSlug && e.slug === slug);
 
 export const featuredServices = services.filter((s) => s.featured).sort((a, b) => a.order - b.order);
 export const allServices = [...services].sort((a, b) => a.order - b.order);

@@ -47,13 +47,13 @@ export const promos: Promo[] = [
     id: 'financing',
     services: ['all'],
     eyebrow: 'Financing',
-    headline: '0% APR for 18 Months — or Payments from $99/Month',
+    headline: 'Check Your Rate in 2 Minutes — Without Touching Your Credit Score',
     detail:
-      'Approved financing on full replacement projects, with no money down. Take the 0% term and pay nothing in interest, or stretch the balance into a low fixed monthly payment. Applying takes about two minutes and does not affect your credit score.',
+      'Financing on any project through Acorn Finance, with no money down. One short form returns real offers from multiple lenders so you can compare rate, term and monthly payment side by side. Pre-qualifying uses a soft credit check, so your score is not affected.',
     terms:
-      'Subject to credit approval through our lending partner. Applies to full replacement projects; not valid on repairs or insurance-claim work. Not combinable with other financing offers. See your loan documents for complete terms.',
-    cta: 'Check your rate',
-    ctaHref: '/contact?topic=financing',
+      'Financing provided by third-party lenders through Acorn Finance, a lending marketplace. Top Dog Exteriors is not a lender and makes no credit decisions. Subject to credit approval. APRs range from 4.99% to 35.99%, amounts from $1,000 to $100,000, and terms from 2 to 12 years across the lender network; your rate depends on your credit profile and is disclosed in your loan documents. Not all applicants qualify.',
+    cta: 'Check my rate',
+    ctaHref: '/financing',
     financing: true,
     active: true,
     order: 1,

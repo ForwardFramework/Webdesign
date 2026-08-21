@@ -5,7 +5,7 @@ import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import { site } from '../data/site.ts';
-import { allServices } from '../data/services.ts';
+import { allServices, productSlug } from '../data/services.ts';
 
 const breadcrumbs = [
   { name: 'Home', href: '/' },
@@ -118,7 +118,9 @@ const highlights = [
                 <tbody>
                   {s.products.map((p) => (
                     <tr>
-                      <th scope="row">{p.name}</th>
+                      <th scope="row">
+                        <a href={`/services/${s.slug}/${productSlug(p)}`}>{p.name}</a>
+                      </th>
                       <td>{p.warranty}</td>
                     </tr>
                   ))}
@@ -199,6 +201,9 @@ const highlights = [
     text-transform: uppercase;
     color: var(--text-subtle);
   }
+  .wtable tbody th a { color: inherit; text-decoration: none; }
+  .wtable tbody th a:hover { color: var(--brand-700); text-decoration: underline; }
+
   .wtable tbody th {
     text-align: left;
     padding: var(--sp-4) var(--sp-5);

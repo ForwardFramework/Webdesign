@@ -163,8 +163,10 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 <style>
   /* ── Announcement bar ─────────────────────────────────────────────────── */
   .promo-bar {
-    background: linear-gradient(90deg, var(--brand-700), var(--brand-600) 55%, var(--brand-500));
-    color: #fff;
+    /* The brand hex as a full-bleed surface. White would only be 2.24:1 on it,
+       so the bar carries the dark brand ink instead — 6.7:1. */
+    background: linear-gradient(90deg, var(--brand-300), var(--brand-400) 45%, var(--brand-500));
+    color: var(--brand-ink);
     font-size: var(--fs-xs);
   }
   .promo-bar__inner {
@@ -181,13 +183,13 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .promo-bar__text strong { font-weight: 700; }
   .promo-bar__sep { margin-inline: 0.4rem; opacity: 0.6; }
   .promo-bar a {
-    color: #fff;
+    color: var(--brand-ink);
     text-decoration: underline;
     text-underline-offset: 2px;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
   }
-  .promo-bar a:hover { color: var(--brand-100); }
+  .promo-bar a:hover { color: var(--brand-900); }
 
   /* ── Header shell ─────────────────────────────────────────────────────── */
   .site-header {

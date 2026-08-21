@@ -1,0 +1,466 @@
+---
+import Icon from './Icon.astro';
+import { financing } from '../data/financing.ts';
+
+/**
+ * Interactive monthly-payment calculator for the Acorn Finance marketplace.
+ *
+ * Standard amortisation, computed live in the browser. Every figure it produces
+ * is labelled an estimate, because it is: Acorn returns real offers only after a
+ * soft-pull pre-qualification, and the APR a given homeowner is offered depends
+ * on their credit profile, not on this slider.
+ */
+const { minAmount, maxAmount, minApr, maxApr, creditBands, termOptions, defaults, prequalifyUrl } =
+  financing;
+---
+
+<div class="calc" data-calc>
+  <div class="calc__head">
+    <span class="eyebrow">Payment estimator</span>
+    <h2>What Would Your Project Cost Per Month?</h2>
+    <p>
+      Move the sliders to see an estimated payment. Then check your real rate — it takes about
+      two minutes and uses a soft credit check that does not affect your score.
+    </p>
+  </div>
+
+  <div class="calc__grid">
+    <!-- ── Controls ─────────────────────────────────────────────────── -->
+    <div class="calc__controls">
+      <div class="calc__field">
+        <div class="calc__label-row">
+          <label for="calc-amount">Project amount</label>
+          <output class="calc__value" data-amount-out for="calc-amount">$18,000</output>
+        </div>
+        <input
+          type="range"
+          id="calc-amount"
+          data-amount
+          min={minAmount}
+          max={maxAmount}
+          step="500"
+          value={defaults.amount}
+        />
+        <div class="calc__scale" aria-hidden="true">
+          <span>${(minAmount / 1000).toFixed(0)}k</span>
+          <span>${(maxAmount / 1000).toFixed(0)}k</span>
+        </div>
+      </div>
+
+      <div class="calc__field">
+        <span class="calc__label" id="calc-term-label">Term</span>
+        <div class="calc__chips" role="radiogroup" aria-labelledby="calc-term-label">
+          {
+            termOptions.map((m) => (
+              <label class="calc__chip">
+                <input type="radio" name="calc-term" value={m} checked={m === defaults.months} data-term />
+                <span>{m < 24 ? `${m} mo` : `${m / 12} yr`}</span>
+              </label>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="calc__field">
+        <span class="calc__label" id="calc-credit-label">Your credit, roughly</span>
+        <div class="calc__chips calc__chips--credit" role="radiogroup" aria-labelledby="calc-credit-label">
+          {
+            creditBands.map((b) => (
+              <label class="calc__chip calc__chip--wide">
+                <input
+                  type="radio"
+                  name="calc-credit"
+                  value={b.apr}
+                  checked={b.id === defaults.band}
+                  data-credit
+                />
+                <span>
+                  <strong>{b.label}</strong>
+                  <em>{b.range}</em>
+                </span>
+              </label>
+            ))
+          }
+        </div>
+        <p class="calc__hint">
+          Used only to pick an illustrative rate for the maths. Your actual offers come from
+          Acorn's lenders after pre-qualification.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Result ───────────────────────────────────────────────────── -->
+    <div class="calc__result">
+      <p class="calc__result-label">Estimated monthly payment</p>
+      <p class="calc__amount">
+        <span data-payment>$0</span><span class="calc__per">/mo</span>
+      </p>
+      <p class="calc__assumption">
+        Based on <strong data-assume-amount>$18,000</strong> over
+        <strong data-assume-term>7 years</strong> at an illustrative
+        <strong data-assume-apr>12.99%</strong> APR
+      </p>
+
+      <dl class="calc__breakdown">
+        <div>
+          <dt>Total of payments</dt>
+          <dd data-total>$0</dd>
+        </div>
+        <div>
+          <dt>Total interest</dt>
+          <dd data-interest>$0</dd>
+        </div>
+      </dl>
+
+      <a
+        class="btn btn--primary btn--lg btn--block calc__cta"
+        href={prequalifyUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="acorn-prequalify"
+      >
+        <Icon name="check-circle" size={20} /> Check My Real Rate
+      </a>
+
+      <ul class="calc__assurances">
+        <li><Icon name="check" size={15} /> Soft credit check — no impact on your score</li>
+        <li><Icon name="check" size={15} /> About two minutes, 100% online</li>
+        <li><Icon name="check" size={15} /> Compare offers from multiple lenders</li>
+        <li><Icon name="check" size={15} /> No prepayment penalties</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── Disclosure ─────────────────────────────────────────────────────
+       Required, and deliberately not buried. Advertising a rate the lender
+       network does not offer is a Regulation Z problem. -->
+  <div class="calc__legal">
+    <p>
+      <strong>This is an estimate, not an offer.</strong> Figures shown are calculated from the
+      values you selected using standard amortisation and are for illustration only. They do not
+      represent a financing offer, a pre-approval, or terms available to you.
+    </p>
+    <p>
+      Financing is provided by third-party lenders through
+      <a href={financing.partnerUrl} target="_blank" rel="noopener noreferrer">{financing.partner}</a>,
+      a lending marketplace. <strong>Top Dog Exteriors is not a lender and does not make credit
+      decisions.</strong> {financing.partner} is not a lender either — it connects you with its
+      network of lending partners.
+    </p>
+    <p>
+      All financing is subject to credit approval. Across {financing.partner}'s lender network,
+      annual percentage rates range from <strong>{minApr}% to {maxApr}% APR</strong>, loan amounts
+      from <strong>${minAmount.toLocaleString('en-US')}</strong> to
+      <strong>${maxAmount.toLocaleString('en-US')}</strong>, and terms from
+      <strong>{financing.minMonths / 12} to {financing.maxMonths / 12} years</strong>. The rate,
+      amount and term you are offered depend on your creditworthiness and are disclosed in your
+      loan documents before you sign anything. Not all applicants will qualify. Checking your rate
+      uses a soft credit inquiry that does not affect your credit score; proceeding with an offer
+      may result in a hard inquiry by the lender.
+    </p>
+  </div>
+</div>
+
+<style>
+  .calc {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .calc__head { padding: var(--sp-6) var(--sp-6) 0; }
+  .calc__head h2 { font-size: var(--fs-xl); margin-bottom: var(--sp-2); }
+  .calc__head p {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+
+  .calc__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--sp-6);
+    padding: var(--sp-6);
+    align-items: start;
+  }
+
+  /* ── Controls ──────────────────────────────────────────────────────── */
+  .calc__controls { display: grid; gap: var(--sp-6); }
+  .calc__field { display: grid; gap: 0.6rem; }
+
+  .calc__label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+  .calc label,
+  .calc__label {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--n-800);
+  }
+  .calc__value {
+    font-family: var(--font-display);
+    font-size: 1.32rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--brand-700);
+  }
+
+  /* Range input — styled for both engines, with a visible focus ring. */
+  .calc input[type='range'] {
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+  }
+  .calc input[type='range']::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--n-200);
+  }
+  .calc input[type='range']::-moz-range-track {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--n-200);
+  }
+  .calc input[type='range']::-webkit-slider-thumb {
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    margin-top: -9px;
+    border-radius: 50%;
+    background: var(--brand-400);
+    border: 3px solid #fff;
+    box-shadow: 0 1px 5px rgba(4, 32, 47, 0.3);
+  }
+  .calc input[type='range']::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--brand-400);
+    border: 3px solid #fff;
+    box-shadow: 0 1px 5px rgba(4, 32, 47, 0.3);
+  }
+  .calc input[type='range']:focus-visible { outline: 3px solid var(--ring); outline-offset: 4px; }
+
+  .calc__scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-subtle);
+  }
+
+  .calc__chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .calc__chip { position: relative; }
+  .calc__chip input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .calc__chip > span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    min-width: 62px;
+    padding: 0.4rem 0.85rem;
+    background: var(--n-50);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--n-700);
+    cursor: pointer;
+    transition: all var(--t-fast);
+  }
+  .calc__chip input:hover + span { border-color: var(--brand-400); }
+  .calc__chip input:checked + span {
+    background: var(--brand-400);
+    border-color: var(--brand-400);
+    color: var(--brand-ink);
+  }
+  .calc__chip input:focus-visible + span { outline: 3px solid var(--ring); outline-offset: 2px; }
+  .calc__chip--wide > span { min-width: 96px; }
+  .calc__chip em { font-style: normal; font-size: 0.72rem; font-weight: 500; opacity: 0.75; }
+
+  .calc__hint { font-size: 0.78rem; line-height: 1.5; color: var(--text-subtle); }
+
+  /* ── Result ────────────────────────────────────────────────────────── */
+  .calc__result {
+    padding: var(--sp-6);
+    background: linear-gradient(160deg, var(--steel-900), var(--n-900));
+    border-radius: var(--radius-lg);
+    color: var(--n-300);
+    position: sticky;
+    top: calc(var(--header-h) + 1rem);
+  }
+  .calc__result-label {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-400);
+  }
+  .calc__amount {
+    margin-top: var(--sp-2);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 1.4rem + 3.6vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: #fff;
+  }
+  .calc__per { font-size: 1.1rem; font-weight: 700; color: var(--n-400); margin-left: 0.2rem; }
+  .calc__assumption {
+    margin-top: var(--sp-3);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--n-400);
+  }
+  .calc__assumption strong { color: #fff; font-weight: 700; }
+
+  .calc__breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-3);
+    margin: var(--sp-5) 0;
+    padding: var(--sp-4) 0;
+    border-block: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  .calc__breakdown dt { font-size: 0.74rem; color: var(--n-400); }
+  .calc__breakdown dd {
+    margin: 2px 0 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: #fff;
+  }
+
+  .calc__cta { margin-top: var(--sp-2); }
+
+  .calc__assurances {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .calc__assurances li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    color: var(--n-300);
+  }
+  .calc__assurances svg { color: var(--brand-400); flex: none; margin-top: 2px; }
+
+  /* ── Legal ─────────────────────────────────────────────────────────── */
+  .calc__legal {
+    padding: var(--sp-5) var(--sp-6) var(--sp-6);
+    background: var(--n-50);
+    border-top: 1px solid var(--border);
+    display: grid;
+    gap: var(--sp-3);
+  }
+  .calc__legal p {
+    font-size: 0.78rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .calc__legal strong { color: var(--n-800); }
+
+  @media (max-width: 900px) {
+    .calc__grid { grid-template-columns: 1fr; }
+    .calc__result { position: static; }
+  }
+  @media (max-width: 560px) {
+    .calc__head { padding: var(--sp-5) var(--sp-5) 0; }
+    .calc__grid { padding: var(--sp-5); gap: var(--sp-5); }
+    .calc__legal { padding: var(--sp-5); }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-calc]');
+
+  if (root) {
+    const amountInput = root.querySelector<HTMLInputElement>('[data-amount]')!;
+    const amountOut = root.querySelector<HTMLOutputElement>('[data-amount-out]')!;
+    const paymentOut = root.querySelector<HTMLElement>('[data-payment]')!;
+    const totalOut = root.querySelector<HTMLElement>('[data-total]')!;
+    const interestOut = root.querySelector<HTMLElement>('[data-interest]')!;
+    const assumeAmount = root.querySelector<HTMLElement>('[data-assume-amount]')!;
+    const assumeTerm = root.querySelector<HTMLElement>('[data-assume-term]')!;
+    const assumeApr = root.querySelector<HTMLElement>('[data-assume-apr]')!;
+
+    const money = (n: number, decimals = 0) =>
+      n.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      });
+
+    const checked = (attr: string) =>
+      Number(root.querySelector<HTMLInputElement>(`[${attr}]:checked`)?.value ?? 0);
+
+    /** Standard fixed-rate amortisation. Handles a 0% rate without dividing by zero. */
+    const monthlyPayment = (principal: number, annualRatePct: number, months: number) => {
+      const r = annualRatePct / 100 / 12;
+      if (r === 0) return principal / months;
+      return (principal * r) / (1 - Math.pow(1 + r, -months));
+    };
+
+    /** Paint the slider's filled portion so progress is visible, not just the thumb. */
+    const paintTrack = () => {
+      const min = Number(amountInput.min);
+      const max = Number(amountInput.max);
+      const pct = ((Number(amountInput.value) - min) / (max - min)) * 100;
+      amountInput.style.background = `linear-gradient(90deg,
+        var(--brand-400) 0%, var(--brand-400) ${pct}%,
+        transparent ${pct}%, transparent 100%)`;
+    };
+
+    const render = () => {
+      const amount = Number(amountInput.value);
+      const months = checked('data-term') || 84;
+      const apr = checked('data-credit') || 12.99;
+
+      const payment = monthlyPayment(amount, apr, months);
+      const total = payment * months;
+
+      amountOut.textContent = money(amount);
+      paymentOut.textContent = money(payment);
+      totalOut.textContent = money(total);
+      interestOut.textContent = money(total - amount);
+
+      assumeAmount.textContent = money(amount);
+      assumeTerm.textContent = months % 12 === 0 ? `${months / 12} years` : `${months} months`;
+      assumeApr.textContent = `${apr.toFixed(2)}%`;
+
+      paintTrack();
+    };
+
+    amountInput.addEventListener('input', render);
+    root.querySelectorAll<HTMLInputElement>('[data-term], [data-credit]').forEach((el) =>
+      el.addEventListener('change', render)
+    );
+
+    render();
+  }
+</script>

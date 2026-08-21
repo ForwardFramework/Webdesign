@@ -1,0 +1,251 @@
+---
+import Icon from './Icon.astro';
+import { site, roofr } from '../data/site.ts';
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  ROOFR INSTANT ESTIMATOR
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ *  Embeds Top Dog's hosted Roofr Instant Estimator. Leads land directly in the
+ *  Roofr account — they do NOT flow through /api/lead, so nothing here needs
+ *  the site's own form plumbing.
+ *
+ *  The URL lives in `src/data/site.ts` under `roofr.estimatorUrl` so it can be
+ *  changed in one place.
+ *
+ *  Robustness: a third-party iframe can be refused (X-Frame-Options /
+ *  frame-ancestors), and if that happens the visitor would be staring at a
+ *  blank box. The script below gives the frame a few seconds to prove it
+ *  loaded; if it doesn't, the whole panel is swapped for a prominent
+ *  open-in-new-tab card so the homeowner still reaches the tool.
+ */
+interface Props {
+  /** Height of the embed on desktop. The tool is a multi-step flow. */
+  height?: number;
+}
+const { height = 760 } = Astro.props;
+---
+
+<div class="roofr" data-roofr style={`--roofr-h:${height}px`}>
+  <!-- Loading state, replaced as soon as the frame reports a load -->
+  <div class="roofr__loading" data-roofr-loading>
+    <span class="roofr__spinner" aria-hidden="true"></span>
+    <p>Loading your instant roof estimate…</p>
+  </div>
+
+  <iframe
+    class="roofr__frame"
+    data-roofr-frame
+    src={roofr.estimatorUrl}
+    title="Top Dog Exteriors instant roof estimate"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="geolocation; clipboard-write"
+  ></iframe>
+
+  <!-- Always present: even a perfectly working embed benefits from a full-screen
+       option, and if the frame ever dies this is still a live path to the tool. -->
+  <p class="roofr__open" data-roofr-open>
+    <a href={roofr.estimatorUrl} target="_blank" rel="noopener noreferrer">
+      <Icon name="arrow_right" size={15} /> Open the estimator in a new tab
+    </a>
+  </p>
+
+  <!-- Shown only if the embed cannot render in-page -->
+  <div class="roofr__fallback" data-roofr-fallback hidden>
+    <span class="roofr__fallback-icon"><Icon name="satellite" size={30} /></span>
+    <h3>Your instant roof estimate is ready</h3>
+    <p>
+      The estimator opens in its own secure window. Enter your address and you will see a
+      real price range for your roof in about 60 seconds — no phone call, no sales visit.
+    </p>
+    <a
+      class="btn btn--primary btn--lg"
+      href={roofr.estimatorUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Icon name="calculator" size={20} /> Start My Instant Estimate
+    </a>
+    <p class="roofr__fallback-alt">
+      Prefer to talk it through? Call <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>.
+    </p>
+  </div>
+</div>
+
+<noscript>
+  <p class="roofr__noscript">
+    <a href={roofr.estimatorUrl} target="_blank" rel="noopener noreferrer">
+      Open the instant roof estimator →
+    </a>
+  </p>
+</noscript>
+
+<style>
+  .roofr {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    min-height: var(--roofr-h);
+  }
+
+  .roofr__frame {
+    display: block;
+    width: 100%;
+    height: var(--roofr-h);
+    border: 0;
+  }
+  .roofr__frame[hidden] { display: none; }
+
+  /* ── Loading ────────────────────────────────────────────────────────── */
+  .roofr__loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--sp-4);
+    background: #fff;
+    z-index: 2;
+  }
+  .roofr__loading[hidden] { display: none; }
+  .roofr__loading p {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .roofr__spinner {
+    width: 38px;
+    height: 38px;
+    border: 3px solid var(--brand-100);
+    border-top-color: var(--brand-400);
+    border-radius: 50%;
+    animation: roofr-spin 800ms linear infinite;
+  }
+  @keyframes roofr-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .roofr__spinner { animation-duration: 2.4s; }
+  }
+
+  /* ── Fallback ───────────────────────────────────────────────────────── */
+  .roofr__fallback {
+    display: grid;
+    justify-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-9) var(--sp-6);
+    text-align: center;
+  }
+  .roofr__fallback[hidden] { display: none; }
+  .roofr__fallback-icon {
+    width: 68px;
+    height: 68px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--brand-50);
+    color: var(--brand-600);
+  }
+  .roofr__fallback h3 { font-size: var(--fs-xl); }
+  .roofr__fallback p {
+    max-width: 46ch;
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .roofr__fallback-alt { font-size: 0.85rem; }
+  .roofr__fallback-alt a { font-weight: 700; }
+
+  .roofr__open {
+    padding: var(--sp-3) var(--sp-5);
+    border-top: 1px solid var(--border);
+    background: var(--n-50);
+    text-align: center;
+  }
+  .roofr__open[hidden] { display: none; }
+  .roofr__open a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--brand-700);
+    text-decoration: none;
+    min-height: 32px;
+  }
+  .roofr__open a:hover { text-decoration: underline; }
+
+  .roofr__noscript { padding: var(--sp-6); text-align: center; font-weight: 700; }
+
+  @media (max-width: 620px) {
+    .roofr { --roofr-h: 680px; border-radius: var(--radius-lg); }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-roofr]');
+  const frame = root?.querySelector<HTMLIFrameElement>('[data-roofr-frame]');
+  const loading = root?.querySelector<HTMLElement>('[data-roofr-loading]');
+  const fallback = root?.querySelector<HTMLElement>('[data-roofr-fallback]');
+  const openLink = root?.querySelector<HTMLElement>('[data-roofr-open]');
+
+  if (root && frame && loading && fallback) {
+    let settled = false;
+
+    const succeed = () => {
+      if (settled) return;
+      settled = true;
+      loading.hidden = true;
+    };
+
+    const failOver = () => {
+      if (settled) return;
+      settled = true;
+      loading.hidden = true;
+      frame.hidden = true;
+      // The inline "open in a new tab" line is redundant once the big card shows.
+      if (openLink) openLink.hidden = true;
+      fallback.hidden = false;
+      root.style.minHeight = 'auto';
+    };
+
+    /**
+     * A cross-origin frame cannot tell its parent whether it rendered — that is
+     * deliberate browser security, and both `load` and same-origin probes lie
+     * about it. So instead of interrogating the frame, probe the origin.
+     *
+     * A `no-cors` request resolves opaquely when Roofr is reachable and rejects
+     * outright when it is not (DNS failure, offline, blocked by a network
+     * policy). That covers the case that would otherwise leave a homeowner
+     * staring at a dead box. It cannot detect a framing refusal — nothing in the
+     * parent page can — which is exactly why the "open in a new tab" link above
+     * is always visible rather than conditional.
+     */
+    const probeOrigin = async () => {
+      try {
+        await fetch(new URL(frame.src).origin, { mode: 'no-cors', cache: 'no-store' });
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    frame.addEventListener('load', succeed);
+    frame.addEventListener('error', failOver);
+
+    void probeOrigin().then((reachable) => {
+      if (!reachable) {
+        // Reset so failOver can run even if `load` already fired on an error page.
+        settled = false;
+        failOver();
+      }
+    });
+
+    // Backstop for a frame that never fires either event at all.
+    window.setTimeout(failOver, 10000);
+  }
+</script>

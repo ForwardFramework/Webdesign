@@ -5,7 +5,7 @@ contractor in Bethel Park, PA serving the Greater Pittsburgh area.
 
 Built with [Astro](https://astro.build) as a fully static site: no client framework, no
 hydration, and roughly 8 KB of JavaScript across the whole site (navigation, scroll
-reveal, form validation, roof estimator). Everything ships as HTML.
+reveal, form validation, payment calculator). Everything ships as HTML.
 
 ---
 
@@ -27,7 +27,8 @@ Node 22+.
 | Document | Covers |
 |---|---|
 | [`docs/FORMS.md`](docs/FORMS.md) | Where leads go, how to configure email delivery, deploying to a non-Netlify host |
-| [`docs/ROOF-ESTIMATOR.md`](docs/ROOF-ESTIMATOR.md) | Tuning the instant roof estimate pricing, plugging in real satellite measurement |
+| [`docs/INSTANT-ESTIMATOR.md`](docs/INSTANT-ESTIMATOR.md) | The Roofr instant estimator embed, its fallback behaviour, and how to change the link |
+| [`docs/FINANCING.md`](docs/FINANCING.md) | The Acorn Finance calculator, its disclosures, and what must never drift |
 | [`docs/REVIEWS.md`](docs/REVIEWS.md) | Adding Google / Facebook / BBB reviews — **read before adding any** |
 | [`docs/SEO.md`](docs/SEO.md) | What SEO/AEO/GEO is built in, and the off-site work that still needs a human |
 
@@ -44,6 +45,7 @@ these, not the pages.
 | `src/data/services.ts` | All nine services: copy, products, warranties, process steps, FAQs |
 | `src/data/promos.ts` | Every offer, its terms, and which services it appears on |
 | `src/data/reviews.ts` | Customer reviews and platform ratings |
+| `src/data/financing.ts` | Acorn pre-qualify link, published APR/amount/term ranges, calculator defaults |
 
 Changing the phone number in `site.ts` updates the header, footer, every CTA, the
 click-to-call links, the schema.org markup and `/llms.txt` in one edit.
@@ -55,6 +57,13 @@ In `src/data/promos.ts`, set `active: false`. Inactive offers render nowhere.
 > ⚠ Offers marked `financing: true` advertise specific credit terms. Do not publish them
 > until they match a signed lender agreement — advertising an APR you cannot deliver is a
 > Truth in Lending Act violation.
+
+### Replacing the logo
+
+`src/components/LogoMark.astro` is a redraw of the supplied artwork, not the original
+file. If you have the vector from whoever designed it, the component header explains the
+two-file swap. `node gen-assets.mjs` regenerates the favicon, app icons and OG card from
+whatever the mark becomes.
 
 ### Adding a service area
 
@@ -73,17 +82,17 @@ src/
 ├── layouts/
 │   └── Base.astro  <head>, JSON-LD graph, header/footer shell
 ├── pages/          Routes (file-based)
-│   ├── services/[slug].astro       one page per service
+│   ├── services/[slug].astro                one page per service
+│   ├── services/[service]/[product].astro   one page per product style
 │   ├── service-areas/[slug].astro  one page per primary town
 │   └── llms.txt.ts                 generated AI-facing summary
 ├── scripts/
-│   ├── lead-form.ts      shared form validation + async submit
-│   └── roof-estimate.ts  pricing engine for the instant quote
+│   └── lead-form.ts      shared form validation + async submit
 └── styles/global.css     design tokens + base styles
 netlify/functions/lead.mts  → emails leads to info@topdogexteriors.com
 ```
 
-35 pages build in about two seconds.
+85 pages build in about two seconds.
 
 ---
 
@@ -93,9 +102,14 @@ Tokens live at the top of `src/styles/global.css`. Components reference semantic
 (`--accent`, `--text-muted`, `--border`), never raw scale values, so a rebrand is a
 token edit.
 
-- **Palette** — industrial graphite + safety orange. The CTA colour is `#c2410c` rather
-  than a brighter orange specifically so white text on it clears WCAG AA at 4.6:1 instead
-  of only large-text AA.
+- **Palette** — anchored on the brand blue `#38b6ff`, with a navy-leaning neutral ramp so
+  dark sections read as part of the brand rather than as generic black. `#38b6ff` is a
+  *surface* colour: white on it is only 2.24:1, so anything that has to be read uses
+  `--brand-600` (`#0873b0`, 5.1:1) or darker. Primary buttons carry the exact brand hex
+  with deep navy ink on top, at 6.7:1.
+- **Switching the button style** — three lines in `src/styles/global.css`:
+  `--cta-bg`, `--cta-fg`, `--cta-bg-hover`. The commented alternative is the more
+  conventional deep-blue-with-white-text treatment.
 - **Type** — Archivo (display) + Inter (body), from Google Fonts with `display=swap`.
 - **Committed to light mode.** A contractor's marketing site should look identical on
   every homeowner's screen; dark sections are deliberate, not a theme.
@@ -121,9 +135,9 @@ Any static host works for the pages; only `/api/lead` needs a serverless runtime
 
 ## Testing
 
-Two scripts, both requiring `npm run preview` on port 4321:
+Requires `npm run preview` on port 4321:
 
 ```bash
-node qa.mjs      # crawls every route: SEO, headings, labels, schema, links, overflow
-node flow.mjs    # drives the instant roof estimator end to end
+node qa.mjs   # crawls every route: SEO, headings, labels, schema, links,
+              # mobile overflow and WCAG AA text contrast
 ```

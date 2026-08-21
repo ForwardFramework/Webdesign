@@ -4,51 +4,62 @@ import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
-import QuoteForm from '../components/QuoteForm.astro';
+import PaymentCalculator from '../components/PaymentCalculator.astro';
 import { site } from '../data/site.ts';
+import { financing } from '../data/financing.ts';
 
 const breadcrumbs = [
   { name: 'Home', href: '/' },
   { name: 'Financing', href: '/financing' },
 ];
 
-const options = [
+const steps = [
   {
-    icon: 'sparkle',
-    title: '0% APR for 18 Months',
-    body: 'Pay no interest at all if the balance is cleared within the promotional term. The strongest option if you have the cash flow but would rather not drain savings for a roof.',
-    fit: 'Best if you can retire the balance inside 18 months.',
+    n: '01',
+    title: 'Check your rate',
+    body: `Answer a few questions on ${financing.partner}'s secure form. It takes about two minutes and uses a soft credit check, so your score is untouched.`,
   },
   {
-    icon: 'dollar',
-    title: 'Low Fixed Monthly Payment',
-    body: 'Stretch the project across a longer term for a small predictable payment. Roofs commonly land near $99–$250 a month depending on project size and approved terms.',
-    fit: 'Best if a manageable monthly number matters more than total interest.',
+    n: '02',
+    title: 'Compare real offers',
+    body: 'Acorn returns offers from its network of lending partners side by side — rate, term and monthly payment — so you can see which one actually suits you.',
   },
   {
-    icon: 'clock',
-    title: 'Deferred Payment Options',
-    body: 'Get the work done now and start payments later. Useful when insurance proceeds, a tax refund or a bonus is coming but has not landed yet.',
-    fit: 'Best when money is coming, just not this month.',
+    n: '03',
+    title: 'Pick one, or none',
+    body: 'Choose the offer you want and finish with that lender directly. If none of them work for you, walk away. Nothing is committed at this stage.',
+  },
+  {
+    n: '04',
+    title: 'We get to work',
+    body: 'Funds go to you, not to us, so you stay in control of the project and of when we get paid.',
   },
 ];
 
 const faqs = [
   {
-    q: 'Does applying affect my credit score?',
-    a: 'Checking your rate uses a soft credit inquiry, which does not affect your score. Only if you accept an offer and move forward does the lender run a hard inquiry. You can see what you qualify for before committing to anything.',
+    q: 'Does checking my rate affect my credit score?',
+    a: 'No. Pre-qualification uses a soft credit inquiry, which is not visible to other lenders and does not affect your score. Only if you accept an offer and move forward does that lender run a hard inquiry.',
+  },
+  {
+    q: 'Who is actually lending me the money?',
+    a: `${financing.partner} is a marketplace, not a lender — and neither are we. You submit one form and Acorn returns offers from its network of lending partners. You then complete the loan with whichever lender you choose. Top Dog Exteriors makes no credit decisions and sees none of your credit information.`,
+  },
+  {
+    q: 'What rates and terms are available?',
+    a: `Across Acorn's lender network, APRs range from ${financing.minApr}% to ${financing.maxApr}%, loan amounts from $${financing.minAmount.toLocaleString('en-US')} to $${financing.maxAmount.toLocaleString('en-US')}, and terms from ${financing.minMonths / 12} to ${financing.maxMonths / 12} years. What you are offered depends on your credit profile. Anyone who quotes you a single rate before you have applied is guessing.`,
   },
   {
     q: 'How long does approval take?',
-    a: 'Usually a couple of minutes. The application takes about two minutes to complete and most homeowners get a decision immediately.',
+    a: 'The application takes about two minutes and most homeowners see offers immediately. Funding timelines vary by lender, but are commonly a few business days.',
   },
   {
-    q: 'Do I need to put money down?',
-    a: 'Approved financing typically requires no money down. We also do not ask for large deposits before work begins — a contractor who wants half the job in cash up front is telling you something about their cash position.',
+    q: 'Do I need money down?',
+    a: 'Not for the financing itself. We also do not ask for large deposits before work begins — Pennsylvania caps home improvement deposits, and a contractor who needs your cash to buy your materials is telling you something about their finances.',
   },
   {
     q: 'Can I pay the loan off early?',
-    a: 'Yes. Our lending programs have no prepayment penalty, so paying it off early simply saves you the remaining interest. Confirm the specific terms in your loan documents before signing — that is where the binding language lives.',
+    a: "Acorn's lending partners do not charge prepayment penalties, so paying early simply saves you the remaining interest. Confirm the specific terms in your loan documents before signing — that is where the binding language lives.",
   },
   {
     q: 'Can I use financing on an insurance claim?',
@@ -56,85 +67,125 @@ const faqs = [
   },
   {
     q: 'What if I do not qualify?',
-    a: 'We will tell you plainly and then talk about scope. Often a project can be phased — the roof this year, the siding next — so that the urgent work gets done without stretching you. We would rather do half the job right than talk you into a payment you will resent.',
+    a: 'We will talk about scope instead. A project can often be phased — the roof this year, the siding next — so the urgent work gets done without stretching you. We would rather do half the job right than talk you into a payment you will resent.',
+  },
+];
+
+const schema = [
+  {
+    '@type': 'Service',
+    name: 'Home improvement financing',
+    serviceType: 'Financing',
+    description: `Home improvement financing for Greater Pittsburgh homeowners through ${financing.partner}'s lender marketplace. Soft credit check, offers in minutes, no money down. Subject to credit approval.`,
+    provider: { '@id': `${site.domain}/#organization` },
+    areaServed: { '@type': 'AdministrativeArea', name: 'Greater Pittsburgh, PA' },
   },
 ];
 ---
 
 <Base
-  title="Financing | 0% APR & Low Monthly Payments | Top Dog"
-  description="Financing for roofing, siding, windows and decks in Greater Pittsburgh. 0% APR terms, low monthly payments, no money down. Checking your rate is a soft pull."
+  title="Financing | Low Monthly Payments on Your Project | Top Dog"
+  description="Home improvement financing for Greater Pittsburgh through Acorn Finance. Check your rate in two minutes with a soft credit check that does not affect your score."
   canonical="/financing"
   breadcrumbs={breadcrumbs}
+  schema={schema}
 >
   <PageHero
     eyebrow="Financing"
     title="Do the Project Now. Pay for It Sensibly."
-    lede="A failing roof does not wait for a good month. Approved financing through our lending partner gives you 0% promotional terms or a low fixed monthly payment, with no money down — and checking your rate does not affect your credit score."
+    lede={`A failing roof does not wait for a good month. Check your real rate through ${financing.partner} in about two minutes — it uses a soft credit check, so your score is not affected, and you see offers from multiple lenders before committing to anything.`}
     breadcrumbs={breadcrumbs}
-  />
+  >
+    <div class="btn-row" style="margin-top:var(--sp-6)">
+      <a
+        href={financing.prequalifyUrl}
+        class="btn btn--primary btn--lg"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track="acorn-prequalify-hero"
+      >
+        <Icon name="check-circle" size={20} /> Check My Rate
+      </a>
+      <a href="#calculator" class="btn btn--ghost-light btn--lg">
+        <Icon name="calculator" size={19} /> Estimate My Payment
+      </a>
+    </div>
+    <p class="hero-note">
+      <Icon name="shield-check" size={15} /> Soft credit check · No impact on your score · No obligation
+    </p>
+  </PageHero>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-head center">
-        <span class="eyebrow">Your options</span>
-        <h2>Three Ways to Pay for It</h2>
-      </div>
-      <ul class="opts">
-        {
-          options.map((o) => (
-            <li>
-              <span class="icon-tile"><Icon name={o.icon} size={26} /></span>
-              <h3>{o.title}</h3>
-              <p>{o.body}</p>
-              <p class="opts__fit"><Icon name="check-circle" size={16} /> {o.fit}</p>
-            </li>
-          ))
-        }
-      </ul>
-
-      <p class="disclosure">
-        <Icon name="alert" size={18} />
-        <span>
-          All financing is provided by a third-party lending partner and is subject to credit
-          approval. Rates, terms, promotional periods and qualifying project amounts are set by
-          the lender, vary by applicant, and are disclosed in full in your loan documents before
-          you sign anything. Promotional offers generally apply to full replacement projects and
-          not to repairs or insurance-claim work. Top Dog Exteriors is not a lender and does not
-          make credit decisions.
-        </span>
-      </p>
+  <!-- ══ CALCULATOR ════════════════════════════════════════════════════ -->
+  <section class="section" id="calculator" aria-labelledby="calc-heading">
+    <div class="container container--calc">
+      <h2 id="calc-heading" class="sr-only">Monthly payment calculator</h2>
+      <PaymentCalculator />
     </div>
   </section>
 
-  <section class="section section--alt">
-    <div class="container fin">
-      <div>
-        <span class="eyebrow">Get started</span>
-        <h2>See What You Qualify For</h2>
-        <p class="lede">
-          Tell us what you are planning and we will send you the application link along with your
-          project estimate — so you can see the number and the payment side by side rather than
-          guessing at one of them.
-        </p>
-        <ul class="fin__list">
-          <li><Icon name="check-circle" size={19} /> Soft credit check — no impact on your score</li>
-          <li><Icon name="check-circle" size={19} /> About two minutes to apply</li>
-          <li><Icon name="check-circle" size={19} /> Decision usually immediate</li>
-          <li><Icon name="check-circle" size={19} /> No money down on approved projects</li>
-          <li><Icon name="check-circle" size={19} /> No prepayment penalty</li>
-        </ul>
-        <p class="fin__call">
-          Questions first? Call <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>.
-        </p>
+  <!-- ══ HOW IT WORKS ══════════════════════════════════════════════════ -->
+  <section class="section section--alt" aria-labelledby="steps-heading">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow">How it works</span>
+        <h2 id="steps-heading">Four Steps, No Pressure</h2>
       </div>
-      <QuoteForm
-        id="financing-form"
-        heading="Check Your Financing Options"
-        sub="We will send the application link with your estimate."
-        source="financing"
-        submitLabel="Send Me the Details"
-      />
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li>
+              <span class="steps__num">{s.n}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ WHY THIS WAY ══════════════════════════════════════════════════ -->
+  <section class="section" aria-labelledby="why-heading">
+    <div class="container why">
+      <div>
+        <span class="eyebrow">Why a marketplace</span>
+        <h2 id="why-heading">One Form. Multiple Lenders. No Sales Pitch From Us.</h2>
+        <p class="lede">
+          Plenty of contractors push a single in-house finance product because it pays them a
+          commission. We would rather you saw several real offers and picked the cheapest one —
+          including the option of not financing at all.
+        </p>
+        <ul class="why__list">
+          <li><Icon name="check-circle" size={19} /> You see the rate before you commit to anything</li>
+          <li><Icon name="check-circle" size={19} /> Funds go to you, not to us</li>
+          <li><Icon name="check-circle" size={19} /> We are not a lender and make no credit decisions</li>
+          <li><Icon name="check-circle" size={19} /> No prepayment penalties on Acorn's network</li>
+        </ul>
+      </div>
+
+      <aside class="why__card">
+        <h3>At a glance</h3>
+        <dl>
+          <div><dt>Loan amounts</dt><dd>${financing.minAmount.toLocaleString('en-US')} – ${financing.maxAmount.toLocaleString('en-US')}</dd></div>
+          <div><dt>APR range</dt><dd>{financing.minApr}% – {financing.maxApr}%</dd></div>
+          <div><dt>Terms</dt><dd>{financing.minMonths / 12} – {financing.maxMonths / 12} years</dd></div>
+          <div><dt>Credit check</dt><dd>Soft, to pre-qualify</dd></div>
+          <div><dt>Money down</dt><dd>None required</dd></div>
+          <div><dt>Prepayment penalty</dt><dd>None</dd></div>
+        </dl>
+        <a
+          href={financing.prequalifyUrl}
+          class="btn btn--primary btn--block"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-track="acorn-prequalify-card"
+        >
+          Check My Rate
+        </a>
+        <p class="why__card-note">
+          Subject to credit approval. Rates and terms are set by the lender, not by us.
+        </p>
+      </aside>
     </div>
   </section>
 
@@ -142,81 +193,110 @@ const faqs = [
 
   <CtaBand
     heading="Price the Project First"
-    body="Start with a free estimate and a real number. Financing is easier to think about once you know what you are financing."
+    body="Start with a free estimate and a real number. Financing is a lot easier to think about once you know what you are financing."
+    secondaryLabel="Instant Roof Quote"
+    secondaryHref="/instant-roof-quote"
   />
 </Base>
 
 <style>
-  .opts {
+  .hero-note {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: var(--sp-4);
+    font-size: 0.82rem;
+    color: var(--n-400);
+  }
+  .hero-note svg { color: var(--brand-400); flex: none; }
+
+  .container--calc { max-width: 1040px; }
+
+  .steps {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
     gap: var(--sp-5);
   }
-  .opts li {
+  .steps li {
     padding: var(--sp-6);
     background: #fff;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
   }
-  .opts h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-3); }
-  .opts p { font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
-  .opts__fit {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.4rem;
-    margin-top: var(--sp-4);
-    padding-top: var(--sp-3);
-    border-top: 1px solid var(--border);
-    font-size: 0.82rem !important;
-    color: var(--n-800) !important;
-    font-weight: 600;
+  .steps__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--brand-600);
+    line-height: 1;
+    margin-bottom: var(--sp-3);
   }
-  .opts__fit svg { color: var(--success-700); flex: none; margin-top: 2px; }
+  .steps h3 { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+  .steps p { font-size: 0.86rem; line-height: 1.62; color: var(--text-muted); }
 
-  .disclosure {
-    display: flex;
-    gap: 0.75rem;
-    max-width: 880px;
-    margin: var(--sp-7) auto 0;
-    padding: var(--sp-5);
-    background: var(--n-50);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 0.8rem;
-    line-height: 1.65;
-    color: var(--text-muted);
-  }
-  .disclosure svg { color: var(--brand-600); flex: none; margin-top: 2px; }
-
-  .fin {
+  .why {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
     gap: var(--sp-8);
     align-items: start;
   }
-  .fin__list {
+  .why__list {
     list-style: none;
     margin: var(--sp-5) 0 0;
     padding: 0;
     display: grid;
     gap: 0.65rem;
   }
-  .fin__list li {
+  .why__list li {
     display: flex;
     align-items: flex-start;
     gap: 0.55rem;
     font-size: var(--fs-sm);
     color: var(--n-800);
   }
-  .fin__list svg { color: var(--brand-600); flex: none; margin-top: 2px; }
-  .fin__call { margin-top: var(--sp-5); font-size: var(--fs-sm); color: var(--text-muted); }
-  .fin__call a { font-weight: 700; }
+  .why__list svg { color: var(--brand-600); flex: none; margin-top: 2px; }
+
+  .why__card {
+    padding: var(--sp-6);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--brand-400);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .why__card h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-4); }
+  .why__card dl { margin: 0 0 var(--sp-5); }
+  .why__card dl > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-3);
+    padding-block: 0.65rem;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .why__card dt { font-size: 0.78rem; color: var(--text-subtle); }
+  .why__card dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: right;
+    color: var(--n-900);
+  }
+  .why__card-note {
+    margin-top: var(--sp-3);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--text-subtle);
+    text-align: center;
+  }
 
   @media (max-width: 940px) {
-    .fin { grid-template-columns: 1fr; }
+    .why { grid-template-columns: 1fr; }
   }
 </style>

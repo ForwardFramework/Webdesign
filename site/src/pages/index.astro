@@ -82,7 +82,7 @@ const homeFaqs = [
   },
   {
     q: 'Do you offer financing?',
-    a: 'Yes, through our lending partner, including 0% APR promotional terms and low fixed monthly payment options on full replacement projects, subject to credit approval. Applying takes about two minutes and does not affect your credit score.',
+    a: 'Yes, through Acorn Finance. One short form returns offers from multiple lenders so you can compare rate, term and monthly payment. It takes about two minutes and uses a soft credit check, so your score is not affected. Subject to credit approval — Top Dog Exteriors is not a lender and makes no credit decisions.',
   },
   {
     q: 'How fast can you get to my project?',
@@ -218,18 +218,15 @@ const serviceSchema = allServices.map((s) => ({
         <div class="irq__card">
           <div class="irq__card-head">
             <Icon name="satellite" size={20} />
-            <span>Instant estimate</span>
+            <span>How it works</span>
           </div>
-          <div class="irq__card-price">$14,200 – $19,800</div>
-          <div class="irq__card-meta">Architectural shingle · about 28 squares</div>
-          <div class="irq__card-bar"><span></span></div>
-          <div class="irq__card-foot">
-            <span>Standing seam</span><span>$31,400 – $46,900</span>
-          </div>
-          <div class="irq__card-foot">
-            <span>Exposed fastener</span><span>$19,600 – $29,300</span>
-          </div>
-          <p class="irq__card-note">Example output. Your range is built from your address.</p>
+          <ol class="irq__card-steps">
+            <li><span>1</span> Enter your address</li>
+            <li><span>2</span> We measure your roof from satellite imagery</li>
+            <li><span>3</span> Pick your shingle and see the price</li>
+            <li><span>4</span> Book an inspection — or don’t</li>
+          </ol>
+          <p class="irq__card-note">About 60 seconds. No phone call, no sales visit.</p>
         </div>
       </div>
     </div>
@@ -340,7 +337,7 @@ const serviceSchema = allServices.map((s) => ({
   .hero {
     position: relative;
     background:
-      radial-gradient(ellipse 90% 70% at 15% 0%, rgba(194, 65, 12, 0.22), transparent 62%),
+      radial-gradient(ellipse 90% 70% at 15% 0%, rgba(56, 182, 255, 0.30), transparent 62%),
       linear-gradient(155deg, var(--steel-900) 0%, var(--n-900) 55%, var(--n-950) 100%);
     color: var(--n-300);
     padding-block: clamp(3rem, 6vw, 5.5rem);
@@ -370,7 +367,7 @@ const serviceSchema = allServices.map((s) => ({
     max-width: 15ch;
   }
   .hero__accent {
-    color: var(--brand-500);
+    color: var(--brand-400);
     position: relative;
     white-space: nowrap;
   }
@@ -457,7 +454,7 @@ const serviceSchema = allServices.map((s) => ({
     color: var(--n-300);
     font-size: var(--fs-sm);
   }
-  .irq__list svg { color: var(--brand-500); flex: none; margin-top: 1px; }
+  .irq__list svg { color: var(--brand-400); flex: none; margin-top: 1px; }
 
   .irq__card {
     background: rgba(255, 255, 255, 0.055);
@@ -478,41 +475,40 @@ const serviceSchema = allServices.map((s) => ({
     text-transform: uppercase;
     color: var(--brand-400);
   }
-  .irq__card-price {
-    margin-top: var(--sp-4);
-    font-family: var(--font-display);
-    font-size: clamp(1.7rem, 1rem + 2.6vw, 2.4rem);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    color: #fff;
-    line-height: 1.05;
-  }
-  .irq__card-meta { margin-top: 0.35rem; font-size: 0.83rem; color: var(--n-400); }
-  .irq__card-bar {
-    height: 6px;
-    margin-block: var(--sp-5);
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.12);
-    overflow: hidden;
-  }
-  .irq__card-bar span {
-    display: block;
-    height: 100%;
-    width: 62%;
-    border-radius: 3px;
-    background: linear-gradient(90deg, var(--brand-600), var(--brand-400));
-  }
-  .irq__card-foot {
-    display: flex;
-    justify-content: space-between;
+  .irq__card-steps {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
     gap: var(--sp-4);
-    padding-block: 0.55rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .irq__card-steps li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: #fff;
+  }
+  .irq__card-steps span {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--brand-400);
+    color: var(--brand-ink);
+    font-family: var(--font-display);
+    font-weight: 800;
     font-size: 0.85rem;
+  }
+  .irq__card-note {
+    margin-top: var(--sp-5);
+    padding-top: var(--sp-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.8rem;
     color: var(--n-400);
   }
-  .irq__card-foot span:last-child { color: #fff; font-weight: 600; }
-  .irq__card-note { margin-top: var(--sp-4); font-size: 0.72rem; color: var(--n-400); font-style: italic; }
 
   @media (max-width: 900px) {
     .irq__inner { grid-template-columns: 1fr; }
@@ -559,7 +555,7 @@ const serviceSchema = allServices.map((s) => ({
     font-size: 2rem;
     font-weight: 900;
     letter-spacing: -0.04em;
-    color: var(--brand-500);
+    color: var(--brand-400);
     line-height: 1;
     margin-bottom: var(--sp-3);
   }

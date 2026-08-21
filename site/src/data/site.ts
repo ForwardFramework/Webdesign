@@ -132,6 +132,16 @@ export const serviceAreas = [
   { name: 'Pittsburgh (South Side & City)', slug: 'pittsburgh', county: 'Allegheny County', primary: false, zip: '15203' },
 ] as const;
 
+/**
+ * Roofr Instant Estimator. Leads from this tool land in the Roofr account, not
+ * in the site's own /api/lead inbox. If Top Dog ever regenerates the estimator
+ * link in Roofr, this is the only line that changes.
+ */
+export const roofr = {
+  estimatorUrl:
+    'https://app.roofr.com/instant-estimator/d8998d6d-4515-4cd4-8042-ce9d1d9f64f9/TopDogRoofing/welcome-question',
+} as const;
+
 export const primaryAreas = serviceAreas.filter((a) => a.primary);
 
 export type ServiceArea = (typeof serviceAreas)[number];

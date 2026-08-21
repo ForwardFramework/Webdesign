@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { site, serviceAreas, primaryAreas } from '../data/site.ts';
-import { allServices } from '../data/services.ts';
+import { allServices, productSlug } from '../data/services.ts';
 import { activePromos } from '../data/promos.ts';
 
 /**
@@ -53,8 +53,12 @@ export const GET: APIRoute = () => {
       '',
       `URL: ${site.domain}/services/${s.slug}`,
       '',
-      'Products and systems installed:',
-      ...s.products.map((p) => `- **${p.name}** — ${p.blurb} Warranty: ${p.warranty}`),
+      'Products and systems installed (each has its own page with full warranty detail):',
+      ...s.products.map(
+        (p) =>
+          `- **${p.name}** (${site.domain}/services/${s.slug}/${productSlug(p)}) — ${p.blurb} ` +
+          `Warranty: ${p.warranty}`
+      ),
       '',
     ]),
     '## Current offers',
