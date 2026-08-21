@@ -32,107 +32,19 @@ python3 tools/set_domain.py https://your-site.static.domains
 python3 tools/build_zip.py --portable      # then re-upload
 ```
 
-### Making the forms live
+### Where the enquiries go
 
-static.app has a built-in **Forms** feature: add a `static-form` attribute to a
-`<form>` and submissions land in your dashboard — no endpoint, no third party.
+All nine forms are wired to Netlify Forms already — nothing to add. Submissions
+appear under **Forms** in the site dashboard.
 
-`assets/js/main.js` already supports this. When a form carries `static-form`
-(or `netlify`, or `data-native-submit`), the script runs its own validation and
-then hands off to the browser instead of intercepting the submit. Without the
-attribute it keeps the current behaviour: validate, show the success state, log
-the payload to the console.
+**Do this once so they reach a person:** Netlify → Forms → *Form notifications*
+→ **Add notification → Email notification** → `hello@forward-framework.com`.
+Without it Netlify still stores every submission, but no one is emailed.
 
-There are eight forms — the hero form on the homepage plus one per service
-page. Ask and the attribute can be added to all of them in one pass.
-
-### Check after deploying
-
-- [ ] `/services/` loads the services hub — this is the one behaviour that
-      varies between hosts (serving `index.html` from a subfolder). Verified
-      working on a plain static server; confirm it on static.app.
-- [ ] A made-up URL shows the branded 404 rather than a host default
-- [ ] `/robots.txt`, `/sitemap.xml` and `/llms.txt` all load
-- [ ] Canonical tags match the address you are actually serving from
-
----
-
-# Netlify — the live host
-
-**Every push to `claude/forward-framework-website-qwe3cg` builds and deploys to
-production**, via `.github/workflows/netlify.yml`. Nothing else needs running.
-
-The one prerequisite is two repository secrets, below. Until they exist the
-workflow builds and uploads an artifact but skips the deploy — pushes stay safe,
-they simply are not live.
-
-### Why this host needs its own build
-
-Netlify serves both `/about` and `/about.html` with a 200 by default, and
-its "Pretty URLs" post-processing toggle is inconsistent about redirecting one
-to the other. Two live URLs for the same page is duplicate content, and which
-one wins would depend on a dashboard setting.
-
-So `tools/build_netlify.py` picks one form and enforces it rather than trusting
-the toggle: links, canonicals, Open Graph URLs, the JSON-LD graph,
-`sitemap.xml`, `llms.txt`, `robots.txt` and the JS redirect all use the
-extensionless form, and a generated `_redirects` file 301s every `.html` path
-to it — forced with `!` so the rule wins even though the file exists.
-`404.html` is deliberately left unredirected, since Netlify uses it as the
-not-found handler.
-
-The clean-URL rewriting is shared with the Cloudflare build, so the two cannot
-drift apart.
-
-```bash
-python3 tools/build_netlify.py                            # -> dist/netlify/ + a zip
-python3 tools/build_netlify.py https://your-domain.com    # set the domain at the same time
-```
-
-Verified against a local emulation of Netlify's routing and `_redirects`: 16
-routes, **zero redirect hops**, zero 4xx, all 19 internal links resolving
-directly, `/about.html` 301ing to `/about`, and `/404.html` still served
-directly.
-
-### Option 1 — Automatic on every push
-
-`.github/workflows/netlify.yml` builds and deploys on every push. Add two
-secrets under **Settings → Secrets and variables → Actions**:
-
-| Secret | Where to get it |
-|---|---|
-| `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → Personal access tokens → New access token |
-| `NETLIFY_SITE_ID` | Site configuration → General → Site details → **Site ID** |
-
-Until both exist the workflow still runs, builds the bundle and uploads it as a
-downloadable artifact, then skips the deploy with a notice rather than failing.
-
-### Option 2 — Connect the Git repo
-
-**Add new site → Import an existing project** → pick the repository. The
-committed `netlify.toml` supplies the settings, so nothing needs entering by
-hand:
-
-| Setting | Value | Source |
-|---|---|---|
-| Build command | `python3 tools/build_netlify.py` | `netlify.toml` |
-| Publish directory | `dist/netlify` | `netlify.toml` |
-| Production branch | `claude/forward-framework-website-qwe3cg` | set in the UI — this repo has no `main` |
-
-`netlify.toml` also sets `X-Robots-Tag: noindex` on deploy previews and branch
-deploys, so only production is indexable.
-
-### Option 3 — Drag and drop
-
-**Sites → Add new site → Deploy manually**, then drop
-`dist/forward-framework-netlify.zip` in.
-
-### Making the forms live
-
-Netlify Forms captures submissions with no backend. `assets/js/main.js` already
-supports it: a form carrying a `netlify` attribute is validated client-side and
-then handed to the browser to submit normally, rather than intercepted. There
-are eight forms — ask and the attribute can be added to all of them in one pass.
+The forms post in the background so the visitor stays on the page for the
+success state, and fall back to a normal submit if that fails. With JavaScript
+off they submit normally and land on `/thank-you`. UTM parameters, gclid,
+landing page and referrer are captured as hidden fields on every submission.
 
 ### After it is live
 

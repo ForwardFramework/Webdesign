@@ -256,18 +256,27 @@
 
         var scope = form.querySelector('.fstep.is-active') || form;
 
-        /* Hosts with built-in form capture (static.app's `static-form`
-           attribute, Netlify's `netlify`, and similar) handle the POST
-           themselves. Run our validation, then get out of the way and let the
-           browser submit the form exactly as the markup specifies. */
-        if (form.hasAttribute('static-form') || form.hasAttribute('netlify') ||
-            form.hasAttribute('data-native-submit')) {
+        /* Hosts that capture the POST themselves and need a plain browser
+           submission (static.app's `static-form`, or an explicit opt-in).
+           Validate, then get out of the way. Netlify is handled below, by
+           posting in the background so the inline success state survives. */
+        if (form.hasAttribute('static-form') || form.hasAttribute('data-native-submit')) {
           if (!validateScope(form, scope)) e.preventDefault();
           return;
         }
 
         e.preventDefault();
         if (!validateScope(form, scope)) return;
+
+        /* Carry attribution into the hidden inputs so it is submitted with the
+           form. These exist in the markup because Netlify only records fields
+           it saw in the deployed HTML. */
+        Object.keys(stored).forEach(function (k) {
+          var field = form.querySelector('input[name="' + k + '"]');
+          if (field) field.value = stored[k];
+        });
+        var stamp = form.querySelector('input[name="submitted_at"]');
+        if (stamp) stamp.value = new Date().toISOString();
 
         var btn = form.querySelector('[type=submit]');
         var original = btn ? btn.innerHTML : '';
@@ -281,6 +290,7 @@
         payload.submitted_at = new Date().toISOString();
 
         var endpoint = form.getAttribute('data-endpoint');
+        var isNetlify = form.hasAttribute('data-netlify');
         var finish = function () {
           if (window.dataLayer) {
             window.dataLayer.push({ event: 'generate_lead', form_id: form.id || 'ff_form' });
@@ -301,7 +311,21 @@
           }
         };
 
-        if (endpoint && endpoint.indexOf('REPLACE') === -1) {
+        if (isNetlify) {
+          /* Netlify Forms accepts a urlencoded POST to any path on the site,
+             as long as form-name is included. Posting in the background keeps
+             the visitor on the page for the success state; if it fails we fall
+             back to a normal submit so the enquiry is never silently lost. */
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(form)).toString()
+          }).then(function (res) {
+            if (res.ok) { finish(); } else { form.submit(); }
+          }).catch(function () {
+            form.submit();
+          });
+        } else if (endpoint && endpoint.indexOf('REPLACE') === -1) {
           fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -311,7 +335,7 @@
             alert('Something went wrong sending your request. Please email hello@forward-framework.com and we will pick it up right away.');
           });
         } else {
-          // No endpoint wired yet — log locally so the flow is testable end to end.
+          // Nothing wired (local preview) — log so the flow stays testable.
           console.info('[Forward Framework] Form payload (no endpoint configured):', payload);
           setTimeout(finish, 550);
         }

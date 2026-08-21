@@ -34,6 +34,25 @@ needs two repository secrets, set once by a human:
 Until both exist the workflow builds and uploads an artifact but skips the
 deploy, so pushes are safe — they simply are not live yet.
 
+## Where enquiries go
+
+Every form on the site is a Netlify Form, and everything routes to
+**hello@forward-framework.com** — there is no second address.
+
+Each form carries `name`, `data-netlify="true"`, a hidden `form-name`,
+`data-netlify-honeypot="company_website_hp"` and `action="/thank-you.html"` as
+the no-JavaScript fallback. `main.js` posts them in the background so the
+visitor keeps the inline success state, and falls back to a normal submit if
+that request fails, so an enquiry is never silently lost.
+
+**One dashboard step is required, once:** Netlify → Forms → Form notifications →
+add an email notification to hello@forward-framework.com. Netlify stores
+submissions without it, but nobody is emailed.
+
+Attribution (UTM parameters, gclid, landing page, referrer) rides along in
+hidden inputs. Those inputs must stay in the markup — Netlify only records
+fields it saw in the deployed HTML, so adding them from JavaScript would not work.
+
 ## Before changing site content
 
 `index.html` is hand-authored and is the source of truth for the site shell

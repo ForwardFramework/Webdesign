@@ -62,6 +62,9 @@ for path, filename in PAGES:
         # thank-you / 404 have their content directly in the body shell
         main = re.search(r"<main id=\"main\">(.*)</main>", doc, re.S)
     body = main.group(1)
+    # The preview is a demo, not a deployment: strip the Netlify wiring so the
+    # forms show their inline success state instead of posting and navigating.
+    body = body.replace(' data-netlify="true"', '').replace(' action="/thank-you.html"', '')
     # The content is parked inside a <script> block, so it must not close one.
     assert "</script" not in body.lower(), f"{filename} contains a script close tag"
     blocks.append(

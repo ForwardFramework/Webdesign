@@ -32,7 +32,10 @@ TODAY = date.today().isoformat()
 index_html = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
 
 _top = re.search(r'(<a class="skip".*?<main id="main">)', index_html, re.S)
-_bottom = re.search(r'(</main>.*)</body>', index_html, re.S)
+# Stop before index.html's own script tag — page() adds it back. Capturing it
+# here made every generated page load main.js twice, which doubled every event
+# listener (and every form submission).
+_bottom = re.search(r'(</main>.*?)<script src=', index_html, re.S)
 if not _top or not _bottom:
     raise SystemExit("Could not locate the shell markers in index.html")
 
@@ -170,7 +173,18 @@ def lead_form(form_id, heading, blurb, cta, trigger, source):
     """Single-step conversion form used on interior pages."""
     return f"""
 <div class="form-panel" id="{form_id}">
-  <form data-ff-form id="{form_id}-form" data-endpoint="REPLACE_WITH_YOUR_FORM_ENDPOINT" novalidate>
+  <form data-ff-form id="{form_id}-form" name="{form_id}" method="POST"
+        action="/thank-you.html" data-netlify="true"
+        data-netlify-honeypot="company_website_hp" novalidate>
+    <input type="hidden" name="form-name" value="{form_id}">
+    <input type="hidden" name="routed_to" value="hello@forward-framework.com">
+    <!-- Netlify only records fields present in the deployed HTML, so the
+         attribution captured by main.js needs real inputs to land in. -->
+    <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium">
+    <input type="hidden" name="utm_campaign"><input type="hidden" name="utm_term">
+    <input type="hidden" name="utm_content"><input type="hidden" name="gclid">
+    <input type="hidden" name="fbclid"><input type="hidden" name="landing_page">
+    <input type="hidden" name="referrer"><input type="hidden" name="submitted_at">
     <div class="form-head">
       <span class="eyebrow">Free · No obligation</span>
       <h2 class="h3" style="margin-bottom:.35rem">{heading}</h2>
@@ -1259,7 +1273,7 @@ def render_contact():
 
       <div class="grid grid-2 mt-7">
         <div class="card"><h3 class="h4">New business</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br><a href="tel:+15550123456">(555) 012-3456</a></p></div>
-        <div class="card"><h3 class="h4">Existing clients</h3><p><a href="mailto:support@forward-framework.com">support@forward-framework.com</a><br>Same-day response, business hours.</p></div>
+        <div class="card"><h3 class="h4">Existing clients</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br>Same-day response, business hours.</p></div>
         <div class="card"><h3 class="h4">Hours</h3><p>Monday–Friday, 8am–6pm across US time zones. Urgent client issues are monitored outside those hours.</p></div>
         <div class="card"><h3 class="h4">Coverage</h3><p>Remote-first, serving companies across the United States. On-site for filming days and workshops.</p></div>
       </div>
@@ -1369,11 +1383,11 @@ def render_privacy():
     <h2>How long we keep it</h2>
     <p>Enquiry records are retained for up to 24 months from your last interaction unless you ask us to remove them sooner. Client records are retained for as long as required for contractual and tax purposes.</p>
     <h2>Your rights</h2>
-    <p>You can request access to, correction of, or deletion of the personal information we hold about you, and you can opt out of marketing communication at any time. Residents of states with applicable privacy laws, including California, have additional rights over the sale or sharing of personal information — we do not sell or share it. Email <a href="mailto:privacy@forward-framework.com">privacy@forward-framework.com</a> and we will respond within 30 days.</p>
+    <p>You can request access to, correction of, or deletion of the personal information we hold about you, and you can opt out of marketing communication at any time. Residents of states with applicable privacy laws, including California, have additional rights over the sale or sharing of personal information — we do not sell or share it. Email <a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> and we will respond within 30 days.</p>
     <h2>Cookies</h2>
     <p>We use essential cookies to make the site work and analytics cookies to measure performance. You can block cookies in your browser settings; essential functionality will continue to work.</p>
     <h2>Contact</h2>
-    <p>Questions about this policy: <a href="mailto:privacy@forward-framework.com">privacy@forward-framework.com</a> or (555) 012-3456.</p>
+    <p>Questions about this policy: <a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> or (555) 012-3456.</p>
   </div>
 </section>"""
     page("privacy.html", "Privacy Policy | Forward Framework",

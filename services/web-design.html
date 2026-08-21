@@ -248,7 +248,18 @@
     </div>
     <div>
 <div class="form-panel" id="concept">
-  <form data-ff-form id="concept-form" data-endpoint="REPLACE_WITH_YOUR_FORM_ENDPOINT" novalidate>
+  <form data-ff-form id="concept-form" name="concept" method="POST"
+        action="/thank-you.html" data-netlify="true"
+        data-netlify-honeypot="company_website_hp" novalidate>
+    <input type="hidden" name="form-name" value="concept">
+    <input type="hidden" name="routed_to" value="hello@forward-framework.com">
+    <!-- Netlify only records fields present in the deployed HTML, so the
+         attribution captured by main.js needs real inputs to land in. -->
+    <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium">
+    <input type="hidden" name="utm_campaign"><input type="hidden" name="utm_term">
+    <input type="hidden" name="utm_content"><input type="hidden" name="gclid">
+    <input type="hidden" name="fbclid"><input type="hidden" name="landing_page">
+    <input type="hidden" name="referrer"><input type="hidden" name="submitted_at">
     <div class="form-head">
       <span class="eyebrow">Free · No obligation</span>
       <h2 class="h3" style="margin-bottom:.35rem">Get my free homepage concept</h2>
@@ -477,7 +488,6 @@
   <a class="is-primary" href="#growth-plan">Free Growth Plan</a>
 </div>
 
-<script src="/assets/js/main.js" defer></script>
 <script src="/assets/js/main.js" defer></script>
 </body>
 </html>
