@@ -53,6 +53,31 @@ jobs:
       # dist/ is committed so the deploy needs no build. Rebuilding here only
       # verifies it is current — a stale dist/ means someone edited _src/ and
       # forgot to run build.py, and we would silently ship the old pages.
+      # Fail here, with instructions, rather than 40 seconds later inside wrangler.
+      - name: Check the Cloudflare secrets are present
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          missing=0
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Repository secret CLOUDFLARE_API_TOKEN is not set."
+            missing=1
+          fi
+          if [ -z "$ACCOUNT" ]; then
+            echo "::error::Repository secret CLOUDFLARE_ACCOUNT_ID is not set."
+            missing=1
+          fi
+          if [ "$missing" = "1" ]; then
+            echo "Add them under Settings -> Secrets and variables -> Actions."
+            echo "Token: Cloudflare -> My Profile -> API Tokens -> Create Token"
+            echo "       (Edit Cloudflare Workers template, or Account > Cloudflare Pages > Edit)."
+            echo "Account ID: Cloudflare dashboard -> Workers & Pages -> right-hand sidebar."
+            echo "Full walkthrough: pittsburgh-painting/README.md -> Deploying to Cloudflare Pages"
+            exit 1
+          fi
+          echo "Both secrets are present."
+
       - name: Verify dist/ is up to date
         working-directory: ${{ env.SITE_DIR }}
         run: |
