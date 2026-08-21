@@ -1,10 +1,18 @@
 # Form handling — where the leads go
 
-Every form on the site posts to **`/api/lead`**, which emails the submission to
-**info@topdogexteriors.com** with the homeowner set as `Reply-To`, so hitting reply in
-the inbox answers the customer directly.
+Every enquiry reaches **info@topdogexteriors.com**. Two mechanisms are built in, and
+**`src/data/forms.ts` picks between them with one constant**:
 
-Forms that use this route:
+| `leadDelivery` | What handles the submission | Setup needed |
+|---|---|---|
+| `'netlify-forms'` **(default)** | Netlify captures it and emails you | Two clicks in the Netlify UI |
+| `'function'` | `netlify/functions/lead.mts` sends a formatted email via Resend | Resend account, verified domain, API key, and a real build |
+
+The default is Netlify Forms because it needs no build step, which is what lets the site
+be deployed by dragging a folder onto Netlify. Switch to `'function'` when you want the
+nicer email and no dependence on Netlify's form product.
+
+Both send the same fields:
 
 | Location | `source` value sent with the lead |
 |---|---|
@@ -18,7 +26,47 @@ Forms that use this route:
 
 ---
 
-## Setup (Netlify — the default)
+## Setup — Netlify Forms (the default)
+
+**Form detection is off by default on new Netlify sites**, and it only runs at deploy
+time. So the order matters:
+
+1. Deploy the site once.
+2. **Forms → Usage and configuration → Form detection → Enable form detection.**
+3. **Deploy again.** This is the step people miss. Detection scans the HTML as it is
+   deployed, so a site deployed before the toggle was flipped has no known forms and
+   its submissions are rejected.
+4. **Forms → Notifications → Add notification → Email notification**, sent to
+   `info@topdogexteriors.com`.
+
+Every form on the site shares the name **`lead`**, so all enquiries collect in one
+place; the `source` and `page` fields say which page produced each one. Submissions are
+also stored in the Netlify dashboard, which is a useful backup if an email is ever lost.
+
+### Verify it works
+
+Submit a test lead from the live site, then check **Forms → lead**. If the submission is
+not there:
+
+- Confirm form detection is enabled **and** that you deployed after enabling it.
+- View source on the live page and confirm the form still carries
+  `name="lead"`, `data-netlify="true"` and `<input type="hidden" name="form-name">`.
+- Netlify only parses url-encoded bodies. `src/scripts/lead-form.ts` sends
+  `application/x-www-form-urlencoded` for exactly this reason — a multipart body is
+  accepted and then silently dropped, which looks like success on the page.
+
+### The spam trap
+
+The hidden `company` field is declared to Netlify via `data-netlify-honeypot`. Bots fill
+it, humans never see it, and Netlify discards anything that arrives with it set. The
+site additionally rejects forms completed in under three seconds.
+
+---
+
+## Setup — the Resend function
+
+Set `leadDelivery = 'function'` in `src/data/forms.ts` first. This route requires a
+git-connected deploy, because the function has to be built.
 
 1. **Create a Resend account** at <https://resend.com> and verify `topdogexteriors.com`
    as a sending domain. Resend walks you through the DNS records (SPF, DKIM); they
@@ -33,8 +81,9 @@ Forms that use this route:
    | `LEAD_FROM` | `Top Dog Exteriors Website <website@topdogexteriors.com>` |
    | `LEAD_BCC` | *(optional)* a CRM inbound address |
 
-4. **Deploy.** `netlify/functions/lead.mts` is picked up automatically and claims
-   `/api/lead`.
+4. **Deploy from git.** `netlify/functions/lead.mts` is picked up automatically and
+   claims `/api/lead`. A drag-and-drop deploy will not work here — nothing builds the
+   function.
 
 > **The `LEAD_FROM` domain must be verified in Resend.** Sending "from" a homeowner's own
 > Gmail address would be spoofing and will be rejected — which is why the customer's

@@ -65,12 +65,12 @@ function buildEmail(lead: Lead) {
 
   const html = `
 <!doctype html>
-<html><body style="margin:0;background:#f7f9fa;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#12181f">
+<html><body style="margin:0;background:#f7f9fa;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#04202f">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px">
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#fff;border:1px solid #dfe5ea;border-radius:12px;overflow:hidden">
         <tr>
-          <td style="background:#12181f;padding:20px 24px;border-bottom:4px solid #c2410c">
+          <td style="background:#04202f;padding:20px 24px;border-bottom:4px solid #38b6ff">
             <div style="color:#fff;font-size:18px;font-weight:800;letter-spacing:-.02em">New website lead</div>
             <div style="color:#94a2ae;font-size:13px;margin-top:4px">Top Dog Exteriors · topdogexteriors.com</div>
           </td>
@@ -108,7 +108,7 @@ function buildEmail(lead: Lead) {
 
           <div style="margin-top:24px">
             <a href="tel:${escapeHtml((lead.phone ?? '').replace(/\D/g, ''))}"
-               style="display:inline-block;background:#c2410c;color:#fff;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:8px;font-size:15px">
+               style="display:inline-block;background:#38b6ff;color:#04283c;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:8px;font-size:15px">
               Call ${escapeHtml(lead.name?.split(' ')[0] ?? 'them')} now
             </a>
           </div>

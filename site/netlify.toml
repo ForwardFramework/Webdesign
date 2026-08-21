@@ -8,8 +8,14 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# The lead router. `config.path` inside lead.mts already claims /api/lead;
+# The lead router, used only when src/data/forms.ts sets leadDelivery =
+# 'function'. In the default 'netlify-forms' mode nothing posts to /api/lead and
+# this rule never fires. `config.path` inside lead.mts already claims the path;
 # this redirect is the belt-and-braces version for older Netlify runtimes.
+#
+# Headers below are mirrored in public/_headers, which is what carries them on a
+# drag-and-drop deploy (no build runs, so this file is only read for redirects
+# and headers at the deploy root). Change both together.
 [[redirects]]
   from = "/api/lead"
   to = "/.netlify/functions/lead"

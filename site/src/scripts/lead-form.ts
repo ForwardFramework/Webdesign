@@ -2,9 +2,9 @@
  * Client-side behaviour for every lead form on the site.
  *
  * Design notes:
- *  - The form works with JavaScript disabled: it is a real POST to /api/lead,
- *    which redirects to /thank-you. This script only upgrades that to an inline
- *    async submit so the homeowner never loses their place on the page.
+ *  - The form works with JavaScript disabled: the markup is a real POST to
+ *    whichever endpoint `src/data/forms.ts` selects. This script only upgrades
+ *    that to an inline async submit so the homeowner never loses their place.
  *  - Validation is inline and on blur, never a summary at the top of the page,
  *    and error text sits next to the field it belongs to.
  *  - One aria-live region per form announces both errors and success.
@@ -168,10 +168,21 @@ export function initLeadForm() {
       if (spinner) spinner.hidden = false;
 
       try {
+        /* Netlify Forms matches on the `form-name` field and only parses
+           url-encoded bodies — a multipart FormData post is accepted and then
+           silently dropped, which is worse than an error. The custom function
+           reads either. Sending url-encoded satisfies both. */
+        const body = new URLSearchParams(
+          [...new FormData(form)].map(([k, v]) => [k, String(v)])
+        ).toString();
+
         const response = await fetch(form.action, {
           method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: new FormData(form),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body,
         });
 
         if (!response.ok) throw new Error(`Request failed with ${response.status}`);

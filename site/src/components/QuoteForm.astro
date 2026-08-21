@@ -2,6 +2,7 @@
 import Icon from './Icon.astro';
 import { site } from '../data/site.ts';
 import { allServices } from '../data/services.ts';
+import { formAction, formName, honeypotField, leadDelivery } from '../data/forms.ts';
 
 interface Props {
   id?: string;
@@ -32,19 +33,28 @@ const {
     <p class="qf__sub">{sub}</p>
   </div>
 
+  <!--
+    `name` + `data-netlify` are what Netlify's deploy-time scan looks for, and
+    the hidden `form-name` is what identifies the submission on the way back in.
+    Both are inert on any other host, so the markup is the same either way.
+  -->
   <form
     class="qf__form"
     id={id}
+    name={formName}
     method="POST"
-    action="/api/lead"
+    action={formAction}
     novalidate
     data-lead-form
+    data-netlify={leadDelivery === 'netlify-forms' ? 'true' : undefined}
+    data-netlify-honeypot={leadDelivery === 'netlify-forms' ? honeypotField : undefined}
     aria-describedby={`${id}-status`}
   >
+    <input type="hidden" name="form-name" value={formName} />
     <!-- Honeypot: bots fill it, humans never see it. -->
     <div class="qf__hp" aria-hidden="true">
       <label for={`${id}-company`}>Company (leave blank)</label>
-      <input type="text" id={`${id}-company`} name="company" tabindex="-1" autocomplete="off" />
+      <input type="text" id={`${id}-company`} name={honeypotField} tabindex="-1" autocomplete="off" />
     </div>
     <input type="hidden" name="source" value={source} />
     <input type="hidden" name="page" value={Astro.url.pathname} />
