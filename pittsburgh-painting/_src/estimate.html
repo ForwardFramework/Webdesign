@@ -1,0 +1,216 @@
+<section class="hero" style="padding-block:clamp(2.5rem,5vw,4rem)">
+ <div class="wrap center" style="max-width:760px">
+  <p class="eyebrow on-dark is-centred" data-reveal>Free &middot; No obligation &middot; 24-hour turnaround</p>
+  <h1 class="mt-5" data-reveal data-delay="60">Get your written estimate</h1>
+  <p class="lede mt-5" data-reveal data-delay="120" style="margin-inline:auto">
+    Four quick questions. Then Brian calls to set up the walk&#8209;through, and you get an
+    itemized quote in writing within 24 hours.
+  </p>
+  <ul class="hero-badges" style="justify-content:center" data-reveal data-delay="180">
+    <li class="pill">{{icon:check}} Takes under 2 minutes</li>
+    <li class="pill">{{icon:check}} No sales pitch</li>
+    <li class="pill">{{icon:check}} Free color rendering included</li>
+  </ul>
+ </div>
+</section>
+
+<section>
+ <div class="wrap" style="max-width:1060px">
+  <div class="grid" style="grid-template-columns:1.35fr .85fr;gap:clamp(1.5rem,4vw,3rem);align-items:start">
+
+  <div class="form-card" data-reveal>
+   <!-- Wire `action` to your form handler (Netlify Forms, Formspree, ServiceTitan,
+        Jobber, etc.) — see README §Wiring up the form. With no action set, the form
+        confirms inline instead of posting to a dead URL. -->
+   <form data-multistep novalidate>
+    <div class="prog">
+      <div class="prog-txt"><span data-step-num>Step 1 of 4</span><span>Free &amp; no obligation</span></div>
+      <div class="prog-bar"><i></i></div>
+    </div>
+
+    <!-- STEP 1 -------------------------------------------------------- -->
+    <div class="fstep is-on">
+      <h3>What are we looking at?</h3>
+      <p>Pick the closest match &mdash; we&rsquo;ll sort out the details on the walk&#8209;through.</p>
+      <div class="tiles">
+        <label class="tile"><input type="radio" name="project" value="Exterior painting" required data-advance="true">
+          <span>Exterior painting<small>Siding, brick, stucco, trim, decks</small></span></label>
+        <label class="tile"><input type="radio" name="project" value="Interior painting" data-advance="true">
+          <span>Interior painting<small>Walls, ceilings, trim, doors</small></span></label>
+        <label class="tile"><input type="radio" name="project" value="Cabinet refinishing" data-advance="true">
+          <span>Cabinet refinishing<small>Sprayed factory-grade finish</small></span></label>
+        <label class="tile"><input type="radio" name="project" value="Renovation or flip" data-advance="true">
+          <span>Renovation / flip<small>Kitchens, baths, flooring</small></span></label>
+        <label class="tile"><input type="radio" name="project" value="Basement or garage" data-advance="true">
+          <span>Basement or garage<small>Sealed walls, coated floors</small></span></label>
+        <label class="tile"><input type="radio" name="project" value="Multiple or not sure" data-advance="true">
+          <span>Multiple / not sure<small>Let&rsquo;s talk it through</small></span></label>
+      </div>
+      <span class="err" style="margin-top:.6rem">Choose one to continue.</span>
+      <div class="fnav"><button class="btn btn-lg" type="button" data-next>Continue {{icon:arrow}}</button></div>
+    </div>
+
+    <!-- STEP 2 -------------------------------------------------------- -->
+    <div class="fstep">
+      <h3>Tell us about the property</h3>
+      <p>Rough numbers are fine. Nobody is holding you to them.</p>
+      <div class="field">
+        <label for="e-type">Property type <span class="req">*</span></label>
+        <select id="e-type" name="property_type" required>
+          <option value="">Choose one&hellip;</option>
+          <option>Single-family home</option><option>Townhouse / row house</option>
+          <option>Duplex or multi-unit</option><option>Rental / investment property</option>
+          <option>Commercial or office</option>
+        </select>
+        <span class="err">Please choose a property type.</span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="e-size">Approximate size</label>
+          <select id="e-size" name="size">
+            <option value="">Not sure</option>
+            <option>Under 1,500 sq ft</option><option>1,500&ndash;2,500 sq ft</option>
+            <option>2,500&ndash;3,500 sq ft</option><option>Over 3,500 sq ft</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="e-stories">Stories</label>
+          <select id="e-stories" name="stories">
+            <option value="">Not sure</option><option>1</option><option>1.5</option>
+            <option>2</option><option>3+</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="e-notes">Anything we should know?</label>
+        <input id="e-notes" name="notes" type="text" placeholder="Peeling on the south side, rotted trim by the porch&hellip;">
+        <span class="hint">Optional &mdash; but it makes the quote sharper.</span>
+      </div>
+      <div class="fnav">
+        <button class="btn btn-ghost" type="button" data-prev>Back</button>
+        <button class="btn" type="button" data-next>Continue {{icon:arrow}}</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -------------------------------------------------------- -->
+    <div class="fstep">
+      <h3>When would you like it done?</h3>
+      <p>This just tells us which slot to hold. It isn&rsquo;t a commitment.</p>
+      <div class="field">
+        <label for="e-timeline">Timeline <span class="req">*</span></label>
+        <select id="e-timeline" name="timeline" required>
+          <option value="">Choose one&hellip;</option>
+          <option>As soon as you can get here</option>
+          <option>Within the next month</option>
+          <option>In the next 2&ndash;3 months</option>
+          <option>Planning ahead / next season</option>
+          <option>Just gathering prices for now</option>
+        </select>
+        <span class="err">Pick the closest option.</span>
+      </div>
+      <div class="field">
+        <label for="e-heard">How did you hear about us?</label>
+        <select id="e-heard" name="heard">
+          <option value="">Prefer not to say</option>
+          <option>Google search</option><option>Facebook or Instagram</option>
+          <option>Referral from a friend or neighbor</option><option>Saw a yard sign or the truck</option>
+          <option>Worked with you before</option><option>Other</option>
+        </select>
+      </div>
+      <div class="fnav">
+        <button class="btn btn-ghost" type="button" data-prev>Back</button>
+        <button class="btn" type="button" data-next>Almost done {{icon:arrow}}</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -------------------------------------------------------- -->
+    <div class="fstep">
+      <h3>Where should we send the quote?</h3>
+      <p>Last step. Brian handles these himself &mdash; you won&rsquo;t get a call center.</p>
+      <div class="field">
+        <label for="e-name">Your name <span class="req">*</span></label>
+        <input id="e-name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe">
+        <span class="err">Please tell us your name.</span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="e-phone">Phone <span class="req">*</span></label>
+          <input id="e-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(412) 555-0100">
+          <span class="err">A 10-digit phone number, please.</span>
+        </div>
+        <div class="field">
+          <label for="e-email">Email <span class="req">*</span></label>
+          <input id="e-email" name="email" type="email" autocomplete="email" required placeholder="jane@example.com">
+          <span class="err">Check that email address.</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="e-address">Property address <span class="req">*</span></label>
+        <input id="e-address" name="address" type="text" autocomplete="street-address" required
+               placeholder="123 Main St, Pittsburgh, PA 15216">
+        <span class="err">We need the address to price the job.</span>
+      </div>
+      <label class="consent">
+        <input type="checkbox" name="consent" value="yes">
+        <span>Text me updates about my estimate at the number above. Message and data rates may
+          apply; reply STOP to opt out. See our <a href="{{base}}privacy.html">privacy policy</a>.
+          <!-- VERIFY: confirm SMS consent wording with your carrier compliance requirements --></span>
+      </label>
+      <div class="fnav">
+        <button class="btn btn-ghost" type="button" data-prev>Back</button>
+        <button class="btn btn-lg" type="submit">Send my request {{icon:arrow}}</button>
+      </div>
+      <p class="form-note">{{icon:lock}} Your details stay with us. We never sell or share them.</p>
+    </div>
+   </form>
+
+   <div data-form-success hidden>
+     <p class="eyebrow">Request received</p>
+     <h2 class="mt-5" style="font-size:2rem">Thanks &mdash; that&rsquo;s all we need.</h2>
+     <p class="lede mt-5">Brian will call you back today to set up the walk&#8209;through, and your
+        itemized quote follows within 24 hours of that visit.</p>
+     <p class="mt-5">Need it sooner? Call him directly at
+        <a href="tel:{{tel}}" style="color:var(--gold-ink);font-weight:700">{{phone}}</a>.</p>
+     <a class="btn btn-lg mt-6" href="{{base}}gallery.html">Browse the gallery while you wait {{icon:arrow}}</a>
+   </div>
+  </div>
+
+  <!-- reassurance rail -->
+  <aside data-reveal="right" data-delay="80">
+   <div class="offer on-dark">
+     <p class="eyebrow on-dark">Booked this season</p>
+     <h3 style="color:#fff;font-size:1.5rem;margin-top:.75rem">$1,000 off full exterior repaints</h3>
+     <p style="font-size:.93rem;margin-top:.6rem">Applies to full exterior jobs scheduled for
+        August, September or October. Mention it on the walk&#8209;through.
+        <!-- VERIFY: minimum job size, expiry date, combinability --></p>
+     <ul class="offer-list">
+       <li><span class="tick">{{icon:check}}</span><div><b>Free color rendering</b>
+         <span>See it before you commit.</span></div></li>
+       <li><span class="tick">{{icon:check}}</span><div><b>Itemized, line-by-line quote</b>
+         <span>Compare bids honestly.</span></div></li>
+       <li><span class="tick">{{icon:check}}</span><div><b>5-year workmanship warranty</b>
+         <span>In writing, on every job.</span></div></li>
+     </ul>
+   </div>
+
+   <div class="review mt-5">
+     {{stars:5}}
+     <!-- ⚠ PLACEHOLDER — replace with a real Google review before launch -->
+     <p>He showed up when he said he would, quoted what he said he&rsquo;d quote, and charged what
+        was on the quote. Genuinely that simple.</p>
+     <footer><span class="avatar">R</span><span><b>[Customer name]</b><span>[Neighborhood]</span></span></footer>
+   </div>
+
+   <ul class="stack-4 mt-5">
+     <li class="feat"><span class="feat-ico">{{icon:phone}}</span>
+       <div><h4>Prefer to talk?</h4>
+       <p style="font-size:.92rem"><a href="tel:{{tel}}" data-loc="estimate-rail"
+          style="color:var(--gold-ink);font-weight:700;font-size:1.15rem">{{phone}}</a><br>Mon&ndash;Sat, 7am&ndash;7pm</p></div></li>
+     <li class="feat"><span class="feat-ico">{{icon:shield}}</span>
+       <div><h4>Fully insured</h4>
+       <p style="font-size:.92rem">Certificate handed over before we start &mdash; you won&rsquo;t have to ask.</p></div></li>
+   </ul>
+  </aside>
+  </div>
+ </div>
+</section>

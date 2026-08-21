@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Pittsburgh Painting and Property Solutions goat badge">
+  <defs><clipPath id="b"><circle cx="200" cy="200" r="178"/></clipPath></defs>
+  <circle cx="200" cy="200" r="192" fill="#0E1116"/>
+  <circle cx="200" cy="200" r="178" fill="#FFFFFF"/>
+  <g clip-path="url(#b)" fill="#E9ECEF">
+      <path d="M200 200 L378.0 200.0 A178 178 0 0 1 376.0 226.3 Z"/>
+      <path d="M200 200 L370.8 250.1 A178 178 0 0 1 361.5 274.9 Z"/>
+      <path d="M200 200 L349.7 296.2 A178 178 0 0 1 333.9 317.3 Z"/>
+      <path d="M200 200 L316.6 334.5 A178 178 0 0 1 295.4 350.3 Z"/>
+      <path d="M200 200 L273.9 361.9 A178 178 0 0 1 249.2 371.1 Z"/>
+      <path d="M200 200 L225.3 376.2 A178 178 0 0 1 199.0 378.0 Z"/>
+      <path d="M200 200 L174.7 376.2 A178 178 0 0 1 148.9 370.5 Z"/>
+      <path d="M200 200 L126.1 361.9 A178 178 0 0 1 102.9 349.2 Z"/>
+      <path d="M200 200 L83.4 334.5 A178 178 0 0 1 64.8 315.8 Z"/>
+      <path d="M200 200 L50.3 296.2 A178 178 0 0 1 37.7 273.0 Z"/>
+      <path d="M200 200 L29.2 250.1 A178 178 0 0 1 23.7 224.3 Z"/>
+      <path d="M200 200 L22.0 200.0 A178 178 0 0 1 24.0 173.7 Z"/>
+      <path d="M200 200 L29.2 149.9 A178 178 0 0 1 38.5 125.1 Z"/>
+      <path d="M200 200 L50.3 103.8 A178 178 0 0 1 66.1 82.7 Z"/>
+      <path d="M200 200 L83.4 65.5 A178 178 0 0 1 104.6 49.7 Z"/>
+      <path d="M200 200 L126.1 38.1 A178 178 0 0 1 150.8 28.9 Z"/>
+      <path d="M200 200 L174.7 23.8 A178 178 0 0 1 201.0 22.0 Z"/>
+      <path d="M200 200 L225.3 23.8 A178 178 0 0 1 251.1 29.5 Z"/>
+      <path d="M200 200 L273.9 38.1 A178 178 0 0 1 297.1 50.8 Z"/>
+      <path d="M200 200 L316.6 65.5 A178 178 0 0 1 335.2 84.2 Z"/>
+      <path d="M200 200 L349.7 103.8 A178 178 0 0 1 362.3 127.0 Z"/>
+      <path d="M200 200 L370.8 149.9 A178 178 0 0 1 376.3 175.7 Z"/>
+  </g>
+  <g clip-path="url(#b)" stroke="#0E1116" stroke-width="9" stroke-linejoin="round" stroke-linecap="round">
+    <path fill="#D9930C" d="M248,214 C276,196 312,196 332,210 C316,238 280,248 250,238 Z"/>
+    <path fill="#D9930C" d="M248,214 C276,196 312,196 332,210 C316,238 280,248 250,238 Z" transform="translate(400,0) scale(-1,1)"/>
+    <path fill="#B4BCC6" d="M240,152 C270,104 322,94 344,128 C360,152 346,190 316,210 L308,190 C328,176 334,150 322,134 C306,114 272,132 254,178 Z"/>
+    <path fill="#B4BCC6" d="M240,152 C270,104 322,94 344,128 C360,152 346,190 316,210 L308,190 C328,176 334,150 322,134 C306,114 272,132 254,178 Z" transform="translate(400,0) scale(-1,1)"/>
+    <path fill="#F7B32B" d="M200,312 C174,312 154,294 148,268 L139,212
+                            C134,180 162,154 200,154 C238,154 266,180 261,212
+                            L252,268 C246,294 226,312 200,312 Z"/>
+    <path fill="#8A929C" d="M166,290 C180,302 220,302 234,290 C238,318 228,344 213,356 C205,362 195,362 187,356 C172,344 162,318 166,290 Z"/>
+  </g>
+  <g clip-path="url(#b)">
+    <path d="M232,158 C248,168 258,184 258,198" fill="none" stroke="#D9930C" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+    <path d="M168,158 C152,168 142,184 142,198" fill="none" stroke="#D9930C" stroke-width="10" stroke-linecap="round" opacity=".85"/>
+    <ellipse cx="176" cy="212" rx="16" ry="17" fill="#FFF" stroke="#0E1116" stroke-width="7"/>
+    <ellipse cx="224" cy="212" rx="16" ry="17" fill="#FFF" stroke="#0E1116" stroke-width="7"/>
+    <ellipse cx="179" cy="215" rx="7" ry="7.5" fill="#0E1116"/>
+    <ellipse cx="227" cy="215" rx="7" ry="7.5" fill="#0E1116"/>
+    <path d="M185,262 C191,256 209,256 215,262 C217,274 209,282 200,282 C191,282 183,274 185,262 Z" fill="#0E1116"/>
+    
+  </g>
+  <circle cx="200" cy="200" r="178" fill="none" stroke="#0E1116" stroke-width="10"/>
+</svg>

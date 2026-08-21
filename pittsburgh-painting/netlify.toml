@@ -1,0 +1,21 @@
+# Static site — nothing to build in CI. Run `python3 build.py` locally and commit the output.
+[build]
+  publish = "."
+  command = ""
+
+[[redirects]]
+  from = "/services"
+  to   = "/services/exterior-painting.html"
+  status = 301
+
+[[redirects]]
+  from = "/quote"
+  to   = "/estimate.html"
+  status = 301
+
+[[redirects]]
+  from = "/free-estimate"
+  to   = "/estimate.html"
+  status = 301
+
+# Headers live in `_headers` so the same config works on Cloudflare Pages.

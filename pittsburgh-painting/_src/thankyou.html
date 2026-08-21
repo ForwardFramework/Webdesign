@@ -1,0 +1,59 @@
+<section class="hero">
+ <div class="wrap center" style="max-width:760px;padding-block:clamp(2.5rem,6vw,5rem)">
+  <span class="feat-ico" style="width:72px;height:72px;margin-inline:auto;background:var(--gold);color:var(--ink)"
+        data-reveal="zoom">{{icon:check}}</span>
+  <h1 class="mt-6" data-reveal data-delay="80">Got it &mdash; thank you</h1>
+  <p class="lede mt-5" data-reveal data-delay="140" style="margin-inline:auto">
+    Your request is in and Brian has it. Here&rsquo;s exactly what happens next, so you&rsquo;re not left
+    wondering.
+  </p>
+  <div class="btn-row mt-6" style="justify-content:center" data-reveal data-delay="200">
+    <a class="btn btn-lg btn-ghost on-dark" href="tel:{{tel}}" data-loc="thankyou">{{icon:phone}} {{phone}}</a>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="wrap" style="max-width:760px">
+  <ul class="steps" data-stagger="90">
+   <li class="step" data-reveal><h3>Brian calls you back &mdash; today</h3>
+     <p>Usually within a couple of hours during business hours. He&rsquo;ll ask a few questions and
+        find a walk&#8209;through time that suits you.</p></li>
+   <li class="step" data-reveal><h3>We walk the property together</h3>
+     <p>30 to 45 minutes. We measure, check the substrate, flag anything that needs repair, and
+        talk through colors.</p></li>
+   <li class="step" data-reveal><h3>Your itemized quote lands within 24 hours</h3>
+     <p>Emailed, line by line, with the prep spec and the products named &mdash; plus your free
+        digital color rendering.</p></li>
+   <li class="step" data-reveal><h3>You take your time</h3>
+     <p>No follow&#8209;up pressure, no expiring quote, no 90&#8209;minute kitchen&#8209;table close. When
+        you&rsquo;re ready, we book you a start date.</p></li>
+  </ul>
+ </div>
+</section>
+
+<section class="sec-alt">
+ <div class="wrap">
+  <div class="grid g-3" data-stagger="80">
+   <a class="card" href="{{base}}gallery.html" data-reveal><div class="card-b">
+     <span class="feat-ico">{{icon:spark}}</span><h3>Browse the gallery</h3>
+     <p>Before and afters from around Pittsburgh &mdash; useful for narrowing down colors before
+        the walk&#8209;through.</p><span class="card-link">See the work {{icon:arrow}}</span></div></a>
+   <a class="card" href="https://www.instagram.com/pittsburgh_paint_goat" rel="noopener" data-reveal>
+     <div class="card-b"><span class="feat-ico">{{icon:ig}}</span><h3>Follow the day-to-day</h3>
+     <p>Jobs in progress on Instagram at <strong>@pittsburgh_paint_goat</strong> &mdash; the messy middle,
+        not just the finished shot.</p><span class="card-link">Follow along {{icon:arrow}}</span></div></a>
+   <div class="card" data-reveal><div class="card-b">
+     <span class="feat-ico">{{icon:users}}</span><h3>Know someone else who needs work done?</h3>
+     <p>Referrals are how this business grows. Mention it when Brian calls &mdash; there&rsquo;s something
+        in it for both of you.
+        <!-- VERIFY: define the referral bonus, or remove this card --></p></div></div>
+  </div>
+ </div>
+</section>
+
+<!-- Conversion tracking fires here. Add your Google Ads / Meta / GA4 snippets in
+     build.py's head() via a page-specific `headextra`, or paste them below. -->
+<script>
+  if (window.ppsTrack) window.ppsTrack('lead_confirmed', { page: 'thank-you' });
+</script>
