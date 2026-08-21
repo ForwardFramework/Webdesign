@@ -25,9 +25,18 @@ grep -rn "VERIFY" _src/ build.py
 | 7 | **Insurance / licensing** | footer, About, FAQs | Add carrier, coverage amounts and your PA Home Improvement Contractor (HIC) registration number. PA requires the HIC number on advertising. |
 | 8 | **Brian's bio** | `_src/about.html` | Written generically. Replace with his real story, years in the trade, and background. This is one of the highest-read blocks on any contractor site. |
 | 9 | **All 33 photos are placeholders** | `dist/assets/img/` | See `dist/assets/img/README.md`. The before/after pairs matter most. |
-| 9b | **The logo is a stand-in, not your mascot** | `dist/assets/logo-mark.svg` | The goat badge on the site was drawn from scratch and does **not** match your real logo — no paint roller, wrong pose. Drop the genuine file into `dist/assets/` and point `LOGO` in `build.py` at it (SVG ideal, PNG fine). Nothing else changes. |
+
 | 10 | **Forms go nowhere** | all five forms | `FORM_ACTION` and `LEAD_EMAIL` are blank in `build.py`, so submissions show an inline thank-you and are **not delivered anywhere**. Send the inbox address and preferred provider and this is a two-line change. See README § *Where the leads go*. |
 | 11 | **Lead-magnet claims** | `guide.html`, capture bands | The forms promise "one email with the PDF attached" and "unsubscribe anytime". That needs an actual email tool behind it before launch, or the copy needs to change to download-only. |
+
+### ✅ Resolved
+
+- **Logo** — the real artwork is now in place, extracted from the supplied PDF into three
+  purpose-cut assets (badge+roller for the header and footer, square badge for the favicon,
+  full lockup for the share card and PDF cover). The brand palette was re-sampled from the
+  artwork's own pixels: gold is `#F9BA0B`, silver `#A6AAAD`.
+  Only remaining wish: a **vector** original (SVG/AI/EPS) would be sharper on retina and
+  would let us make a knockout version for dark backgrounds. The raster is fine meanwhile.
 
 ## 🟡 Should fix before you spend money on ads
 

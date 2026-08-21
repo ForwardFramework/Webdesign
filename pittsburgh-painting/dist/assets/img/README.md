@@ -55,7 +55,25 @@ can fit on the site.
 
 ## The logo
 
-`../logo-mark.svg` is a **stand-in**, not the real mascot — it was drawn from scratch and
-has no paint roller. Replace it with the genuine artwork (SVG ideal; PNG fine) and point
-`LOGO` in `build.py` at the new filename. It is used in the header, the footer, the
-favicon and the `Organization` schema, all from that one constant.
+Three assets, all cut from the client's supplied artwork by `tools/extract-logo.py`:
+
+| File | Used for |
+|---|---|
+| `../logo-mark.png` | Header, mobile nav, footer — badge + paint roller, natural ~1.75:1 |
+| `../logo-icon.png` | Favicon and Apple touch icon — badge alone, circle-masked, square |
+| `../logo-lockup.png` | Share card and the guide PDF cover — full logo with the wordmark |
+
+All three have transparent backgrounds and are referenced from the `LOGO`, `LOGO_ICON` and
+`LOGO_LOCKUP` constants in `build.py`.
+
+To regenerate them from a new source file:
+
+```bash
+python3 tools/extract-logo.py path/to/logo.pdf     # or .png / .jpg
+python3 tools/make-og.py                           # rebuild the share card
+python3 tools/render-guide.py                      # rebuild the PDF + its cover
+```
+
+If a **vector** original (SVG, AI, EPS) turns up, prefer it — it would be sharper on retina
+displays and would allow a knockout version for dark backgrounds, where the logo's black ring
+and wordmark bar currently lose definition.

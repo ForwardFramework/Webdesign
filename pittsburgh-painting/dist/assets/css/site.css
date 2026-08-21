@@ -9,15 +9,15 @@
 /* ---- 1. TOKENS ---------------------------------------------------------- */
 :root{
   /* brand */
-  --gold:#F7B32B;
-  --gold-lt:#FFC845;
-  --gold-dk:#D9930C;
+  --gold:#F9BA0B;
+  --gold-lt:#FFC93C;
+  --gold-dk:#D99700;
   --gold-ink:#8A5A00;          /* the ONLY gold safe for text on white (4.6:1) */
-  --ink:#0E1116;
-  --ink-2:#171B22;
-  --ink-3:#242A34;
-  --slate:#5B6673;
-  --slate-lt:#656F7B;   /* 5.0:1 on white, 4.6:1 on --paper-2 */
+  --ink:#14161A;
+  --ink-2:#1C1F24;
+  --ink-3:#282C33;
+  --slate:#575D64;
+  --slate-lt:#676D75;   /* 5.0:1 on white, 4.6:1 on --paper-2 */
   --line:#E4E7EC;
   --line-dk:#2C333E;
   --paper:#FFFFFF;
@@ -121,11 +121,11 @@ strong{color:var(--ink); font-weight:600}
    them back. This is what keeps .lede, .hint, .btn-note etc. legible on both. */
 .sec-dark,.on-dark,.hero,.cta-band,.site-footer,.offer,.trust-strip{
   --slate:#B9C1CC;
-  --slate-lt:#A8B1BC;   /* 8.5:1 on #0E1116 */
+  --slate-lt:#A8B1BC;   /* 8.5:1 on #14161A */
 }
 .form-card,.card,.review,.tile span,.menu,.mnav,.hero-tag{
-  --slate:#5B6673;
-  --slate-lt:#656F7B;
+  --slate:#575D64;
+  --slate-lt:#676D75;
 }
 
 /* ---- 4. LAYOUT ---------------------------------------------------------- */
@@ -200,7 +200,7 @@ section{padding-block:clamp(3.5rem,7vw,6.5rem)}
 .site-header.is-stuck{box-shadow:0 6px 24px rgba(14,17,22,.09); background:rgba(255,255,255,.97)}
 .hdr{display:flex; align-items:center; gap:var(--s4); min-height:var(--header-h)}
 .brand{display:flex; align-items:center; gap:.65rem; flex:0 1 auto; min-width:0; padding-block:.5rem}
-.brand img{width:46px; height:46px; transition:transform var(--t) var(--ease-out)}
+.brand img{height:42px; width:auto; transition:transform var(--t) var(--ease-out)}
 .brand:hover img{transform:rotate(-6deg) scale(1.05)}
 .brand-txt{display:flex; flex-direction:column; line-height:1; min-width:0; overflow:hidden}
 .brand-txt b{
@@ -693,7 +693,7 @@ a.card:hover .card-link svg,.card-link:hover svg{transform:translateX(4px)}
 .site-footer a{transition:color var(--t) linear}
 .site-footer a:hover{color:var(--gold)}
 .foot-brand{display:flex; align-items:center; gap:.65rem; margin-bottom:var(--s4)}
-.foot-brand img{width:52px; height:52px}
+.foot-brand img{height:48px; width:auto}
 .foot-brand b{font-family:var(--font-display); font-weight:800; font-size:1.45rem; color:#fff; text-transform:uppercase; line-height:1}
 .foot-brand span{display:block; font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--slate-lt); margin-top:3px}
 .socials{display:flex; gap:.5rem; margin-top:var(--s4)}
@@ -759,7 +759,7 @@ a.card:hover .card-link svg,.card-link:hover svg{transform:translateX(4px)}
 }
 @media (max-width:820px){
   .hdr{gap:var(--s3)}
-  .brand img{width:40px; height:40px}
+  .brand img{height:36px; width:auto}
   .brand-txt b{font-size:1.15rem}
   .brand-txt span{display:none}
 }
