@@ -29,7 +29,6 @@ FILES = [
     ("Service — Ad management", "services/ad-management.html"),
     ("Service — Social media marketing", "services/social-media-marketing.html"),
     ("Service — Scaffold, business systems", "services/business-systems.html"),
-    ("Pricing", "pricing.html"),
     ("Results", "results.html"),
     ("About", "about.html"),
     ("Contact", "contact.html"),

@@ -17,6 +17,13 @@ from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://www.forward-framework.com"
+
+# Pricing is currently withheld from the public site. The figures still live in
+# each service's "prices" list below — they drive tools/build_pricing_pdf.py and
+# are the single source of truth if pricing is ever republished. Flip this to
+# True to restore the pricing page, the per-service price cards, the homepage
+# teaser and the Offer prices in the structured data.
+SHOW_PRICING = False
 TODAY = date.today().isoformat()
 
 # --------------------------------------------------------------------------
@@ -250,7 +257,7 @@ SERVICES = [
  "nav": "Web Design & Development",
  "h1": "Websites that behave like your best salesperson.",
  "title": "Web Design &amp; Development Company | Forward Framework",
- "desc": "Conversion-first web design and development from $749. Launch in 30–45 days with green Core Web Vitals, full schema and AI-search readiness. Free homepage concept first.",
+ "desc": "Conversion-first web design and development. Launch in 30–45 days with green Core Web Vitals, full schema and AI-search readiness. Starts with a free homepage concept.",
  "eyebrow": "Web design & development",
  "answer": "Conversion-focused web design is the practice of building a website around a single measurable business outcome instead of around aesthetics. It combines clear positioning, one dominant call to action, proof placed above the fold, sub-2.5-second load times and forms engineered to be finished rather than abandoned.",
  "intro": [
@@ -291,8 +298,8 @@ SERVICES = [
  ],
  "metrics": [("30–45", "Days to launch"), ("&lt;2.5s", "LCP at handover"), ("100%", "Ownership, day one")],
  "faqs": [
-   ("How much does a conversion-focused website cost?",
-    "Landing pages start at $749, full conversion sites at $1,499, and platform builds at $1,999. Most small and mid-sized company projects land between $1,499 and $4,500 depending on page count, integrations and ecommerce complexity. Pricing is fixed-scope and published before you speak to a salesperson."),
+   ("How is a website project priced?",
+    "As a fixed price for a fixed scope, quoted in writing after your free homepage concept — never an hourly rate and never a moving target. What moves the number is page count, how many systems need integrating, and how much content has to be created rather than migrated. If we underestimate, that is our problem rather than a change order."),
    ("How long does a website take to build?",
     "A landing page ships in 10–14 days. A full conversion site launches in 30–45 days from kickoff. Platform builds run 8–14 weeks. The pace depends far more on how quickly we get content, approvals and access than on production time."),
    ("Do you build on WordPress, Shopify or custom code?",
@@ -308,7 +315,7 @@ SERVICES = [
  "nav": "AI Consulting",
  "h1": "Find the profit in AI before you spend a dollar building it.",
  "title": "AI Consulting for Growing Companies | Forward Framework",
- "desc": "AI consulting that starts with a free AI Opportunity Audit: ranked use cases with dollar estimates, buy-vs-build calls and a build order. Readiness Sprint from $1,999.",
+ "desc": "AI consulting that starts with a free AI Opportunity Audit: ranked use cases with dollar estimates, buy-vs-build calls and a build order, at no cost.",
  "eyebrow": "AI consulting",
  "answer": "AI consulting is the work of identifying where artificial intelligence will actually make or save money in a specific business, then sequencing those opportunities by value, effort and risk. A good engagement produces a ranked use-case roadmap with dollar estimates and clear buy-versus-build decisions — not a technology demonstration.",
  "intro": [
@@ -349,8 +356,8 @@ SERVICES = [
  ],
  "metrics": [("7–10", "Days to roadmap"), ("$0", "To find out if it's worth it"), ("100%", "Vendor-neutral advice")],
  "faqs": [
-   ("What does AI consulting actually cost?",
-    "Our AI Opportunity Audit is free. The AI Readiness Sprint is $1,999 fixed for two weeks. Implementation projects start at $3,499 and are scoped to a fixed price after the audit. That is deliberately below the market: comparable readiness assessments commonly run from roughly $2,000 for narrow small-business scopes to $50,000 and up for enterprise engagements."),
+   ("How is AI consulting priced?",
+    "The AI Opportunity Audit is free. The Readiness Sprint that follows is a fixed fee for a fixed two weeks, and any implementation is quoted as a fixed price once the audit has established what is actually worth building. You approve a number before work starts, and the audit itself costs nothing whether or not you go further."),
    ("How do you decide which AI use cases are worth building?",
     "Each candidate is scored on three axes: annual value if it works, build and maintenance cost, and risk when it fails. High-value, low-risk, repetitive information work wins nearly every time — quoting, intake, document processing, support deflection and reporting. Anything requiring flawless judgement on rare edge cases usually loses."),
    ("Is our data safe if we use AI tools?",
@@ -366,7 +373,7 @@ SERVICES = [
  "nav": "Automation",
  "h1": "Delete the manual work between your tools.",
  "title": "Business Process Automation Agency | Forward Framework",
- "desc": "Automation that removes the manual work between your tools, leads and staff. Free automation blueprint, first workflow live in under two weeks. Missions from $2,499.",
+ "desc": "Automation that removes the manual work between your tools, leads and staff. Free automation blueprint, first workflow live in under two weeks.",
  "eyebrow": "Automation",
  "answer": "Business process automation replaces the manual steps people take to move information between systems — copying leads into a CRM, chasing quotes, assembling reports, onboarding a customer. Done properly it removes roughly 65% of the identified manual hours and cuts response times from hours to seconds.",
  "intro": [
@@ -407,8 +414,8 @@ SERVICES = [
  ],
  "metrics": [("&lt;60s", "Speed to lead"), ("~65%", "Of manual hours removed"), ("14", "Days to first workflow live")],
  "faqs": [
-   ("How much does business process automation cost?",
-    "Single workflows start at $749 one-time. A full Automation Mission covering three to five workflows runs from $2,499 depending on integration complexity. Ongoing operations retainers start at $499 per month. Most clients see the build cost returned within the first few months of recovered labour."),
+   ("How is automation work priced?",
+    "Single workflows are a fixed one-time fee. A full Automation Mission covering three to five workflows is quoted as a fixed project price that depends mainly on how many systems must be connected and how clean the data is. Ongoing operations run as a monthly retainer. Your free blueprint puts a number against each workflow before you commit to any of them."),
    ("Which automation platform do you use — Zapier, Make or n8n?",
     "Whichever fits the job and your budget. Zapier is fastest to stand up and most expensive at volume. Make is cheaper for high-volume branching logic. n8n is the most flexible and can be self-hosted for data-sensitive work. We recommend on merit and you own the account regardless."),
    ("Will automation replace my staff?",
@@ -424,7 +431,7 @@ SERVICES = [
  "nav": "Marketing, SEO & AI Search",
  "h1": "Rank in Google. Get cited by the AI.",
  "title": "SEO, GEO &amp; AI Search Marketing Agency | Forward Framework",
- "desc": "SEO plus Generative Engine Optimization: get found in Google and cited by ChatGPT, Perplexity, Gemini and AI Overviews. Free AI Search Visibility Report. From $499/mo.",
+ "desc": "SEO plus Generative Engine Optimization: get found in Google and cited by ChatGPT, Perplexity, Gemini and AI Overviews. Free AI Search Visibility Report.",
  "eyebrow": "Marketing, SEO & AI search",
  "answer": "Modern search marketing has two jobs: earn the classic organic ranking, and earn the citation inside AI-generated answers. The second — Generative Engine Optimization — rewards direct answers in the first 40 to 60 words, structured data, entity clarity, crawler access and freshness rather than keyword density.",
  "intro": [
@@ -482,7 +489,7 @@ SERVICES = [
  "nav": "Ad Management",
  "h1": "Ads managed to profit, not to impressions.",
  "title": "PPC &amp; Ad Management Agency | Google, Meta, LinkedIn | Forward Framework",
- "desc": "Google, Meta, LinkedIn and Microsoft ads managed to closed revenue. Free ad account audit — most accounts hide 20–40% wasted spend. Month to month, from $749.",
+ "desc": "Google, Meta, LinkedIn and Microsoft ads managed to closed revenue. Free ad account audit — most accounts hide 20–40% wasted spend. Month to month, no long-term contract.",
  "eyebrow": "Ad management",
  "answer": "Effective ad management optimises toward closed revenue rather than clicks or form fills. That requires conversion tracking wired back to your CRM, offline conversion imports so the platforms learn which leads actually became customers, and a willingness to turn off spend that looks good in the dashboard.",
  "intro": [
@@ -523,8 +530,8 @@ SERVICES = [
  ],
  "metrics": [("20–40%", "Typical wasted spend found"), ("0", "Long-term contracts"), ("100%", "You own the accounts")],
  "faqs": [
-   ("How much does PPC management cost?",
-    "Management starts at $749 per month for accounts under $20,000 in monthly spend, or 12% of spend for larger accounts. There is no long-term contract after an initial 90-day runway, and you own every ad account, pixel and piece of data from day one to the day you leave."),
+   ("How is ad management priced?",
+    "A flat monthly management fee on smaller accounts, and a percentage of spend once an account is large enough that the flat fee stops making sense. Media budget is always paid by you directly to the platform — we never mark it up or take a rebate. There is no long-term contract after an initial 90-day runway, and you own every ad account, pixel and piece of data throughout."),
    ("What does a free ad account audit include?",
     "A written teardown covering wasted spend with dollar figures attached, conversion tracking and attribution health, account structure, keyword and audience quality, creative performance, competitor auction overlap, and a prioritised fix list. You keep the document and are welcome to hand it to your current agency."),
    ("How much ad spend do I need to make this worthwhile?",
@@ -540,7 +547,7 @@ SERVICES = [
  "nav": "Social Media Marketing",
  "h1": "Social that builds demand instead of chasing the algorithm.",
  "title": "Social Media Marketing Agency | Forward Framework",
- "desc": "Social media marketing tied to pipeline, not likes. Free 30-day content plan with ten scripted posts. Management from $499/month, month to month.",
+ "desc": "Social media marketing tied to pipeline, not likes. Free 30-day content plan with ten scripted posts. Month to month, no long-term contract.",
  "eyebrow": "Social media marketing",
  "answer": "Effective social media marketing for a business is a demand-building programme, not a posting schedule. It produces a consistent point of view, short-form video and proof content that reaches buyers before they are searching, and it is measured against pipeline influence rather than follower count.",
  "intro": [
@@ -581,8 +588,8 @@ SERVICES = [
  ],
  "metrics": [("10", "Free scripted posts"), ("1", "Filming day per month"), ("0", "Vanity metrics in reporting")],
  "faqs": [
-   ("How much does social media management cost?",
-    "Management starts at $499 per month for two platforms and consistent publishing. Video-led programmes with a monthly filming day start at $1,749, and full-funnel work combining organic, paid social and creator partnerships starts at $2,999. All are month to month after an initial 90-day runway."),
+   ("How is social media work priced?",
+    "As a monthly retainer sized to how much is being produced: consistent publishing on two platforms sits at one level, a video-led programme with a monthly filming day at another, and full-funnel work combining organic, paid social and creator partnerships higher again. All are month to month after an initial 90-day runway."),
    ("Which social platforms should my business be on?",
     "Two or three, chosen by where your buyers already spend attention and what your team can sustain. For most B2B that is LinkedIn plus YouTube or Instagram. For home services and local businesses it is usually Facebook and Instagram with short-form video. Being mediocre on six platforms beats nobody."),
    ("Does organic social actually generate leads?",
@@ -598,7 +605,7 @@ SERVICES = [
  "nav": "Scaffold — Business Systems",
  "h1": "The company should run the same whether or not you're in the room.",
  "title": "Business Systems, SOPs, Training &amp; Hiring | Scaffold | Forward Framework",
- "desc": "Scaffold builds the structure under your business: org design, SOPs, sales playbooks, training manuals and hiring systems. Free Key-Person Risk Map. From $999.",
+ "desc": "Scaffold builds the structure under your business: org design, SOPs, sales playbooks, training manuals and hiring systems. Starts with a free Key-Person Risk Map.",
  "eyebrow": "Scaffold — business systems",
  "answer": "Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.",
  "intro": [
@@ -639,8 +646,8 @@ SERVICES = [
  ],
  "metrics": [("7", "Days to your risk map"), ("$0", "To find where you're exposed"), ("100%", "Documented and owned by you")],
  "faqs": [
-   ("How much does it cost to document our processes?",
-    "A Scaffold Sprint covering your five most fragile processes starts at $999. A full Operating System build — structure, SOP library, sales playbook, training paths and hiring scorecards — starts at $2,999. Ongoing support to keep it all current starts at $999 per month. Every price is fixed in writing after your free risk map."),
+   ("How is this work priced?",
+    "As a fixed project fee, sized by how many processes and roles need documenting. A short sprint covering your most fragile processes is one level; a full Operating System build — structure, SOP library, sales playbook, training paths and hiring scorecards — is another. Ongoing support to keep it current runs monthly. Every number is fixed in writing after your free risk map."),
    ("What is an SOP and why does my business need one?",
     "A standard operating procedure is a short, specific document describing how one task gets done correctly every time. Businesses need them because undocumented process is a single point of failure: when the person who knows how it works is unavailable, quality drops, training takes months, and nothing can be safely automated or delegated."),
    ("How long does it take to build a company operating system?",
@@ -680,6 +687,26 @@ def render_service(s):
         for i, (t, b) in enumerate(s["includes"])
     )
     prices_html = "".join(price_card(*p) for p in s["prices"])
+    pricing_section = f"""
+<section class="section section--bone" id="pricing">
+  <div class="wrap">
+    <div class="center mx-auto mb-7" style="max-width:720px">
+      <span class="eyebrow">Transparent pricing</span>
+      <h2 class="h2 balance">What it costs, before you call.</h2>
+      <p class="lede mx-auto">Published starting prices. Final scope is fixed in writing after your free deliverable — never a moving target.</p>
+    </div>
+    <div class="price-grid">{prices_html}</div>
+  </div>
+</section>""" if SHOW_PRICING else """
+<section class="section section--bone" id="scope">
+  <div class="wrap">
+    <div class="center mx-auto" style="max-width:720px">
+      <span class="eyebrow">How it is scoped</span>
+      <h2 class="h2 balance">A fixed number, before any work begins.</h2>
+      <p class="lede mx-auto">Every engagement is quoted as a fixed price after your free deliverable, so you approve a number rather than an hourly rate. Retainers run a 90-day runway, then month to month. You own the accounts, the code and the documentation throughout.</p>
+    </div>
+  </div>
+</section>"""
     metrics_html = "".join(
         f'<div class="stat"><b>{v}</b><span>{l}</span></div>' for v, l in s["metrics"]
     )
@@ -700,7 +727,7 @@ def render_service(s):
       {''.join(f'<p>{p}</p>' for p in s['intro'])}
       <div class="btn-row mt-6">
         <a class="btn btn--primary btn--lg" href="#{offer['form_id']}">{offer['cta']} <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="btn btn--ghost btn--lg" href="#pricing">See pricing</a>
+        <a class="btn btn--ghost btn--lg" href="#included">What's included</a>
       </div>
       <div class="hero-proof">
         {''.join(f'<div class="proof-item"><b>{v}</b><span>{l}</span></div>' for v, l in s['metrics'])}
@@ -726,7 +753,7 @@ def render_service(s):
       <p class="small">Interactive and personalised offers convert materially better than a gated PDF or a "book a call" button, and the people who request them are far more likely to become customers. So we give away the first genuinely useful piece of work, and let it argue for us.</p>
       <p class="small mb-0">If the deliverable is good, you will know inside ten minutes whether we are worth a conversation. If it isn't, you have lost nothing and gained a document you can act on yourself.</p>
       <div class="card-foot">
-        <a class="link-arrow" href="/pricing.html">See every price on one page <span aria-hidden="true">&rarr;</span></a>
+        <a class="link-arrow" href="/contact.html">Start with the free deliverable <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </div>
@@ -746,19 +773,7 @@ def render_service(s):
   <div class="wrap"><div class="stat-band">{metrics_html}</div></div>
 </section>
 
-<section class="section section--bone" id="pricing">
-  <div class="wrap">
-    <div class="center mx-auto mb-7" style="max-width:720px">
-      <span class="eyebrow">Transparent pricing</span>
-      <h2 class="h2 balance">What it costs, before you call.</h2>
-      <p class="lede mx-auto">Published starting prices. Final scope is fixed in writing after your free deliverable — never a moving target.</p>
-    </div>
-    <div class="price-grid">{prices_html}</div>
-    <div class="btn-row mt-7" style="justify-content:center">
-      <a class="btn btn--dark btn--lg" href="/pricing.html">Compare all seven services <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-    </div>
-  </div>
-</section>
+{pricing_section}
 
 <section class="section" id="faq">
   <div class="wrap split">
@@ -789,22 +804,24 @@ def render_service(s):
             "provider": {"@id": f"{SITE}/#organization"},
             "areaServed": {"@type": "Country", "name": "United States"},
             "audience": {"@type": "BusinessAudience", "name": "Small and mid-market companies in the United States"},
-            "offers": {
-                "@type": "Offer",
-                "priceCurrency": "USD",
-                "price": re.sub(r"[^0-9]", "", s["prices"][0][1]) or "0",
-                "availability": "https://schema.org/InStock",
-                "url": url,
-            },
-            "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": f"{strip_tags(s['nav'])} packages",
-                "itemListElement": [
-                    {"@type": "Offer", "name": p[0], "description": p[3],
-                     "priceCurrency": "USD", "price": re.sub(r"[^0-9]", "", p[1]) or "0"}
-                    for p in s["prices"]
-                ],
-            },
+            **({
+                "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "USD",
+                    "price": re.sub(r"[^0-9]", "", s["prices"][0][1]) or "0",
+                    "availability": "https://schema.org/InStock",
+                    "url": url,
+                },
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": f"{strip_tags(s['nav'])} packages",
+                    "itemListElement": [
+                        {"@type": "Offer", "name": p[0], "description": p[3],
+                         "priceCurrency": "USD", "price": re.sub(r"[^0-9]", "", p[1]) or "0"}
+                        for p in s["prices"]
+                    ],
+                },
+            } if SHOW_PRICING else {}),
         },
         {
             "@type": "WebPage",
@@ -847,7 +864,6 @@ def render_services_index():
     rows = "".join(f"""<tr>
         <td><b>{s['nav']}</b></td>
         <td>{s['offer']['name']}</td>
-        <td>{s['prices'][0][1]} <span class="muted">{s['prices'][0][2]}</span></td>
         <td><a class="link-arrow" href="/services/{s['slug']}.html">View</a></td>
       </tr>""" for s in SERVICES)
 
@@ -864,7 +880,7 @@ def render_services_index():
       </div>
       <div class="btn-row mt-6">
         <a class="btn btn--primary btn--lg" href="/contact.html">Get my free Growth Plan <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="btn btn--ghost btn--lg" href="/pricing.html">See all pricing</a>
+        <a class="btn btn--ghost btn--lg" href="/results.html">See client results</a>
       </div>
     </div>
   </div>
@@ -878,11 +894,11 @@ def render_services_index():
   <div class="wrap">
     <div class="center mx-auto mb-7" style="max-width:700px">
       <span class="eyebrow">At a glance</span>
-      <h2 class="h2 balance">Every service, its free offer, and where pricing starts.</h2>
+      <h2 class="h2 balance">Every service and the free deliverable it starts with.</h2>
     </div>
     <div class="table-wrap">
       <table class="compare">
-        <thead><tr><th scope="col">Service</th><th scope="col">Free deliverable</th><th scope="col">Starts at</th><th scope="col"></th></tr></thead>
+        <thead><tr><th scope="col">Service</th><th scope="col">Free deliverable</th><th scope="col"></th></tr></thead>
         <tbody>{rows}</tbody>
       </table>
     </div>
@@ -1144,7 +1160,7 @@ def render_about():
     </div>
     <div class="grid grid-2">
       <div class="card"><span class="card-num">01</span><h3 class="h4">Revenue is the only scoreboard</h3><p>Impressions, sessions and engagement are diagnostics. If a tactic cannot be connected to money, it is a hypothesis, not a strategy.</p></div>
-      <div class="card"><span class="card-num">02</span><h3 class="h4">Transparency by default</h3><p>Published prices, open dashboards, client-owned accounts, and an honest answer when the answer is "don't buy this from us."</p></div>
+      <div class="card"><span class="card-num">02</span><h3 class="h4">Transparency by default</h3><p>Fixed quotes before work starts, open dashboards, client-owned accounts, and an honest answer when the answer is "don't buy this from us."</p></div>
       <div class="card"><span class="card-num">03</span><h3 class="h4">Build to be handed over</h3><p>Documentation, training and plain-language runbooks on everything. Work that only we can maintain is a liability we refuse to sell.</p></div>
       <div class="card"><span class="card-num">04</span><h3 class="h4">Speed is a feature</h3><p>Of the website, of the lead response, of our own replies. Nearly every conversion problem has a latency component hiding in it.</p></div>
       <div class="card"><span class="card-num">05</span><h3 class="h4">Say the uncomfortable thing</h3><p>Sometimes the honest recommendation is a smaller engagement, a different vendor, or nothing at all. We'd rather be right than booked.</p></div>
@@ -1237,7 +1253,7 @@ def render_contact():
       <h1 class="balance">Start with a plan, not a pitch.</h1>
       <div class="answer">
         <span class="eyebrow">What happens next</span>
-        <p>Send the form and a strategist audits your site, your AI search visibility and your funnel. Within two business days you receive a written Growth Plan with ranked priorities, dollar impact and transparent pricing. There is no obligation and no call required to receive it.</p>
+        <p>Send the form and a strategist audits your site, your AI search visibility and your funnel. Within two business days you receive a written Growth Plan with ranked priorities and the dollar impact of each. There is no obligation and no call required to receive it.</p>
       </div>
       <p class="lede">Prefer to talk first? Call <a class="accent" href="tel:+15550123456">(555) 012-3456</a> or email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a>. A senior strategist answers, not a scheduler.</p>
 
@@ -1250,7 +1266,7 @@ def render_contact():
     </div>
 
     <div>{lead_form("contact", "Get my free Growth Plan",
-      "Tell us where it hurts. We'll send a written plan with priorities, dollar impact and pricing within two business days.",
+      "Tell us where it hurts. We'll send a written plan with priorities and dollar impact within two business days.",
       "Send my Growth Plan",
       "No obligation, no call required, and yours to keep whether or not we work together.",
       "growth-plan")}</div>
@@ -1293,7 +1309,7 @@ def render_thank_you():
     <p class="lede mx-auto">A strategist is reviewing your details now. Expect your written Growth Plan within two business days — check your inbox, and your spam folder just in case.</p>
     <div class="btn-row mt-6" style="justify-content:center">
       <a class="btn btn--primary" href="/results.html">See client results <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-      <a class="btn btn--ghost" href="/pricing.html">Browse pricing</a>
+      <a class="btn btn--ghost" href="/services/">Browse services</a>
     </div>
     <p class="small muted mt-6">Need something sooner? Call <a class="accent" href="tel:+15550123456">(555) 012-3456</a>.</p>
   </div>
@@ -1402,7 +1418,7 @@ def render_terms():
 def all_urls():
     urls = [("/", "1.0", "weekly"), ("/services/", "0.9", "monthly")]
     urls += [(f"/services/{s['slug']}.html", "0.9", "monthly") for s in SERVICES]
-    urls += [("/pricing.html", "0.9", "monthly"), ("/results.html", "0.8", "monthly"),
+    urls += [("/results.html", "0.8", "monthly"),
              ("/about.html", "0.7", "monthly"), ("/contact.html", "0.8", "monthly"),
              ("/privacy.html", "0.2", "yearly"), ("/terms.html", "0.2", "yearly")]
     return urls
@@ -1499,33 +1515,16 @@ Sitemap: {SITE}/sitemap.xml
 
 > Forward Framework is a United States digital agency that builds websites, AI systems, automations and marketing campaigns as one connected growth engine. Companies hire one accountable team instead of seven separate vendors, and report on a single revenue number.
 
-Forward Framework serves owner-led and mid-market companies across the United States, typically between $1M and $50M in revenue, across home and trade services, professional services, healthcare, ecommerce and B2B. Every service begins with a free, genuinely useful deliverable rather than a sales call, and all starting prices are published publicly.
+Forward Framework serves owner-led and mid-market companies across the United States, typically between $1M and $50M in revenue, across home and trade services, professional services, healthcare, ecommerce and B2B. Every service begins with a free, genuinely useful deliverable rather than a sales call, and every engagement is quoted as a fixed price before work starts.
 
 ## Services
 
 {svc_lines}
 
-## Pricing (published starting points, USD)
-
-- Landing page: from $749 one-time
-- Conversion website: from $1,499 one-time, or $149/month on a 12-month plan
-- Platform build (ecommerce / integration-heavy): from $1,999
-- AI Opportunity Audit: free
-- AI Readiness Sprint: $1,999 fixed, two weeks
-- AI build and embed: from $3,499
-- Single automation workflow: from $749
-- Automation Mission (3–5 workflows): from $2,499
-- Automation operations retainer: from $499/month
-- SEO, GEO and content: from $499/month (Growth $2,499/mo, Market Leader $4,999/mo)
-- Ad management: from $749/month, or 12% of ad spend above $20,000/month
-- Social media marketing: from $499/month (Demand Engine $1,749/mo, Full Funnel $2,999/mo)
-- Scaffold business systems and SOPs: from $999 (Operating System $2,999, Embedded Ops $999/month)
-
 ## Key pages
 
 - [Home]({SITE}/): overview, method and the free Growth Plan offer
 - [Services]({SITE}/services/): all seven services with their free deliverables
-- [Pricing]({SITE}/pricing.html): published starting prices for every service
 - [Results]({SITE}/results.html): case studies with baselines and methods
 - [About]({SITE}/about.html): operating principles and the five-phase method
 - [Contact]({SITE}/contact.html): request a written Growth Plan in 48 hours
@@ -1541,6 +1540,7 @@ Forward Framework serves owner-led and mid-market companies across the United St
 ## Terms of engagement
 
 - Free deliverable before any paid work, no call required to receive it
+- Every engagement quoted as a fixed price after that deliverable
 - 90-day initial runway on retainers, month to month thereafter
 - Clients own all accounts, code, automations, data and documentation
 - Media spend paid directly to platforms, never marked up
@@ -1576,7 +1576,8 @@ def main():
     for s in SERVICES:
         render_service(s)
     render_services_index()
-    render_pricing()
+    if SHOW_PRICING:
+        render_pricing()
     render_results()
     render_about()
     render_contact()

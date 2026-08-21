@@ -68,7 +68,7 @@ they simply are not live.
 
 ### Why this host needs its own build
 
-Netlify serves both `/pricing` and `/pricing.html` with a 200 by default, and
+Netlify serves both `/about` and `/about.html` with a 200 by default, and
 its "Pretty URLs" post-processing toggle is inconsistent about redirecting one
 to the other. Two live URLs for the same page is duplicate content, and which
 one wins would depend on a dashboard setting.
@@ -91,7 +91,7 @@ python3 tools/build_netlify.py https://your-domain.com    # set the domain at th
 
 Verified against a local emulation of Netlify's routing and `_redirects`: 16
 routes, **zero redirect hops**, zero 4xx, all 19 internal links resolving
-directly, `/pricing.html` 301ing to `/pricing`, and `/404.html` still served
+directly, `/about.html` 301ing to `/about`, and `/404.html` still served
 directly.
 
 ### Option 1 — Automatic on every push
@@ -149,7 +149,7 @@ Then again with the real domain once it is attached under **Domain management**.
 ### Why this host needs its own build
 
 Cloudflare Pages serves HTML **without the extension** and 308-redirects the
-extension back: `/pricing.html` permanently redirects to `/pricing`. Uploading
+extension back: `/about.html` permanently redirects to `/about`. Uploading
 the source unchanged would mean every internal link costs a redirect hop, and —
 the real problem — every canonical tag would point at a URL that redirects.
 Google treats that as a conflicting signal and it is a documented cause of pages
@@ -378,7 +378,7 @@ and social profile links are left alone.
 | Security headers on all routes | `nosniff`, `SAMEORIGIN`, `strict-origin-when-cross-origin`, a `Permissions-Policy` denying camera/mic/geo/payment, and HSTS |
 | `Cache-Control` on `/assets/*` | 10 minutes plus a day of `stale-while-revalidate`. Deliberately short: `styles.css` and `main.js` are not fingerprinted, so a long cache would serve stale CSS after a deploy |
 
-Clean URLs (`/pricing` instead of `/pricing.html`) are **off**. Turning them on
+Clean URLs (`/about` instead of `/about.html`) are **off**. Turning them on
 means Vercel 308-redirects every `.html` URL, so the canonicals, sitemap,
 `llms.txt` and internal links would all have to change at the same time or you
 get redirect chains and mismatched canonicals. It is a one-command change while
@@ -391,7 +391,7 @@ deployment.
 
 ## Verify after deploying
 
-- [ ] Homepage, a service page, `/services/`, `/pricing.html` all load
+- [ ] Homepage, a service page, `/services/`, `/about.html` all load
 - [ ] `/assets/css/styles.css` returns 200 (the page is dark, not unstyled)
 - [ ] A made-up URL shows the branded 404
 - [ ] `/robots.txt`, `/sitemap.xml` and `/llms.txt` load as plain text/XML

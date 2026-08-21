@@ -27,7 +27,6 @@ PAGES = [
     ("/services/ad-management.html", "services/ad-management.html"),
     ("/services/social-media-marketing.html", "services/social-media-marketing.html"),
     ("/services/business-systems.html", "services/business-systems.html"),
-    ("/pricing.html", "pricing.html"),
     ("/results.html", "results.html"),
     ("/about.html", "about.html"),
     ("/contact.html", "contact.html"),

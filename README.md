@@ -33,7 +33,7 @@ Every page works with JavaScript disabled. The whole site is 147 KB zipped.
 
 | | |
 |---|---|
-| **Pages** | 17 — homepage, 7 service pages, pricing, results, about, contact, legal, 404 |
+| **Pages** | 16 — homepage, 7 service pages, results, about, contact, legal, 404 |
 | **Weight** | 40 KB CSS · 16 KB JS · no external libraries |
 | **Fonts** | Jost + Inter, loaded async from Google Fonts with a real fallback stack |
 | **Accessibility** | WCAG AA contrast across the palette, keyboard navigable, `prefers-reduced-motion` honoured |
@@ -84,7 +84,6 @@ Full walkthroughs for each host are in **[DEPLOY.md](DEPLOY.md)**.
 ```
 index.html              Homepage — also the source of truth for the site shell
 services/               Hub + 7 service pages
-pricing.html            Every published price
 results.html            Case studies
 about.html              Method and operating principles
 contact.html            Growth Plan form
@@ -108,6 +107,7 @@ stamps it onto every other page, so navigation and footer can never drift.
 | `tools/build_pages.py` | Stages `_site/` for GitHub Pages, rewriting paths for the subpath |
 | `tools/build_preview.py` | Single self-contained HTML file containing all 17 pages |
 | `tools/build_source_pdf.py` | The whole source as a printable document plus a text bundle |
+| `tools/build_pricing_pdf.py` | The archived pricing, generated from the same data the site would publish |
 | `tools/set_domain.py` | Rewrites the absolute domain everywhere, then rebuilds |
 
 </details>

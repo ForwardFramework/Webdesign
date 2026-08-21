@@ -3,3 +3,5 @@ node_modules/
 *.log
 dist/
 _site/
+__pycache__/
+*.pyc

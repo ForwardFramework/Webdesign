@@ -41,6 +41,21 @@ deploy, so pushes are safe — they simply are not live yet.
 stamps it onto every other page. Edit `index.html` for shell changes and
 `tools/build.py` for service copy and pricing, then rebuild.
 
+## Pricing is currently withheld
+
+Prices were removed from the public site. The figures still live in each
+service's `prices` list in `tools/build.py` and are gated by `SHOW_PRICING`.
+
+- To restore pricing: set `SHOW_PRICING = True` and run `python3 tools/build.py`.
+  That brings back the pricing page, the per-service price cards, the homepage
+  teaser and the `Offer` prices in the structured data.
+- The copy that framed the site around published pricing was rewritten when
+  pricing came off (the "our prices are on the website" section, the FAQ
+  answers that quoted figures, the About page's transparency claim). Restoring
+  the flag does not restore that copy — it would need revisiting.
+- `python3 tools/build_pricing_pdf.py` regenerates the archive from the same
+  data, so it can never disagree with what the site would publish.
+
 ## Invariants worth not breaking
 
 - **FAQ schema must match the visible copy word for word.** Every FAQ answer

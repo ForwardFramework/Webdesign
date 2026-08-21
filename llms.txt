@@ -2,7 +2,7 @@
 
 > Forward Framework is a United States digital agency that builds websites, AI systems, automations and marketing campaigns as one connected growth engine. Companies hire one accountable team instead of seven separate vendors, and report on a single revenue number.
 
-Forward Framework serves owner-led and mid-market companies across the United States, typically between $1M and $50M in revenue, across home and trade services, professional services, healthcare, ecommerce and B2B. Every service begins with a free, genuinely useful deliverable rather than a sales call, and all starting prices are published publicly.
+Forward Framework serves owner-led and mid-market companies across the United States, typically between $1M and $50M in revenue, across home and trade services, professional services, healthcare, ecommerce and B2B. Every service begins with a free, genuinely useful deliverable rather than a sales call, and every engagement is quoted as a fixed price before work starts.
 
 ## Services
 
@@ -14,27 +14,10 @@ Forward Framework serves owner-led and mid-market companies across the United St
 - [Social Media Marketing](https://www.forward-framework.com/services/social-media-marketing.html): Effective social media marketing for a business is a demand-building programme, not a posting schedule. It produces a consistent point of view, short-form video and proof content that reaches buyers before they are searching, and it is measured against pipeline influence rather than follower count.
 - [Scaffold — Business Systems](https://www.forward-framework.com/services/business-systems.html): Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.
 
-## Pricing (published starting points, USD)
-
-- Landing page: from $749 one-time
-- Conversion website: from $1,499 one-time, or $149/month on a 12-month plan
-- Platform build (ecommerce / integration-heavy): from $1,999
-- AI Opportunity Audit: free
-- AI Readiness Sprint: $1,999 fixed, two weeks
-- AI build and embed: from $3,499
-- Single automation workflow: from $749
-- Automation Mission (3–5 workflows): from $2,499
-- Automation operations retainer: from $499/month
-- SEO, GEO and content: from $499/month (Growth $2,499/mo, Market Leader $4,999/mo)
-- Ad management: from $749/month, or 12% of ad spend above $20,000/month
-- Social media marketing: from $499/month (Demand Engine $1,749/mo, Full Funnel $2,999/mo)
-- Scaffold business systems and SOPs: from $999 (Operating System $2,999, Embedded Ops $999/month)
-
 ## Key pages
 
 - [Home](https://www.forward-framework.com/): overview, method and the free Growth Plan offer
 - [Services](https://www.forward-framework.com/services/): all seven services with their free deliverables
-- [Pricing](https://www.forward-framework.com/pricing.html): published starting prices for every service
 - [Results](https://www.forward-framework.com/results.html): case studies with baselines and methods
 - [About](https://www.forward-framework.com/about.html): operating principles and the five-phase method
 - [Contact](https://www.forward-framework.com/contact.html): request a written Growth Plan in 48 hours
@@ -50,6 +33,7 @@ Forward Framework serves owner-led and mid-market companies across the United St
 ## Terms of engagement
 
 - Free deliverable before any paid work, no call required to receive it
+- Every engagement quoted as a fixed price after that deliverable
 - 90-day initial runway on retainers, month to month thereafter
 - Clients own all accounts, code, automations, data and documentation
 - Media spend paid directly to platforms, never marked up
