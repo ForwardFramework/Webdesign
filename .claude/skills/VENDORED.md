@@ -2,7 +2,7 @@
 
 The skill directories here are vendored from
 [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-(MIT), version 2.13.0, upstream commit `8a1a6d8`.
+(MIT), version 2.13.0, upstream commit `bc826e2` (re-vendored 2026-08-21).
 
 They are checked into the repo so every Claude Code session in this project —
 local, web, or CI — loads them without a separate install step.
@@ -36,3 +36,24 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "home services site" --de
 Re-copy `.claude/skills/` from a fresh clone of the upstream repo, or run
 `npx ui-ux-pro-max-cli init --ai claude` in the project root, then update the
 version and commit recorded above.
+
+```bash
+git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git /tmp/uupm
+git -C /tmp/uupm log -1 --format='%h %s'          # record this commit at the top of this file
+
+cp .claude/skills/VENDORED.md /tmp/VENDORED.md    # this file is ours, not upstream's
+rm -rf .claude/skills
+cp -R /tmp/uupm/.claude/skills .claude/skills
+cp /tmp/VENDORED.md .claude/skills/VENDORED.md
+
+find .claude/skills -name __pycache__ -type d -prune -exec rm -rf {} +
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "roofing landing page" --domain style
+```
+
+Only `.claude/skills/` is vendored — the upstream CLI, docs, and gallery are not.
+`VENDORED.md` is the one file in this directory that is *not* from upstream, so
+copy it aside before wiping the directory.
+
+Running `search.py` writes `.pyc` files into `ui-ux-pro-max/scripts/__pycache__/`.
+That path is gitignored; never commit it. (Three `.pyc` files were committed in the
+initial vendoring and removed on 2026-08-21.)

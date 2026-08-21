@@ -4,3 +4,7 @@
 # Local environment files
 .env
 .env.local
+
+# Python bytecode from the vendored skill scripts
+__pycache__/
+*.py[cod]

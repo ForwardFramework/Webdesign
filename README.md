@@ -45,9 +45,34 @@ Or install the official plugin, which bundles the same MCP server with the 21st 
 /plugin install 21st@21st
 ```
 
-### Network requirement
+### Troubleshooting `Needs authentication`
 
-`21st.dev:443` must be reachable. In sandboxed or proxied environments with an egress
-allowlist, add `21st.dev` to it — otherwise the server registers fine but reports
-`Needs authentication`, which is the proxy's `403` surfacing as an auth failure rather than
-a bad key.
+Claude Code reports `Needs authentication` for both of the ways this server can fail, and
+they need different fixes. Check them in this order.
+
+**1. `API_KEY_21ST` is not exported.** `.mcp.json` substitutes the variable from the
+environment Claude Code was launched in, so a key set only in a shell you started *after*
+Claude — or in a `.env` file nothing sources — does not reach it:
+
+```bash
+printenv API_KEY_21ST     # empty output means the header goes out unset
+```
+
+Export it in your shell profile and restart Claude Code so the new environment is inherited.
+
+**2. `21st.dev:443` is not reachable.** In sandboxed, proxied, or allowlisted environments
+the connection is refused before the key is ever checked, so a valid key still reports as an
+auth failure:
+
+```bash
+curl -sS -o /dev/null -w '%{http_code}\n' https://21st.dev/api/mcp
+```
+
+`CONNECT tunnel failed, response 403` is an egress denial, not a bad key — add `21st.dev` to
+the allowlist. On Claude Code on the web, this is the environment's network policy
+([docs](https://code.claude.com/docs/en/claude-code-on-the-web)), where
+`curl -sS "$HTTPS_PROXY/__agentproxy/status"` lists recent denied hosts under
+`recentRelayFailures`.
+
+A `401`/`403` **in the HTTP response body** (rather than at the CONNECT stage) is the real
+bad-key case — regenerate the key at <https://21st.dev/settings/api-keys>.
