@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Signal — assessment controller
+   Forward Framework Personality Assessment — controller
    Screens: intro -> paged sections -> report. State persists to localStorage
    so a closed tab costs nothing, and a completed profile can be re-opened
    from a self-contained link with no server involved.
@@ -9,7 +9,7 @@ import { SECTIONS, LIKERT_SEQUENCE, TETRADS, REASONING_ITEMS, LIKERT_SCALE, TOTA
 import { score } from './scoring.js';
 import { renderReport, esc } from './report.js';
 
-const STORE_KEY = 'signal.assessment.v1';
+const STORE_KEY = 'forwardframework.assessment.v1';
 
 /* --- Pages --------------------------------------------------------------- */
 const PAGES = [];
@@ -182,40 +182,40 @@ function renderIntro(resumable) {
   el.progress.hidden = true;
   el.main.innerHTML = `
     <div class="wrap">
-      <div class="panel panel--narrow">
+      <div class="form-panel" style="max-width:800px;margin-inline:auto">
         <p class="eyebrow">Before you start</p>
-        <h1 style="font-size:var(--step-3)">Signal behavioural assessment</h1>
+        <h1 style="font-size:var(--t-3xl)">Forward Framework<br>Personality Assessment</h1>
         <p class="lede">Seventy items, about twenty minutes. Fifty-four statements about how you work,
           ten forced-choice word blocks, and six short reasoning problems.</p>
 
-        ${resumable ? `<div class="notice notice--ok" style="margin-bottom:var(--sp-5)">
+        ${resumable ? `<div class="notice notice--ok" style="margin-bottom:var(--s-5)">
           <b>You have an assessment in progress.</b> ${resumable.answered} of ${TOTAL_ITEMS} items answered.
-          <div style="margin-top:var(--sp-3);display:flex;gap:.5rem;flex-wrap:wrap">
+          <div style="margin-top:var(--s-3);display:flex;gap:.5rem;flex-wrap:wrap">
             <button class="btn btn--ink btn--sm" id="resume">Resume where I left off</button>
             <button class="btn btn--ghost btn--sm" id="restart">Start over</button>
           </div></div>` : ''}
 
-        <div class="grid" style="gap:var(--sp-4);margin-bottom:var(--sp-6)">
+        <div class="grid" style="gap:var(--s-4);margin-bottom:var(--s-6)">
           <div class="field">
-            <label for="cand-name">Name <span style="font-weight:400;color:var(--slate-400)">(optional)</span></label>
+            <label for="cand-name">Name <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
             <input id="cand-name" type="text" autocomplete="name" placeholder="Who is this profile for?"
                    value="${esc(state.candidate.name)}">
           </div>
           <div class="field">
-            <label for="cand-role">Role being assessed for <span style="font-weight:400;color:var(--slate-400)">(optional)</span></label>
+            <label for="cand-role">Role being assessed for <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
             <input id="cand-role" type="text" placeholder="e.g. Senior Adviser, Operations Manager"
                    value="${esc(state.candidate.role)}">
             <p class="hint">Used only to label the report. Nothing is sent anywhere.</p>
           </div>
         </div>
 
-        <div class="notice" style="margin-bottom:var(--sp-6)">
+        <div class="notice" style="margin-bottom:var(--s-6)">
           <b>Answer as you are, not as you think a hiring manager wants.</b>
           The assessment checks internal consistency and candour, and a profile answered to impress is
           reported as exactly that. First instinct is usually the accurate one.
         </div>
 
-        <ul style="margin:0 0 var(--sp-6);padding-left:1.1rem;font-size:.9rem;color:var(--slate-500);display:grid;gap:.45rem">
+        <ul style="margin:0 0 var(--s-6);padding-left:1.1rem;font-size:.9rem;color:var(--muted);display:grid;gap:.45rem">
           <li>Everything is scored in this browser. There is no account, no server and no upload.</li>
           <li>Progress saves automatically — closing the tab loses nothing.</li>
           <li>No timer, but work briskly. Long deliberation makes profiles less accurate, not more.</li>
@@ -295,7 +295,7 @@ function tetradBlock(item, index) {
             </span>
           </div>`).join('')}
       </div>
-      <p class="qnav__hint" style="margin-top:var(--sp-3)">Most and least must be different words.</p>
+      <p class="qnav__hint" style="margin-top:var(--s-3)">Most and least must be different words.</p>
     </div>`;
 }
 
@@ -355,10 +355,10 @@ function renderQuestions() {
 
   el.main.innerHTML = `
     <div class="wrap">
-      <div class="panel panel--narrow">
-        ${page.first ? `<div style="margin-bottom:var(--sp-6)">
+      <div class="form-panel" style="max-width:800px;margin-inline:auto">
+        ${page.first ? `<div style="margin-bottom:var(--s-6)">
           <p class="eyebrow">Part ${page.sectionIndex + 1} — ${esc(section.title)}</p>
-          <p class="lede" style="font-size:var(--step-0)">${esc(section.intro)}</p>
+          <p class="lede" style="font-size:var(--t-base)">${esc(section.intro)}</p>
         </div>` : ''}
         <form id="qform">
           ${page.items.map((item, i) => renderer(item, page.offset + i + 1)).join('')}
@@ -454,7 +454,7 @@ function renderReportScreen() {
   el.main.innerHTML = `
     <div class="wrap">
       <div id="report-mount"></div>
-      <div class="rcard no-print" style="margin-top:var(--sp-6)">
+      <div class="rcard no-print" style="margin-top:var(--s-6)">
         <h3>Keep this profile</h3>
         <p class="rcard__sub">Nothing has left this browser. These are the only ways a copy exists anywhere else.</p>
         <div class="actions-row">
@@ -463,7 +463,7 @@ function renderReportScreen() {
           <button class="btn btn--ghost" id="act-link">Copy shareable link</button>
           <button class="btn btn--ghost" id="act-restart">Take it again</button>
         </div>
-        <p class="qnav__hint" id="act-status" style="margin-top:var(--sp-3)" role="status"></p>
+        <p class="qnav__hint" id="act-status" style="margin-top:var(--s-3)" role="status"></p>
       </div>
     </div>`;
 
@@ -481,7 +481,7 @@ function renderReportScreen() {
     const payload = JSON.stringify({ answers: state.answers, result }, null, 2);
     const slug = (state.candidate.name || 'candidate').toLowerCase()
       .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    const filename = `signal-profile-${slug || 'candidate'}.json`;
+    const filename = `ff-profile-${slug || 'candidate'}.json`;
 
     // A sandboxed host (the published-artifact viewer) never lets the page
     // start its own download, so hand the file to the host's save surface

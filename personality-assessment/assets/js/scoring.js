@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Signal — scoring engine
+   Forward Framework Personality Assessment — scoring engine
    --------------------------------------------------------------------------
    One pass over the raw responses produces every layer of the report:
 
@@ -195,11 +195,11 @@ function scoreBigFive(f) {
 }
 
 const BIG_FIVE_META = {
-  openness:          { label: 'Openness',            axis: 'Conventional ←→ Inventive' },
-  conscientiousness: { label: 'Conscientiousness',   axis: 'Flexible ←→ Disciplined' },
-  extraversion:      { label: 'Extraversion',        axis: 'Reserved ←→ Outgoing' },
-  agreeableness:     { label: 'Agreeableness',       axis: 'Challenging ←→ Accommodating' },
-  stability:         { label: 'Emotional Stability', axis: 'Reactive ←→ Composed' }
+  openness:          { label: 'Openness',            short: 'OPEN', axis: 'Conventional ←→ Inventive' },
+  conscientiousness: { label: 'Conscientiousness',   short: 'CONS', axis: 'Flexible ←→ Disciplined' },
+  extraversion:      { label: 'Extraversion',        short: 'EXTR', axis: 'Reserved ←→ Outgoing' },
+  agreeableness:     { label: 'Agreeableness',       short: 'AGRE', axis: 'Challenging ←→ Accommodating' },
+  stability:         { label: 'Emotional Stability', short: 'STAB', axis: 'Reactive ←→ Composed' }
 };
 
 /* --- Part 5: HPI-style bright-side scales -------------------------------- */

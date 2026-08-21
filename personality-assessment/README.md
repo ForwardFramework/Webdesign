@@ -1,16 +1,17 @@
-# Signal — behavioural hiring assessment
+# Forward Framework Personality Assessment
 
-A complete, self-contained hiring personality assessment and its landing page. Seventy scored
-items produce one profile read five ways: **Big Five (OCEAN)**, **DISC**, **Hogan Personality
+A complete, self-contained hiring personality assessment and its landing page, in the Forward
+Framework visual identity. Seventy scored items produce one profile read five ways: **Big Five (OCEAN)**, **DISC**, **Hogan Personality
 Inventory-style scales**, **Predictive Index-style behavioural drives**, and **Caliper-style job
 competencies** including an abstract-reasoning screen.
 
 No build step, no dependencies, no server. Open `index.html` in a browser and it works.
 
 ```
-talent-signal/
+personality-assessment/
 ├── index.html              landing page
 ├── assessment.html         the assessment + report app
+├── build.mjs               single-file bundler
 └── assets/
     ├── css/brand.css       design tokens — the whole visual identity lives here
     ├── css/landing.css     landing page
@@ -25,7 +26,7 @@ talent-signal/
 ## Running it
 
 ```bash
-cd talent-signal
+cd personality-assessment
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
@@ -111,7 +112,7 @@ Adding a role is one object: a label, a summary, six target levels, and which of
 ## Single-file build
 
 `node build.mjs` inlines the CSS and the four ES modules into one self-contained
-`dist/signal.html` — landing page, assessment and report in a single file with no external
+`dist/forward-framework-assessment.html` — landing page, assessment and report in a single file with no external
 requests except the webfont. Page navigation becomes hash routing (`#/`, `#/assess`, `#/demo`,
 `#r=<payload>`), which is what makes the whole product work as a single shareable file or a
 published artifact.
@@ -126,30 +127,36 @@ a sandboxed viewer that blocks page-initiated downloads, and a blob link everywh
 ## Privacy
 
 Everything is scored in the browser. There is no account, no server call and no database — answers
-persist to `localStorage` under `signal.assessment.v1` until cleared. A profile leaves the machine
+persist to `localStorage` under `forwardframework.assessment.v1` until cleared. A profile leaves the machine
 only by explicit action: **Download JSON**, **Print / save as PDF**, or **Copy shareable link**,
 which encodes the whole answer set into the URL fragment. That link is not secret, so treat it as
 you would the report itself.
 
-## Re-branding
+## The visual identity
 
-Every colour, font and shape token is in `assets/css/brand.css` under `:root`. Nothing else in the
-codebase references a raw colour, so re-skinning is one file. Product naming lives in the page
-`<title>`, the `.mark` wordmark blocks in `index.html` / `assessment.html`, and the footer.
+Every colour, typeface and shape token lives in `assets/css/brand.css` under `:root`, taken from
+the Forward Framework design system:
 
-The current palette — deep navy `#0b1f3a`, gold `#c8a44d`, serif display over sans body — was set
-to read like a professional financial-services recruiting brand.
+| | |
+| --- | --- |
+| **Field** | `--ink` `#0A0A0A` primary, `--bone` `#EFEBE6` for sustained reading |
+| **Accent** | `--taupe` `#A99A8C`, used sparingly and alone |
+| **Display** | Jost — weight 300 at display sizes with tight negative tracking, weight 500 uppercase at `.1–.26em` for labels, eyebrows and buttons |
+| **Body** | Inter |
+| **Shape** | A 45-degree chamfer on the bottom-right of every box, via `clip-path`. Nothing in the system has a rounded corner. |
+| **Rules** | 1px hairlines at 10% and 18% white |
+| **Status** | `--good` `#7FC9A2`, `--warn` `#E0B072`, `--bad` `#E38B7A` — separate from the accent |
 
-> **Note on the brand reference.** This was asked to follow the branding of
-> `prianosolutions.com`. That domain is blocked by this environment's network egress policy, so
-> its stylesheet, palette and type could not be inspected. The visual direction here was built
-> from the firm's published positioning and voice (premium wealth-management recruiting; "the best
-> candidates are never looking"), not from its actual CSS. **Swap the exact hex values and font
-> families into `brand.css` and the whole product matches** — no other file needs to change.
+Nothing outside `brand.css` refers to a raw colour, so the palette is a one-file change. The
+eyebrow's leading rule, the chamfer, and the wide-tracked geometric caps are the three devices
+that carry the identity; the charts follow them too, using square vertices rather than circles.
+
+The brand mark is the Forward Framework monogram, inlined as SVG in the page header, the footer
+and the favicon.
 
 ## Fair use
 
-Signal is an **independent instrument built on public constructs**. It is not the DISC assessment,
+This is an **independent instrument built on public constructs**. It is not the DISC assessment,
 the Hogan Personality Inventory, the Predictive Index Behavioral Assessment, or the Caliper
 Profile, and it is not normed or validated against those publishers' samples. Those are
 proprietary instruments owned by their respective publishers and are named here only to describe

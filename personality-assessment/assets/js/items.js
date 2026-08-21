@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Signal — item bank
+   Forward Framework Personality Assessment — item bank
    --------------------------------------------------------------------------
    Three response formats:
      1. likert   — 5-point agreement, normative, 48 scored + 6 candour items

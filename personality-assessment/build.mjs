@@ -1,12 +1,12 @@
 /* ==========================================================================
-   Signal — single-file build
+   Forward Framework Personality Assessment — single-file build
    --------------------------------------------------------------------------
    Bundles the landing page, the assessment and the report into one
    self-contained HTML file with no external requests except the webfont.
    The multi-file source stays the single source of truth: this script only
    inlines it and swaps page navigation for hash routes.
 
-     node build.mjs        ->  dist/signal.html
+     node build.mjs        ->  dist/forward-framework-assessment.html
 
    Routes in the bundle:
      #/          landing page
@@ -40,9 +40,9 @@ const between = (src, startRe, endRe, what) => {
   return src.slice(start, end);
 };
 
-const header = between(index, /<header class="site-header">/, /<main id="main">/, 'site header');
+const header = between(index, /<div class="utility-bar">/, /<main id="main">/, 'utility bar + site header');
 const landing = between(index, /<main id="main">/, /<footer class="site-footer">/, 'landing main');
-const footer = between(index, /<footer class="site-footer">/, /<script>document\.getElementById\('year'\)/, 'site footer');
+const footer = between(index, /<footer class="site-footer">/, /<script>\s*document\.getElementById\('year'\)/, 'site footer');
 
 const progressBar = between(read('assessment.html'), /<div class="progress-bar/, /<main class="app-main"/, 'progress bar');
 
@@ -85,34 +85,34 @@ for (const line of js.split('\n')) {
 }
 
 /* --- Compose ------------------------------------------------------------- */
-const FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>"
-  + "<rect width='32' height='32' rx='8' fill='%230b1f3a'/>"
-  + "<path d='M7 21l5-9 4 6 3-4 6 7' stroke='%23c8a44d' stroke-width='2.4' fill='none'"
-  + " stroke-linecap='round' stroke-linejoin='round'/></svg>";
+const FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>"
+  + "<rect width='200' height='200' fill='%230A0A0A'/>"
+  + "<path fill='%23A99A8C' d='M78 34 L198 34 L164 68 L112 68 L112 112 L174 112 L140 146 L112 146 L112 200 L78 166 Z'/>"
+  + "<path fill='%23FFFFFF' d='M0 0 L120 0 L86 34 L34 34 L34 78 L96 78 L62 112 L34 112 L34 200 L0 166 Z'/></svg>";
 
 const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Signal Behavioural Profile</title>
-<meta name="description" content="A hiring assessment built on the Big Five, DISC, the Hogan Personality Inventory, Predictive Index behavioural drives and the Caliper Profile. Seventy items in, a decision-grade profile out.">
+<title>Forward Framework Personality Assessment</title>
+<meta name="description" content="A hiring assessment built on the Big Five, DISC, the Hogan Personality Inventory, Predictive Index behavioural drives and the Caliper Profile. Seventy items in, one decision-grade profile out.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap">
 <link rel="icon" href="${FAVICON}">
 <style>
 ${css}
 
 /* ===== single-file router ===== */
-body.is-app { background: var(--paper-alt); }
+body.is-app .utility-bar { display: none; }
 body.is-app #main { display: none; }
 #view-app { display: none; }
 body.is-app #view-app { display: block; }
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a>
 
 ${toRoutes(header)}
 ${toRoutes(progressBar)}
@@ -121,7 +121,7 @@ ${toRoutes(landing)}
 <div id="view-app">
   <main class="app-main" id="app">
     <div class="wrap">
-      <div class="panel panel--narrow"><p class="lede">Loading the assessment…</p></div>
+      <div class="form-panel" style="max-width:800px;margin-inline:auto"><p class="lede">Loading the assessment…</p></div>
     </div>
   </main>
 </div>
@@ -167,11 +167,16 @@ route();
 
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
+
+const siteHeader = document.querySelector('.site-header');
+const onScroll = () => siteHeader.classList.toggle('is-stuck', window.scrollY > 8);
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 </script>
 </body>
 </html>
 `;
 
 mkdirSync(join(root, 'dist'), { recursive: true });
-writeFileSync(join(root, 'dist/signal.html'), html);
-console.log(`dist/signal.html — ${(html.length / 1024).toFixed(1)} KB`);
+writeFileSync(join(root, 'dist/forward-framework-assessment.html'), html);
+console.log(`dist/forward-framework-assessment.html — ${(html.length / 1024).toFixed(1)} KB`);
