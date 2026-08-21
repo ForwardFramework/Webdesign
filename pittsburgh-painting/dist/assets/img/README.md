@@ -52,3 +52,10 @@ They are the single most persuasive thing on the site. To make them work:
 Standing habit worth building: every job, take the same four shots before the crew unloads and
 the same four after the walk-through. Within a season you'll have more usable pairs than you
 can fit on the site.
+
+## The logo
+
+`../logo-mark.svg` is a **stand-in**, not the real mascot — it was drawn from scratch and
+has no paint roller. Replace it with the genuine artwork (SVG ideal; PNG fine) and point
+`LOGO` in `build.py` at the new filename. It is used in the header, the footer, the
+favicon and the `Organization` schema, all from that one constant.

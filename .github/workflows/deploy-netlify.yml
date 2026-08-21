@@ -1,0 +1,141 @@
+# Deploy the Pittsburgh Painting site to Netlify on every push.
+#
+# One-time setup (see pittsburgh-painting/README.md → Deploying):
+#   1. Create the site once — drop pittsburgh-painting-site.zip on
+#      https://app.netlify.com/drop, or connect this repo in the Netlify UI.
+#   2. Netlify → User settings → Applications → New access token.
+#   3. Site → Site configuration → General → copy the Site ID.
+#   4. GitHub → this repo → Settings → Secrets and variables → Actions, add:
+#        NETLIFY_AUTH_TOKEN
+#        NETLIFY_SITE_ID
+#
+# After that, pushing deploys. `main` publishes production; any other branch
+# gets its own preview URL. "Run workflow" can force a branch to production.
+
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'pittsburgh-painting/**'
+      - 'netlify.toml'
+      - '.github/workflows/deploy-netlify.yml'
+  workflow_dispatch:
+    inputs:
+      production:
+        description: 'Publish as production (rather than a preview URL)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: netlify-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  SITE_DIR: pittsburgh-painting
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # build.py reads git history for sitemap lastmod
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Fail here, with instructions, rather than inside the CLI later.
+      - name: Check the Netlify secrets are present
+        env:
+          TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          SITE: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          missing=0
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Repository secret NETLIFY_AUTH_TOKEN is not set."
+            missing=1
+          fi
+          if [ -z "$SITE" ]; then
+            echo "::error::Repository secret NETLIFY_SITE_ID is not set."
+            missing=1
+          fi
+          if [ "$missing" = "1" ]; then
+            echo "Add them under Settings -> Secrets and variables -> Actions."
+            echo "Token:   Netlify -> User settings -> Applications -> New access token."
+            echo "Site ID: Netlify -> your site -> Site configuration -> General -> Site ID."
+            echo "Create the site first by dropping the zip on https://app.netlify.com/drop"
+            echo "Full walkthrough: pittsburgh-painting/README.md -> Deploying to Netlify"
+            exit 1
+          fi
+          echo "Both secrets are present."
+
+      # dist/ is committed so the deploy needs no build. Rebuilding here only
+      # verifies it is current — a stale dist/ means someone edited _src/ and
+      # forgot to run build.py, and we would silently ship the old pages.
+      - name: Verify dist/ is up to date
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          python3 build.py
+          # sitemap.xml is excluded: its lastmod comes from git, so it legitimately
+          # shifts on the very commit that changes a page. This step rebuilt dist/
+          # anyway, so the deploy below always ships a freshly generated sitemap.
+          if ! git diff --quiet -- dist/ ':!dist/sitemap.xml'; then
+            echo "::error::dist/ is out of date. Run 'python3 build.py' in ${SITE_DIR}/ and commit the result."
+            git diff --stat -- dist/ ':!dist/sitemap.xml'
+            exit 1
+          fi
+          echo "dist/ matches the sources."
+
+      - name: Check the deploy surface
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          # Nothing private should ever reach the CDN — build.py holds LEAD_EMAIL.
+          if find dist -name '*.py' -o -name '_src' -o -name 'CONTENT-CHECKLIST.md' | grep -q .; then
+            echo "::error::Private files found inside dist/"; exit 1
+          fi
+          test -f dist/index.html && test -f dist/404.html
+          test -f dist/_headers  && test -f dist/_redirects
+          test -f dist/robots.txt && test -f dist/sitemap.xml && test -f dist/llms.txt
+          echo "dist/ contains $(( $(find dist -name 'index.html' | wc -l) + 1 )) pages and no private files."
+
+      - name: Deploy
+        id: deploy
+        working-directory: ${{ env.SITE_DIR }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ] || [ "${{ inputs.production }}" = "true" ]; then
+            PROD=--prod
+          else
+            PROD=
+          fi
+          # Pin netlify-cli here if a future major ever changes the deploy flags.
+          npx --yes netlify-cli deploy \
+            --dir=dist \
+            --site="$NETLIFY_SITE_ID" \
+            --message="${{ github.ref_name }}@${GITHUB_SHA::7}" \
+            $PROD | tee deploy.log
+          URL=$(grep -Eo 'https://[^ ]*netlify\.app' deploy.log | tail -1)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        run: |
+          {
+            echo "### Deployed to Netlify"
+            echo
+            echo "- **URL:** ${{ steps.deploy.outputs.url }}"
+            echo "- **Branch:** \`${{ github.ref_name }}\`"
+            if [ "${{ github.ref_name }}" = "main" ] || [ "${{ inputs.production }}" = "true" ]; then
+              echo "- **Environment:** production"
+            else
+              echo "- **Environment:** deploy preview"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

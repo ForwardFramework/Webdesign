@@ -1,4 +1,4 @@
-# Deploy the Pittsburgh Painting site to Cloudflare Pages on every push.
+# Deploy the Pittsburgh Painting site to Cloudflare Pages — on demand.
 #
 # One-time setup (see pittsburgh-painting/README.md → Deploying):
 #   1. Cloudflare → My Profile → API Tokens → Create Token → "Edit Cloudflare Workers"
@@ -7,18 +7,14 @@
 #        CLOUDFLARE_API_TOKEN
 #        CLOUDFLARE_ACCOUNT_ID   (Cloudflare dashboard → Workers & Pages → right-hand sidebar)
 #
-# After that, pushing to this repo deploys. Pushing `main` publishes production;
-# any other branch gets its own preview URL. "Run workflow" on the Actions tab
-# can force a branch out to production.
+# Then run it from the Actions tab. `main` publishes production; any other
+# branch gets its own preview URL.
 
 name: Deploy to Cloudflare Pages
 
+# Manual only. Netlify is the live host (see deploy-netlify.yml); this stays
+# here so Cloudflare Pages remains one click away, without failing every push.
 on:
-  push:
-    branches: ['**']
-    paths:
-      - 'pittsburgh-painting/**'
-      - '.github/workflows/deploy-cloudflare.yml'
   workflow_dispatch:
     inputs:
       production:

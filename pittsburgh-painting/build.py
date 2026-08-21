@@ -38,6 +38,12 @@ LEAD_EMAIL  = ""            # e.g. "brian@pittsburghpaintingpps.com"
 # The gated PDF the lead magnet delivers.
 GUIDE_PDF   = "assets/pittsburgh-exterior-paint-checklist.pdf"
 
+# Logo used in the header, footer and favicon. The file that ships is a vector
+# stand-in, not the real mascot. To use the genuine artwork: drop it in
+# dist/assets/ and point this at it — SVG is ideal (sharp at every size, and
+# valid as a favicon), but a PNG works too. Nothing else needs changing.
+LOGO        = "assets/logo-mark.svg"
+
 # AI answer engines (ChatGPT, Perplexity, Claude, Google AI Overviews) are a
 # growth channel for a local contractor, not a threat — so their crawlers are
 # allowed in robots.txt. Flip to False to block the model-training ones.
@@ -230,8 +236,8 @@ def head(p, base):
 <meta property="og:url" content="{canonical}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E1116">
-<link rel="icon" href="{base}assets/logo-mark.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="{base}assets/logo-mark.svg">
+<link rel="icon" href="{base}{LOGO}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{base}{LOGO}">
 <link rel="preload" as="font" type="font/woff2" href="{base}assets/fonts/inter-var.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="{base}assets/fonts/barlow-condensed-800.woff2" crossorigin>
 <link rel="stylesheet" href="{base}assets/css/fonts.css">
@@ -247,7 +253,7 @@ def header(p, base):
     if p.get("bare"):
         return f'''<header class="site-header"><div class="wrap hdr">
   <a class="brand" href="{page_url("index.html")}">
-    <img src="{base}assets/logo-mark.svg" alt="" width="46" height="46">
+    <img src="{base}{LOGO}" alt="" width="46" height="46">
     <span class="brand-txt"><b>Pittsburgh</b><span>Painting &amp; Property Solutions</span></span>
   </a>
   <div class="hdr-cta" style="margin-left:auto">
@@ -272,7 +278,7 @@ def header(p, base):
 <header class="site-header">
  <div class="wrap hdr">
   <a class="brand" href="{page_url("index.html")}">
-    <img src="{base}assets/logo-mark.svg" alt="{BRAND}" width="46" height="46">
+    <img src="{base}{LOGO}" alt="{BRAND}" width="46" height="46">
     <span class="brand-txt"><b>Pittsburgh</b><span>Painting &amp; Property Solutions</span></span>
   </a>
   <nav class="nav" aria-label="Main">
@@ -293,7 +299,7 @@ def header(p, base):
 <div class="scrim" data-open="false"></div>
 <nav class="mnav" id="mnav" data-open="false" aria-label="Mobile">
   <div class="mnav-head">
-    <img src="{base}assets/logo-mark.svg" alt="" width="44" height="44">
+    <img src="{base}{LOGO}" alt="" width="44" height="44">
     <button class="burger" type="button" aria-expanded="true" aria-label="Close menu"><span></span></button>
   </div>
   <a href="{page_url("index.html")}">Home</a>
@@ -322,7 +328,7 @@ def footer(p, base):
   <div class="foot-grid">
    <div>
     <a class="foot-brand" href="{page_url("index.html")}">
-      <img src="{base}assets/logo-mark.svg" alt="" width="52" height="52">
+      <img src="{base}{LOGO}" alt="" width="52" height="52">
       <span><b>Pittsburgh</b><span>Painting &amp; Property Solutions</span></span>
     </a>
     <p style="max-width:34ch">Family owned and operated. Interior and exterior painting, cabinet
@@ -463,7 +469,7 @@ def business_node():
       "telephone": "+1-412-537-4866",
       "url": SITE + "/",
       "image": SITE + "/assets/img/og-image.jpg",
-      "logo": {"@type": "ImageObject", "url": SITE + "/assets/logo-mark.svg"},
+      "logo": {"@type": "ImageObject", "url": SITE + "/" + LOGO},
       "priceRange": "$$",
       "currenciesAccepted": "USD",
       "founder": {"@type": "Person", "name": "Brian G"},
