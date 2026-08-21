@@ -108,6 +108,21 @@ reported separately as "more than the seat needs" rather than as a strength.
 
 Adding a role is one object: a label, a summary, six target levels, and which of them are capped.
 
+## Single-file build
+
+`node build.mjs` inlines the CSS and the four ES modules into one self-contained
+`dist/signal.html` — landing page, assessment and report in a single file with no external
+requests except the webfont. Page navigation becomes hash routing (`#/`, `#/assess`, `#/demo`,
+`#r=<payload>`), which is what makes the whole product work as a single shareable file or a
+published artifact.
+
+The multi-file source stays the source of truth; the build only inlines it. It fails loudly on
+leftover module syntax and on duplicate top-level declarations, which are otherwise a silent
+fatal error once separate modules share one scope.
+
+The JSON export uses the host's save surface (`claude.use('downloads')`) when the page runs inside
+a sandboxed viewer that blocks page-initiated downloads, and a blob link everywhere else.
+
 ## Privacy
 
 Everything is scored in the browser. There is no account, no server call and no database — answers

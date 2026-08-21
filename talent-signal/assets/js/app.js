@@ -7,11 +7,9 @@
 
 import { SECTIONS, LIKERT_SEQUENCE, TETRADS, REASONING_ITEMS, LIKERT_SCALE, TOTAL_ITEMS } from './items.js';
 import { score } from './scoring.js';
-import { renderReport } from './report.js';
+import { renderReport, esc } from './report.js';
 
 const STORE_KEY = 'signal.assessment.v1';
-const esc = s => String(s).replace(/[&<>"']/g, c =>
-  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 /* --- Pages --------------------------------------------------------------- */
 const PAGES = [];
@@ -479,13 +477,38 @@ function renderReportScreen() {
 
   document.getElementById('act-print').addEventListener('click', () => window.print());
 
-  document.getElementById('act-json').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify({ answers: state.answers, result }, null, 2)],
-                          { type: 'application/json' });
+  document.getElementById('act-json').addEventListener('click', async () => {
+    const payload = JSON.stringify({ answers: state.answers, result }, null, 2);
+    const slug = (state.candidate.name || 'candidate').toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const filename = `signal-profile-${slug || 'candidate'}.json`;
+
+    // A sandboxed host (the published-artifact viewer) never lets the page
+    // start its own download, so hand the file to the host's save surface
+    // when one is offered and fall back to a blob link everywhere else.
+    let downloads = null;
+    try {
+      if (window.claude && typeof window.claude.use === 'function') {
+        downloads = await window.claude.use('downloads');
+      }
+    } catch (err) { downloads = null; }
+
+    if (downloads) {
+      try {
+        await downloads.save({ filename, data: payload });
+        say('Saved. The file holds the raw answers as well as every scored layer.');
+      } catch (err) {
+        say(err && err.code === 'declined'
+          ? 'Save cancelled — nothing left this browser.'
+          : 'This viewer would not accept the file. Use Print / save as PDF instead.');
+      }
+      return;
+    }
+
+    const blob = new Blob([payload], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    const slug = (state.candidate.name || 'candidate').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    a.download = `signal-profile-${slug || 'candidate'}.json`;
+    a.download = filename;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     say('Downloaded. The file holds the raw answers as well as every scored layer.');
@@ -495,7 +518,11 @@ function renderReportScreen() {
     const url = `${location.origin}${location.pathname}#r=${encodeResult()}`;
     try {
       await navigator.clipboard.writeText(url);
-      say('Link copied. The whole profile travels inside the link, so anyone holding it can open this report.');
+      // Inside a sandboxed preview the page's own URL is not the one the
+      // viewer sees, so don't claim the copied link is shareable there.
+      say(window.top !== window.self
+        ? 'Link copied — inside this preview it points at the sandboxed frame. On your own deployment it reopens the full report.'
+        : 'Link copied. The whole profile travels inside the link, so anyone holding it can open this report.');
     } catch (err) {
       location.hash = 'r=' + encodeResult();
       say('Clipboard unavailable — the link is now in the address bar, copy it from there.');
@@ -519,7 +546,18 @@ function render() {
   return renderReportScreen();
 }
 
-function boot() {
+export function boot(modeOverride) {
+  // A fresh boot never inherits the previous one's answers: the single-file
+  // build re-enters here every time the router opens the assessment.
+  state.answers = {};
+  state.page = 0;
+  state.screen = 'intro';
+  state.candidate = { name: '', role: '' };
+  state.startedAt = null;
+  state.completedAt = null;
+  state.elapsedMs = null;
+  state.resumable = null;
+
   const params = new URLSearchParams(location.search);
   const hash = location.hash.startsWith('#r=') ? location.hash.slice(3) : null;
 
@@ -527,7 +565,7 @@ function boot() {
     state.screen = 'report';
     return render();
   }
-  if (params.get('demo')) {
+  if (modeOverride === 'demo' || params.get('demo')) {
     fillDemo();
     state.screen = 'report';
     return render();

@@ -6,7 +6,7 @@
 import { FACETS, REASONING_ITEMS } from './items.js';
 import { BIG_FIVE_META, HPI_META, CALIPER_META, DRIVE_LABELS, DISC_LABEL, bandClass, band } from './scoring.js';
 
-const esc = s => String(s).replace(/[&<>"']/g, c =>
+export const esc = s => String(s).replace(/[&<>"']/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 /* --- Charts -------------------------------------------------------------- */
