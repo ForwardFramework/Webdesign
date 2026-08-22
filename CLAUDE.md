@@ -4,8 +4,12 @@
 
 **Netlify is the live host. Every website change ships there.**
 
-The flow is: commit → push to `claude/forward-framework-website-qwe3cg` →
-`.github/workflows/netlify.yml` builds and deploys to production automatically.
+The flow is: commit → push to `main` → Netlify (or
+`.github/workflows/netlify.yml`) builds and deploys to production automatically.
+
+`main` is the production branch. `claude/forward-framework-website-qwe3cg` is
+kept as a working branch and carries the same history — push both so they never
+drift.
 
 So the rule for any change to the site: **rebuild the bundles, commit, and push.**
 The push is the deploy. Do not leave site changes uncommitted.
@@ -13,7 +17,9 @@ The push is the deploy. Do not leave site changes uncommitted.
 ```bash
 python3 tools/build.py            # regenerate pages after content edits
 python3 tools/build_netlify.py    # the live bundle
-git add -A && git commit -m "…" && git push -u origin claude/forward-framework-website-qwe3cg
+git add -A && git commit -m "…"
+git push -u origin main
+git push -u origin HEAD:claude/forward-framework-website-qwe3cg   # keep in sync
 ```
 
 Vercel, Cloudflare Pages and GitHub Pages configs are kept in the repo as

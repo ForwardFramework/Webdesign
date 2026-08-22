@@ -76,8 +76,9 @@ Full walkthroughs for each host are in **[DEPLOY.md](DEPLOY.md)**.
 > Once live, the site publishes to `https://forwardframework.github.io/Webdesign/`.
 
 > [!NOTE]
-> This repository has no `main` branch. The workflow runs from
-> `claude/forward-framework-website-qwe3cg`.
+> `main` is the production branch — every push to it deploys. The workflow also
+> runs from `claude/forward-framework-website-qwe3cg`, which is kept as a
+> working branch.
 
 ## Project structure
 

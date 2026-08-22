@@ -60,9 +60,8 @@ Do not run both. They would deploy the same thing twice.
 
 1. In Netlify, open **Projects → Add new project → Import an existing project**.
 2. Choose **GitHub** and authorise it if asked. Pick `ForwardFramework/Webdesign`.
-3. **Set the branch to `claude/forward-framework-website-qwe3cg`.** This repo has
-   no `main`, so leaving the default means Netlify never publishes anything and
-   every request returns 404.
+3. **Leave the branch on `main`.** That is the production branch and it is what
+   Netlify offers by default, so there is nothing to change here.
 4. Leave build command and publish directory alone — `netlify.toml` in the repo
    already sets them (`python3 tools/build_netlify.py` → `dist/netlify`). The
    build needs no packages beyond the Python standard library.
@@ -123,10 +122,8 @@ problem described under Option 3 entirely.
 ### Option 2 — Connect the Git repo
 
 **Add new project → Import an existing project.** `netlify.toml` supplies the build
-command and publish directory. Set the **production branch** to
-`claude/forward-framework-website-qwe3cg` — this repo has no `main`, and leaving
-it at the default means Netlify never produces a production deploy, which
-serves 404 on every request.
+command and publish directory. The **production branch** is `main`, which is
+what Netlify offers by default — no change needed.
 
 ### Option 3 — Drag and drop
 
@@ -333,7 +330,7 @@ failing.
 | Framework preset | `None` |
 | Build command | `python3 tools/build_cloudflare.py` |
 | Build output directory | `dist/cloudflare` |
-| Production branch | `claude/forward-framework-website-qwe3cg` (this repo has no `main`) |
+| Production branch | `main` |
 
 ### Option 3 — Direct upload
 
@@ -409,8 +406,8 @@ inside the subpath, canonicals correct.
 ### Branch note
 
 The workflow triggers on `main` and on `claude/forward-framework-website-qwe3cg`.
-This repository currently has no `main` — see the branch note under Vercel
-below, which applies here too.
+`main` is the production branch; the second is kept so work-in-progress on that
+branch still builds.
 
 ### Run it locally
 
@@ -430,19 +427,12 @@ no framework and no dependencies — Vercel serves the repository root as-is.
 
 ## Before you start: the branch
 
-This repository has **no `main` branch**. The site lives on:
+The site lives on **`main`**, which is what Vercel uses for the *Production
+Branch* by default — so there is nothing to configure.
 
-```
-claude/forward-framework-website-qwe3cg
-```
-
-Vercel deploys the *Production Branch*, which defaults to `main`. So do one of
-these, or the first production deploy will have nothing to serve:
-
-- **Set the branch in Vercel** — Project → Settings → Git → Production Branch →
-  `claude/forward-framework-website-qwe3cg`, or
-- **Create `main` from this branch** and make it the repository default in
-  GitHub (Settings → General → Default branch). Cleaner long term.
+A second branch, `claude/forward-framework-website-qwe3cg`, carries the same
+history and is kept as a working branch. Only `main` should be treated as
+production.
 
 ---
 
