@@ -236,17 +236,38 @@ email was untouched.
 
 ### Where the enquiries go
 
-All nine forms are wired to Netlify Forms already — nothing to add. Submissions
-appear under **Forms** in the site dashboard.
+All nine forms are wired to Netlify Forms already — nothing to add in the
+markup. Submissions appear under **Forms** in the project dashboard.
 
-**Do this once so they reach a person:** Netlify → Forms → *Form notifications*
-→ **Add notification → Email notification** → `hello@forward-framework.com`.
-Without it Netlify still stores every submission, but no one is emailed.
+**Two dashboard steps are required, and neither can be done from the repo.**
+
+1. **Turn form detection on.** Netlify → the project → **Project configuration
+   → Forms → Enable form detection**. Netlify no longer parses forms by default;
+   until this is on, a submission is refused outright.
+2. **Then deploy again.** Detection runs *at deploy time*, so enabling the
+   setting does nothing to the deploy that is already live. Push a commit, or
+   hit **Deploys → Trigger deploy → Deploy site**.
+3. **Add the notification.** Netlify → **Forms → Form notifications → Add
+   notification → Email notification** → `hello@forward-framework.com`.
+   Without it Netlify stores every submission but emails nobody.
 
 The forms post in the background so the visitor stays on the page for the
-success state, and fall back to a normal submit if that fails. With JavaScript
-off they submit normally and land on `/thank-you`. UTM parameters, gclid,
-landing page and referrer are captured as hidden fields on every submission.
+success state. With JavaScript off they submit normally and land on
+`/thank-you`. UTM parameters, gclid, landing page and referrer are captured as
+hidden fields on every submission.
+
+#### Symptom: submitting shows a blank white page
+
+That is Netlify answering the POST with an empty `405`, which is what a static
+host does when the form was never detected — so step 1 or step 2 above is
+missing. Check the browser console: the site now logs which form was refused
+and the status it came back with.
+
+The site no longer strands anyone when that happens. A refused submission keeps
+everything the visitor typed on screen and offers them the address and phone
+number instead, with the details they entered prefilled into the email. It used
+to retry as a native form post, which is what produced the blank page and threw
+their answers away.
 
 ### After it is live
 

@@ -51,9 +51,22 @@ the no-JavaScript fallback. `main.js` posts them in the background so the
 visitor keeps the inline success state, and falls back to a normal submit if
 that request fails, so an enquiry is never silently lost.
 
-**One dashboard step is required, once:** Netlify → Forms → Form notifications →
-add an email notification to hello@forward-framework.com. Netlify stores
-submissions without it, but nobody is emailed.
+**Two dashboard steps are required, once, and neither is in the repo:**
+
+1. **Project configuration → Forms → Enable form detection.** Netlify does not
+   parse forms by default any more. Until this is on, every submission is
+   refused with an empty 405 — which is what a blank white page after submit
+   means.
+2. **Deploy again afterwards.** Detection runs at deploy time, so the setting
+   does nothing to the deploy already live.
+3. **Forms → Form notifications → add an email notification** to
+   hello@forward-framework.com. Netlify stores submissions without it, but
+   nobody is emailed.
+
+If a submission is refused, `main.js` keeps what the visitor typed on screen and
+offers the address and phone instead, with their answers prefilled into a
+mailto. Never replace that with `form.submit()` — a native POST to a host that
+is not handling the form returns an empty 405 and the visitor loses everything.
 
 Attribution (UTM parameters, gclid, landing page, referrer) rides along in
 hidden inputs. Those inputs must stay in the markup — Netlify only records

@@ -10,6 +10,13 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* The one address and number, for the fallback shown when a submission is
+     refused. tools/set_domain.py and tools/set_phone.py rewrite these, so do
+     not edit them by hand. */
+  var CONTACT_EMAIL = 'hello@forward-framework.com';
+  var CONTACT_PHONE = '(412) 463-2126';
+  var CONTACT_TEL = '+14124632126';
+
   /* ---------- Attribution capture (once) ---------- */
   var params = new URLSearchParams(window.location.search);
   var attrKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
@@ -111,6 +118,9 @@
     if (!summary) return bad.length === 0;
 
     if (bad.length) {
+      // The submit handler reuses this box to report a send failure, so put the
+      // validation heading back before listing fields.
+      summary.querySelector('h3').textContent = 'There is a problem';
       summary.querySelector('ul').innerHTML = bad.map(function (el) {
         return '<li><a href="#' + el.id + '">' + labelFor(el) + '</a></li>';
       }).join('');
@@ -311,29 +321,68 @@
           }
         };
 
+        /* If the host refuses the submission, hand the enquiry back to the
+           visitor rather than losing it: keep everything they typed on screen,
+           offer a prefilled email and the phone number, and log the status so
+           the cause is diagnosable from the console. */
+        var failed = function (status) {
+          if (btn) { btn.disabled = false; btn.innerHTML = original; }
+          var skip = ['form-name', 'company_website_hp', 'routed_to', 'gclid',
+                      'fbclid', 'landing_page', 'referrer', 'submitted_at'];
+          var lines = Object.keys(payload).filter(function (k) {
+            return payload[k] && skip.indexOf(k) === -1 && k.indexOf('utm_') !== 0;
+          }).map(function (k) { return k.replace(/_/g, ' ') + ': ' + payload[k]; });
+          var mail = 'mailto:' + CONTACT_EMAIL +
+            '?subject=' + encodeURIComponent('Enquiry from the website') +
+            '&body=' + encodeURIComponent(lines.join('\n'));
+          var box = form._ffSummary;
+          if (box) {
+            box.querySelector('h3').textContent = 'We could not send that';
+            box.querySelector('ul').innerHTML =
+              '<li>Something on our end refused it. Nothing you typed has been lost.</li>' +
+              '<li><a href="' + mail + '">Send it to ' + CONTACT_EMAIL + ' instead</a></li>' +
+              '<li><a href="tel:' + CONTACT_TEL + '">Or call ' + CONTACT_PHONE + '</a></li>';
+            box.classList.add('is-visible');
+            box.focus({ preventScroll: false });
+          } else {
+            window.location.href = mail;
+          }
+          if (window.console && console.error) {
+            console.error('[Forward Framework] Form "' + (form.getAttribute('name') || form.id) +
+              '" was refused (' + (status ? 'HTTP ' + status : 'network error') + '). ' +
+              'On Netlify, check Project configuration \u2192 Forms \u2192 form detection is ' +
+              'enabled, and that the live deploy contains this form.');
+          }
+        };
+
         if (isNetlify) {
-          /* Netlify Forms accepts a urlencoded POST to any path on the site,
-             as long as form-name is included. Posting in the background keeps
-             the visitor on the page for the success state; if it fails we fall
-             back to a normal submit so the enquiry is never silently lost. */
-          fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(new FormData(form)).toString()
-          }).then(function (res) {
-            if (res.ok) { finish(); } else { form.submit(); }
-          }).catch(function () {
-            form.submit();
-          });
+          /* Netlify Forms accepts a urlencoded POST carrying form-name. Posting
+             in the background keeps the visitor on the page for the inline
+             success state.
+
+             Try this page's own path first — that is what a no-JS submit would
+             hit — then the site root as the documented alternative. Do not fall
+             back to form.submit(): a host that is not processing the form
+             answers a native POST with an empty 405, which shows the visitor a
+             blank page and throws away everything they typed. */
+          var encoded = new URLSearchParams(new FormData(form)).toString();
+          var post = function (url) {
+            return fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: encoded
+            });
+          };
+          post(window.location.pathname)
+            .then(function (res) { return res.ok ? res : post('/'); })
+            .then(function (res) { if (res.ok) { finish(); } else { failed(res.status); } })
+            .catch(function () { failed(0); });
         } else if (endpoint && endpoint.indexOf('REPLACE') === -1) {
           fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify(payload)
-          }).then(finish).catch(function () {
-            if (btn) { btn.disabled = false; btn.innerHTML = original; }
-            alert('Something went wrong sending your request. Please email hello@forward-framework.com and we will pick it up right away.');
-          });
+          }).then(finish).catch(function () { failed(0); });
         } else {
           // Nothing wired (local preview) — log so the flow stays testable.
           console.info('[Forward Framework] Form payload (no endpoint configured):', payload);

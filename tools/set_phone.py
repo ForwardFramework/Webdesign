@@ -24,8 +24,9 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# The hand-authored files. Every other page is generated from these two.
-SOURCES = ["index.html", "tools/build.py"]
+# The hand-authored files. Every page is generated from the first two;
+# assets/js/main.js carries the number in the form-failure fallback.
+SOURCES = ["index.html", "tools/build.py", "assets/js/main.js"]
 
 
 def digits(raw):
