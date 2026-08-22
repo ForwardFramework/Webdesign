@@ -14,12 +14,80 @@ Two bundles are produced by `python3 tools/build_zip.py`:
 
 # Netlify — the live host
 
-**Every push to `claude/forward-framework-website-qwe3cg` builds and deploys to
-production**, via `.github/workflows/netlify.yml`. Nothing else needs running.
+## How a change reaches the live site
 
-The one prerequisite is two repository secrets, below. Until they exist the
-workflow builds and uploads an artifact but skips the deploy — pushes stay safe,
-they simply are not live.
+Yes — **everything goes through GitHub first.** That is what makes it seamless
+rather than a chore: GitHub is the single record of what the site is, and
+Netlify watches it.
+
+```
+you ask for a change
+      ↓
+Claude edits the source and rebuilds
+      ↓
+git commit + git push          ← the only manual-ish step, and Claude does it
+      ↓
+Netlify sees the new commit
+      ↓
+Netlify runs: python3 tools/build_netlify.py
+      ↓
+publishes dist/netlify  →  www.forward-framework.com is updated
+```
+
+Once connected, **no zips, no dragging, no dashboards.** A change is live a
+minute or two after it is pushed, and every deploy is tied to a commit you can
+read, compare and roll back.
+
+### Why not keep dragging zips?
+
+Because a zip has no history. You cannot tell which version is live, cannot roll
+back, and — as happened here — **each drop onto "Add new project" creates
+another project**, so the custom domain ends up attached to a stale one while
+your content sits on a different one. Git removes that whole class of problem.
+
+## Connecting it — two ways, pick one
+
+**Option A — Netlify pulls from GitHub. Recommended.** No tokens, no secrets.
+Netlify watches the repo itself and shows every build in its own UI.
+
+**Option B — GitHub Actions pushes to Netlify.** Already built
+(`.github/workflows/netlify.yml`); needs two secrets in GitHub. Use this if you
+would rather the build run on GitHub's side.
+
+Do not run both. They would deploy the same thing twice.
+
+### Option A, step by step
+
+1. In Netlify, open **Projects → Add new project → Import an existing project**.
+2. Choose **GitHub** and authorise it if asked. Pick `ForwardFramework/Webdesign`.
+3. **Set the branch to `claude/forward-framework-website-qwe3cg`.** This repo has
+   no `main`, so leaving the default means Netlify never publishes anything and
+   every request returns 404.
+4. Leave build command and publish directory alone — `netlify.toml` in the repo
+   already sets them (`python3 tools/build_netlify.py` → `dist/netlify`). The
+   build needs no packages beyond the Python standard library.
+5. Deploy. Then **Domain management → Add a domain →**
+   `www.forward-framework.com`, set as **primary**, and add the apex too.
+6. Delete the old drag-and-drop projects so only this one remains.
+
+From then on every push deploys automatically.
+
+### Option B, step by step
+
+Add two secrets under GitHub **Settings → Secrets and variables → Actions**:
+
+| Secret | Where |
+|---|---|
+| `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → Personal access tokens |
+| `NETLIFY_SITE_ID` | The project → **Project configuration → General → Project details → Project ID** |
+
+The secret keeps the name `NETLIFY_SITE_ID`; only Netlify's label changed from
+Site ID to Project ID.
+
+### Rolling back
+
+**Deploys** tab → pick any earlier deploy → **Publish deploy**. Instant, and it
+does not touch the repo.
 
 ### Why this host needs its own build
 
