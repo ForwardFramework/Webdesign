@@ -559,12 +559,27 @@ ul, ol { padding-left: 1.25em; }
 }
 
 /* ─── 11. MOTION ────────────────────────────────────────────────────────── */
-.reveal {
+/*
+   Reveal-on-scroll, built so it can only ever ADD motion — never subtract
+   content.
+
+   `.reveal` is deliberately not hidden here. Hiding it in the base stylesheet
+   makes every page depend on JavaScript to show its own content: if the script
+   is slow, blocked, errors, or the observer simply misses an element, the
+   visitor gets a white screen that only a refresh fixes.
+
+   Instead an inline script in <head> stamps data-reveal="on" before first
+   paint. Only then does anything get hidden, so:
+     - no JS, blocked JS, or a script error → everything is visible
+     - JS present → hidden, then revealed on scroll, with a failsafe timer and
+       a pageshow handler in Base.astro that force-reveal anything left over
+*/
+:root[data-reveal='on'] .reveal {
   opacity: 0;
   transform: translateY(18px);
 }
 
-.reveal.is-visible {
+:root[data-reveal='on'] .reveal.is-visible {
   opacity: 1;
   transform: none;
   transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -582,7 +597,7 @@ ul, ol { padding-left: 1.25em; }
     scroll-behavior: auto !important;
   }
   /* Never leave content invisible when motion is suppressed. */
-  .reveal { opacity: 1 !important; transform: none !important; }
+  :root[data-reveal='on'] .reveal { opacity: 1 !important; transform: none !important; }
 }
 
 /* ─── 12. PRINT ─────────────────────────────────────────────────────────── */

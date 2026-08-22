@@ -94,6 +94,11 @@ export const site = {
 /**
  * Local landing pages. `primary: true` towns get a dedicated /service-areas/<slug>
  * page; the rest are listed for internal-link equity and NAP consistency.
+ *
+ * The rule of thumb is roughly an hour from Pittsburgh. Promote a town by
+ * flipping `primary` and giving it a `note` — but only when there is something
+ * genuinely specific to say about its housing stock. Eight thin, near-identical
+ * town pages rank worse than one good directory page.
  */
 export const serviceAreas = [
   { name: 'Bethel Park', slug: 'bethel-park', county: 'Allegheny County', primary: true, zip: '15102',
@@ -129,7 +134,15 @@ export const serviceAreas = [
   { name: 'Eighty Four', slug: 'eighty-four', county: 'Washington County', primary: false, zip: '15330' },
   { name: 'Cecil Township', slug: 'cecil-township', county: 'Washington County', primary: false, zip: '15321' },
   { name: 'South Fayette', slug: 'south-fayette', county: 'Allegheny County', primary: false, zip: '15017' },
-  { name: 'Pittsburgh (South Side & City)', slug: 'pittsburgh', county: 'Allegheny County', primary: false, zip: '15203' },
+  { name: 'City of Pittsburgh', slug: 'pittsburgh', county: 'Allegheny County', primary: false, zip: '15203' },
+  { name: 'North Hills', slug: 'north-hills', county: 'Allegheny County', primary: false, zip: '15237' },
+  { name: 'Gibsonia', slug: 'gibsonia', county: 'Allegheny County', primary: false, zip: '15044' },
+  { name: 'Cranberry Township', slug: 'cranberry-township', county: 'Butler County', primary: false, zip: '16066' },
+  { name: 'Fox Chapel', slug: 'fox-chapel', county: 'Allegheny County', primary: false, zip: '15238' },
+  { name: 'Sewickley', slug: 'sewickley', county: 'Allegheny County', primary: false, zip: '15143' },
+  { name: 'Robinson Township', slug: 'robinson-township', county: 'Allegheny County', primary: false, zip: '15205' },
+  { name: 'Moon Township', slug: 'moon-township', county: 'Allegheny County', primary: false, zip: '15108' },
+  { name: 'Monroeville', slug: 'monroeville', county: 'Allegheny County', primary: false, zip: '15146' },
 ] as const;
 
 /**

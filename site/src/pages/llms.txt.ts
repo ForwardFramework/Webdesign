@@ -38,7 +38,7 @@ export const GET: APIRoute = () => {
     '',
     '## Service area',
     '',
-    `Greater Pittsburgh, Pennsylvania — Allegheny County and Washington County, approximately a 40 km radius of ${site.address.city}, PA.`,
+    `Greater Pittsburgh, Pennsylvania — anywhere within about an hour of Pittsburgh, spanning Allegheny, Washington and Butler counties, from a base in ${site.address.city}, PA.`,
     '',
     `Primary communities served: ${serviceAreas.map((a) => a.name).join(', ')}.`,
     '',

@@ -172,16 +172,16 @@ export const services: Service[] = [
       'TimberTech and Trex, framed square and fastened tight by crews who have been building with hand tools since they were kids. Product warranties range from 25 years up to a lifetime limited warranty with 50-year fade and stain protection.',
     metaTitle: 'Deck Builders Pittsburgh PA | TimberTech & Trex Composite Decks',
     metaDescription:
-      'Custom TimberTech and Trex composite decks built by Amish crews in Greater Pittsburgh. 25-year to lifetime limited product warranties. Free design and estimate.',
+      'TimberTech and Trex composite decks built by Amish crews in Greater Pittsburgh. 25-year to lifetime warranties, full professional drawings with every deck.',
     edge:
-      'Our decks are built by Amish crews. That is not marketing — it is why our framing is square, our picture-frame borders close tight, and our fastener lines are straight enough to sight down.',
+      'Our decks are built by Amish crews. That is not marketing — it is why our framing is square, our picture-frame borders close tight, and our fastener lines are straight enough to sight down. Every deck is drawn up properly before a single board is cut: you get full professional drawings, always.',
     workmanship:
       'Framing, ledger attachment and flashing are the parts of a deck nobody sees and everybody regrets. We flash every ledger, bolt to structure, and build to PA residential code so your deck passes inspection the first time.',
     highlights: [
       'Built by Amish Crews',
       'TimberTech & Trex Authorized',
       'Up to Lifetime Limited Warranty',
-      '3D Design Before You Commit',
+      'Full Professional Drawings, Always',
     ],
     products: [
       {
@@ -236,7 +236,7 @@ export const services: Service[] = [
       },
     ],
     process: [
-      { title: 'Design consult', body: 'We walk the yard, take grade and door-height measurements, and talk through how you actually use the space — grill, table, hot tub, dogs, stairs.' },
+      { title: 'Design consult', body: 'We walk the yard, take grade and door-height measurements, and talk through how you actually use the space — grill, table, hot tub, dogs, stairs. Every deck we quote comes with full professional drawings, so you are approving a plan rather than a description.' },
       { title: 'Board and railing selection', body: 'Full-size TimberTech and Trex samples in your hand, in your light, against your siding. Color reads completely differently on a screen.' },
       { title: 'Permit & layout', body: 'We pull the municipal permit and stake the footing layout. Bethel Park, Mt. Lebanon and Peters Township all inspect differently — we know each.' },
       { title: 'Amish crew build', body: 'Footings, framing, ledger flashing, decking, borders, railing, lighting. Hidden fasteners throughout so nothing shows on the walking surface.' },
@@ -708,15 +708,15 @@ export const services: Service[] = [
     summary:
       'Top Dog Exteriors pours driveways, sidewalks, patios, garage floors, steps and footings across the Greater Pittsburgh area, with our own excavation equipment handling base prep on the same job.',
     cardBlurb:
-      'Driveways, patios, sidewalks, steps and footings — with our own excavator doing the base prep that decides whether concrete cracks.',
-    heroHeadline: 'Concrete That Doesn’t Crack in Three Winters',
+      'Driveways, patios, sidewalks, steps and footings — with our own excavator doing the base prep that decides how well concrete holds up.',
+    heroHeadline: 'Concrete Poured for a Freeze-Thaw Climate',
     heroSub:
-      'Driveways, patios, sidewalks, garage floors, steps and footings. We own the excavation equipment, so the base under your slab gets prepped properly instead of being someone else’s problem.',
+      'Driveways, patios, sidewalks, garage floors, steps and footings. We own the excavation equipment, so the base under your slab gets prepped properly instead of being someone else’s problem. Nobody can guarantee concrete will not crack in Pittsburgh’s climate — what we can control is the base, the mix, the reinforcement and the joints, and we control all four.',
     metaTitle: 'Concrete Contractor Pittsburgh PA | Driveways & Patios',
     metaDescription:
       'Concrete driveways, patios, sidewalks, garage floors, steps and footings in Greater Pittsburgh. Proper base prep with our own excavation equipment.',
     edge:
-      'Concrete fails from the bottom up. Because we own the Bobcat and the excavator, the sub-base gets excavated, graded and compacted to depth — not scraped and hoped for.',
+      'Concrete fails from the bottom up. Because we own the Bobcat and the excavator, the sub-base gets excavated, graded and compacted to depth — not scraped and hoped for. We will not tell you your slab will never crack; in this freeze-thaw climate nobody honestly can. We will tell you exactly what we do to make cracking less likely and to keep it in the joints where it belongs.',
     highlights: [
       'Proper Compacted Sub-Base',
       'Fiber & Rebar Reinforced',
@@ -773,8 +773,9 @@ export const services: Service[] = [
       { title: 'Joint, cure & seal', body: 'Control joints cut on schedule, cure managed, and sealer applied when the slab is ready for it.' },
     ],
     faqs: [
-      { q: 'How much does a concrete driveway cost in Pittsburgh?', a: 'Most residential concrete driveways run $8–$16 per square foot installed, depending on tear-out of the existing surface, excavation depth, reinforcement and finish. A typical two-car driveway lands between $6,000 and $14,000. Stamped and decorative finishes carry a premium.' },
-      { q: 'Why does concrete crack?', a: 'Three reasons, in order: an inadequate or uncompacted sub-base, control joints cut too late or spaced too far apart, and the wrong mix for a freeze-thaw climate. All three are installation decisions, not bad luck. We address each one deliberately — which is exactly why we own our own excavation equipment.' },
+      { q: 'How much does a concrete driveway cost in Pittsburgh?', a: 'Most residential concrete driveways run $14–$28 per square foot installed, depending on tear-out of the existing surface, excavation depth, reinforcement and finish. A typical two-car driveway lands between $12,000 and $20,000. Stamped and decorative finishes carry a premium.' },
+      { q: 'What does the concrete warranty cover?', a: 'Concrete cracking cannot be fully guaranteed against happening. Concrete is a natural product and may develop minor shrinkage cracks, surface blemishes, or slight color variations during curing. Control joints help minimize random cracking but cannot guarantee all cracking will occur within the joints. Our 5-year workmanship warranty covers our installation — the base preparation, the placement, the reinforcement and the jointing.' },
+      { q: 'Why does concrete crack?', a: 'Three reasons, in order: an inadequate or uncompacted sub-base, control joints cut too late or spaced too far apart, and the wrong mix for a freeze-thaw climate. Those three are installation decisions, not bad luck, and we address each one deliberately — which is exactly why we own our own excavation equipment. Beyond them, concrete is a natural product that shrinks as it cures, and Pittsburgh puts it through freeze-thaw cycling and road salt every winter. No contractor can guarantee a slab will never crack here. Good work makes cracking less likely and steers it into the control joints; it cannot eliminate it.' },
       { q: 'When can I drive on a new driveway?', a: 'Foot traffic after 24–48 hours, passenger vehicles after 7 days, and heavy vehicles or trailers after 28 days when the concrete has reached full design strength. Parking a loaded truck on a 5-day-old slab is one of the most common ways homeowners crack their own driveway.' },
       { q: 'Should I seal my concrete?', a: 'In Western Pennsylvania, yes. Freeze-thaw cycling and road salt are the two things that shorten concrete life here, and a penetrating sealer meaningfully slows both. Plan on resealing every 2–3 years.' },
       { q: 'Can you do concrete and the deck or drainage at the same time?', a: 'Yes, and it usually saves money. The excavator is already on site, the grade is already open, and sequencing footings, drainage and flatwork on one mobilization avoids paying twice for the same setup.' },
@@ -801,7 +802,7 @@ export const services: Service[] = [
     metaDescription:
       'Room additions, garages, sunrooms, three-season rooms and dormers in Greater Pittsburgh. Excavation through finish by one contractor. Free consultation.',
     edge:
-      'Additions go wrong at the seams — where new roof meets old, where new siding meets weathered. Because we self-perform the excavation, roofing and siding, those seams are our responsibility alone.',
+      'Additions go wrong at the seams — where new roof meets old, where new siding meets weathered. Because the excavation, the roofing and the siding all run through us, those seams are our responsibility alone.',
     highlights: [
       'Excavation Through Finish',
       'Permits & Inspections Handled',
@@ -861,7 +862,7 @@ export const services: Service[] = [
       { q: 'How much does a home addition cost in Pittsburgh?', a: 'Additions in the Greater Pittsburgh area commonly run $180–$400 per square foot depending on whether plumbing is involved, foundation type, roof complexity and finish level. A simple bump-out is at the low end; a primary suite with a full bath sits at the high end. We give an honest range before you spend money on drawings.' },
       { q: 'Do you handle permits and inspections?', a: 'Yes. We pull the permit, schedule the inspections and meet the inspector. Every municipality we serve handles setbacks, footing inspections and framing sign-off a little differently, and knowing that in advance is most of the job.' },
       { q: 'How long does an addition take?', a: 'Most residential additions run 8–16 weeks from footings to final inspection, with permitting adding 2–8 weeks in front of that depending on the municipality. Weather and material lead times are the two variables we cannot fully control, and we tell you where the risk is instead of promising a date we cannot hold.' },
-      { q: 'Will the new roof and siding match my existing house?', a: 'This is the hardest part of any addition, and it is why we self-perform the roofing and siding. On an older home with weathered siding, an exact match is sometimes impossible — in which case we will tell you honestly and propose a design solution, like re-siding one full elevation to a natural break line, rather than delivering a patch that looks like a patch.' },
+      { q: 'Will the new roof and siding match my existing house?', a: 'This is the hardest part of any addition, and it is why the roofing and the siding stay under one contract rather than being split between companies. On an older home with weathered siding, an exact match is sometimes impossible — in which case we will tell you honestly and propose a design solution, like re-siding one full elevation to a natural break line, rather than delivering a patch that looks like a patch.' },
     ],
   },
 

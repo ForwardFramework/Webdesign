@@ -22,7 +22,7 @@ const topicMap: Record<string, { heading: string; service: string }> = {
   'roof-inspection': { heading: 'Book Your Free Roof Inspection', service: 'roofing' },
   roofing: { heading: 'Get Your Roofing Quote', service: 'roofing' },
   deck: { heading: 'Start Your Deck Project', service: 'decks' },
-  'deck-design': { heading: 'Book Your Free 3D Deck Design', service: 'decks' },
+  'deck-design': { heading: 'Book Your Deck Consultation', service: 'decks' },
   siding: { heading: 'Get Your Siding Quote', service: 'siding' },
   windows: { heading: 'Price Your Replacement Windows', service: 'windows' },
   doors: { heading: 'Design Your ProVia Door', service: 'doors' },
@@ -150,7 +150,7 @@ const schema = [
         <div class="contact__card">
           <h2>Service area</h2>
           <p class="contact__areas-note">
-            Based in Bethel Park, working across Allegheny and Washington counties.
+            Based in Bethel Park, serving anywhere within about an hour of Pittsburgh.
           </p>
           <ul class="contact__areas">
             {serviceAreas.slice(0, 14).map((a) => <li>{a.name}</li>)}

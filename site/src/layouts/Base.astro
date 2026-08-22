@@ -62,12 +62,16 @@ const organization = {
   areaServed: [
     { '@type': 'AdministrativeArea', name: 'Allegheny County, Pennsylvania' },
     { '@type': 'AdministrativeArea', name: 'Washington County, Pennsylvania' },
+    { '@type': 'AdministrativeArea', name: 'Butler County, Pennsylvania' },
     { '@type': 'City', name: 'Pittsburgh' },
   ],
   serviceArea: {
     '@type': 'GeoCircle',
     geoMidpoint: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
-    geoRadius: '40000',
+    /* About an hour's drive from Pittsburgh. Stated in metres, as schema.org
+       requires, and kept consistent with the "within about an hour" wording
+       used in the page copy. */
+    geoRadius: '65000',
   },
   openingHoursSpecification: site.hours.map((h) => ({
     '@type': 'OpeningHoursSpecification',
@@ -180,6 +184,29 @@ const graph = { '@context': 'https://schema.org', '@graph': [organization, websi
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(graph)} is:inline />
+
+    <!--
+      Opt in to the reveal animation before the first paint.
+
+      This has to be inline and in <head>: it runs synchronously, so the class
+      is on the element before anything is painted and there is no flash of
+      un-animated content. It also has to be tiny and unconditional, because
+      everything it enables is decorative — if it does not run, the stylesheet
+      simply never hides anything and the page renders in full.
+    -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.setAttribute('data-reveal', 'on');
+        // If the reveal script never gets to run at all — bundle blocked by an
+        // extension, a 404, a CSP rule, a dead network — nothing would ever
+        // remove the hiding. Stop hiding after five seconds unless that script
+        // has checked in. Content outlives decoration.
+        setTimeout(function () {
+          if (!root.hasAttribute('data-reveal-ready')) root.removeAttribute('data-reveal');
+        }, 5000);
+      })();
+    </script>
   </head>
 
   <body>
@@ -192,27 +219,72 @@ const graph = { '@context': 'https://schema.org', '@graph': [organization, websi
     {stickyCta && <StickyCta />}
 
     <script>
-      // Scroll reveal. Progressive enhancement only — `.reveal` elements are
-      // forced visible under prefers-reduced-motion by the stylesheet, and this
-      // script bails entirely if IntersectionObserver is missing.
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const targets = document.querySelectorAll('.reveal');
-      if (reduce || !('IntersectionObserver' in window)) {
-        targets.forEach((el) => el.classList.add('is-visible'));
-      } else {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              const el = entry.target as HTMLElement;
-              const delay = Number(el.dataset.revealDelay ?? 0);
-              window.setTimeout(() => el.classList.add('is-visible'), delay);
-              io.unobserve(el);
-            });
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
-        );
-        targets.forEach((el) => io.observe(el));
+      /*
+        Scroll reveal.
+
+        The hiding is opt-in: nothing is hidden until the inline <head> script
+        has stamped data-reveal="on". By the time this runs, the only job left
+        is to reveal — and every path below ends in everything being visible.
+
+        The previous version hid content in the base stylesheet and revealed it
+        from here. Anything that stopped this script — or an element the
+        observer simply never reported — left a permanently blank white page
+        that only a refresh fixed.
+      */
+      const root = document.documentElement;
+      const pending = () => document.querySelectorAll<HTMLElement>('.reveal:not(.is-visible)');
+      const showAll = () => pending().forEach((el) => el.classList.add('is-visible'));
+
+      /* Tell the <head> guard that this script is alive, so it stops counting
+         down to disabling the animation wholesale. */
+      root.setAttribute('data-reveal-ready', '');
+
+      /* The safety net is armed FIRST, before a single line that could throw.
+         Registering it after the observer setup would mean an exception in that
+         setup takes the net down with it — which is how content ends up hidden
+         forever. */
+      const failsafe = window.setTimeout(showAll, 4000);
+
+      try {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) {
+          window.clearTimeout(failsafe);
+          showAll();
+        } else {
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target as HTMLElement;
+                const delay = Number(el.dataset.revealDelay ?? 0);
+                window.setTimeout(() => el.classList.add('is-visible'), delay);
+                io.unobserve(el);
+              });
+            },
+            /* threshold 0 fires as soon as one pixel crosses the line. A
+               fractional threshold can never be met by an element taller than
+               the viewport, and is easily skipped past during fast scrolling —
+               that is what left whole pages blank before. */
+            { rootMargin: '0px 0px -10% 0px', threshold: 0 }
+          );
+          pending().forEach((el) => io.observe(el));
+
+          /* Restoring from the back/forward cache re-runs no scripts, so
+             anything mid-flight when the visitor navigated away stays hidden. */
+          window.addEventListener('pageshow', (e) => {
+            if ((e as PageTransitionEvent).persisted) showAll();
+          });
+
+          /* Printing, or deep-linking to an anchor, must never land on
+             invisible content. */
+          window.addEventListener('beforeprint', showAll);
+          if (location.hash) showAll();
+        }
+      } catch {
+        /* No IntersectionObserver, a hostile extension, anything at all:
+           give up on the animation rather than on the content. */
+        window.clearTimeout(failsafe);
+        showAll();
       }
     </script>
   </body>
