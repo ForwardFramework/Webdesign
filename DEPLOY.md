@@ -83,6 +83,9 @@ Add two secrets under GitHub **Settings → Secrets and variables → Actions**:
 The secret keeps the name `NETLIFY_SITE_ID`; only Netlify's label changed from
 Site ID to Project ID.
 
+Only pushes to `main` publish. `claude/forward-framework-website-qwe3cg` still
+runs the build — so a broken build is caught — but never overwrites production.
+
 ### Rolling back
 
 **Deploys** tab → pick any earlier deploy → **Publish deploy**. Instant, and it

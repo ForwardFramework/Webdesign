@@ -10,8 +10,10 @@ on:
 permissions:
   contents: read
 
+# Per-branch, so pushing main and the working branch at the same commit does not
+# make one run cancel the other.
 concurrency:
-  group: netlify
+  group: netlify-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -39,8 +41,10 @@ jobs:
             echo "::notice::Netlify secrets not set — bundle built but not deployed. Add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID under Settings → Secrets and variables → Actions."
           fi
 
+      # Only main publishes. The working branch still builds, so a broken build
+      # is caught there, but it never overwrites production.
       - name: Deploy to Netlify
-        if: steps.creds.outputs.ready == 'true'
+        if: steps.creds.outputs.ready == 'true' && github.ref == 'refs/heads/main'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
