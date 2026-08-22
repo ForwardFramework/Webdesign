@@ -32,6 +32,76 @@ python3 tools/set_domain.py https://your-site.static.domains
 python3 tools/build_zip.py --portable      # then re-upload
 ```
 
+### Connecting the GoDaddy domain
+
+`www.forward-framework.com` is the canonical hostname — every canonical tag,
+the sitemap and the JSON-LD point at it — so the apex must redirect to `www`,
+not the other way round.
+
+**Use GoDaddy's DNS. Do not move the nameservers to Netlify.** Netlify's own
+DNS is fine in general, but switching nameservers moves *all* records,
+including the MX records that deliver `hello@forward-framework.com`. Any MX
+record not recreated in Netlify DNS means mail silently stops. Adding two
+records at GoDaddy leaves email completely untouched.
+
+#### 1. In Netlify first
+
+Site configuration → **Domain management → Add a domain** → enter
+`www.forward-framework.com`. Netlify will show it as unverified — expected until
+DNS points at it. Add `forward-framework.com` too, and make sure **`www` is set
+as the primary domain**; Netlify then redirects the apex to it automatically.
+
+Note the site's Netlify subdomain from this screen — something like
+`forward-framework.netlify.app`. The CNAME below points at it.
+
+#### 2. In GoDaddy
+
+**My Products → Domains →** `forward-framework.com` **→ DNS → DNS Records.**
+
+GoDaddy ships every domain with a parked `A @` record and a `CNAME www` record.
+**Edit those two rather than adding duplicates** — two conflicting records at
+the same name is the most common reason this fails.
+
+| Type | Name | Value | TTL |
+|---|---|---|---|
+| `A` | `@` | `75.2.60.5` | 600 seconds |
+| `CNAME` | `www` | `forward-framework.netlify.app` *(your actual Netlify subdomain)* | 600 seconds |
+
+Leave every other record alone — especially `MX`, and any `TXT` records for
+SPF, DKIM or domain verification. Those carry your email.
+
+Never put a `CNAME` on the apex (`@`). A name with a CNAME cannot hold any other
+record, which would wipe out MX and stop mail reaching the domain.
+
+#### 3. Back in Netlify
+
+DNS usually propagates in minutes, though it can take up to a day. Once it
+resolves, Netlify provisions a free Let's Encrypt certificate automatically —
+Domain management → HTTPS → **Verify DNS configuration**, then **Provision
+certificate** if it has not already started. Do not set up any redirect at
+GoDaddy; Netlify handles apex → www itself.
+
+#### 4. Then point the site at the live domain
+
+The build already targets `https://www.forward-framework.com`, so if that is the
+final address nothing needs changing. If you ever move it:
+
+```bash
+python3 tools/set_domain.py https://www.example.com
+```
+
+#### Checking it worked
+
+```bash
+dig +short www.forward-framework.com      # -> the netlify.app subdomain
+dig +short forward-framework.com          # -> 75.2.60.5
+dig +short forward-framework.com MX       # -> unchanged, your mail host
+curl -sI https://forward-framework.com | head -3   # -> 301 to the www address
+```
+
+The MX check is the one people skip. Run it before and after so you can prove
+email was untouched.
+
 ### Where the enquiries go
 
 All nine forms are wired to Netlify Forms already — nothing to add. Submissions

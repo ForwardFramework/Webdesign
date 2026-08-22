@@ -53,6 +53,14 @@ Attribution (UTM parameters, gclid, landing page, referrer) rides along in
 hidden inputs. Those inputs must stay in the markup — Netlify only records
 fields it saw in the deployed HTML, so adding them from JavaScript would not work.
 
+## Domain
+
+`www.forward-framework.com`, registered at GoDaddy, DNS stays at GoDaddy.
+Two records point it at Netlify: `A @ -> 75.2.60.5` and
+`CNAME www -> <site>.netlify.app`. The nameservers are deliberately **not**
+moved to Netlify, because that would move the MX records that deliver
+hello@forward-framework.com. See DEPLOY.md for the full procedure.
+
 ## Before changing site content
 
 `index.html` is hand-authored and is the source of truth for the site shell
