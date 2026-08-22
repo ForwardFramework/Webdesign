@@ -14,7 +14,7 @@ import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP_DIRS = {".git", ".github", ".claude", "dist", "docs", "tools", "__pycache__", ".vercel", "_site"}
-SKIP_FILES = {"README.md", ".gitignore", "DEPLOY.md"}
+SKIP_FILES = {"README.md", ".gitignore", "DEPLOY.md", "CLAUDE.md"}
 
 # Host-specific files, excluded from the generic bundle.
 HOST_ONLY = {"vercel.json", ".vercelignore", "netlify.toml"}

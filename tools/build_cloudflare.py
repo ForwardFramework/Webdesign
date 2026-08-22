@@ -28,7 +28,7 @@ OUT = os.path.join(ROOT, "dist", "cloudflare")
 
 
 SKIP_DIRS = {".git", ".github", ".claude", "dist", "tools", "__pycache__", ".vercel", "_site", "node_modules", "docs"}
-SKIP_FILES = {"README.md", "DEPLOY.md", ".gitignore", "vercel.json", ".vercelignore"}
+SKIP_FILES = {"README.md", "DEPLOY.md", "CLAUDE.md", ".gitignore", "vercel.json", ".vercelignore"}
 REWRITE_EXT = {".html", ".xml", ".txt", ".webmanifest", ".json", ".js"}
 
 
