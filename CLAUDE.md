@@ -101,6 +101,9 @@ service's `prices` list in `tools/build.py` and are gated by `SHOW_PRICING`.
   JavaScript disabled — AI crawlers often do not execute it.
 - **The absolute domain lives in one place.** Change it with
   `tools/set_domain.py`, never by hand; it also moves the email addresses.
+- **The phone number likewise.** `tools/set_phone.py` updates the `tel:` links,
+  the visible text and the JSON-LD `telephone` field together — editing one
+  shape by hand leaves a dead click-to-call on mobile.
 - **Asset caching stays short.** `styles.css` and `main.js` are not
   fingerprinted, so a long cache serves stale CSS after a deploy.
 

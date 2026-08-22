@@ -226,10 +226,10 @@ Everything below is a placeholder and is marked in the source.
 
 | What | Current value |
 |---|---|
-| **Phone** | `(555) 012-3456` — reserved fictional range |
+| **Phone** | `(412) 463-2126` — temporary, change with `tools/set_phone.py` |
 | **Email** | `hello@forward-framework.com` |
 | **Domain** | `https://www.forward-framework.com` — change with `tools/set_domain.py` |
-| **Form endpoint** | `REPLACE_WITH_YOUR_FORM_ENDPOINT` on every `data-endpoint` |
+| **Form notifications** | Wired as Netlify Forms; add the email notification to `hello@forward-framework.com` in the Netlify dashboard |
 | **Case studies** | Illustrative examples, marked `PLACEHOLDER` in HTML comments |
 | **Testimonials** | Illustrative, marked `PLACEHOLDER` |
 | **Partner badges** | Text placeholders in the trust bar |

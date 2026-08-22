@@ -251,7 +251,7 @@ def cta_band(heading, blurb, cta_href="/contact.html", cta="Get my free Growth P
     <p class="lede mx-auto">{blurb}</p>
     <div class="btn-row mt-6" style="justify-content:center">
       <a class="btn btn--primary btn--lg" href="{cta_href}">{cta} <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-      <a class="btn btn--ghost btn--lg" href="tel:+15550123456">Call (555) 012-3456</a>
+      <a class="btn btn--ghost btn--lg" href="tel:+14124632126">Call (412) 463-2126</a>
     </div>
     <p class="small muted mt-5">No obligation · No contracts to start · Your data is never resold</p>
   </div>
@@ -991,7 +991,7 @@ def render_pricing():
       <p class="lede">In an industry where "contact us for a quote" is the default, publishing numbers is a real differentiator — and it saves us both a discovery call that was only ever going to end in sticker shock. Final scope is fixed in writing after your free deliverable, and it does not move.</p>
       <div class="btn-row mt-6">
         <a class="btn btn--primary btn--lg" href="/contact.html">Get my free Growth Plan <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-        <a class="btn btn--ghost btn--lg" href="tel:+15550123456">Call (555) 012-3456</a>
+        <a class="btn btn--ghost btn--lg" href="tel:+14124632126">Call (412) 463-2126</a>
       </div>
     </div>
   </div>
@@ -1269,10 +1269,10 @@ def render_contact():
         <span class="eyebrow">What happens next</span>
         <p>Send the form and a strategist audits your site, your AI search visibility and your funnel. Within two business days you receive a written Growth Plan with ranked priorities and the dollar impact of each. There is no obligation and no call required to receive it.</p>
       </div>
-      <p class="lede">Prefer to talk first? Call <a class="accent" href="tel:+15550123456">(555) 012-3456</a> or email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a>. A senior strategist answers, not a scheduler.</p>
+      <p class="lede">Prefer to talk first? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> or email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a>. A senior strategist answers, not a scheduler.</p>
 
       <div class="grid grid-2 mt-7">
-        <div class="card"><h3 class="h4">New business</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br><a href="tel:+15550123456">(555) 012-3456</a></p></div>
+        <div class="card"><h3 class="h4">New business</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br><a href="tel:+14124632126">(412) 463-2126</a></p></div>
         <div class="card"><h3 class="h4">Existing clients</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br>Same-day response, business hours.</p></div>
         <div class="card"><h3 class="h4">Hours</h3><p>Monday–Friday, 8am–6pm across US time zones. Urgent client issues are monitored outside those hours.</p></div>
         <div class="card"><h3 class="h4">Coverage</h3><p>Remote-first, serving companies across the United States. On-site for filming days and workshops.</p></div>
@@ -1325,7 +1325,7 @@ def render_thank_you():
       <a class="btn btn--primary" href="/results.html">See client results <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
       <a class="btn btn--ghost" href="/services/">Browse services</a>
     </div>
-    <p class="small muted mt-6">Need something sooner? Call <a class="accent" href="tel:+15550123456">(555) 012-3456</a>.</p>
+    <p class="small muted mt-6">Need something sooner? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a>.</p>
   </div>
 </section>"""
     page("thank-you.html", "Thank You | Forward Framework",
@@ -1387,7 +1387,7 @@ def render_privacy():
     <h2>Cookies</h2>
     <p>We use essential cookies to make the site work and analytics cookies to measure performance. You can block cookies in your browser settings; essential functionality will continue to work.</p>
     <h2>Contact</h2>
-    <p>Questions about this policy: <a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> or (555) 012-3456.</p>
+    <p>Questions about this policy: <a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> or (412) 463-2126.</p>
   </div>
 </section>"""
     page("privacy.html", "Privacy Policy | Forward Framework",
@@ -1563,7 +1563,7 @@ Forward Framework serves owner-led and mid-market companies across the United St
 ## Contact
 
 - Email: hello@forward-framework.com
-- Phone: +1-555-012-3456
+- Phone: +1-412-463-2126
 - Area served: United States (remote-first)
 """
     open(os.path.join(ROOT, "llms.txt"), "w", encoding="utf-8").write(llms)
