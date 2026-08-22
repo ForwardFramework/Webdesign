@@ -54,7 +54,19 @@ as the primary domain**; Netlify then redirects the apex to it automatically.
 Note the site's Netlify subdomain from this screen — something like
 `forward-framework.netlify.app`. The CNAME below points at it.
 
-#### 2. In GoDaddy
+#### 2. In GoDaddy — turn Forwarding off first
+
+Before touching DNS records, check **Domain Settings → Forwarding** and remove
+any forwarding rule. GoDaddy forwarding works by pointing the domain at its own
+parking servers, which then issue a redirect. It overrides what the DNS records
+say, and if it redirects to a Netlify URL you get a Netlify error page rather
+than your site — which looks like a Netlify problem but is a GoDaddy setting.
+
+Symptoms of forwarding still being on: the apex and `www` both resolve to
+addresses in the `3.33.x.x` / `15.197.x.x` range instead of `75.2.60.5`, and
+`www` is a CNAME to the apex rather than to a `netlify.app` subdomain.
+
+#### 2b. Then the DNS records
 
 **My Products → Domains →** `forward-framework.com` **→ DNS → DNS Records.**
 
