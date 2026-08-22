@@ -29,7 +29,7 @@ needs two repository secrets, set once by a human:
 | Secret | Where |
 |---|---|
 | `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → Personal access tokens |
-| `NETLIFY_SITE_ID` | Site configuration → General → Site details → Site ID |
+| `NETLIFY_SITE_ID` | Project configuration → General → Project details → Project ID |
 
 Until both exist the workflow builds and uploads an artifact but skips the
 deploy, so pushes are safe — they simply are not live yet.

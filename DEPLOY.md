@@ -47,14 +47,14 @@ Add two secrets under **Settings → Secrets and variables → Actions**:
 | Secret | Where to get it |
 |---|---|
 | `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → Personal access tokens |
-| `NETLIFY_SITE_ID` | Site configuration → General → Site details → **Site ID** |
+| `NETLIFY_SITE_ID` | **Project configuration → General → Project details → Project ID** |
 
 CI then always deploys to that one site, which removes the duplicate-site
 problem described under Option 3 entirely.
 
 ### Option 2 — Connect the Git repo
 
-**Add new site → Import an existing project.** `netlify.toml` supplies the build
+**Add new project → Import an existing project.** `netlify.toml` supplies the build
 command and publish directory. Set the **production branch** to
 `claude/forward-framework-website-qwe3cg` — this repo has no `main`, and leaving
 it at the default means Netlify never produces a production deploy, which
@@ -62,7 +62,7 @@ serves 404 on every request.
 
 ### Option 3 — Drag and drop
 
-Open the **existing site → Deploys tab** and drop
+Open the **existing project → Deploys tab** and drop
 `dist/forward-framework-netlify.zip` onto the deploy area there.
 
 > **Drop it in the right place.** Using **Add new site → Deploy manually**
@@ -72,10 +72,17 @@ Open the **existing site → Deploys tab** and drop
 > `www.forward-framework.com` while `your-site.netlify.app` loads perfectly —
 > the domain is pointing at a different, empty site.
 >
-> If that has already happened: **Team → Domains** shows which site each domain
-> is assigned to. Either move the domain onto the site that has the content, or
-> deploy into the site that already holds the domain. Then delete the strays so
-> there is exactly one site.
+> If that has already happened, you do not need a team-wide domains page —
+> Netlify renamed **Sites** to **Projects**, and the Projects list is enough:
+>
+> 1. Open the **Projects** list. Each row shows that project's URL. The project
+>    holding the domain displays `www.forward-framework.com` instead of a
+>    `.netlify.app` address — that is the one to fix.
+> 2. Open that project → **Domain management** in the left sidebar → remove
+>    `www.forward-framework.com`.
+> 3. Open the project that actually serves the site → **Domain management →
+>    Add a domain** → enter it → set it as the **primary domain**.
+> 4. Delete the leftover projects so there is exactly one.
 
 ### Connecting the GoDaddy domain
 
@@ -91,7 +98,7 @@ records at GoDaddy leaves email completely untouched.
 
 #### 1. In Netlify first
 
-Site configuration → **Domain management → Add a domain** → enter
+your project → **Domain management** (left sidebar) → **Add a domain** → enter
 `www.forward-framework.com`. Netlify will show it as unverified — expected until
 DNS points at it. Add `forward-framework.com` too, and make sure **`www` is set
 as the primary domain**; Netlify then redirects the apex to it automatically.
