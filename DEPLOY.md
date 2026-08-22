@@ -12,25 +12,70 @@ Two bundles are produced by `python3 tools/build_zip.py`:
 
 ---
 
-# static.app
+# Netlify — the live host
 
-1. Build the portable bundle: `python3 tools/build_zip.py --portable`
-2. In your static.app dashboard, **Add a new site** and drag
-   `forward-framework-site-portable.zip` into the drop zone. It unpacks and
-   deploys automatically.
-3. The site goes live on a `your-site.static.domains` address. Add your own
-   domain under **Settings → Domains** (SSL is issued for free).
+**Every push to `claude/forward-framework-website-qwe3cg` builds and deploys to
+production**, via `.github/workflows/netlify.yml`. Nothing else needs running.
 
-### Set the domain
+The one prerequisite is two repository secrets, below. Until they exist the
+workflow builds and uploads an artifact but skips the deploy — pushes stay safe,
+they simply are not live.
 
-Same rule as any host: the canonical tags, Open Graph tags, JSON-LD,
-`sitemap.xml`, `robots.txt` and `llms.txt` all carry an absolute URL. Point
-them at whatever address is actually serving the site:
+### Why this host needs its own build
+
+Netlify serves both `/about` and `/about.html` with a 200 by default, and its
+"Pretty URLs" post-processing toggle is inconsistent about redirecting one to
+the other. Two live URLs for the same page is duplicate content, and which one
+wins would depend on a dashboard setting.
+
+So `tools/build_netlify.py` picks one form and enforces it: links, canonicals,
+Open Graph URLs, the JSON-LD graph, `sitemap.xml`, `llms.txt`, `robots.txt` and
+the JS redirect all use the extensionless form, and a generated `_redirects`
+file 301s every `.html` path to it — forced with `!` so the rule wins even
+though the file exists. `404.html` is deliberately left unredirected, since
+Netlify uses it as the not-found handler.
 
 ```bash
-python3 tools/set_domain.py https://your-site.static.domains
-python3 tools/build_zip.py --portable      # then re-upload
+python3 tools/build_netlify.py                            # -> dist/netlify/ + a zip
+python3 tools/build_netlify.py https://your-domain.com    # set the domain at the same time
 ```
+
+### Option 1 — Automatic on every push (recommended)
+
+Add two secrets under **Settings → Secrets and variables → Actions**:
+
+| Secret | Where to get it |
+|---|---|
+| `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → Personal access tokens |
+| `NETLIFY_SITE_ID` | Site configuration → General → Site details → **Site ID** |
+
+CI then always deploys to that one site, which removes the duplicate-site
+problem described under Option 3 entirely.
+
+### Option 2 — Connect the Git repo
+
+**Add new site → Import an existing project.** `netlify.toml` supplies the build
+command and publish directory. Set the **production branch** to
+`claude/forward-framework-website-qwe3cg` — this repo has no `main`, and leaving
+it at the default means Netlify never produces a production deploy, which
+serves 404 on every request.
+
+### Option 3 — Drag and drop
+
+Open the **existing site → Deploys tab** and drop
+`dist/forward-framework-netlify.zip` onto the deploy area there.
+
+> **Drop it in the right place.** Using **Add new site → Deploy manually**
+> creates a *brand new site every time*. Repeat that a few times and you end up
+> with several sites all holding the same content, while the custom domain stays
+> attached to whichever one it was added to first. The symptom is a 404 on
+> `www.forward-framework.com` while `your-site.netlify.app` loads perfectly —
+> the domain is pointing at a different, empty site.
+>
+> If that has already happened: **Team → Domains** shows which site each domain
+> is assigned to. Either move the domain onto the site that has the content, or
+> deploy into the site that already holds the domain. Then delete the strays so
+> there is exactly one site.
 
 ### Connecting the GoDaddy domain
 
@@ -135,6 +180,28 @@ python3 tools/build_netlify.py https://your-site.netlify.app
 ```
 
 Then again with the real domain once it is attached under **Domain management**.
+
+---
+
+# static.app
+
+1. Build the portable bundle: `python3 tools/build_zip.py --portable`
+2. In your static.app dashboard, **Add a new site** and drag
+   `forward-framework-site-portable.zip` into the drop zone. It unpacks and
+   deploys automatically.
+3. The site goes live on a `your-site.static.domains` address. Add your own
+   domain under **Settings → Domains** (SSL is issued for free).
+
+### Set the domain
+
+Same rule as any host: the canonical tags, Open Graph tags, JSON-LD,
+`sitemap.xml`, `robots.txt` and `llms.txt` all carry an absolute URL. Point
+them at whatever address is actually serving the site:
+
+```bash
+python3 tools/set_domain.py https://your-site.static.domains
+python3 tools/build_zip.py --portable      # then re-upload
+```
 
 ---
 
