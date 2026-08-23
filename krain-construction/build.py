@@ -1275,7 +1275,7 @@ def build_city(c):
                 f'additions, garages, decks and full exterior replacements. Free estimates: {B["phone_display"]}.')}
 
     <div style="border-radius:var(--r-lg);overflow:hidden;margin-bottom:2.25rem;box-shadow:var(--shadow)">
-      {A.scene("custom", abs(hash(c["slug"])) % 4, label=f'Construction in {c["city"]}, PA')}
+      {A.scene("custom", A.variant_for(c["slug"]), label=f'Construction in {c["city"]}, PA')}
     </div>
 
     <h2>Building in {e(c["city"])} since {B["founded"]}</h2>

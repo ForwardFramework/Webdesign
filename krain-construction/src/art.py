@@ -5,6 +5,8 @@ Flat, layered vector scenes in the Krain palette. They stand in for the client's
 photography: intentional-looking, weightless (no image requests) and swapped out
 one-for-one when real project photos arrive (see TODO-CLIENT.md).
 """
+import zlib
+
 W, H = 800, 500
 
 PALETTES = {
@@ -206,6 +208,16 @@ def scene(kind, variant=0, cls="", label=""):
     body += f'<rect x="0" y="{H-10}" width="{W}" height="10" fill="{p["trim"]}" opacity=".85"/>'
     return (f'<svg{c} viewBox="0 0 {W} {H}" {aria} preserveAspectRatio="xMidYMid slice" '
             f'xmlns="http://www.w3.org/2000/svg">{body}</svg>')
+
+
+def variant_for(key):
+    """Stable palette pick from a string.
+
+    Python's built-in hash() is salted per process, so using it here made the
+    build non-reproducible — identical input produced different artwork and a
+    dirty diff on every run. crc32 is deterministic across processes.
+    """
+    return zlib.crc32(key.encode()) % len(ORDER)
 
 
 SERVICE_ART = {
