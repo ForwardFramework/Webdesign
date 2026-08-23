@@ -14,14 +14,19 @@
 <meta property="og:title" content="Client Results &amp; Case Studies | Forward Framework">
 <meta property="og:description" content="Case studies with baselines, timeframes and the actual work behind each number — web design, automation, AI search, ads and social across US companies.">
 <meta property="og:url" content="https://www.forward-framework.com/results.html">
-<meta property="og:image" content="https://www.forward-framework.com/assets/img/og-image.svg">
+<!-- PNG, not the SVG this is generated from: Facebook, LinkedIn, X and most
+     link unfurlers ignore an SVG og:image and show no card at all. -->
+<meta property="og:image" content="https://www.forward-framework.com/assets/img/og-image.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Forward Framework — web design, AI consulting, automation and marketing, with a free Growth Plan and no contracts to start">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Client Results &amp; Case Studies | Forward Framework">
 <meta name="twitter:description" content="Case studies with baselines, timeframes and the actual work behind each number — web design, automation, AI search, ads and social across US companies.">
-<meta name="twitter:image" content="https://www.forward-framework.com/assets/img/og-image.svg">
+<meta name="twitter:image" content="https://www.forward-framework.com/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="Forward Framework — web design, AI consulting, automation and marketing, with a free Growth Plan and no contracts to start">
 
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
@@ -156,8 +161,10 @@
 
 <!-- PLACEHOLDER CASE STUDIES: replace with your verified client outcomes before launch.
      Keep the structure — industry, baseline, metric, method — it is what makes proof credible. -->
-<section class="section section--alt section--line">
-  <div class="wrap"><div class="grid grid-3">
+<section class="section section--alt section--line" aria-labelledby="cases-h">
+  <div class="wrap">
+    <h2 class="h2 balance mb-5" id="cases-h">Engagements, with the baseline stated.</h2>
+    <div class="grid grid-3">
       <article class="result-card reveal">
         <span class="result-industry">Home services · Multi-location</span>
         <h3 class="h3">From a brochure site to a booking machine</h3>
@@ -199,7 +206,8 @@
         <div class="result-metrics"><div><b>-58%</b><span>Page load time</span></div><div><b>+34%</b><span>Mobile conversion</span></div><div><b>+22%</b><span>AOV</span></div></div>
         <p class="small">Peak season was exposing a slow theme and a checkout with three unnecessary steps. We rebuilt the front end for speed, restructured collection and product templates around decision-making rather than merchandising, and added post-purchase automation that lifted average order value without another dollar of media.</p>
         <div class="card-foot"><ul class="tick-list"><li>Platform Build on Shopify</li><li>CRO programme</li><li>Post-purchase automation</li></ul></div>
-      </article></div></div>
+      </article></div>
+  </div>
 </section>
 
 <section class="section">
@@ -267,8 +275,8 @@
         </div>
       </div>
 
-      <div class="footer-col">
-        <h4>Services</h4>
+      <nav class="footer-col" aria-labelledby="ftr-services">
+        <p class="footer-col-h" id="ftr-services">Services</p>
         <ul>
           <li><a href="/services/web-design.html">Web Design &amp; Development</a></li>
           <li><a href="/services/ai-consulting.html">AI Consulting</a></li>
@@ -278,10 +286,10 @@
           <li><a href="/services/social-media-marketing.html">Social Media Marketing</a></li>
           <li><a href="/services/business-systems.html">Scaffold — Business Systems</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div class="footer-col">
-        <h4>Company</h4>
+      <nav class="footer-col" aria-labelledby="ftr-company">
+        <p class="footer-col-h" id="ftr-company">Company</p>
         <ul>
           <li><a href="/about.html">About</a></li>
           <li><a href="/results.html">Client results</a></li>
@@ -289,10 +297,10 @@
           <li><a href="/services/">All services</a></li>
           <li><a href="/discovery/">Discovery questionnaire</a></li>
         </ul>
-      </div>
+      </nav>
 
-      <div class="footer-col">
-        <h4>Free tools</h4>
+      <nav class="footer-col" aria-labelledby="ftr-free-tools">
+        <p class="footer-col-h" id="ftr-free-tools">Free tools</p>
         <ul>
           <li><a href="#growth-plan">Growth Plan</a></li>
           <li><a href="#ai-search">AI visibility report</a></li>
@@ -301,7 +309,7 @@
           <li><a href="/services/web-design.html#concept">Homepage concept</a></li>
           <li><a href="/services/business-systems.html#risk-map">Key-person risk map</a></li>
         </ul>
-      </div>
+      </nav>
     </div>
 
     <div class="footer-bottom">

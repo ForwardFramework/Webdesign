@@ -1,4 +1,12 @@
 # Forward Framework — robots.txt
+#
+# Everything is allowed on purpose. Two families of crawler matter now:
+# training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot) which feed
+# model weights, and retrieval crawlers (OAI-SearchBot, Claude-SearchBot,
+# PerplexityBot, ChatGPT-User) which fetch pages to answer a live question.
+# Blocking the first group also costs citations from the second on several
+# platforms, and being quoted is the entire point of this site.
+#
 # Traditional search crawlers
 User-agent: Googlebot
 Allow: /
@@ -23,6 +31,12 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
 Allow: /
 
 User-agent: anthropic-ai
@@ -53,6 +67,27 @@ User-agent: CCBot
 Allow: /
 
 User-agent: meta-externalagent
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: iaskspider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Timpibot
 Allow: /
 
 # Everyone else

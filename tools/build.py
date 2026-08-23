@@ -89,14 +89,19 @@ def page(path, title, description, body, schema=None, active=None,
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE}/assets/img/og-image.svg">
+<!-- PNG, not the SVG this is generated from: Facebook, LinkedIn, X and most
+     link unfurlers ignore an SVG og:image and show no card at all. -->
+<meta property="og:image" content="{SITE}/assets/img/og-image.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Forward Framework — web design, AI consulting, automation and marketing, with a free Growth Plan and no contracts to start">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="{SITE}/assets/img/og-image.svg">
+<meta name="twitter:image" content="{SITE}/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="Forward Framework — web design, AI consulting, automation and marketing, with a free Growth Plan and no contracts to start">
 
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/favicon.svg">
@@ -273,6 +278,21 @@ def cta_band(heading, blurb, cta_href="/contact.html", cta="Get my free Growth P
 </section>"""
 
 
+def evidence(claim, source, url):
+    """A statistic with its source named and linked.
+
+    Worth the markup: sourced statistics and explicit citations are among the
+    few things shown to raise the odds of being quoted by an AI assistant, and
+    they are the difference between a claim a reader can check and one they
+    have to take on faith. Never add one of these without verifying the study.
+    """
+    return f'''
+      <aside class="evidence">
+        <p>{claim}</p>
+        <p class="evidence-src">Source: <a href="{url}" rel="nofollow noopener" target="_blank">{source}</a></p>
+      </aside>'''
+
+
 def ticks(items):
     return '<ul class="tick-list">' + "".join(f"<li>{i}</li>" for i in items) + "</ul>"
 
@@ -286,7 +306,7 @@ SERVICES = [
  "nav": "Web Design & Development",
  "h1": "Websites that behave like your best salesperson.",
  "title": "Web Design &amp; Development Company | Forward Framework",
- "desc": "Conversion-first web design and development. Launch in 30–45 days with green Core Web Vitals, full schema and AI-search readiness. Starts with a free homepage concept.",
+ "desc": "Conversion-first web design and development. Live in 30–45 days with green Core Web Vitals and AI-search readiness. Starts with a free homepage concept.",
  "eyebrow": "Web design & development",
  "answer": "Conversion-focused web design is the practice of building a website around a single measurable business outcome instead of around aesthetics. It combines clear positioning, one dominant call to action, proof placed above the fold, sub-2.5-second load times and forms engineered to be finished rather than abandoned.",
  "intro": [
@@ -441,6 +461,15 @@ SERVICES = [
    ("Ops Retainer", "$499", "/month, from", "We run, monitor and keep extending the system.",
     ["Ongoing build and optimisation", "Monitoring and failure response", "Monthly hours-saved reporting", "Month to month after 90 days"], False)
  ],
+ "evidence": (
+   "The research behind speed-to-lead is unusually clear. A study of more than 15,000 leads and "
+   "100,000 call attempts, run by Dr James Oldroyd at MIT's Sloan School of Management with "
+   "InsideSales.com, found that leads contacted within five minutes were 21 times more likely to "
+   "qualify than leads contacted after thirty. A separate Harvard Business Review audit of 2,241 "
+   "US companies put the average first response at 42 hours — which is why an automation that "
+   "answers in seconds is usually the cheapest revenue on the table.",
+   "Oldroyd, MIT Sloan / InsideSales.com — Lead Response Management Study",
+   "https://hbr.org/2011/03/the-short-life-of-online-sales-leads"),
  "metrics": [("&lt;60s", "Speed to lead"), ("~65%", "Of manual hours removed"), ("14", "Days to first workflow live")],
  "faqs": [
    ("How is automation work priced?",
@@ -517,8 +546,8 @@ SERVICES = [
  "slug": "ad-management",
  "nav": "Ad Management",
  "h1": "Ads managed to profit, not to impressions.",
- "title": "PPC &amp; Ad Management Agency | Google, Meta, LinkedIn | Forward Framework",
- "desc": "Google, Meta, LinkedIn and Microsoft ads managed to closed revenue. Free ad account audit — most accounts hide 20–40% wasted spend. Month to month, no long-term contract.",
+ "title": "PPC &amp; Ad Management Agency | Forward Framework",
+ "desc": "Google, Meta, LinkedIn and Microsoft ads managed to closed revenue. Free audit first — most accounts hide 20–40% wasted spend. Month to month, no contract.",
  "eyebrow": "Ad management",
  "answer": "Effective ad management optimises toward closed revenue rather than clicks or form fills. That requires conversion tracking wired back to your CRM, offline conversion imports so the platforms learn which leads actually became customers, and a willingness to turn off spend that looks good in the dashboard.",
  "intro": [
@@ -633,7 +662,7 @@ SERVICES = [
  "slug": "business-systems",
  "nav": "Scaffold — Business Systems",
  "h1": "The company should run the same whether or not you're in the room.",
- "title": "Business Systems, SOPs, Training &amp; Hiring | Scaffold | Forward Framework",
+ "title": "Business Systems, SOPs &amp; Hiring | Forward Framework",
  "desc": "Scaffold builds the structure under your business: org design, SOPs, sales playbooks, training manuals and hiring systems. Starts with a free Key-Person Risk Map.",
  "eyebrow": "Scaffold — business systems",
  "answer": "Business systemisation turns how a company operates into documented, repeatable structure — org design, standard operating procedures, sales playbooks, training manuals and hiring processes. It replaces knowledge living in a few people's heads with systems any new hire can follow, which is what makes a business scalable, sellable and survivable.",
@@ -754,6 +783,7 @@ def render_service(s):
         <p>{s['answer']}</p>
       </div>
       {''.join(f'<p>{p}</p>' for p in s['intro'])}
+      {evidence(*s['evidence']) if s.get('evidence') else ''}
       <div class="btn-row mt-6">
         <a class="btn btn--primary btn--lg" href="#{offer['form_id']}">{offer['cta']} <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
         <a class="btn btn--ghost btn--lg" href="#included">What's included</a>
@@ -917,8 +947,11 @@ def render_services_index():
   </div>
 </section>
 
-<section class="section section--alt section--line">
-  <div class="wrap"><div class="grid grid-3">{cards}</div></div>
+<section class="section section--alt section--line" aria-labelledby="all-services-h">
+  <div class="wrap">
+    <h2 class="h2 balance mb-5" id="all-services-h">Every service, and the free deliverable it starts with.</h2>
+    <div class="grid grid-3">{cards}</div>
+  </div>
 </section>
 
 <section class="section">
@@ -937,7 +970,7 @@ def render_services_index():
 </section>
 
 {cta_band("Not sure which one you need?",
-          "Take the 90-second Growth Plan. We'll tell you which of the six actually moves your number first — and which to leave for later.")}
+          "Take the 90-second Growth Plan. We'll tell you which of the seven actually moves your number first — and which to leave for later.")}
 """
     schema = {"@context": "https://schema.org", "@graph": [
         crumb_schema(trail),
@@ -951,8 +984,8 @@ def render_services_index():
               "url": f"{SITE}/services/{s['slug']}.html"}
              for i, s in enumerate(SERVICES)]},
     ]}
-    page(path, "Services | Web Design, AI, Automation &amp; Marketing | Forward Framework",
-         "Six connected services: web design, AI consulting, automation, SEO and AI search, ad management and social media marketing. Every one starts with a free deliverable.",
+    page(path, "Services | Web Design, AI &amp; Marketing | Forward Framework",
+         "Seven connected services — web design, AI consulting, automation, SEO and AI search, ads, social and business systems. Each starts with a free deliverable.",
          body, schema=schema)
 
 
@@ -1124,8 +1157,11 @@ def render_results():
 
 <!-- PLACEHOLDER CASE STUDIES: replace with your verified client outcomes before launch.
      Keep the structure — industry, baseline, metric, method — it is what makes proof credible. -->
-<section class="section section--alt section--line">
-  <div class="wrap"><div class="grid grid-3">{cards}</div></div>
+<section class="section section--alt section--line" aria-labelledby="cases-h">
+  <div class="wrap">
+    <h2 class="h2 balance mb-5" id="cases-h">Engagements, with the baseline stated.</h2>
+    <div class="grid grid-3">{cards}</div>
+  </div>
 </section>
 
 <section class="section">
@@ -1251,7 +1287,7 @@ def render_about():
          "inLanguage": "en-US", "dateModified": TODAY,
          "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".answer", ".faq-body"]}},
     ]}
-    page(path, "About Forward Framework | One Team for Web, AI, Automation &amp; Marketing",
+    page(path, "About Forward Framework | One Team, Seven Disciplines",
          "Forward Framework combines web design, AI consulting, automation and marketing under one accountable team. Our beliefs, our method and how we work.",
          body, schema=schema, active="/about.html")
 
@@ -1288,7 +1324,8 @@ def render_contact():
       </div>
       <p class="lede">Prefer to talk first? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> or email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a>. A senior strategist answers, not a scheduler.</p>
 
-      <div class="grid grid-2 mt-7">
+      <h2 class="h4 mt-7" style="margin-bottom:var(--s-4)">How to reach us</h2>
+      <div class="grid grid-2">
         <div class="card"><h3 class="h4">New business</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br><a href="tel:+14124632126">(412) 463-2126</a></p></div>
         <div class="card"><h3 class="h4">Existing clients</h3><p><a href="mailto:hello@forward-framework.com">hello@forward-framework.com</a><br>Same-day response, business hours.</p></div>
         <div class="card"><h3 class="h4">Hours</h3><p>Monday–Friday, 8am–6pm across US time zones. Urgent client issues are monitored outside those hours.</p></div>
@@ -1323,7 +1360,7 @@ def render_contact():
          "inLanguage": "en-US", "dateModified": TODAY, "mainEntity": {"@id": f"{url}#faq"}},
         faq_schema(faqs, url),
     ]}
-    page(path, "Contact Forward Framework | Get a Free Growth Plan in 48 Hours",
+    page(path, "Contact Forward Framework | Free Growth Plan in 48 Hours",
          "Contact Forward Framework for web design, AI consulting, automation and marketing. Written Growth Plan in 48 hours — no obligation, no call required.",
          body, schema=schema, active="/contact.html")
 
@@ -1599,7 +1636,7 @@ def render_404():
   </div>
 </section>"""
     page("404.html", "Page Not Found | Forward Framework",
-         "The page you were looking for could not be found.", body, noindex=True)
+         "That page has moved or been retired. Here are the services, results and free deliverables worth finding instead — or call (412) 463-2126.", body, noindex=True)
 
 
 LEGAL_INTRO = ("This page is a starting template drafted for a US-based agency. "
@@ -1642,7 +1679,7 @@ def render_privacy():
   </div>
 </section>"""
     page("privacy.html", "Privacy Policy | Forward Framework",
-         "How Forward Framework collects, uses, stores and protects your personal information.", body,
+         "How Forward Framework collects, uses, stores and protects your personal information — what we keep, who we share it with, and how to have it deleted.", body,
          schema=legal_schema("privacy.html", "Privacy Policy | Forward Framework",
                              [("Home", "/"), ("Privacy", None)]))
 
@@ -1672,7 +1709,7 @@ def render_terms():
   </div>
 </section>"""
     page("terms.html", "Terms of Service | Forward Framework",
-         "The terms governing use of the Forward Framework website and our client engagements.", body,
+         "The terms governing use of this website and our client engagements: scope, payment, ownership of work, confidentiality and how either side ends an agreement.", body,
          schema=legal_schema("terms.html", "Terms of Service | Forward Framework",
                              [("Home", "/"), ("Terms", None)]))
 
@@ -1803,7 +1840,7 @@ DISCOVERY = [
         "questions": [
             {"id": "speed_to_lead", "label": "When an enquiry arrives, how fast does a human respond?",
              "type": "radio",
-             "hint": "Responding inside five minutes typically multiplies contact rates several times over. This is usually the cheapest money on the table.",
+             "hint": "MIT and InsideSales studied 15,000 leads: those contacted inside five minutes were 21 times more likely to qualify than those contacted after thirty. This is usually the cheapest money on the table.",
              "options": ["Under 5 minutes", "Within an hour", "Same day", "Next day",
                          "Honestly? Sometimes never"]},
             {"id": "followup", "label": "What happens to an enquiry that doesn't buy straight away?",
@@ -2131,7 +2168,7 @@ def render_discovery():
     ]}
     page("discovery/index.html",
          "Discovery Questionnaire | Forward Framework",
-         f"Answer {count} questions about your demand, website, hours and goals. You get back a written plan — where the money is leaking, what to fix first, and what it costs. Free, no call required.",
+         f"Answer {count} questions about your demand, website, hours and goals. Get back a written plan: where money leaks, what to fix first, what it costs.",
          body, schema=schema)
 
 
@@ -2663,9 +2700,12 @@ def render_service_discovery(svc):
          "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#organization"},
          "inLanguage": "en-US", "dateModified": TODAY},
     ]}
+    # "Scaffold — Business Systems" overshoots once the suffix is added, and the
+    # em-dash half is branding rather than the term anyone searches for.
+    short = svc["nav"].split("—")[-1].strip()
     page(path,
-         f"{svc['nav']} Questionnaire | Forward Framework",
-         f"Answer {count} questions about your {svc['eyebrow'].lower()} and get {cfg['hook']} back within two business days. Free, no call required.",
+         f"{short} Questionnaire | Forward Framework",
+         f"Answer {count} questions and get {cfg['hook']} back within two business days. Free, yours to keep, and no call required to receive it.",
          body, schema=schema)
 
 
@@ -2684,6 +2724,14 @@ def all_urls():
 def render_meta_files():
     # robots.txt — explicitly welcome AI crawlers (GEO/AEO requirement)
     robots = f"""# Forward Framework — robots.txt
+#
+# Everything is allowed on purpose. Two families of crawler matter now:
+# training crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot) which feed
+# model weights, and retrieval crawlers (OAI-SearchBot, Claude-SearchBot,
+# PerplexityBot, ChatGPT-User) which fetch pages to answer a live question.
+# Blocking the first group also costs citations from the second on several
+# platforms, and being quoted is the entire point of this site.
+#
 # Traditional search crawlers
 User-agent: Googlebot
 Allow: /
@@ -2708,6 +2756,12 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
 Allow: /
 
 User-agent: anthropic-ai
@@ -2738,6 +2792,27 @@ User-agent: CCBot
 Allow: /
 
 User-agent: meta-externalagent
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: iaskspider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Timpibot
 Allow: /
 
 # Everyone else
@@ -2829,8 +2904,26 @@ Forward Framework serves owner-led and mid-market companies across the United St
 
 
 # --------------------------------------------------------------------------
+def refresh_index_dates():
+    """index.html is hand-authored, so its JSON-LD dateModified would otherwise
+    freeze on the day it was written while every generated page moves with the
+    build. Freshness is a real retrieval signal for both search and AI answers,
+    and a homepage claiming it has not changed since launch is simply wrong.
+
+    Only dateModified moves. datePublished is history and stays put.
+    """
+    path = os.path.join(ROOT, "index.html")
+    src = open(path, encoding="utf-8").read()
+    new = re.sub(r'("dateModified":\s*")\d{4}-\d{2}-\d{2}(")', rf'\g<1>{TODAY}\g<2>', src)
+    if new != src:
+        open(path, "w", encoding="utf-8").write(new)
+        print(f"  refreshed index.html dateModified -> {TODAY}")
+    return new
+
+
 def main():
     print("Building Forward Framework…")
+    refresh_index_dates()
     for s in SERVICES:
         render_service(s)
     render_services_index()

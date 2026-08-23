@@ -552,6 +552,17 @@ hr{border:0;border-top:1px solid var(--line);margin:var(--s-7) 0}
 .affix--pre input{padding-left:2.1rem}
 .affix--post::before{right:.95rem}
 .affix--post input{padding-right:2.9rem}
+/* A statistic with its source named. Deliberately quotable: this is the shape
+   an AI assistant can lift and attribute. */
+.evidence{
+  border-left:2px solid var(--taupe);padding:.15rem 0 .15rem var(--s-5);
+  margin:var(--s-6) 0;font-size:var(--t-sm);line-height:1.65;color:var(--muted)
+}
+.evidence p{margin:0}
+.evidence-src{margin-top:.5rem!important;font-size:var(--t-xs);color:var(--taupe)}
+.evidence-src a{color:var(--taupe-lt);text-decoration:underline;text-underline-offset:3px}
+.evidence-src a:hover{color:var(--white)}
+
 .prefill-note{
   font-size:var(--t-xs);color:var(--taupe-lt);line-height:1.5;
   border:1px solid rgba(169,154,140,.32);background:rgba(169,154,140,.08);
@@ -684,9 +695,9 @@ input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--ta
 .footer-grid{display:grid;gap:var(--s-6);grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:var(--s-7)}
 .footer-brand{grid-column:span 2;min-width:250px}
 @media(max-width:700px){.footer-brand{grid-column:span 1}}
-.footer-col h4{
+.footer-col-h{
   font-family:var(--f-display);font-size:var(--t-xs);letter-spacing:.18em;text-transform:uppercase;
-  color:var(--taupe);margin-bottom:var(--s-4);font-weight:500
+  color:var(--taupe);margin:0 0 var(--s-4);font-weight:500
 }
 .footer-col ul{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
 .footer-col a{color:var(--muted);transition:color var(--fast)}

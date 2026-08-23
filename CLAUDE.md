@@ -184,6 +184,34 @@ service's `prices` list in `tools/build.py` and are gated by `SHOW_PRICING`.
 - `python3 tools/build_pricing_pdf.py` regenerates the archive from the same
   data, so it can never disagree with what the site would publish.
 
+## SEO / AEO / GEO notes
+
+- **`og:image` must stay a PNG.** Facebook, LinkedIn and X ignore an SVG
+  og:image and show no card at all. `assets/img/og-image.svg` is the source;
+  `og-image.png` is what the meta tags point at. Re-render after editing the
+  SVG. Its text uses `textLength`/`lengthAdjust` because the brand faces are
+  webfonts — without that the subtitle runs off the edge wherever Jost is
+  missing, which is most renderers.
+- **Titles ≤ 60 characters, descriptions 110–165.** Both are checked by eye
+  easily; anything outside gets truncated or rewritten by Google.
+- **One heading level at a time.** No h1 → h3. Footer column labels are
+  `<p class="footer-col-h">` inside a labelled `<nav>` for exactly this reason —
+  they label navigation, not document sections.
+- **`evidence()` blocks need a verified source.** Sourced statistics are one of
+  the few things shown to raise the odds of being quoted by an AI assistant.
+  That only holds while the citation is real — never add one without checking
+  the study.
+- **robots.txt allows every AI crawler on purpose.** Blocking training crawlers
+  also costs citations from the retrieval crawlers on several platforms.
+- **`llms.txt` stays, but expect little from it.** Google confirmed in May 2026
+  that it ignores the file entirely. It costs nothing and is read by agentic
+  tools, so it is worth keeping and not worth optimising.
+- **FAQPage schema no longer produces rich results** (Google retired them in
+  May 2026) but is still valid and still read by AI systems. Keep the existing
+  markup; there is no reason to add more of it for new pages.
+- `build.py` refreshes `index.html`'s JSON-LD `dateModified` on every build so
+  the hand-authored homepage does not freeze while generated pages move.
+
 ## Invariants worth not breaking
 
 - **FAQ schema must match the visible copy word for word.** Every FAQ answer
