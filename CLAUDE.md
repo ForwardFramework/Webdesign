@@ -201,6 +201,11 @@ service's `prices` list in `tools/build.py` and are gated by `SHOW_PRICING`.
   the few things shown to raise the odds of being quoted by an AI assistant.
   That only holds while the citation is real — never add one without checking
   the study.
+- **Facebook is the only real social profile.** LinkedIn, Instagram and YouTube
+  were placeholder handles and have been removed from the footer and from
+  `sameAs`. Do not add a profile back until the channel exists — `sameAs` is a
+  claim that the account is ours, and a dead one weakens entity resolution
+  rather than helping it.
 - **robots.txt allows every AI crawler on purpose.** Blocking training crawlers
   also costs citations from the retrieval crawlers on several platforms.
 - **`llms.txt` stays, but expect little from it.** Google confirmed in May 2026

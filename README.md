@@ -233,6 +233,7 @@ Everything below is a placeholder and is marked in the source.
 | **Case studies** | Illustrative examples, marked `PLACEHOLDER` in HTML comments |
 | **Testimonials** | Illustrative, marked `PLACEHOLDER` |
 | **Partner badges** | Text placeholders in the trust bar |
+| **Social profiles** | Facebook only. LinkedIn, Instagram and YouTube removed until those channels exist |
 | **Postal address** | Intentionally absent from schema — add once HQ is confirmed |
 | **Legal pages** | Templates — have counsel review |
 
