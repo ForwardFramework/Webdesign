@@ -775,7 +775,9 @@ def render_service(s):
       {ticks(offer['bullets'])}
       <div class="btn-row mt-6">
         <a class="btn btn--primary" href="#{offer['form_id']}">{offer['cta']} <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn--ghost" href="/discovery/{s['slug']}.html">Answer the full questionnaire</a>
       </div>
+      <p class="small muted mt-5">The short form above is enough to start. The <a class="accent" href="/discovery/{s['slug']}.html">{s['nav'].lower()} questionnaire</a> takes about ten minutes and gets you a sharper deliverable, because we are not guessing at the parts you did not tell us.</p>
     </div>
     <div class="panel">
       <h3 class="h4">Why we lead with a deliverable</h3>
@@ -1636,11 +1638,1003 @@ def render_terms():
 # --------------------------------------------------------------------------
 # robots.txt / sitemap.xml / llms.txt / manifest
 # --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# Discovery questionnaire
+#
+# One source for two outputs: the fillable page at /discovery and the printable
+# PDF built by tools/build_discovery_pdf.py. They cannot drift, which matters
+# because a client may answer one and be walked through the other.
+#
+# Field types: text, email, tel, url, number, textarea, radio, check, select.
+# Almost nothing is required — a half-finished questionnaire is worth far more
+# than an abandoned one, and the gaps are themselves diagnostic.
+# --------------------------------------------------------------------------
+
+DISCOVERY = [
+    {
+        "n": "01",
+        "title": "The business",
+        "lede": "Enough context that nothing we suggest later is generic.",
+        "why": "Everything downstream is priced against what a customer is worth to you. Without this section the rest is opinion.",
+        "questions": [
+            {"id": "name", "label": "Your name", "type": "text", "required": True,
+             "placeholder": "Jordan Reyes", "autocomplete": "name", "half": True},
+            {"id": "role", "label": "Your role", "type": "text",
+             "placeholder": "Owner, VP Marketing…", "half": True},
+            {"id": "company", "label": "Company", "type": "text", "required": True,
+             "placeholder": "Company name", "autocomplete": "organization", "half": True},
+            {"id": "email", "label": "Work email", "type": "email", "required": True,
+             "placeholder": "you@company.com", "autocomplete": "email", "half": True},
+            {"id": "phone", "label": "Phone", "type": "tel",
+             "placeholder": "(412) 555-0134", "autocomplete": "tel", "half": True},
+            {"id": "website", "label": "Website", "type": "url",
+             "placeholder": "yourcompany.com", "autocomplete": "url", "half": True},
+            {"id": "what_you_sell", "label": "In a sentence or two, what do you sell and to whom?",
+             "type": "textarea", "placeholder": "We install and service commercial HVAC for property managers across western Pennsylvania…"},
+            {"id": "best_customer", "label": "Describe your best customer. What makes them better than an average one?",
+             "type": "textarea", "hint": "Where you make money is usually narrower than where you make revenue.",
+             "placeholder": "Multi-site property managers on a maintenance contract — they call us first and they never haggle…"},
+            {"id": "team_size", "label": "How many people work in the business?", "type": "radio",
+             "options": ["Just me", "2–10", "11–50", "51–200", "200+"]},
+            {"id": "revenue_band", "label": "Annual revenue", "type": "radio",
+             "options": ["Under $500K", "$500K – $2M", "$2M – $10M", "$10M – $50M", "$50M+", "Rather not say"]},
+            {"id": "biggest_constraint", "label": "What is actually holding the business back right now?",
+             "type": "radio",
+             "options": ["Not enough leads", "Leads don't convert", "We can't deliver any more than we do",
+                         "Margins are too thin", "Everything depends on me", "Something else"]},
+            {"id": "constraint_detail", "label": "Say more about that",
+             "type": "textarea", "hint": "This is the single most useful answer on the form.",
+             "placeholder": "Be blunt. We would rather read something uncomfortable than something polished."},
+        ],
+    },
+    {
+        "n": "02",
+        "title": "How customers find you now",
+        "lede": "Where demand comes from today, and what it is worth when it arrives.",
+        "why": "These five numbers — leads, close rate, customer value, spend, repeat rate — decide which service earns you the most, and in what order. Estimates are fine.",
+        "questions": [
+            {"id": "lead_sources", "label": "Where do enquiries come from today?", "type": "check",
+             "options": ["Referrals and word of mouth", "Google search", "Google Ads", "Meta ads",
+                         "LinkedIn", "Social content", "Email list", "Cold outreach",
+                         "Events and trade shows", "Directories and marketplaces", "Walk-in or phone",
+                         "Honestly, we're not sure"]},
+            {"id": "leads_per_month", "label": "Enquiries in a typical month", "type": "number",
+             "placeholder": "40", "half": True},
+            {"id": "close_rate", "label": "Roughly what percent do you win?", "type": "number",
+             "placeholder": "25", "suffix": "%", "half": True},
+            {"id": "avg_customer_value", "label": "What is an average new customer worth, first purchase?",
+             "type": "number", "placeholder": "4500", "prefix": "$", "half": True},
+            {"id": "lifetime_value", "label": "And over the whole relationship?", "type": "number",
+             "placeholder": "18000", "prefix": "$", "half": True},
+            {"id": "repeat_rate", "label": "How much of your revenue is repeat?", "type": "radio",
+             "options": ["One-and-done", "Some repeat", "Mostly repeat", "Subscription or contract"]},
+            {"id": "ad_spend", "label": "Monthly advertising spend", "type": "number",
+             "placeholder": "3000", "prefix": "$", "half": True},
+            {"id": "ads_who", "label": "Who runs the ads?", "type": "select",
+             "options": ["Nobody — we don't advertise", "Me personally", "Someone in-house",
+                         "A freelancer", "An agency"], "half": True},
+            {"id": "tracking", "label": "Can you trace a sale back to what caused it?", "type": "radio",
+             "options": ["Every lead, reliably", "Roughly, for most", "We guess", "No idea"]},
+            {"id": "ai_search", "label": "Have you asked ChatGPT or Perplexity to recommend a company like yours?",
+             "type": "radio", "hint": "Worth doing before you answer. It takes thirty seconds and it is often the most uncomfortable thing on this page.",
+             "options": ["Yes — we get named", "Yes — we don't get named", "No, never tried it"]},
+            {"id": "competitors", "label": "Name two or three competitors you lose to", "type": "textarea",
+             "placeholder": "Names or URLs are both fine."},
+            {"id": "why_you_lose", "label": "When you lose one, why?", "type": "textarea",
+             "placeholder": "Price, timing, they'd never heard of us, we were slow to reply…"},
+        ],
+    },
+    {
+        "n": "03",
+        "title": "Your website and your tools",
+        "lede": "What the site is supposed to do, and what it actually does.",
+        "why": "A site that loads slowly, hides its offer, or cannot be updated without a developer is a tax on every other channel you pay for.",
+        "questions": [
+            {"id": "platform", "label": "What is the site built on?", "type": "select",
+             "options": ["WordPress", "Shopify", "Squarespace", "Wix", "Webflow", "Custom build",
+                         "I don't know", "We don't have a website"], "half": True},
+            {"id": "site_age", "label": "When was it last rebuilt?", "type": "select",
+             "options": ["Within a year", "1–3 years ago", "3–5 years ago", "More than 5 years ago",
+                         "Never — it's the original"], "half": True},
+            {"id": "site_job", "label": "What is the site's job?", "type": "check",
+             "options": ["Generate enquiries", "Sell directly", "Explain what we do",
+                         "Book appointments", "Recruit staff", "It's a brochure", "Not sure"]},
+            {"id": "site_complaints", "label": "What do people complain about, or what makes you wince?",
+             "type": "textarea", "placeholder": "Nobody can find pricing, it looks dated on a phone, the form goes nowhere…"},
+            {"id": "who_updates", "label": "Who changes the site when something needs changing?", "type": "radio",
+             "options": ["Anyone on the team", "One person in-house", "An outside developer",
+                         "Me, reluctantly", "Nobody — it hasn't changed in years"]},
+            {"id": "tools_stack", "label": "What software does the business run on?", "type": "textarea",
+             "hint": "CRM, quoting, scheduling, field service, accounting, email, phones, spreadsheets that should not be load-bearing.",
+             "placeholder": "HubSpot, ServiceTitan, QuickBooks, Google Workspace, three spreadsheets and a group chat…"},
+            {"id": "tools_talk", "label": "Do those tools talk to each other?", "type": "radio",
+             "options": ["Everything is connected", "Some of it", "Nothing talks to anything",
+                         "I don't know"]},
+        ],
+    },
+    {
+        "n": "04",
+        "hours": True,
+        "title": "Where the hours go",
+        "lede": "The part most owners have never added up.",
+        "why": "Every hour below is a real cost that repeats every week, forever, until something changes. Rough numbers are fine — the order of magnitude is what matters.",
+        "questions": [
+            {"id": "speed_to_lead", "label": "When an enquiry arrives, how fast does a human respond?",
+             "type": "radio",
+             "hint": "Responding inside five minutes typically multiplies contact rates several times over. This is usually the cheapest money on the table.",
+             "options": ["Under 5 minutes", "Within an hour", "Same day", "Next day",
+                         "Honestly? Sometimes never"]},
+            {"id": "followup", "label": "What happens to an enquiry that doesn't buy straight away?",
+             "type": "radio",
+             "options": ["An automated sequence follows up", "We follow up manually, consistently",
+                         "We follow up when someone remembers", "Nothing happens"]},
+            {"id": "hours_admin", "label": "Hours a week spent copying information between systems",
+             "type": "number", "placeholder": "8", "suffix": "hrs", "hours": True, "half": True},
+            {"id": "hours_quoting", "label": "Hours a week producing quotes, proposals or estimates",
+             "type": "number", "placeholder": "6", "suffix": "hrs", "hours": True, "half": True},
+            {"id": "hours_scheduling", "label": "Hours a week on scheduling and rescheduling",
+             "type": "number", "placeholder": "4", "suffix": "hrs", "hours": True, "half": True},
+            {"id": "hours_reporting", "label": "Hours a week assembling reports someone asked for",
+             "type": "number", "placeholder": "3", "suffix": "hrs", "hours": True, "half": True},
+            {"id": "hours_chasing", "label": "Hours a week chasing customers, suppliers or your own team",
+             "type": "number", "placeholder": "5", "suffix": "hrs", "hours": True, "half": True},
+            {"id": "loaded_rate", "label": "Roughly what does an hour of that person's time cost you?",
+             "type": "number", "hint": "Fully loaded — salary, tax, benefits, the lot.",
+             "placeholder": "45", "prefix": "$", "rate": True, "half": True},
+            {"id": "worst_task", "label": "If you could delete one recurring task forever, what would it be?",
+             "type": "textarea", "placeholder": "Say the one that made you sigh just now."},
+            {"id": "dropped_ball", "label": "When something falls through the cracks, where does it usually fall?",
+             "type": "textarea", "placeholder": "Between the sale and the schedule. Every time."},
+        ],
+    },
+    {
+        "n": "05",
+        "title": "The business without you",
+        "lede": "What is written down, and what only exists in someone's head.",
+        "why": "Undocumented process is the cost you cannot see until the week the person holding it is unavailable — and it is the reason most owners cannot take a real holiday.",
+        "questions": [
+            {"id": "documented", "label": "Are your processes written down?", "type": "radio",
+             "options": ["Written down and actually followed", "Written down but ignored",
+                         "They live in people's heads", "What processes?"]},
+            {"id": "key_person", "label": "Whose two-week absence would hurt most, and what would break?",
+             "type": "textarea", "placeholder": "Name the role, not the person, if you would rather."},
+            {"id": "onboarding", "label": "How does a new hire learn the job?", "type": "radio",
+             "options": ["A structured programme", "Shadowing a colleague", "Trial by fire",
+                         "We haven't hired in years"]},
+            {"id": "hiring_next_12", "label": "People you expect to hire in the next 12 months",
+             "type": "select", "options": ["None", "1–2", "3–5", "6–10", "More than 10"], "half": True},
+            {"id": "sales_process", "label": "Does everyone sell the same way?", "type": "select",
+             "options": ["Same process every time", "Loosely the same",
+                         "Every rep does their own thing", "One person does all the selling"], "half": True},
+            {"id": "vacation_test", "label": "If you vanished for 30 days, what happens?", "type": "radio",
+             "options": ["It runs fine", "Bumpy, but it survives", "Revenue stops",
+                         "I would rather not think about it"]},
+        ],
+    },
+    {
+        "n": "06",
+        "title": "What 'worth it' looks like",
+        "lede": "So we can price against your definition of success rather than ours.",
+        "why": "We quote a fixed price against a written outcome. This section is the outcome.",
+        "questions": [
+            {"id": "goal_90", "label": "What would have to be true 90 days from now for this to have been worth it?",
+             "type": "textarea", "placeholder": "Be specific. \"More leads\" is not a target; \"twenty more booked estimates a month\" is."},
+            {"id": "goal_12mo", "label": "And twelve months from now?", "type": "textarea",
+             "placeholder": "Revenue, headcount, hours back, a business you could sell…"},
+            {"id": "services_interest", "label": "Which of these sound relevant?", "type": "check",
+             "hint": "Every one of them starts with something free. Tick as many as you like.",
+             "options": ["Web design & development", "AI consulting", "Automation",
+                         "Marketing, SEO & AI search", "Ad management", "Social media marketing",
+                         "Business systems & SOPs", "Not sure — tell us"]},
+            {"id": "budget_band", "label": "What have you got in mind to invest?", "type": "radio",
+             "hint": "Not a commitment. It stops us proposing something you would never buy.",
+             "options": ["Under $1K", "$1K – $5K", "$5K – $15K", "$15K – $50K", "$50K+",
+                         "No idea — advise me"]},
+            {"id": "timeline", "label": "When do you want this moving?", "type": "radio",
+             "options": ["Immediately", "Within 30 days", "This quarter", "This year", "Just exploring"]},
+            {"id": "decision", "label": "Who else signs off?", "type": "select",
+             "options": ["Just me", "Me and one other", "A small group", "A board or committee"],
+             "half": True},
+            {"id": "start_blocker", "label": "What would stop this happening?", "type": "select",
+             "options": ["Nothing — we're ready", "Budget approval", "Timing", "Internal capacity",
+                         "Trust — we've been burned"], "half": True},
+            {"id": "tried_before", "label": "What have you already tried that didn't work?",
+             "type": "textarea", "hint": "Blunt saves us both time. We will not be offended by the last agency's name.",
+             "placeholder": "We paid someone $2K a month for six months and never saw a report…"},
+            {"id": "non_negotiable", "label": "Anything that is non-negotiable?", "type": "textarea",
+             "placeholder": "Brand rules, a platform you must keep, a person we must work through, a date you cannot miss."},
+            {"id": "anything_else", "label": "Anything we haven't asked that we should have?",
+             "type": "textarea", "placeholder": "The floor is yours."},
+        ],
+    },
+]
+
+
+def _dfield(q, step_idx):
+    """One question, rendered for the web form."""
+    fid = "dq-" + q["id"]
+    req = ' <span class="req">*</span>' if q.get("required") else ""
+    hint = f'<span class="field-hint">{q["hint"]}</span>' if q.get("hint") else ""
+    err = ('<span class="field-error">This one we do need.</span>'
+           if q.get("required") else "")
+    attrs = ""
+    if q.get("required"):
+        attrs += " required"
+    if q.get("autocomplete"):
+        attrs += f' autocomplete="{q["autocomplete"]}"'
+    if q.get("placeholder"):
+        attrs += f' placeholder="{q["placeholder"]}"'
+    if q.get("hours"):
+        attrs += ' data-hours min="0" step="0.5"'
+    if q.get("rate"):
+        attrs += ' data-rate min="0" step="1"'
+
+    t = q["type"]
+    if t in ("text", "email", "tel", "url", "number"):
+        itype = {"url": "text", "number": "number"}.get(t, t)
+        extra = ' inputmode="url"' if t == "url" else ""
+        if t == "number":
+            extra += ' inputmode="decimal"'
+        control = f'<input type="{itype}" id="{fid}" name="{q["id"]}"{extra}{attrs}>'
+        if q.get("prefix") or q.get("suffix"):
+            affix = q.get("prefix") or q.get("suffix")
+            side = "pre" if q.get("prefix") else "post"
+            control = (f'<span class="affix affix--{side}" data-affix="{affix}">{control}</span>')
+    elif t == "textarea":
+        control = f'<textarea id="{fid}" name="{q["id"]}" rows="3"{attrs}></textarea>'
+    elif t == "select":
+        opts = "".join(f"<option>{o}</option>" for o in q["options"])
+        control = (f'<select id="{fid}" name="{q["id"]}"{attrs}>'
+                   f'<option value="">Choose one</option>{opts}</select>')
+    elif t in ("radio", "check"):
+        kind = "radio" if t == "radio" else "checkbox"
+        name = q["id"] if t == "radio" else q["id"] + "[]"
+        chips = "".join(
+            f'<label class="choice"><input type="{kind}" name="{name}" value="{o}"'
+            f'{attrs if (t == "radio" and i == 0) else ""}><span>{o}</span></label>'
+            for i, o in enumerate(q["options"]))
+        return f"""<div class="field">
+              <label id="{fid}-lbl">{q["label"]}{req}</label>
+              {hint}
+              <div class="choices" role="group" aria-labelledby="{fid}-lbl">{chips}</div>
+              {err}
+            </div>"""
+    else:
+        raise ValueError("unknown question type: " + t)
+
+    return f"""<div class="field">
+              <label for="{fid}">{q["label"]}{req}</label>
+              {hint}
+              {control}
+              {err}
+            </div>"""
+
+
+def _dsteps(sections, submit_label="Send it over"):
+    """Render a list of question sections as multi-step form panels."""
+    out = ""
+    total = len(sections)
+    for i, sec in enumerate(sections):
+        fields = ""
+        pending_half = []
+        for q in sec["questions"]:
+            if q.get("half"):
+                pending_half.append(q)
+                if len(pending_half) == 2:
+                    fields += ('<div class="field-row">'
+                               + "".join(_dfield(x, i) for x in pending_half)
+                               + "</div>")
+                    pending_half = []
+                continue
+            if pending_half:
+                fields += "".join(_dfield(x, i) for x in pending_half)
+                pending_half = []
+            fields += _dfield(q, i)
+        if pending_half:
+            fields += "".join(_dfield(x, i) for x in pending_half)
+
+        # The running total sits inside the hours section, fed by its own inputs.
+        readout = ""
+        if sec.get("hours"):
+            readout = """
+            <div class="calc-out" data-hours-out hidden>
+              <span class="eyebrow">Your own numbers, multiplied out</span>
+              <div class="calc-metric"><span>Hours a year, at that rate</span><b data-hours-year>—</b></div>
+              <div class="calc-metric"><span>What those hours cost you a year</span><b data-hours-cost>—</b></div>
+              <p class="small muted mt-0">Nothing here is a promise. It is your figures times fifty weeks — which is usually the first time anyone has written it down.</p>
+            </div>"""
+
+        nav = '<button class="btn btn--primary btn--block" type="button" data-next>Continue <span class="btn-arrow" aria-hidden="true">&rarr;</span></button>'
+        if i == total - 1:
+            nav = ('<button class="btn btn--primary btn--block btn--lg" type="submit">'
+                   + submit_label + ' <span class="btn-arrow" aria-hidden="true">&rarr;</span></button>')
+        back = '<button class="form-back" type="button" data-back>Back</button>' if i else ""
+
+        out += f"""
+          <div class="fstep{' is-active' if i == 0 else ''}">
+            <div class="dsec-head">
+              <span class="eyebrow">Section {sec['n']} · {sec['title']}</span>
+              <p class="small muted mb-0">{sec['lede']}</p>
+            </div>
+            <p class="dsec-why"><b>Why we ask.</b> {sec['why']}</p>
+            {fields}{readout}
+            <div class="form-nav">{nav}{back}</div>
+          </div>"""
+    return out
+
+
+def render_discovery():
+    steps = _dsteps(DISCOVERY)
+    total = len(DISCOVERY)
+    count = sum(len(s["questions"]) for s in DISCOVERY)
+
+    section_list = "".join(
+        f'<li><b>{s["n"]}</b> {s["title"]}<span>{s["lede"]}</span></li>' for s in DISCOVERY)
+
+    trail = [("Home", f"{SITE}/"), ("Discovery questionnaire", f"{SITE}/discovery/")]
+    url = f"{SITE}/discovery/"
+
+    body = f"""
+{crumbs(trail)}
+
+<section class="section" style="padding-block:clamp(3rem,7vw,5rem) 0">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Discovery</span>
+      <h1 class="h1 balance">Twenty minutes here saves us both a month of guessing.</h1>
+      <p class="lede">This is the questionnaire we would work through with you on a call — written down, so you can answer it in your own time and we can arrive already knowing your business. Fill in what you know. Skip what you don't; the gaps tell us something too.</p>
+      <p>Answer it and you get back a written plan: where the money is leaking, what we would fix first, what it would cost, and what we would leave alone. No obligation, and no call required to receive it.</p>
+      <div class="badge-row mt-6" style="justify-content:flex-start">
+        <span class="badge">{count} questions, {total} sections</span>
+        <span class="badge">~20 minutes</span>
+        <span class="badge">3 required fields, the rest optional</span>
+      </div>
+      <ol class="dsec-list mt-7">{section_list}</ol>
+      <p class="small muted mt-6">Prefer to talk it through? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> and we will fill it in together, or email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> for a printable copy.</p>
+    </div>
+
+    <div id="discovery">
+      <div class="form-panel">
+        <form data-ff-form data-multistep id="discovery-form" name="discovery" method="POST"
+              action="/thank-you.html" data-netlify="true"
+              data-netlify-honeypot="company_website_hp" novalidate>
+          <input type="hidden" name="form-name" value="discovery">
+          <input type="hidden" name="routed_to" value="hello@forward-framework.com">
+          <input type="hidden" name="request_type" value="Discovery questionnaire">
+          <!-- Netlify only records fields present in the deployed HTML, so the
+               attribution captured by main.js needs real inputs to land in. -->
+          <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium">
+          <input type="hidden" name="utm_campaign"><input type="hidden" name="utm_term">
+          <input type="hidden" name="utm_content"><input type="hidden" name="gclid">
+          <input type="hidden" name="fbclid"><input type="hidden" name="landing_page">
+          <input type="hidden" name="referrer"><input type="hidden" name="submitted_at">
+          <div class="form-head">
+            <span class="eyebrow">Free · No obligation</span>
+            <h2 class="h3" style="margin-bottom:.35rem">Discovery questionnaire</h2>
+            <p class="small muted mb-0">Your answers come to one strategist, not a list. You can stop and send at any point.</p>
+          </div>
+          <div class="steps-bar">
+            <span class="count">Step 1 of {total}</span>
+            <span class="bar"><i></i></span>
+          </div>
+{steps}
+          <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="company_website_hp" tabindex="-1" autocomplete="off"></label></div>
+          <p class="form-legal">We use your answers only to prepare your plan. No lists, no reselling. Read our <a href="/privacy.html">privacy policy</a>.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="center mx-auto" style="max-width:760px">
+      <span class="eyebrow" style="justify-content:center">What you get back</span>
+      <h2 class="h2 balance">Answers in. A written plan out, inside two business days.</h2>
+      <p class="lede mx-auto">Not a proposal with a signature line at the bottom. A document you could hand to another agency and have them execute — which is exactly why we are comfortable sending it before you have paid us anything.</p>
+    </div>
+    <div class="grid grid-3 mt-7">
+      <article class="card">
+        <span class="offer-tag">Where the money is going</span>
+        <h3 class="h4">The leaks, in dollars</h3>
+        <p class="small">Wasted ad spend, hours lost to work software should be doing, enquiries going cold, and revenue sitting in a database nobody follows up. Each one with a figure beside it.</p>
+      </article>
+      <article class="card">
+        <span class="offer-tag">What we would do first</span>
+        <h3 class="h4">One priority, not twelve</h3>
+        <p class="small">Ranked by dollars per week of delay, so the first thing we build pays for the second. Plus the honest note on anything we think is not worth doing yet.</p>
+      </article>
+      <article class="card">
+        <span class="offer-tag">What it costs</span>
+        <h3 class="h4">A fixed price, before you commit</h3>
+        <p class="small">Scope, price and timeline in writing. No hourly billing, no retainer minimum to start, and every account, automation and document owned by you from day one.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt section--line" id="by-service">
+  <div class="wrap">
+    <div class="center mx-auto" style="max-width:780px">
+      <span class="eyebrow" style="justify-content:center">Or go straight to one</span>
+      <h2 class="h2 balance">Already know which service you need?</h2>
+      <p class="lede mx-auto">Each of these is a shorter questionnaire aimed at one discipline — about ten minutes, and specific enough that we can scope and price the work rather than ask you the same things again on a call. Each one ends with that service's free deliverable.</p>
+    </div>
+    <div class="grid grid-3 mt-7">{"".join(f'''
+      <article class="card card--link reveal">
+        <div class="card-icon" aria-hidden="true">{icon(sv['slug'])}</div>
+        <span class="offer-tag">Ends with {SERVICE_DISCOVERY[sv['slug']]['hook']}</span>
+        <h3 class="h4">{sv['nav']}</h3>
+        <p class="small">{SERVICE_DISCOVERY[sv['slug']]['lede']}</p>
+        <div class="card-foot card-foot--split">
+          <span class="small muted">{sum(len(x["questions"]) for x in SERVICE_DISCOVERY[sv['slug']]['sections']) + len(DISCOVERY_ABOUT_YOU['questions'])} questions</span>
+          <a class="link-arrow" href="/discovery/{sv['slug']}.html">Start it <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>''' for sv in SERVICES)}
+    </div>
+  </div>
+</section>
+
+{cta_band("Rather just talk it through?",
+          "Some people would sooner say all this out loud than type it. Call and a senior strategist will work through the same questions with you — it takes about twenty minutes.",
+          cta_href="/contact.html", cta="Get my written plan")}
+"""
+    schema = {"@context": "https://schema.org", "@graph": [
+        crumb_schema(trail),
+        {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
+         "name": "Discovery Questionnaire | Forward Framework",
+         "description": f"A {count}-question discovery questionnaire covering demand, website, automation, systems and goals. Answer it and receive a written plan within two business days.",
+         "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#organization"},
+         "inLanguage": "en-US", "dateModified": TODAY},
+    ]}
+    page("discovery/index.html",
+         "Discovery Questionnaire | Forward Framework",
+         f"Answer {count} questions about your demand, website, hours and goals. You get back a written plan — where the money is leaking, what to fix first, and what it costs. Free, no call required.",
+         body, schema=schema)
+
+
+# --------------------------------------------------------------------------
+# Per-service questionnaires
+#
+# The master questionnaire finds out which service is worth doing. These find
+# out enough to scope and price the one they picked, so the first call can be
+# about the plan rather than about the facts.
+#
+# Same question data shape and same renderer, so they inherit every fix made
+# to the main one.
+# --------------------------------------------------------------------------
+
+# Asked at the end of every service questionnaire.
+DISCOVERY_ABOUT_YOU = {
+    "n": "You",
+    "title": "Where to send it",
+    "lede": "Last section. Then it comes straight to a strategist.",
+    "why": "Your answers go to one person, not a list. We reply with the deliverable, not a calendar link.",
+    "questions": [
+        {"id": "name", "label": "Your name", "type": "text", "required": True,
+         "placeholder": "Jordan Reyes", "autocomplete": "name", "half": True},
+        {"id": "company", "label": "Company", "type": "text", "required": True,
+         "placeholder": "Company name", "autocomplete": "organization", "half": True},
+        {"id": "email", "label": "Work email", "type": "email", "required": True,
+         "placeholder": "you@company.com", "autocomplete": "email", "half": True},
+        {"id": "phone", "label": "Phone", "type": "tel", "placeholder": "(412) 555-0134",
+         "autocomplete": "tel", "half": True},
+        {"id": "website", "label": "Website", "type": "url", "placeholder": "yourcompany.com",
+         "autocomplete": "url", "half": True},
+        {"id": "timeline", "label": "When do you want this moving?", "type": "select",
+         "options": ["Immediately", "Within 30 days", "This quarter", "This year", "Just exploring"],
+         "half": True},
+        {"id": "budget_band", "label": "What have you got in mind to invest?", "type": "radio",
+         "hint": "Not a commitment — it stops us proposing something you would never buy.",
+         "options": ["Under $1K", "$1K – $5K", "$5K – $15K", "$15K – $50K", "$50K+",
+                     "No idea — advise me"]},
+        {"id": "anything_else", "label": "Anything we haven't asked that we should have?",
+         "type": "textarea", "placeholder": "The floor is yours."},
+    ],
+}
+
+SERVICE_DISCOVERY = {
+    "web-design": {
+        "hook": "a free homepage concept",
+        "lede": "Enough to design a real concept rather than a template, and to quote a build without a discovery call first.",
+        "sections": [
+            {"n": "01", "title": "The site you have",
+             "lede": "What exists today, and what has to survive.",
+             "why": "Half of a redesign is deciding what not to throw away. Rankings, content and integrations are expensive to rebuild by accident.",
+             "questions": [
+                 {"id": "current_url", "label": "The site we should be looking at", "type": "url",
+                  "placeholder": "yourcompany.com", "half": True},
+                 {"id": "platform", "label": "What is it built on?", "type": "select",
+                  "options": ["WordPress", "Shopify", "Squarespace", "Wix", "Webflow",
+                              "Custom build", "I don't know", "We don't have one yet"], "half": True},
+                 {"id": "built_by", "label": "Who built it, and can you still reach them?", "type": "text",
+                  "placeholder": "An agency in 2019, no longer trading", "half": True},
+                 {"id": "page_count", "label": "Roughly how many pages?", "type": "select",
+                  "options": ["Under 10", "10–30", "30–100", "100–500", "500+"], "half": True},
+                 {"id": "monthly_visitors", "label": "Monthly visitors", "type": "number",
+                  "placeholder": "2500", "half": True},
+                 {"id": "site_conversion", "label": "What percent turn into an enquiry?", "type": "number",
+                  "placeholder": "1.5", "suffix": "%", "half": True},
+                 {"id": "analytics_access", "label": "Do you have analytics we could look at?", "type": "radio",
+                  "options": ["Yes — GA4", "Yes — something else", "It's installed but nobody looks",
+                              "No analytics at all"]},
+                 {"id": "must_keep", "label": "Anything on the current site that must survive the rebuild?",
+                  "type": "textarea",
+                  "placeholder": "A blog that ranks, a customer portal, a booking system, 400 product pages…"},
+                 {"id": "site_hates", "label": "What do you dislike most about it?", "type": "textarea",
+                  "placeholder": "Say the thing you would say to a friend, not to a vendor."},
+             ]},
+            {"n": "02", "title": "What the new one has to do",
+             "lede": "The job, the audience, and the proof we have to work with.",
+             "why": "A homepage can do one thing well. Deciding which one, before design starts, is most of the conversion work.",
+             "questions": [
+                 {"id": "primary_action", "label": "What is the single most valuable thing a visitor can do?",
+                  "type": "radio",
+                  "options": ["Call us", "Fill in a form", "Book an appointment", "Buy online",
+                              "Apply or submit documents", "Download something", "Not sure"]},
+                 {"id": "audiences", "label": "Who is it for? List every distinct audience.", "type": "textarea",
+                  "placeholder": "Homeowners, property managers, and the trades who refer us…"},
+                 {"id": "proof_assets", "label": "What proof do you already have?", "type": "check",
+                  "options": ["Written reviews", "Video testimonials", "Case studies with numbers",
+                              "Photos of real work", "Certifications or licences", "Awards",
+                              "Recognisable client logos", "Nothing yet"]},
+                 {"id": "brand_assets", "label": "Where is the brand?", "type": "radio",
+                  "options": ["Full brand guide exists", "Logo and colours only",
+                              "Nothing consistent", "It needs a rebrand"]},
+                 {"id": "content_ready", "label": "What about the words?", "type": "radio",
+                  "options": ["Written and approved", "Rough drafts exist",
+                              "We need it written for us", "Reuse what's on the site now"]},
+                 {"id": "photography", "label": "And photography?", "type": "radio",
+                  "options": ["Professional shots, current", "Professional but dated",
+                              "Phone photos of real work", "Stock only", "Nothing"]},
+                 {"id": "integrations", "label": "What does the site need to connect to?", "type": "check",
+                  "options": ["CRM", "Booking or scheduling", "Payments", "Live chat",
+                              "Inventory or ERP", "Email marketing", "A customer portal",
+                              "Nothing"]},
+                 {"id": "sites_liked", "label": "Two or three sites you admire — and what you admire about them",
+                  "type": "textarea", "hint": "Competitors or not. \"I like how obvious the next step is\" is more useful than \"I like the blue\".",
+                  "placeholder": "URL — what works about it"},
+                 {"id": "deadline_reason", "label": "Is there a date this has to be live by, and why?",
+                  "type": "text", "placeholder": "Trade show in March, busy season starts in April…"},
+             ]},
+        ],
+    },
+    "ai-consulting": {
+        "hook": "a free AI Opportunity Audit",
+        "lede": "Enough to rank real use cases by value and risk, instead of handing you a list of tools.",
+        "sections": [
+            {"n": "01", "title": "Where judgement lives",
+             "lede": "The decisions and the data behind them.",
+             "why": "AI is worth money where a human currently applies judgement to information, repeatedly. Finding those spots is the whole audit.",
+             "questions": [
+                 {"id": "where_judgement", "label": "Which decisions get made by feel rather than by rule?",
+                  "type": "textarea",
+                  "placeholder": "Which jobs to quote, which leads to chase, what to charge, who to schedule where…"},
+                 {"id": "volume_task", "label": "What repetitive judgement call happens most often, and how many times a day?",
+                  "type": "textarea", "placeholder": "Reading inbound emails and deciding who they go to — maybe 60 a day."},
+                 {"id": "data_where", "label": "Where does the information those decisions need actually live?",
+                  "type": "check",
+                  "options": ["A CRM", "Spreadsheets", "Email inboxes", "A database", "Paper or PDFs",
+                              "An ERP or field system", "Recorded calls", "People's heads"]},
+                 {"id": "data_quality", "label": "If you had to grade that data, honestly", "type": "radio",
+                  "options": ["Clean and current", "Mostly fine", "Messy but salvageable",
+                              "A disaster", "I genuinely don't know"]},
+                 {"id": "ai_tried", "label": "What have you tried already?", "type": "check",
+                  "options": ["ChatGPT or Claude, ad hoc", "Copilot in Microsoft 365",
+                              "An AI feature inside a tool we pay for", "A custom build",
+                              "A vendor pilot that went nowhere", "Nothing yet"]},
+                 {"id": "ai_result", "label": "How did that go?", "type": "textarea",
+                  "placeholder": "Including the parts that did not work — those are the useful bits."},
+             ]},
+            {"n": "02", "title": "Constraints and ownership",
+             "lede": "What we have to design around.",
+             "why": "Most AI projects fail on governance, not on models. Better to know the rules before we propose anything.",
+             "questions": [
+                 {"id": "regulated", "label": "Are you in a regulated space?", "type": "check",
+                  "options": ["HIPAA / healthcare", "Financial services", "Legal",
+                              "Government or defence", "Education", "GDPR-relevant EU data",
+                              "None of these"]},
+                 {"id": "ai_fears", "label": "What worries you about it?", "type": "check",
+                  "options": ["Accuracy and hallucination", "Customer data privacy",
+                              "How clients would react", "Staff resistance", "Ongoing cost",
+                              "Regulation changing", "Being locked into a vendor",
+                              "Nothing — I'm impatient"]},
+                 {"id": "staff_reaction", "label": "How would your team react to this?", "type": "radio",
+                  "options": ["Enthusiastic", "Curious but cautious", "Quietly resistant",
+                              "Openly hostile", "Mixed"]},
+                 {"id": "who_owns_it", "label": "Who inside would own an AI system once it exists?",
+                  "type": "text", "placeholder": "A role is fine — \"our ops manager\"."},
+                 {"id": "buy_or_build", "label": "Any preference between buying a tool and building one?",
+                  "type": "radio",
+                  "options": ["Buy — we don't want to maintain anything",
+                              "Build — we want it to fit us exactly", "Whichever pays back faster",
+                              "No view"]},
+                 {"id": "success_ai", "label": "What would make this obviously worth it?",
+                  "type": "textarea", "placeholder": "Hours back, errors gone, a role you no longer need to fill, a decision made faster…"},
+             ]},
+        ],
+    },
+    "automation": {
+        "hook": "a free automation blueprint",
+        "lede": "Enough to map one process end to end and put hours and dollars against automating it.",
+        "sections": [
+            {"n": "01", "title": "The process itself",
+             "lede": "Pick the one that annoys you most and walk us through it.",
+             "why": "Automation is priced per workflow. One process described properly is worth more than ten described vaguely.",
+             "questions": [
+                 {"id": "process_name", "label": "Which process are we talking about?", "type": "text",
+                  "placeholder": "Turning an accepted quote into a scheduled job"},
+                 {"id": "manual_handoffs", "label": "Walk it through, step by step. Name every place a human retypes something.",
+                  "type": "textarea",
+                  "hint": "The retyping is where the money is. Be tediously literal.",
+                  "placeholder": "1. Customer replies yes by email. 2. Sam copies the details into the CRM. 3. Sam messages Dana. 4. Dana opens the scheduler and types it again…"},
+                 {"id": "volume_per_month", "label": "How many times a month does it run?", "type": "number",
+                  "placeholder": "120", "half": True},
+                 {"id": "minutes_each", "label": "Minutes it takes, each time", "type": "number",
+                  "placeholder": "25", "suffix": "min", "half": True},
+                 {"id": "people_involved", "label": "How many people touch it?", "type": "number",
+                  "placeholder": "3", "half": True},
+                 {"id": "loaded_rate", "label": "Roughly, cost of an hour of their time", "type": "number",
+                  "placeholder": "45", "prefix": "$", "half": True},
+                 {"id": "error_cost", "label": "What happens when it goes wrong?", "type": "textarea",
+                  "placeholder": "A job gets double-booked and we eat the callout, about twice a month."},
+                 {"id": "other_processes", "label": "What else is on the list after this one?",
+                  "type": "textarea", "placeholder": "Anything that made you think \"and that too\" while reading."},
+             ]},
+            {"n": "02", "title": "The systems it runs on",
+             "lede": "What we would be connecting.",
+             "why": "Whether a workflow takes days or weeks comes down to whether the tools involved have decent APIs and who holds the logins.",
+             "questions": [
+                 {"id": "systems_list", "label": "Every piece of software this touches", "type": "textarea",
+                  "placeholder": "Gmail, HubSpot, ServiceTitan, QuickBooks, a shared spreadsheet, Slack"},
+                 {"id": "trigger_events", "label": "Which moments should set something off automatically?",
+                  "type": "check",
+                  "options": ["A new enquiry arrives", "A quote is accepted", "A job is scheduled",
+                              "A job is completed", "An invoice is raised", "A payment lands",
+                              "A customer goes quiet", "A review is due", "A reorder is due"]},
+                 {"id": "existing_automation", "label": "Is anything automated today?", "type": "radio",
+                  "options": ["Zapier or Make is running", "Native integrations between tools",
+                              "Custom code someone wrote", "Nothing at all", "I don't know"]},
+                 {"id": "api_access", "label": "Do those tools have APIs, and do you have admin access?",
+                  "type": "radio",
+                  "options": ["Yes to both", "Admin yes, APIs unknown", "Some tools, not all",
+                              "No idea — find out for us"]},
+                 {"id": "speed_to_lead", "label": "How fast does a human currently reply to a new enquiry?",
+                  "type": "radio",
+                  "options": ["Under 5 minutes", "Within an hour", "Same day", "Next day",
+                              "Sometimes never"]},
+                 {"id": "who_maintains", "label": "Who would look after these automations afterwards?",
+                  "type": "radio",
+                  "options": ["Someone technical in-house", "Me, with documentation",
+                              "Nobody — we'd want you to hold it", "Not thought about it"]},
+             ]},
+        ],
+    },
+    "marketing": {
+        "hook": "a free AI Search Visibility Report",
+        "lede": "Enough to run your category's real buying prompts and tell you why you are or are not in the answer.",
+        "sections": [
+            {"n": "01", "title": "Demand and geography",
+             "lede": "What people search — or ask — right before they need you.",
+             "why": "The prompts we test have to be the ones your buyers actually use. Yours will be better than ours.",
+             "questions": [
+                 {"id": "target_terms", "label": "What would someone type, or ask an AI, moments before they need you?",
+                  "type": "textarea",
+                  "hint": "Write them as real sentences. \"Who's the best commercial roofer in Pittsburgh\" beats \"roofing\".",
+                  "placeholder": "One per line."},
+                 {"id": "geography", "label": "Where do you serve?", "type": "text",
+                  "placeholder": "Allegheny County, or nationwide, or 40 miles from the shop"},
+                 {"id": "service_areas", "label": "Do you need to rank in more than one town or region?",
+                  "type": "radio",
+                  "options": ["One location", "A handful of towns", "Whole state or region",
+                              "Nationwide", "International"]},
+                 {"id": "competitors", "label": "Who currently comes up when you search?", "type": "textarea",
+                  "placeholder": "Names or URLs."},
+                 {"id": "ai_answers_seen", "label": "Have you asked an AI to recommend someone in your category?",
+                  "type": "radio",
+                  "options": ["Yes — we get named", "Yes — a competitor gets named",
+                              "Yes — nobody local gets named", "No, never tried"]},
+                 {"id": "ai_answer_paste", "label": "If you tried it, paste what it said", "type": "textarea",
+                  "placeholder": "Straight copy-paste is perfect."},
+             ]},
+            {"n": "02", "title": "What is already in place",
+             "lede": "Content, reputation and history.",
+             "why": "AI answers are assembled from what already exists about you elsewhere. Reviews and citations often move the needle faster than anything on your own site.",
+             "questions": [
+                 {"id": "content_who", "label": "Who writes anything that goes on the site?", "type": "radio",
+                  "options": ["Someone in-house", "A freelancer", "An agency", "Me", "Nobody"]},
+                 {"id": "content_volume", "label": "How often does something new go up?", "type": "select",
+                  "options": ["Weekly", "Monthly", "A few times a year", "It hasn't changed in years"],
+                  "half": True},
+                 {"id": "gbp", "label": "Google Business Profile", "type": "select",
+                  "options": ["Claimed and active", "Claimed but neglected", "Not claimed",
+                              "Doesn't apply to us", "I don't know"], "half": True},
+                 {"id": "reviews_count", "label": "Roughly how many reviews do you have?", "type": "number",
+                  "placeholder": "40", "half": True},
+                 {"id": "reviews_rating", "label": "Average rating", "type": "number",
+                  "placeholder": "4.7", "half": True},
+                 {"id": "reviews_where", "label": "Where are they?", "type": "check",
+                  "options": ["Google", "Facebook", "Yelp", "Industry directory", "Our own site",
+                              "Trustpilot or similar", "Nowhere yet"]},
+                 {"id": "press_mentions", "label": "Has anyone written about you — press, directories, associations?",
+                  "type": "textarea", "placeholder": "Links if you have them. This is what AI assistants read."},
+                 {"id": "seo_history", "label": "Has anyone done SEO for you before? What happened?",
+                  "type": "textarea", "hint": "Including the bad experiences. Especially those.",
+                  "placeholder": "We paid $1,500 a month for a year and got a monthly PDF nobody read."},
+             ]},
+        ],
+    },
+    "ad-management": {
+        "hook": "a free ad account audit",
+        "lede": "Enough to tell you where the budget is leaking before you hire anyone — including us.",
+        "sections": [
+            {"n": "01", "title": "What is running now",
+             "lede": "Platforms, spend and who holds the keys.",
+             "why": "Account ownership and tracking decide whether an audit is possible at all, and whether you can leave any agency cleanly.",
+             "questions": [
+                 {"id": "platforms_running", "label": "Where are you spending?", "type": "check",
+                  "options": ["Google Search", "Google Performance Max", "Google Display", "YouTube",
+                              "Meta (Facebook/Instagram)", "LinkedIn", "TikTok", "Microsoft/Bing",
+                              "Local Services Ads", "Nowhere yet"]},
+                 {"id": "spend_by_platform", "label": "Roughly how is the monthly budget split?",
+                  "type": "textarea", "placeholder": "Google $4K, Meta $1.5K, LSA $600"},
+                 {"id": "account_access", "label": "Who owns the ad accounts?", "type": "radio",
+                  "hint": "If an agency owns them, you cannot take your history with you. Worth checking today.",
+                  "options": ["We do", "An agency does", "A freelancer does",
+                              "I genuinely don't know"]},
+                 {"id": "ads_who", "label": "Who manages them day to day?", "type": "radio",
+                  "options": ["Nobody, really", "Me", "Someone in-house", "A freelancer",
+                              "An agency"]},
+                 {"id": "current_cpl", "label": "What does a lead cost you now?", "type": "number",
+                  "placeholder": "85", "prefix": "$", "half": True},
+                 {"id": "target_cpl", "label": "What would it need to be?", "type": "number",
+                  "placeholder": "50", "prefix": "$", "half": True},
+             ]},
+            {"n": "02", "title": "Tracking, creative and offers",
+             "lede": "The three things that decide whether spend works.",
+             "why": "Most wasted budget is not bad bidding. It is a platform optimising towards the wrong event because nobody told it what a good customer looks like.",
+             "questions": [
+                 {"id": "conversion_tracking", "label": "What counts as a conversion today?", "type": "radio",
+                  "options": ["Qualified leads only", "Any form fill or call", "Page views or clicks",
+                              "Nothing is tracked", "I don't know"]},
+                 {"id": "offline_conversions", "label": "Do closed deals get sent back into the ad platforms?",
+                  "type": "radio",
+                  "hint": "This is usually the single biggest lever in a lead-gen account.",
+                  "options": ["Yes, automatically", "Yes, manually", "No", "What does that mean?"]},
+                 {"id": "crm_link", "label": "Is your CRM connected to the ad platforms?", "type": "radio",
+                  "options": ["Yes", "Partially", "No", "We don't have a CRM"]},
+                 {"id": "landing_pages", "label": "Where does the traffic land?", "type": "radio",
+                  "options": ["Dedicated landing pages", "Relevant site pages", "The homepage",
+                              "A mix"]},
+                 {"id": "creative_who", "label": "Who makes the ads?", "type": "radio",
+                  "options": ["An agency", "In-house", "A freelancer", "Platform auto-generated",
+                              "Whatever was there last year"]},
+                 {"id": "offer_used", "label": "What is the offer in the ad right now?", "type": "textarea",
+                  "placeholder": "\"Free estimate\" is an answer. So is \"we don't really have one\"."},
+                 {"id": "seasonality", "label": "Does demand swing through the year?", "type": "textarea",
+                  "placeholder": "Dead in January, chaos from May."},
+                 {"id": "best_worst", "label": "Best and worst campaign you have ever run — and why",
+                  "type": "textarea", "placeholder": "Guesses welcome."},
+             ]},
+        ],
+    },
+    "social-media-marketing": {
+        "hook": "a free 30-day content plan",
+        "lede": "Enough to script ten posts in your voice, about things only you could say.",
+        "sections": [
+            {"n": "01", "title": "Where you are now",
+             "lede": "Channels, cadence and who is actually doing it.",
+             "why": "A content plan nobody can execute is worthless. What you can realistically film and post decides the plan's shape.",
+             "questions": [
+                 {"id": "channels", "label": "Which channels matter to you?", "type": "check",
+                  "options": ["Instagram", "Facebook", "TikTok", "LinkedIn", "YouTube",
+                              "X / Twitter", "Pinterest", "Nextdoor", "None yet"]},
+                 {"id": "handles", "label": "Your handles or profile links", "type": "textarea",
+                  "placeholder": "So we can look before we suggest anything."},
+                 {"id": "posting_cadence", "label": "How often does something go out?", "type": "select",
+                  "options": ["Daily", "A few times a week", "Weekly", "Monthly",
+                              "When we remember", "Never"], "half": True},
+                 {"id": "who_creates", "label": "Who makes the content?", "type": "select",
+                  "options": ["Me", "Someone in-house", "A freelancer", "An agency", "Nobody"],
+                  "half": True},
+                 {"id": "on_camera", "label": "Is anyone willing to be on camera?", "type": "radio",
+                  "hint": "There is a plan either way. It is just a different plan.",
+                  "options": ["Yes, happily", "Yes, reluctantly", "Someone else on the team will",
+                              "Absolutely nobody"]},
+                 {"id": "filming_capacity", "label": "Realistically, how much filming can you do?",
+                  "type": "radio",
+                  "options": ["A day a month", "A few hours a month", "Grab clips as we work",
+                              "None — use what we already have"]},
+                 {"id": "asset_library", "label": "What do you already have sitting on a phone or drive?",
+                  "type": "check",
+                  "options": ["Job site photos", "Before and afters", "Video clips",
+                              "Customer testimonials", "Team photos", "Product shots", "Nothing"]},
+             ]},
+            {"n": "02", "title": "What you actually know",
+             "lede": "The raw material nobody else has.",
+             "why": "The posts that work are the ones only you could write. Generic advice is what everyone else is already posting.",
+             "questions": [
+                 {"id": "content_pillars", "label": "What do you know that your customers don't?",
+                  "type": "textarea",
+                  "hint": "The things you explain over and over. Those are your best posts.",
+                  "placeholder": "Why the cheap quote costs more. What we find behind the drywall. How to tell if you actually need this."},
+                 {"id": "faq_asked", "label": "What do customers ask you every single time?", "type": "textarea",
+                  "placeholder": "List as many as you can. Each one is a post."},
+                 {"id": "best_post", "label": "Best-performing thing you have ever posted — and why you think it worked",
+                  "type": "textarea", "placeholder": "A link is fine."},
+                 {"id": "goal_social", "label": "What is social actually for, here?", "type": "radio",
+                  "options": ["Getting known locally", "Generating enquiries",
+                              "Recruiting staff", "Proof for people already considering us",
+                              "Building an audience we own"]},
+                 {"id": "brand_limits", "label": "Anything that is off limits?", "type": "textarea",
+                  "placeholder": "Clients we can't name, sites we can't film, topics we avoid, a competitor we won't mention."},
+                 {"id": "paid_social", "label": "Would you put money behind what works?", "type": "radio",
+                  "options": ["Yes", "Maybe, once it proves out", "Organic only"]},
+             ]},
+        ],
+    },
+    "business-systems": {
+        "hook": "a free Key-Person Risk Map",
+        "lede": "Enough to name every process living in someone's head and rank it by what it costs you.",
+        "sections": [
+            {"n": "01", "title": "How the work gets done",
+             "lede": "Who does what, and whether any of it is written down.",
+             "why": "Risk sits wherever a process exists in exactly one person. Naming those is the whole exercise.",
+             "questions": [
+                 {"id": "org_shape", "label": "Who does what? Roles rather than names is fine.",
+                  "type": "textarea",
+                  "placeholder": "Me — sales and everything nobody else does. Sam — ops and scheduling. Two techs. A bookkeeper one day a week."},
+                 {"id": "documented_areas", "label": "Which parts are written down anywhere?", "type": "check",
+                  "options": ["Sales", "Delivery and operations", "Finance and billing",
+                              "Hiring and onboarding", "Marketing", "Customer service",
+                              "Safety and compliance", "None of it"]},
+                 {"id": "sops_where", "label": "Where would someone look for a written process?",
+                  "type": "radio",
+                  "options": ["A proper system everyone uses", "Google Drive or SharePoint",
+                              "Someone's laptop", "A binder in the office", "Nowhere"]},
+                 {"id": "key_person", "label": "Whose two-week absence would hurt most, and what would break?",
+                  "type": "textarea", "placeholder": "Be honest. It is usually you."},
+                 {"id": "quality_variance", "label": "Where does the customer's experience change depending on who is working?",
+                  "type": "textarea", "placeholder": "The bit that makes you check up on people."},
+                 {"id": "vacation_test", "label": "If you disappeared for 30 days, what happens?",
+                  "type": "radio",
+                  "options": ["It runs fine", "Bumpy, but it survives", "Revenue stops",
+                              "I would rather not think about it"]},
+             ]},
+            {"n": "02", "title": "People and direction",
+             "lede": "Hiring, training and where this is all heading.",
+             "why": "Documentation is worth building only against what you are trying to become — a business you can hand over, sell, or simply stop carrying.",
+             "questions": [
+                 {"id": "hiring_next_12", "label": "People you expect to hire in the next 12 months",
+                  "type": "select", "options": ["None", "1–2", "3–5", "6–10", "More than 10"],
+                  "half": True},
+                 {"id": "training_time", "label": "Weeks until a new hire is genuinely productive",
+                  "type": "number", "placeholder": "12", "suffix": "wks", "half": True},
+                 {"id": "hiring_pain", "label": "Where does hiring hurt most?", "type": "radio",
+                  "options": ["Finding candidates", "Telling good from bad", "Onboarding them",
+                              "Keeping them", "All of it"]},
+                 {"id": "turnover", "label": "How is staff turnover?", "type": "select",
+                  "options": ["Very low", "Normal for our industry", "Higher than we'd like",
+                              "A revolving door"], "half": True},
+                 {"id": "meeting_rhythm", "label": "What regular meetings exist?", "type": "select",
+                  "options": ["Daily huddle and weekly leadership", "Weekly team meeting",
+                              "Monthly, roughly", "None"], "half": True},
+                 {"id": "metrics_tracked", "label": "What numbers does leadership look at every week?",
+                  "type": "textarea", "hint": "\"None\" is a completely normal answer and a useful one.",
+                  "placeholder": "Revenue, jobs booked, and a gut feeling."},
+                 {"id": "exit_intent", "label": "What are you building towards?", "type": "radio",
+                  "options": ["A business I could sell", "A business that runs without me",
+                              "Handing it to family or staff", "Just growing it, no exit in mind",
+                              "Haven't decided"]},
+                 {"id": "sops_first", "label": "If one process were documented tomorrow, which would you pick?",
+                  "type": "text", "placeholder": "The one you explain most often."},
+             ]},
+        ],
+    },
+}
+
+def render_service_discovery(svc):
+    """One questionnaire per service, scoped to what that build actually needs."""
+    slug = svc["slug"]
+    cfg = SERVICE_DISCOVERY[slug]
+    sections = cfg["sections"] + [DISCOVERY_ABOUT_YOU]
+    total = len(sections)
+    count = sum(len(s["questions"]) for s in sections)
+    form_id = "d-" + slug
+    steps = _dsteps(sections, submit_label="Send it and claim " + cfg["hook"])
+
+    path = f"discovery/{slug}.html"
+    url = f"{SITE}/{path}"
+    trail = [("Home", f"{SITE}/"),
+             ("Discovery", f"{SITE}/discovery/"),
+             (svc["nav"], url)]
+
+    others = "".join(
+        f'<li><a href="/discovery/{o["slug"]}.html">{o["nav"]}</a></li>'
+        for o in SERVICES if o["slug"] != slug)
+
+    body = f"""
+{crumbs(trail)}
+
+<section class="section" style="padding-block:clamp(3rem,7vw,5rem) 0">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Discovery · {svc['eyebrow']}</span>
+      <h1 class="h1 balance">{svc['nav']}: the questions we need answered.</h1>
+      <p class="lede">{cfg['lede']}</p>
+      <p>Answer it and we produce {cfg['hook']} — free, yours to keep, and no call required to receive it. Skip anything you don't know; a blank is information too.</p>
+      <div class="badge-row mt-6" style="justify-content:flex-start">
+        <span class="badge">{count} questions</span>
+        <span class="badge">About 10 minutes</span>
+        <span class="badge">Ends with {cfg['hook']}</span>
+      </div>
+      <div class="dsec-why mt-7" style="border-left-color:var(--taupe)">
+        <b>Not sure this is the right one?</b> The <a class="accent" href="/discovery/">full discovery questionnaire</a> covers every service at once and tells us which is worth doing first. It takes about twenty minutes.
+      </div>
+      <h2 class="h4 mt-7">Questionnaires for the other services</h2>
+      <ul class="tick-list mt-5">{others}</ul>
+      <p class="small muted mt-6">Prefer to talk it through? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> and we will work through it together.</p>
+    </div>
+
+    <div id="questionnaire">
+      <div class="form-panel">
+        <form data-ff-form data-multistep id="{form_id}-form" name="{form_id}" method="POST"
+              action="/thank-you.html" data-netlify="true"
+              data-netlify-honeypot="company_website_hp" novalidate>
+          <input type="hidden" name="form-name" value="{form_id}">
+          <input type="hidden" name="routed_to" value="hello@forward-framework.com">
+          <input type="hidden" name="request_type" value="{svc['nav']} questionnaire">
+          <!-- Netlify only records fields present in the deployed HTML, so the
+               attribution captured by main.js needs real inputs to land in. -->
+          <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium">
+          <input type="hidden" name="utm_campaign"><input type="hidden" name="utm_term">
+          <input type="hidden" name="utm_content"><input type="hidden" name="gclid">
+          <input type="hidden" name="fbclid"><input type="hidden" name="landing_page">
+          <input type="hidden" name="referrer"><input type="hidden" name="submitted_at">
+          <div class="form-head">
+            <span class="eyebrow">Free · No obligation</span>
+            <h2 class="h3" style="margin-bottom:.35rem">{svc['nav']} questionnaire</h2>
+            <p class="small muted mb-0">Goes to one strategist, not a list. You can stop and send at any point.</p>
+          </div>
+          <div class="steps-bar">
+            <span class="count">Step 1 of {total}</span>
+            <span class="bar"><i></i></span>
+          </div>
+{steps}
+          <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="company_website_hp" tabindex="-1" autocomplete="off"></label></div>
+          <p class="form-legal">We use your answers only to prepare your deliverable. No lists, no reselling. Read our <a href="/privacy.html">privacy policy</a>.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{cta_band("Answers in, deliverable out — inside two business days.",
+          "Nothing here obliges you to anything. Read what we send, keep it either way, and decide afterwards whether a twenty-minute walkthrough is worth your time.",
+          cta_href=f"/services/{slug}.html", cta="Read about this service")}
+"""
+    schema = {"@context": "https://schema.org", "@graph": [
+        crumb_schema(trail),
+        {"@type": "WebPage", "@id": f"{url}#webpage", "url": url,
+         "name": f"{svc['nav']} Questionnaire | Forward Framework",
+         "description": f"A {count}-question intake questionnaire for {svc['nav'].lower()}. Answer it and receive {cfg['hook']} within two business days.",
+         "isPartOf": {"@id": f"{SITE}/#website"}, "about": {"@id": f"{SITE}/#organization"},
+         "inLanguage": "en-US", "dateModified": TODAY},
+    ]}
+    page(path,
+         f"{svc['nav']} Questionnaire | Forward Framework",
+         f"Answer {count} questions about your {svc['eyebrow'].lower()} and get {cfg['hook']} back within two business days. Free, no call required.",
+         body, schema=schema)
+
+
 def all_urls():
     urls = [("/", "1.0", "weekly"), ("/services/", "0.9", "monthly")]
     urls += [(f"/services/{s['slug']}.html", "0.9", "monthly") for s in SERVICES]
     urls += [("/results.html", "0.8", "monthly"),
              ("/about.html", "0.7", "monthly"), ("/contact.html", "0.8", "monthly"),
+             ("/discovery/", "0.6", "monthly")]
+    urls += [(f"/discovery/{s['slug']}.html", "0.5", "monthly") for s in SERVICES]
+    urls += [
              ("/privacy.html", "0.2", "yearly"), ("/terms.html", "0.2", "yearly")]
     return urls
 
@@ -1749,6 +2743,7 @@ Forward Framework serves owner-led and mid-market companies across the United St
 - [Results]({SITE}/results.html): case studies with baselines and methods
 - [About]({SITE}/about.html): operating principles and the five-phase method
 - [Contact]({SITE}/contact.html): request a written Growth Plan in 48 hours
+- [Discovery questionnaire]({SITE}/discovery/): the full intake questions we work through, answerable online
 
 ## Method — The Forward Framework
 
@@ -1802,6 +2797,9 @@ def main():
     render_results()
     render_about()
     render_contact()
+    render_discovery()
+    for s in SERVICES:
+        render_service_discovery(s)
     render_thank_you()
     render_404()
     render_privacy()

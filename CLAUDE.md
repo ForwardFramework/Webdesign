@@ -89,6 +89,26 @@ on that page is the phone number, which is real. Set it to a Calendly (or
 similar) link and "Book my 20 minutes" becomes the primary button in both
 places, with the phone as the fallback. Rebuild after changing it.
 
+## The questionnaires
+
+`DISCOVERY`, `SERVICE_DISCOVERY` and `DISCOVERY_ABOUT_YOU` in `tools/build.py`
+are the only place the questions live. Three things render from them:
+
+- `/discovery/` — the full intake, six steps, every service
+- `/discovery/<slug>` — one per service, deeper and shorter
+- `tools/build_discovery_pdf.py` → `dist/discovery-questionnaire.html`, rendered
+  to PDF for meetings and attachments
+
+Edit the data, never the output, or the printed copy starts asking different
+questions from the online one.
+
+`/discovery/` is a directory index, like `/services/`. Do not add a
+`discovery.html` beside it — a file and a directory of the same name make
+`/discovery` ambiguous and the host serves neither.
+
+The hours running total on section 04 multiplies the visitor's own figures by
+fifty weeks. It is not a savings claim and must not be dressed up as one.
+
 ## Domain
 
 `www.forward-framework.com`, registered at GoDaddy, DNS stays at GoDaddy.

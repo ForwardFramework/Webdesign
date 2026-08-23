@@ -422,6 +422,39 @@
       }
     }
 
+    /* ---------- Questionnaire: hours running total ----------
+       Multiplies out what the visitor just typed. No assumptions of our own —
+       their hours, their rate, fifty working weeks. Hidden until there is
+       something real to show, so an empty form is not shouting numbers. */
+    var hoursOut = root.querySelector ? root.querySelector('[data-hours-out]') : null;
+    if (hoursOut) {
+      var hourFields = root.querySelectorAll('[data-hours]');
+      var rateField = root.querySelector('[data-rate]');
+      var yearEl = hoursOut.querySelector('[data-hours-year]');
+      var costEl = hoursOut.querySelector('[data-hours-cost]');
+      var WEEKS = 50;
+      var runHours = function () {
+        var perWeek = 0;
+        Array.prototype.forEach.call(hourFields, function (f) {
+          var v = parseFloat(f.value);
+          if (!isNaN(v) && v > 0) perWeek += v;
+        });
+        if (!perWeek) { hoursOut.hidden = true; return; }
+        hoursOut.hidden = false;
+        var perYear = Math.round(perWeek * WEEKS);
+        yearEl.textContent = perYear.toLocaleString('en-US') + ' hrs';
+        var rate = parseFloat(rateField && rateField.value);
+        costEl.textContent = (!isNaN(rate) && rate > 0)
+          ? '$' + Math.round(perYear * rate).toLocaleString('en-US')
+          : 'Add an hourly cost';
+      };
+      Array.prototype.forEach.call(hourFields, function (f) {
+        f.addEventListener('input', runHours);
+      });
+      if (rateField) rateField.addEventListener('input', runHours);
+      runHours();
+    }
+
     /* ---------- Automation ROI calculator ---------- */
     var calc = root.querySelector ? root.querySelector('#roi-calc') : null;
     if (calc) {
