@@ -9,7 +9,12 @@ no runtime dependencies — every page is a plain file that any host will serve 
 ```bash
 python3 build.py            # generate ./site
 python3 build.py --serve    # generate, then preview at http://localhost:8080
+python3 make-preview.py     # bundle all 25 pages into one shareable HTML file
 ```
+
+`make-preview.py` produces `preview/krain-preview.html` — the entire site in a single
+self-contained file with a client-side router, for emailing to a prospect or dropping on any
+host. Same markup, same design system, same behaviour; only the page transport differs.
 
 ---
 

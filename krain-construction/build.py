@@ -1516,7 +1516,7 @@ def build_thank_you():
 </section>
 {conv}
 '''
-    page("/thank-you/", f'Thank You — We&rsquo;ll Be In Touch Today | {B["short_name"]}',
+    page("/thank-you/", f'Thank You — We’ll Be In Touch Today | {B["short_name"]}',
          'Thanks for contacting Krain Construction. Here is what happens next with your free estimate request.',
          body, noindex=True)
 

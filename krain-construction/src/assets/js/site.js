@@ -46,8 +46,17 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") toggleNav(false); });
   }
 
+  /* ============================================================================
+     Everything below is scoped to a view root so it can be re-run after the
+     single-file preview swaps pages in. On the static site it runs once.
+     ========================================================================== */
+  window.krainInitPage = function (root) {
+    root = root || document;
+    var $r = function (s) { return root.querySelector(s); };
+    var $$r = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
   /* ------------------------------------------------------- scroll reveal */
-  var revealables = $$(".reveal");
+  var revealables = $$r(".reveal");
   if (revealables.length) {
     if (reduce || !("IntersectionObserver" in window)) {
       revealables.forEach(function (el) { el.classList.add("in"); });
@@ -64,7 +73,7 @@
   }
 
   /* ---------------------------------------------------------- stat counters */
-  var counters = $$("[data-count]");
+  var counters = $$r("[data-count]");
   if (counters.length && "IntersectionObserver" in window) {
     var co = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -89,13 +98,13 @@
   }
 
   /* -------------------------------------------------------- gallery filters */
-  var filters = $$(".filter");
+  var filters = $$r(".filter");
   if (filters.length) {
     filters.forEach(function (btn) {
       btn.addEventListener("click", function () {
         var cat = btn.dataset.filter;
         filters.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
-        $$(".shot").forEach(function (fig) {
+        $$r(".shot").forEach(function (fig) {
           fig.hidden = !(cat === "all" || fig.dataset.cat === cat);
         });
       });
@@ -103,13 +112,13 @@
   }
 
   /* -------------------------------------------------------------- lightbox */
-  var box = $(".lightbox");
+  var box = $r(".lightbox");
   if (box && typeof box.showModal === "function") {
-    $$(".shot").forEach(function (fig) {
+    $$r(".shot").forEach(function (fig) {
       var open = function () {
-        $(".lightbox-inner .art-slot").innerHTML = $("svg", fig).outerHTML;
-        $(".lightbox-cap b").textContent = fig.dataset.title;
-        $(".lightbox-cap span").textContent = fig.dataset.sub;
+        $r(".lightbox-inner .art-slot").innerHTML = $("svg", fig).outerHTML;
+        $r(".lightbox-cap b").textContent = fig.dataset.title;
+        $r(".lightbox-cap span").textContent = fig.dataset.sub;
         box.showModal();
       };
       fig.addEventListener("click", open);
@@ -117,12 +126,12 @@
         if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); open(); }
       });
     });
-    $(".lightbox-close").addEventListener("click", function () { box.close(); });
+    $r(".lightbox-close").addEventListener("click", function () { box.close(); });
     box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
   }
 
   /* ------------------------------------------------------- multi-step form */
-  $$("form[data-quote]").forEach(function (form) {
+  $$r("form[data-quote]").forEach(function (form) {
     var steps = $$(".fstep", form),
         bars = $$(".progress i", form),
         current = 0,
@@ -218,7 +227,7 @@
           name: fd.get("name"), project: fd.get("project"), city: fd.get("city")
         })); } catch (err) {}
         if (window.krainTrack) window.krainTrack("generate_lead", { project: fd.get("project") });
-        location.href = form.dataset.success + qs;
+        (window.krainNavigate || function (u) { location.href = u; })(form.dataset.success + qs);
       };
 
       if (!endpoint) { setTimeout(done, 500); return; } // demo mode
@@ -236,16 +245,16 @@
   });
 
   /* ------------------------------------------------ thank-you personalisation */
-  var ty = $("[data-ty]");
+  var ty = $r("[data-ty]");
   if (ty) {
     var p = new URLSearchParams(location.search);
     var first = p.get("n");
     if (first) {
-      var h = $("[data-ty-name]");
+      var h = $r("[data-ty-name]");
       if (h) h.textContent = "Thanks, " + first.replace(/[^\w\s'-]/g, "") + " —";
     }
     var ref = p.get("ref");
-    var refEl = $("[data-ty-project]");
+    var refEl = $r("[data-ty-project]");
     if (ref && refEl) {
       refEl.textContent = ({
         "custom-home": "Custom home", "log-home": "Log or timber frame home",
@@ -258,12 +267,18 @@
   }
 
   /* ------------------------------------------------------------- tel tracking */
-  $$('a[href^="tel:"]').forEach(function (a) {
+  $$r('a[href^="tel:"]').forEach(function (a) {
     a.addEventListener("click", function () {
       if (window.krainTrack) window.krainTrack("phone_call", { location: a.dataset.loc || "page" });
     });
   });
 
   /* ------------------------------------------------------------- current year */
-  $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  $$r("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  };
+
+  window.krainInitPage(document);
+  document.querySelectorAll("[data-year]").forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
 })();
