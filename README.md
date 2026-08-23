@@ -26,6 +26,7 @@ Netlify site — roughly 30 seconds, one browser prompt the first time.
 | `--owner NAME` | your personal account | GitHub org or user to own the repo |
 | `--public` / `--private` | `--private` | Repo visibility |
 | `--template NAME` | `static` | Which folder under `templates/` to copy |
+| `--no-netlify` | off | Stop after the GitHub push; skips the interactive `netlify init` |
 
 Defaults can be set once via `NEW_SITE_DIR` and `NEW_SITE_GH_OWNER` in your shell profile:
 
@@ -88,6 +89,26 @@ netlify init
 `design-system`, `brand`, `banner-design`, `slides`). They auto-activate on UI/UX work and
 need only Python 3.x. See [.claude/skills/VENDORED.md](.claude/skills/VENDORED.md) for the
 upstream version and update procedure.
+
+### `deploy-site`
+
+Local, not vendored. It triggers whenever you ask Claude to build a website — including when
+you never mention hosting — and makes it scaffold the repo and Netlify link *before* doing
+the design work, so the site is live from the first commit and every later change ships by
+being committed.
+
+Just say what you want:
+
+> build me a landing page for Top Dog Exteriors
+
+Claude runs `new-site.sh --no-netlify` (the flag matters: `netlify init` needs an interactive
+terminal and would hang inside a session), designs the site with the skills above, pushes,
+and hands you the single `netlify init` command to run once. Every change after that deploys
+on push with no further prompting.
+
+[`references/troubleshooting.md`](.claude/skills/deploy-site/references/troubleshooting.md)
+covers the common Netlify failures — builds that pass locally and fail remotely, blank pages,
+SPA 404s, and rollbacks.
 
 ## 21st.dev MCP server
 

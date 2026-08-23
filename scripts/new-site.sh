@@ -19,6 +19,7 @@ PARENT_DIR="${NEW_SITE_DIR:-$HOME/Sites}"
 VISIBILITY="--private"
 TEMPLATE="static"
 GH_OWNER="${NEW_SITE_GH_OWNER:-}"
+RUN_NETLIFY=1
 
 # ------------------------------------------------------------------ output ---
 bold() { printf '\033[1m%s\033[0m\n' "$*"; }
@@ -31,6 +32,7 @@ while [[ $# -gt 0 ]]; do
     --dir)      PARENT_DIR="$2"; shift 2 ;;
     --template) TEMPLATE="$2";   shift 2 ;;
     --owner)    GH_OWNER="$2";   shift 2 ;;
+    --no-netlify) RUN_NETLIFY=0; shift ;;
     --private)  VISIBILITY="--private"; shift ;;
     --public)   VISIBILITY="--public";  shift ;;
     -h|--help)
@@ -57,13 +59,17 @@ TARGET="$PARENT_DIR/$SLUG"
 
 # --------------------------------------------------------------- preflight ---
 bold "Preflight"
-for cmd in git gh netlify; do
+REQUIRED=(git gh)
+[[ $RUN_NETLIFY -eq 1 ]] && REQUIRED+=(netlify)
+for cmd in "${REQUIRED[@]}"; do
   command -v "$cmd" >/dev/null 2>&1 || die "'$cmd' not found — see the setup notes in README.md"
 done
 gh auth status >/dev/null 2>&1 || die "GitHub CLI not authenticated — run: gh auth login"
-netlify status >/dev/null 2>&1 || die "Netlify CLI not authenticated — run: netlify login"
+if [[ $RUN_NETLIFY -eq 1 ]]; then
+  netlify status >/dev/null 2>&1 || die "Netlify CLI not authenticated — run: netlify login"
+fi
 [[ -e "$TARGET" ]] && die "$TARGET already exists"
-info "git, gh, netlify ready"
+info "${REQUIRED[*]} ready"
 
 REPO_PATH="$SLUG"
 [[ -n "$GH_OWNER" ]] && REPO_PATH="$GH_OWNER/$SLUG"
@@ -96,12 +102,18 @@ REPO_URL="$(gh repo view --json url --jq .url)"
 info "$REPO_URL"
 
 # --------------------------------------------------------------- netlify -----
-bold "Linking Netlify (continuous deployment from GitHub)"
-info "netlify init reads netlify.toml, so accept the detected build settings."
-netlify init
+SITE_URL=""
+if [[ $RUN_NETLIFY -eq 1 ]]; then
+  bold "Linking Netlify (continuous deployment from GitHub)"
+  info "netlify init reads netlify.toml, so accept the detected build settings."
+  netlify init
+else
+  bold "Skipping Netlify link (--no-netlify)"
+  info "netlify init needs an interactive terminal. Run it yourself in $TARGET."
+fi
 
 # The Netlify CLI ships on Node, so node is guaranteed present here.
-SITE_URL="$(netlify status --json 2>/dev/null | node -e '
+[[ $RUN_NETLIFY -eq 1 ]] && SITE_URL="$(netlify status --json 2>/dev/null | node -e '
   let raw = "";
   process.stdin.on("data", d => raw += d).on("end", () => {
     try {
@@ -116,4 +128,9 @@ info "Local:   $TARGET"
 info "GitHub:  $REPO_URL"
 [[ -n "$SITE_URL" ]] && info "Live:    $SITE_URL"
 info ""
-info "From here on, deploying is just:  git push"
+if [[ $RUN_NETLIFY -eq 1 ]]; then
+  info "From here on, deploying is just:  git push"
+else
+  info "One step left — run this in a terminal to turn on auto-deploy:"
+  info "  cd $TARGET && netlify init"
+fi
