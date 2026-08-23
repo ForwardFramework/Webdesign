@@ -27,8 +27,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "dist", "cloudflare")
 
 
-SKIP_DIRS = {".git", ".github", ".claude", "dist", "tools", "__pycache__", ".vercel", "_site", "node_modules", "docs"}
-SKIP_FILES = {"README.md", "DEPLOY.md", "CLAUDE.md", ".gitignore", "vercel.json", ".vercelignore"}
+SKIP_DIRS = {".git", ".github", ".claude", "dist", "tools", "__pycache__", ".vercel",
+             "_site", "node_modules", "docs", "netlify"}
+SKIP_FILES = {"README.md", "DEPLOY.md", "CLAUDE.md", ".gitignore",
+              "vercel.json", ".vercelignore", "netlify.toml", "package.json",
+              "package-lock.json"}
 REWRITE_EXT = {".html", ".xml", ".txt", ".webmanifest", ".json", ".js"}
 
 
@@ -68,6 +71,28 @@ def clean_urls(text):
     return text
 
 
+def source_files():
+    """Every file that should ship, as (absolute path, path relative to ROOT).
+
+    SKIP_DIRS names repo furniture — docs/, tools/, dist/ — and is applied only
+    at the top level. The same names deeper down are real content:
+    assets/docs/ holds a download that has to reach the site.
+
+    Shared with build_netlify, build_pages and build_zip so the four host
+    bundles cannot disagree about what ships.
+    """
+    for base, dirs, files in os.walk(ROOT):
+        if os.path.abspath(base) == ROOT:
+            dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+        else:
+            dirs[:] = [d for d in dirs if d not in {"__pycache__", "node_modules"}]
+        for f in sorted(files):
+            if f in SKIP_FILES:
+                continue
+            src = os.path.join(base, f)
+            yield src, os.path.relpath(src, ROOT)
+
+
 def main():
     SRC = source_domain()
     domain = (sys.argv[1].rstrip("/") if len(sys.argv) > 1 else SRC)
@@ -77,27 +102,21 @@ def main():
     os.makedirs(OUT)
 
     copied = rewritten = 0
-    for base, dirs, files in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-        for f in sorted(files):
-            if f in SKIP_FILES:
-                continue
-            src = os.path.join(base, f)
-            rel = os.path.relpath(src, ROOT)
-            dest = os.path.join(OUT, rel)
-            os.makedirs(os.path.dirname(dest), exist_ok=True)
+    for src, rel in source_files():
+        dest = os.path.join(OUT, rel)
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
 
-            if os.path.splitext(f)[1].lower() in REWRITE_EXT:
-                text = original = open(src, encoding="utf-8").read()
-                if domain != SRC:
-                    text = text.replace(SRC, domain)
-                text = clean_urls(text)
-                open(dest, "w", encoding="utf-8").write(text)
-                if text != original:
-                    rewritten += 1
-            else:
-                shutil.copy2(src, dest)
-            copied += 1
+        if os.path.splitext(src)[1].lower() in REWRITE_EXT:
+            text = original = open(src, encoding="utf-8").read()
+            if domain != SRC:
+                text = text.replace(SRC, domain)
+            text = clean_urls(text)
+            open(dest, "w", encoding="utf-8").write(text)
+            if text != original:
+                rewritten += 1
+        else:
+            shutil.copy2(src, dest)
+        copied += 1
 
     open(os.path.join(OUT, "_headers"), "w", encoding="utf-8").write(HEADERS)
 

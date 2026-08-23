@@ -17,6 +17,84 @@
   var CONTACT_PHONE = '(412) 463-2126';
   var CONTACT_TEL = '+14124632126';
 
+  /* ---------- Carrying answers between forms ----------
+     The lead forms and the questionnaires ask for some of the same things.
+     Whatever someone has already typed follows them, so no question is ever
+     asked twice: within a session through storage, and from the questionnaire
+     email through query parameters. */
+  var CARRY = ['name', 'email', 'company', 'website', 'phone', 'timeline',
+               'revenue_band', 'budget_band'];
+
+  function readLead() {
+    try { return JSON.parse(localStorage.getItem('ff_lead') || '{}'); } catch (e) { return {}; }
+  }
+
+  function saveLead(form) {
+    var out = readLead();
+    CARRY.forEach(function (k) {
+      var els = form.querySelectorAll('[name="' + k + '"]');
+      Array.prototype.forEach.call(els, function (el) {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+          if (el.checked && el.value) out[k] = el.value;
+        } else if (el.value) {
+          out[k] = el.value;
+        }
+      });
+    });
+    try { localStorage.setItem('ff_lead', JSON.stringify(out)); } catch (e) {}
+  }
+
+  /* Fill what we already know and say so. Returns how many fields were set. */
+  function prefill(form) {
+    var params = new URLSearchParams(window.location.search);
+    var lead = readLead();
+    var filled = 0;
+    var fromUrl = false;
+    CARRY.forEach(function (k) {
+      var v = params.get(k) || lead[k];
+      if (!v) return;
+      var els = form.querySelectorAll('[name="' + k + '"]');
+      if (!els.length) return;
+      var hit = false;
+      Array.prototype.forEach.call(els, function (el) {
+        if (el.type === 'radio') {
+          if (el.value === v) { el.checked = true; hit = true; }
+        } else if (el.tagName === 'SELECT') {
+          var match = Array.prototype.filter.call(el.options, function (o) {
+            return o.value === v || o.text === v;
+          })[0];
+          if (match) { el.value = match.value; hit = true; }
+        } else if (el.type !== 'hidden' && !el.value) {
+          el.value = v;
+          hit = true;
+        }
+      });
+      if (hit) {
+        filled++;
+        if (params.get(k)) fromUrl = true;
+        var field = els[0].closest && els[0].closest('.field');
+        if (field) field.classList.add('is-prefilled');
+      }
+    });
+
+    if (filled) {
+      var note = document.createElement('p');
+      note.className = 'prefill-note';
+      note.setAttribute('role', 'status');
+      note.textContent = 'We have filled in ' + filled + ' answer' + (filled === 1 ? '' : 's')
+        + ' from what you already told us. Change anything that looks wrong.';
+      var head = form.querySelector('.form-head');
+      if (head) head.parentNode.insertBefore(note, head.nextSibling);
+    }
+
+    /* Their name and address were in the link we emailed them. Once the form
+       holds them there is no reason to leave them in the address bar. */
+    if (fromUrl && window.history && history.replaceState) {
+      try { history.replaceState({}, '', window.location.pathname); } catch (e) {}
+    }
+    return filled;
+  }
+
   /* What the visitor said they came for, as a service slug, so the
      post-submission page can lead with that deliverable. */
   var NEED_SLUGS = {
@@ -305,6 +383,9 @@
         var stamp = form.querySelector('input[name="submitted_at"]');
         if (stamp) stamp.value = new Date().toISOString();
 
+        // Remember the shared answers so the questionnaire can skip them.
+        saveLead(form);
+
         var btn = form.querySelector('[type=submit]');
         var original = btn ? btn.innerHTML : '';
         if (btn) { btn.disabled = true; btn.innerHTML = 'Sending…'; }
@@ -413,6 +494,12 @@
       var want = (new URLSearchParams(window.location.search).get('need') || '').toLowerCase();
       if (/^[a-z][a-z-]{2,39}$/.test(want)) {
         var chosen = offerGrid.querySelector('[data-slug="' + want + '"]');
+        /* The card carries the host-correct URL — each host build rewrites the
+           extension its own way, so it cannot be assembled here. */
+        var qLink = root.querySelector('[data-questionnaire-link]');
+        if (qLink && chosen && chosen.getAttribute('data-questionnaire')) {
+          qLink.setAttribute('href', chosen.getAttribute('data-questionnaire'));
+        }
         if (chosen) {
           offerGrid.insertBefore(chosen, offerGrid.firstElementChild);
           chosen.classList.add('is-picked');
@@ -421,6 +508,9 @@
         }
       }
     }
+
+    /* ---------- Questionnaires: carry across what we already know ---------- */
+    Array.prototype.forEach.call(root.querySelectorAll('form[data-prefill]'), prefill);
 
     /* ---------- Questionnaire: hours running total ----------
        Multiplies out what the visitor just typed. No assumptions of our own —

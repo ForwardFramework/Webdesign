@@ -256,6 +256,20 @@ success state. With JavaScript off they submit normally and land on
 `/thank-you`. UTM parameters, gclid, landing page and referrer are captured as
 hidden fields on every submission.
 
+#### Emailing the sender their questionnaire
+
+`netlify/functions/submission-created.js` fires after each verified submission
+and sends that person a prefilled questionnaire link. Two things gate it:
+
+1. **Set `RESEND_API_KEY`** under **Project configuration → Environment
+   variables** — a key from resend.com on a verified sending domain. Add
+   `MAIL_FROM` too if the address should differ from
+   `hello@forward-framework.com`. Without the key the function logs what it
+   would have sent and returns 200, so nothing breaks.
+2. **Deploy from Git or the CLI.** Functions are not part of a drag-and-dropped
+   zip, so this feature stays dormant until the repo is connected — one more
+   reason to do Option A above.
+
 #### Telling the three failure states apart
 
 Load **`/form-check`** on the live site. It is unlinked and noindexed, and it

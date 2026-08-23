@@ -11,6 +11,13 @@
 [build.environment]
   PYTHON_VERSION = "3.11"
 
+# submission-created.js runs after every verified form submission and emails
+# the sender their prefilled questionnaire. Functions deploy from Git or the
+# CLI only — a drag-and-dropped zip does not carry them.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Deploy previews and branch deploys must not be indexed.
 [[context.deploy-preview.headers]]
   for = "/*"

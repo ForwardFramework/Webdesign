@@ -109,6 +109,51 @@ questions from the online one.
 The hours running total on section 04 multiplies the visitor's own figures by
 fifty weeks. It is not a savings claim and must not be dressed up as one.
 
+## The questionnaire email
+
+`netlify/functions/submission-created.js` runs after every verified form
+submission and emails that person a link to the questionnaire, prefilled with
+what they just told us. It skips questionnaire submissions so nobody is sent
+the thing they just finished.
+
+It needs one environment variable, set in **Project configuration → Environment
+variables**:
+
+| Variable | Notes |
+|---|---|
+| `RESEND_API_KEY` | resend.com key on a verified sending domain |
+| `MAIL_FROM` | optional, defaults to hello@forward-framework.com |
+
+**Without the key it logs what it would have sent and returns 200.** Never make
+it throw — the submission is already stored, and failing here would show the
+visitor an error for something unrelated to them.
+
+**Functions only deploy from Git or the CLI.** A drag-and-dropped zip does not
+carry them, so this feature does nothing until the repo is connected in Netlify.
+
+## Carrying answers between forms
+
+`CARRY` in `main.js` lists the fields the lead forms and questionnaires share.
+On submit they go to `localStorage`; on a questionnaire they are read back from
+storage or from query parameters (how the email link carries them), the fields
+are marked "already answered", and the parameters are then stripped from the
+address bar. Nobody is asked the same question twice.
+
+Keep the field `name` attributes identical across forms or this silently stops
+working.
+
+## Regenerating the fillable PDF
+
+`assets/docs/discovery-questionnaire.pdf` is a build product committed on
+purpose — the Netlify build runs Python only and cannot rebuild it. After
+changing any question:
+
+```bash
+python3 tools/build_discovery_pdf.py   # writes dist/discovery-questions.json
+cd tools && npm install                # once, for pdf-lib
+node tools/build_fillable_pdf.mjs      # rewrites the committed PDF
+```
+
 ## Domain
 
 `www.forward-framework.com`, registered at GoDaddy, DNS stays at GoDaddy.

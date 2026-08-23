@@ -1367,7 +1367,7 @@ def render_thank_you():
     for svc in SERVICES:
         tag, blurb, meta = hooks[svc["slug"]]
         cards += f'''
-      <article class="card card--link reveal" data-slug="{svc['slug']}">
+      <article class="card card--link reveal" data-slug="{svc['slug']}" data-questionnaire="/discovery/{svc['slug']}.html">
         <div class="card-icon" aria-hidden="true">{icon(svc['slug'])}</div>
         <span class="offer-tag">{tag}</span>
         <h3 class="h4">{svc['nav']}</h3>
@@ -1452,6 +1452,48 @@ def render_thank_you():
             <p>You bring the objections, we defend the reasoning. If the plan is right, we scope it. If it is not, you keep the plan and we part on good terms.</p>
           </div>
           <div class="step-meta">When it suits you — book it now if you like</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE QUESTIONNAIRE ============ -->
+<section class="section section--alt section--line" id="questionnaire-next">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">While it is being written</span>
+      <h2 class="h2 balance">Ten more minutes makes the plan twice as useful.</h2>
+      <p class="lede">We are working from what you just told us. The questionnaire is everything else we would ask on a call — where enquiries come from, what a customer is worth, where the hours go, what breaks when you are away.</p>
+      <p>The more of it you answer, the less of your plan is us guessing. And you are not asked anything twice: whatever you have already given us is filled in for you when you open it.</p>
+      <div class="btn-row mt-6">
+        <a class="btn btn--primary" data-questionnaire-link href="/discovery/">Open my questionnaire <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn--ghost" href="tel:+14124632126">Or answer it on a call</a>
+      </div>
+      <p class="small muted mt-5">A copy of this link is in your inbox too, so you can come back to it whenever suits.</p>
+    </div>
+    <div>
+      <div class="process">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div>
+            <h3 class="h4">Nothing asked twice</h3>
+            <p>Your name, company and the answers you just gave are already in it. Skip anything you do not know — a blank tells us where nobody is currently looking.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div>
+            <h3 class="h4">One section adds up your hours</h3>
+            <p>Five questions about where the week goes, multiplied by your own hourly cost. Most owners have never seen that number written down.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div>
+            <h3 class="h4">Stop whenever you like</h3>
+            <p>Send it half-finished if that is all you have time for. We would rather have six honest answers than thirty polished ones.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1990,12 +2032,12 @@ def render_discovery():
         <span class="badge">3 required fields, the rest optional</span>
       </div>
       <ol class="dsec-list mt-7">{section_list}</ol>
-      <p class="small muted mt-6">Prefer to talk it through? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> and we will fill it in together, or email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> for a printable copy.</p>
+      <p class="small muted mt-6">Prefer a document? <a class="accent" href="/assets/docs/discovery-questionnaire.pdf">Download the fillable PDF</a> — all eight questionnaires, type straight into it, save, and email it back. Or call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> and we will fill it in together.</p>
     </div>
 
     <div id="discovery">
       <div class="form-panel">
-        <form data-ff-form data-multistep id="discovery-form" name="discovery" method="POST"
+        <form data-ff-form data-multistep data-prefill id="discovery-form" name="discovery" method="POST"
               action="/thank-you.html" data-netlify="true"
               data-netlify-honeypot="company_website_hp" novalidate>
           <input type="hidden" name="form-name" value="discovery">
@@ -2573,12 +2615,12 @@ def render_service_discovery(svc):
       </div>
       <h2 class="h4 mt-7">Questionnaires for the other services</h2>
       <ul class="tick-list mt-5">{others}</ul>
-      <p class="small muted mt-6">Prefer to talk it through? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> and we will work through it together.</p>
+      <p class="small muted mt-6">Prefer a document? <a class="accent" href="/assets/docs/discovery-questionnaire.pdf">Download the fillable PDF</a> — every questionnaire in one file, typed into and emailed back. Or call <a class="accent" href="tel:+14124632126">(412) 463-2126</a> and we will work through it together.</p>
     </div>
 
     <div id="questionnaire">
       <div class="form-panel">
-        <form data-ff-form data-multistep id="{form_id}-form" name="{form_id}" method="POST"
+        <form data-ff-form data-multistep data-prefill id="{form_id}-form" name="{form_id}" method="POST"
               action="/thank-you.html" data-netlify="true"
               data-netlify-honeypot="company_website_hp" novalidate>
           <input type="hidden" name="form-name" value="{form_id}">

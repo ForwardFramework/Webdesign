@@ -552,6 +552,15 @@ hr{border:0;border-top:1px solid var(--line);margin:var(--s-7) 0}
 .affix--pre input{padding-left:2.1rem}
 .affix--post::before{right:.95rem}
 .affix--post input{padding-right:2.9rem}
+.prefill-note{
+  font-size:var(--t-xs);color:var(--taupe-lt);line-height:1.5;
+  border:1px solid rgba(169,154,140,.32);background:rgba(169,154,140,.08);
+  padding:.65rem .8rem;margin-bottom:var(--s-5)
+}
+.field.is-prefilled > label::after{
+  content:"already answered";margin-left:.5rem;font-size:.62rem;letter-spacing:.12em;
+  color:var(--taupe);border:1px solid rgba(169,154,140,.35);padding:.1rem .3rem
+}
 .dsec-head{margin-bottom:var(--s-4)}
 .dsec-why{
   font-size:var(--t-sm);color:var(--muted);line-height:1.6;

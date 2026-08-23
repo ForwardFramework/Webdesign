@@ -24,7 +24,7 @@ import sys
 import zipfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from build_cloudflare import clean_urls, source_domain, REWRITE_EXT, SKIP_DIRS, SKIP_FILES
+from build_cloudflare import clean_urls, source_domain, source_files, REWRITE_EXT
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "dist", "netlify")
@@ -73,30 +73,27 @@ def main():
     os.makedirs(OUT)
 
     pages, copied, rewritten = [], 0, 0
-    for base, dirs, files in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-        for f in sorted(files):
-            if f in SKIP_FILES or f in {"netlify.toml"}:
-                continue
-            src = os.path.join(base, f)
-            rel = os.path.relpath(src, ROOT).replace(os.sep, "/")
-            dest = os.path.join(OUT, rel)
-            os.makedirs(os.path.dirname(dest), exist_ok=True)
+    for src, rel in source_files():
+        rel = rel.replace(os.sep, "/")
+        if os.path.basename(src) == "netlify.toml":
+            continue          # config, not content
+        dest = os.path.join(OUT, rel)
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
 
-            if rel.endswith(".html"):
-                pages.append(rel)
+        if rel.endswith(".html"):
+            pages.append(rel)
 
-            if os.path.splitext(f)[1].lower() in REWRITE_EXT:
-                text = original = open(src, encoding="utf-8").read()
-                if domain != src_domain:
-                    text = text.replace(src_domain, domain)
-                text = clean_urls(text)
-                open(dest, "w", encoding="utf-8").write(text)
-                if text != original:
-                    rewritten += 1
-            else:
-                shutil.copy2(src, dest)
-            copied += 1
+        if os.path.splitext(src)[1].lower() in REWRITE_EXT:
+            text = original = open(src, encoding="utf-8").read()
+            if domain != src_domain:
+                text = text.replace(src_domain, domain)
+            text = clean_urls(text)
+            open(dest, "w", encoding="utf-8").write(text)
+            if text != original:
+                rewritten += 1
+        else:
+            shutil.copy2(src, dest)
+        copied += 1
 
     open(os.path.join(OUT, "_headers"), "w", encoding="utf-8").write(HEADERS)
     open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8").write(build_redirects(sorted(pages)))

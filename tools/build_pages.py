@@ -23,9 +23,12 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "_site")
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_cloudflare import source_files  # noqa: E402  (one shared file list)
 
-SKIP_DIRS = {".git", ".github", ".claude", "dist", "tools", "__pycache__", ".vercel", "_site", "node_modules"}
-SKIP_FILES = {"README.md", "DEPLOY.md", ".gitignore", "vercel.json", ".vercelignore"}
+
+
+
 REWRITE_EXT = {".html", ".xml", ".txt", ".webmanifest", ".json"}
 
 
@@ -49,38 +52,32 @@ def main():
     os.makedirs(OUT)
 
     copied = rewritten = 0
-    for base, dirs, files in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
-        for f in sorted(files):
-            if f in SKIP_FILES:
-                continue
-            src = os.path.join(base, f)
-            rel = os.path.relpath(src, ROOT)
-            dest = os.path.join(OUT, rel)
-            os.makedirs(os.path.dirname(dest), exist_ok=True)
+    for src, rel in source_files():
+        dest = os.path.join(OUT, rel)
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
 
-            if os.path.splitext(f)[1].lower() in REWRITE_EXT:
-                text = open(src, encoding="utf-8").read()
-                before = text
+        if os.path.splitext(src)[1].lower() in REWRITE_EXT:
+            text = open(src, encoding="utf-8").read()
+            before = text
 
-                # 1. Absolute URLs: canonicals, Open Graph, JSON-LD, sitemap, robots, llms.
-                if base_url != SRC:
-                    text = text.replace(SRC, base_url)
+            # 1. Absolute URLs: canonicals, Open Graph, JSON-LD, sitemap, robots, llms.
+            if base_url != SRC:
+                text = text.replace(SRC, base_url)
 
-                # 2. Root-relative paths, only when serving from a subpath.
-                #    The negative lookahead leaves protocol-relative //host alone.
-                if base_path:
-                    text = re.sub(r'(href|src)="/(?!/)', rf'\1="{base_path}/', text)
-                    if f.endswith(".webmanifest"):
-                        text = text.replace('"start_url": "/"', f'"start_url": "{base_path}/"')
-                        text = re.sub(r'"src": "/(?!/)', f'"src": "{base_path}/', text)
+            # 2. Root-relative paths, only when serving from a subpath.
+            #    The negative lookahead leaves protocol-relative //host alone.
+            if base_path:
+                text = re.sub(r'(href|src)="/(?!/)', rf'\1="{base_path}/', text)
+                if src.endswith(".webmanifest"):
+                    text = text.replace('"start_url": "/"', f'"start_url": "{base_path}/"')
+                    text = re.sub(r'"src": "/(?!/)', f'"src": "{base_path}/', text)
 
-                open(dest, "w", encoding="utf-8").write(text)
-                if text != before:
-                    rewritten += 1
-            else:
-                shutil.copy2(src, dest)
-            copied += 1
+            open(dest, "w", encoding="utf-8").write(text)
+            if text != before:
+                rewritten += 1
+        else:
+            shutil.copy2(src, dest)
+        copied += 1
 
     # Stop Pages running the files through Jekyll.
     open(os.path.join(OUT, ".nojekyll"), "w").close()

@@ -1,0 +1,9 @@
+{
+  "name": "forward-framework-build-tools",
+  "private": true,
+  "type": "module",
+  "description": "Build-time only. tools/ is excluded from every host bundle, so nothing here ships to the site. Run: cd tools && npm install",
+  "devDependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}

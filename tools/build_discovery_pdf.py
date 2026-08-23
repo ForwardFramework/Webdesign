@@ -290,6 +290,31 @@ def main():
     print(f"wrote dist/discovery-questionnaire.html — "
           f"{len(SERVICES) + 1} questionnaires, {total_q} questions")
 
+    # The same questions as data, for tools/build_fillable_pdf.mjs. Emitting it
+    # here rather than re-declaring the questions in JavaScript is the whole
+    # point: one source, three outputs.
+    import json
+    bundle = [{
+        "id": "discovery",
+        "title": "Discovery questionnaire",
+        "kicker": "Every service - start here",
+        "blurb": "The full picture. Answer this one if you are not sure which service you "
+                 "need - it tells us which is worth doing first, and what it is worth.",
+        "sections": DISCOVERY,
+    }]
+    for svc in SERVICES:
+        cfg = SERVICE_DISCOVERY[svc["slug"]]
+        bundle.append({
+            "id": svc["slug"],
+            "title": f"{svc['nav']} questionnaire",
+            "kicker": f"Service deep-dive - ends with {cfg['hook']}",
+            "blurb": cfg["lede"],
+            "sections": cfg["sections"] + [DISCOVERY_ABOUT_YOU],
+        })
+    js = os.path.join(ROOT, "dist", "discovery-questions.json")
+    open(js, "w", encoding="utf-8").write(json.dumps(bundle, ensure_ascii=False, indent=1))
+    print(f"wrote dist/discovery-questions.json — {len(bundle)} questionnaires")
+
 
 if __name__ == "__main__":
     main()
