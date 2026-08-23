@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Form check — Forward Framework</title>
+<!--
+  A diagnostic page, deliberately unlinked and noindexed. It sends test posts to
+  the host and reports exactly what comes back, so a refused enquiry can be
+  diagnosed without guessing.
+
+  It reads the answers the way Netlify gives them:
+    405 everywhere                  form detection is off
+    404 for a real form name        detection is on but this deploy was not parsed
+    200 / redirect for a real name  forms are working
+  Deleting this file is safe once forms are confirmed working.
+-->
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;padding:2.5rem 1.25rem;background:#0A0A0A;color:#C9C6C1;
+       font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:46rem;margin:0 auto}
+  h1{font-size:1.6rem;color:#EFEBE6;margin:0 0 .35rem;letter-spacing:-.01em}
+  p.sub{margin:0 0 2rem;color:#8C8880}
+  table{width:100%;border-collapse:collapse;margin:0 0 1.75rem;font-size:.92rem}
+  th,td{text-align:left;padding:.6rem .5rem;border-bottom:1px solid #232323;vertical-align:top}
+  th{color:#A99A8C;font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;color:#EFEBE6}
+  .verdict{padding:1.1rem 1.25rem;border:1px solid #232323;border-left-width:3px;background:#111}
+  .verdict h2{margin:0 0 .5rem;font-size:1.05rem;color:#EFEBE6}
+  .verdict ol{margin:.5rem 0 0;padding-left:1.2rem}
+  .verdict li{margin:.3rem 0}
+  .ok{border-left-color:#6FAE7E}
+  .bad{border-left-color:#E38B7A}
+  .wait{border-left-color:#A99A8C}
+  .muted{color:#8C8880}
+</style>
+</head>
+<body>
+<main>
+  <h1>Form check</h1>
+  <p class="sub">Sends test posts to this host and reports what it answers.</p>
+
+  <table>
+    <thead><tr><th>Test</th><th>Target</th><th>Answer</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="verdict wait" id="verdict"><h2>Running…</h2></div>
+
+  <p class="sub" style="margin-top:2rem">
+    If forms are working, a submission named <code>contact</code> will appear in
+    Netlify under Forms — that is this page, not a real enquiry.
+  </p>
+</main>
+
+<script>
+(function () {
+  var rows = document.getElementById('rows');
+  var verdict = document.getElementById('verdict');
+
+  function post(path, formName) {
+    var body = new URLSearchParams({
+      'form-name': formName,
+      name: 'Netlify form check',
+      email: 'hello@forward-framework.com',
+      message: 'Automated diagnostic from /form-check'
+    }).toString();
+    return fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body,
+      redirect: 'manual'
+    }).then(function (res) {
+      // A same-origin 3xx with redirect:'manual' arrives opaque, status 0.
+      return { code: res.type === 'opaqueredirect' ? 303 : res.status, note: res.type };
+    }).catch(function (e) {
+      return { code: 0, note: String(e && e.message || e) };
+    });
+  }
+
+  function row(label, target, result) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + label + '</td><td><code>' + target + '</code></td>' +
+      '<td><code>' + (result.code || 'network error') + '</code> ' +
+      '<span class="muted">' + result.note + '</span></td>';
+    rows.appendChild(tr);
+  }
+
+  var here = window.location.pathname;
+  var tests = [
+    ['A real form name, posted to the site root', '/', 'contact'],
+    ['A real form name, posted to its own page', '/contact', 'contact'],
+    ['A form name that does not exist', here, 'no-such-form-xyz']
+  ];
+
+  var results = [];
+  tests.reduce(function (chain, t) {
+    return chain.then(function () {
+      return post(t[1], t[2]).then(function (r) { results.push(r); row(t[0], t[1], r); });
+    });
+  }, Promise.resolve()).then(function () {
+    var real = [results[0].code, results[1].code];
+    var bogus = results[2].code;
+    var accepted = real.some(function (c) { return c === 200 || c === 303; });
+    var cls, head, steps;
+
+    if (accepted && bogus === 404) {
+      cls = 'ok';
+      head = 'Forms are working on this host.';
+      steps = ['A test submission named <code>contact</code> should now be listed under Forms.',
+               'If enquiries still are not reaching anyone, the missing piece is the ' +
+               'notification: Forms → Form notifications → Add notification → ' +
+               'Email notification → hello@forward-framework.com.'];
+    } else if (real.every(function (c) { return c === 404; })) {
+      cls = 'bad';
+      head = 'Form detection is on, but this deploy was never parsed.';
+      steps = ['Detection runs at deploy time, so it does nothing to a deploy that is already live.',
+               'Deploy again: Deploys → Trigger deploy → Deploy site.',
+               'Then reload this page.'];
+    } else if (real.every(function (c) { return c === 405; })) {
+      cls = 'bad';
+      head = 'Form detection is off on this project.';
+      steps = ['Project configuration → Forms → Enable form detection.',
+               'Deploy again afterwards — detection runs at deploy time.',
+               'Forms → Form notifications → Add notification → Email notification → hello@forward-framework.com.',
+               'Then reload this page.'];
+    } else {
+      cls = 'bad';
+      head = 'This host is not handling form posts.';
+      steps = ['The answers above are what it returned. If they are all 404, the domain may be ' +
+               'pointing at a different project from the one holding this deploy.'];
+    }
+
+    verdict.className = 'verdict ' + cls;
+    verdict.innerHTML = '<h2>' + head + '</h2><ol><li>' + steps.join('</li><li>') + '</li></ol>';
+  });
+})();
+</script>
+</body>
+</html>

@@ -256,6 +256,20 @@ success state. With JavaScript off they submit normally and land on
 `/thank-you`. UTM parameters, gclid, landing page and referrer are captured as
 hidden fields on every submission.
 
+#### Telling the three failure states apart
+
+Load **`/form-check`** on the live site. It is unlinked and noindexed, and it
+sends test posts to the host and reads back what it answers:
+
+| What comes back | What it means |
+|---|---|
+| `405` on every post | Form detection is off on the project |
+| `404` on every post | Detection is on, but the live deploy was never parsed — deploy again |
+| `303` for a real form name, `404` for a made-up one | Forms are working; if nothing arrives, the notification is missing |
+
+Delete `form-check.html` once forms are confirmed working, or leave it — it is
+noindexed and absent from `sitemap.xml` and `llms.txt`.
+
 #### Symptom: submitting shows a blank white page
 
 That is Netlify answering the POST with an empty `405`, which is what a static
