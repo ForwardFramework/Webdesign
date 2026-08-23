@@ -72,6 +72,23 @@ Attribution (UTM parameters, gclid, landing page, referrer) rides along in
 hidden inputs. Those inputs must stay in the markup — Netlify only records
 fields it saw in the deployed HTML, so adding them from JavaScript would not work.
 
+## After a form is submitted
+
+Every form now navigates to `/thank-you`, which is a full landing page rather
+than a receipt: what happens next, the twenty-minute walkthrough ask, and all
+seven free deliverables. `main.js` appends `?need=<service-slug>` so the offer
+the visitor asked for leads the grid — derived from `primary_need` on the
+homepage form, or from the service page they submitted on.
+
+The inline `.form-success` panels were removed when this landed. Do not
+reintroduce them: two confirmations for one submission is worse than one, and
+the landing page is where the next conversion happens.
+
+**`BOOKING_URL` in `tools/build.py` is empty.** While it is, the primary action
+on that page is the phone number, which is real. Set it to a Calendly (or
+similar) link and "Book my 20 minutes" becomes the primary button in both
+places, with the phone as the fallback. Rebuild after changing it.
+
 ## Domain
 
 `www.forward-framework.com`, registered at GoDaddy, DNS stays at GoDaddy.

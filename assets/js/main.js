@@ -17,6 +17,23 @@
   var CONTACT_PHONE = '(412) 463-2126';
   var CONTACT_TEL = '+14124632126';
 
+  /* What the visitor said they came for, as a service slug, so the
+     post-submission page can lead with that deliverable. */
+  var NEED_SLUGS = {
+    'A website that converts': 'web-design',
+    'More qualified leads': 'marketing',
+    'AI + automation': 'automation',
+    'Better ad performance': 'ad-management'
+  };
+
+  function needSlug(form) {
+    var picked = form.querySelector('input[name="primary_need"]:checked');
+    if (picked && NEED_SLUGS[picked.value]) return NEED_SLUGS[picked.value];
+    // On a service page the deliverable they asked for is the page itself.
+    var here = window.location.pathname.match(/\/services\/([a-z-]+)/);
+    return here && here[1] !== 'index' ? here[1] : '';
+  }
+
   /* ---------- Attribution capture (once) ---------- */
   var params = new URLSearchParams(window.location.search);
   var attrKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
@@ -305,20 +322,16 @@
           if (window.dataLayer) {
             window.dataLayer.push({ event: 'generate_lead', form_id: form.id || 'ff_form' });
           }
-          var success = form.querySelector('.form-success');
-          if (success) {
-            Array.prototype.forEach.call(
-              form.querySelectorAll('.fstep, .form-body, .steps-bar, .form-head, .form-errors'),
-              function (el) { el.style.display = 'none'; }
-            );
-            success.classList.add('is-visible');
-            success.setAttribute('tabindex', '-1');
-            success.focus({ preventScroll: true });
-          } else if (window.FF && window.FF.navigate) {
-            window.FF.navigate('/thank-you.html');
-          } else {
-            window.location.href = '/thank-you.html';
-          }
+          /* Send them to the post-submission page rather than swapping in an
+             inline confirmation. It says what happens next, asks for the
+             walkthrough while intent is at its highest, and shows the other
+             free deliverables — none of which fits in the panel they just
+             filled in. ?need carries what they asked for so that offer leads
+             the grid. The .html is rewritten to the clean URL by the host
+             build, the same as every other link. */
+          var dest = '/thank-you.html';
+          var need = needSlug(form);
+          window.location.href = dest + (need ? '?need=' + need : '');
         };
 
         /* If the host refuses the submission, hand the enquiry back to the
@@ -390,6 +403,24 @@
         }
       });
     });
+
+    /* ---------- Post-submission offer grid ----------
+       Lift the deliverable they said they wanted to the front and mark it.
+       Progressive enhancement: without this the grid still renders complete,
+       in the same order as the services hub. */
+    var offerGrid = root.querySelector ? root.querySelector('[data-offer-grid]') : null;
+    if (offerGrid) {
+      var want = (new URLSearchParams(window.location.search).get('need') || '').toLowerCase();
+      if (/^[a-z][a-z-]{2,39}$/.test(want)) {
+        var chosen = offerGrid.querySelector('[data-slug="' + want + '"]');
+        if (chosen) {
+          offerGrid.insertBefore(chosen, offerGrid.firstElementChild);
+          chosen.classList.add('is-picked');
+          var tag = chosen.querySelector('.offer-tag');
+          if (tag) tag.textContent = 'Your pick \u00b7 ' + tag.textContent;
+        }
+      }
+    }
 
     /* ---------- Automation ROI calculator ---------- */
     var calc = root.querySelector ? root.querySelector('#roi-calc') : null;

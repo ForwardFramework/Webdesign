@@ -359,9 +359,14 @@ hr{border:0;border-top:1px solid var(--line);margin:var(--s-7) 0}
 }
 .card:hover{border-color:var(--line-2);background:var(--ink-3);transform:translateY(-3px)}
 .card--link:hover{border-color:rgba(169,154,140,.45)}
+/* The deliverable the visitor asked for, lifted to the front of the
+   post-submission grid by main.js. */
+.card.is-picked{border-color:rgba(169,154,140,.5);box-shadow:inset 0 0 0 1px rgba(169,154,140,.16)}
 .card h3{margin-bottom:.5rem}
 .card > p{color:var(--text);font-size:var(--t-sm);line-height:1.6}
 .card-foot{margin-top:auto;padding-top:var(--s-5)}
+/* Offer cards carry a turnaround note beside the link, not run into it. */
+.card-foot--split{display:flex;flex-wrap:wrap;gap:.5rem var(--s-4);align-items:baseline;justify-content:space-between}
 .card-num{
   font-family:var(--f-display);font-size:var(--t-xs);letter-spacing:.2em;color:var(--taupe);
   display:block;margin-bottom:var(--s-4)
@@ -546,8 +551,6 @@ hr{border:0;border-top:1px solid var(--line);margin:var(--s-7) 0}
 .form-nav{display:flex;gap:var(--s-3);align-items:center;margin-top:var(--s-5);flex-wrap:wrap}
 .form-back{background:none;border:0;color:var(--muted);font-size:var(--t-sm);cursor:pointer;padding:.5rem;text-decoration:underline;text-underline-offset:3px}
 .form-back:hover{color:var(--white)}
-.form-success{display:none;text-align:center;padding-block:var(--s-5)}
-.form-success.is-visible{display:block;animation:fadeUp .34s var(--ease)}
 .success-mark{width:56px;height:56px;margin:0 auto var(--s-4);display:grid;place-items:center;border:1px solid var(--taupe);color:var(--taupe)}
 
 /* ---------- 16. Pricing ---------- */

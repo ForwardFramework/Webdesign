@@ -24,6 +24,11 @@ SITE = "https://www.forward-framework.com"
 # True to restore the pricing page, the per-service price cards, the homepage
 # teaser and the Offer prices in the structured data.
 SHOW_PRICING = False
+
+# Scheduling link (Calendly, SavvyCal, HubSpot — whatever you use). While it is
+# empty the post-submission page asks people to call, which is a real number
+# rather than a dead button. Set it and booking becomes the primary action.
+BOOKING_URL = ""
 TODAY = date.today().isoformat()
 
 # --------------------------------------------------------------------------
@@ -230,16 +235,26 @@ def lead_form(form_id, heading, blurb, cta, trigger, source):
       </p>
       <p class="form-legal">We use your details only to prepare and send this. No lists, no reselling. Read our <a href="/privacy.html">privacy policy</a>.</p>
     </div>
-    <div class="form-success" role="status">
-      <div class="success-mark" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
-      </div>
-      <h3 class="h3">We're on it.</h3>
-      <p class="muted">A strategist is reviewing your details now. Expect your deliverable within two business days — check your inbox and your spam folder.</p>
-      <a class="link-arrow" href="/results.html">See client results while you wait <span aria-hidden="true">&rarr;</span></a>
-    </div>
   </form>
 </div>"""
+
+
+# The same marks used on the homepage service cards, keyed by slug so the
+# post-submission page cannot drift from them.
+SERVICE_ICONS = {
+    "web-design": '<rect x="2" y="3" width="20" height="14" rx="1"/><path d="M2 7h20M8 21h8M12 17v4"/>',
+    "ai-consulting": '<path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/><circle cx="12" cy="12" r="4.5"/>',
+    "automation": '<circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 6h9M6 8.4l4.6 7.4M18 8.4l-4.6 7.4"/>',
+    "marketing": '<circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21M11 8v6M8 11h6"/>',
+    "ad-management": '<path d="M3 11l16-7v16L3 13z"/><path d="M7 12.5V19l4 1.5"/>',
+    "social-media-marketing": '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-9A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/>',
+    "business-systems": '<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9.5 21v-5h5v5"/><path d="M9.5 11h5"/>',
+}
+
+
+def icon(slug, size=22):
+    return (f'<svg width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" '
+            f'stroke="currentColor" stroke-width="1.5">{SERVICE_ICONS[slug]}</svg>')
 
 
 def cta_band(heading, blurb, cta_href="/contact.html", cta="Get my free Growth Plan"):
@@ -1312,24 +1327,216 @@ def render_contact():
 
 
 def render_thank_you():
-    body = """
-<section class="section" style="padding-block:clamp(5rem,12vw,9rem)">
-  <div class="wrap center mx-auto" style="max-width:680px">
+    """The page a prospect lands on after submitting anything.
+
+    It has one job: turn a form fill into a booked conversation. So it confirms
+    what was sent, says exactly what happens and when, asks for the meeting
+    while intent is at its highest, and shows that the other six deliverables
+    are free too. Everything renders without JavaScript; main.js only lifts the
+    offer matching ?need= to the front of the grid.
+    """
+
+    # One line per service, written for someone who has just raised their hand.
+    hooks = {
+        "web-design": ("Free homepage concept",
+                       "A real above-the-fold concept for your homepage — your brand, your offer, your proof — with the conversion reasoning written out beside it.",
+                       "Designed, not described"),
+        "ai-consulting": ("Free AI Opportunity Audit",
+                          "We interview your operators, map where judgement actually moves through the business, and rank the AI use cases with a dollar figure and a risk note on each.",
+                          "Roadmap in 7–10 days"),
+        "automation": ("Free automation blueprint",
+                       "A 60-minute working session on your real processes, then a written blueprint: what to automate first, what it returns, and what we would honestly leave alone.",
+                       "Hours and dollars, per workflow"),
+        "marketing": ("Free AI Search Visibility Report",
+                      "Twelve real buying prompts from your category, run through four AI assistants. You get the transcripts, the competitor citation share, and why you are missing.",
+                      "12 prompts, 4 assistants"),
+        "ad-management": ("Free ad account audit",
+                          "Read-only access for one week and a written teardown of where the spend goes. In most accounts we open, 20–40% is going somewhere it shouldn't.",
+                          "Before you hire anyone"),
+        "social-media-marketing": ("Free 30-day content plan",
+                                   "Ten fully scripted posts written for your business — hooks, copy, format and the angle behind each — plus a calendar for what to post, where, and in what order.",
+                                   "10 posts, ready to publish"),
+        "business-systems": ("Free Key-Person Risk Map",
+                             "Every process that currently lives only in someone's head, named and ranked by what it costs you the week that person is unavailable.",
+                             "Most owners have never seen this"),
+    }
+
+    cards = ""
+    for svc in SERVICES:
+        tag, blurb, meta = hooks[svc["slug"]]
+        cards += f'''
+      <article class="card card--link reveal" data-slug="{svc['slug']}">
+        <div class="card-icon" aria-hidden="true">{icon(svc['slug'])}</div>
+        <span class="offer-tag">{tag}</span>
+        <h3 class="h4">{svc['nav']}</h3>
+        <p class="small">{blurb}</p>
+        <div class="card-foot card-foot--split">
+          <span class="small muted">{meta}</span>
+          <a class="link-arrow" href="/services/{svc['slug']}.html">Claim it <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>'''
+
+    # While BOOKING_URL is unset the primary action is the phone number, which
+    # is real. A dead "Book a time" button would cost more than it earns.
+    if BOOKING_URL:
+        book_primary = (f'<a class="btn btn--primary btn--lg" href="{BOOKING_URL}" '
+                        f'target="_blank" rel="noopener">Book my 20 minutes '
+                        f'<span class="btn-arrow" aria-hidden="true">&rarr;</span></a>')
+        book_dark = (f'<a class="btn btn--dark" href="{BOOKING_URL}" target="_blank" '
+                     f'rel="noopener">Book my 20 minutes '
+                     f'<span class="btn-arrow" aria-hidden="true">&rarr;</span></a>')
+        book_second = '<a class="btn btn--ghost btn--lg" href="tel:+14124632126">Or call (412) 463-2126</a>'
+    else:
+        book_primary = ('<a class="btn btn--primary btn--lg" href="tel:+14124632126">'
+                        'Call (412) 463-2126 <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>')
+        book_dark = '<a class="btn btn--dark" href="tel:+14124632126">Call (412) 463-2126</a>'
+        book_second = ('<a class="btn btn--ghost btn--lg" href="mailto:hello@forward-framework.com?'
+                       'subject=Booking%20a%20walkthrough">Email us a time that suits</a>')
+
+    body = f'''
+<!-- ============ CONFIRMATION ============ -->
+<section class="section" style="padding-block:clamp(4rem,10vw,7rem)">
+  <div class="wrap center mx-auto" style="max-width:780px">
     <div class="success-mark" aria-hidden="true">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg>
     </div>
     <span class="eyebrow" style="justify-content:center">Received</span>
-    <h1 class="h1 balance">Your plan is in the queue.</h1>
-    <p class="lede mx-auto">A strategist is reviewing your details now. Expect your written Growth Plan within two business days — check your inbox, and your spam folder just in case.</p>
-    <div class="btn-row mt-6" style="justify-content:center">
-      <a class="btn btn--primary" href="/results.html">See client results <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
-      <a class="btn btn--ghost" href="/services/">Browse services</a>
+    <h1 class="h1 balance">Got it. Now the useful part starts.</h1>
+    <p class="lede mx-auto">A strategist has your answers and is already looking at your site. Your written plan lands in your inbox within two business days — worth checking spam once, just in case.</p>
+    <div class="badge-row mt-6">
+      <span class="badge"><span class="dot-live" aria-hidden="true"></span> In the queue now</span>
+      <span class="badge">Written plan, not a sales call</span>
+      <span class="badge">No obligation, no contract</span>
     </div>
-    <p class="small muted mt-6">Need something sooner? Call <a class="accent" href="tel:+14124632126">(412) 463-2126</a>.</p>
+    <p class="small muted mt-6">Wrong details, or something you forgot to mention? Email <a class="accent" href="mailto:hello@forward-framework.com">hello@forward-framework.com</a> and it goes straight onto your file.</p>
   </div>
-</section>"""
+</section>
+
+<!-- ============ WHAT HAPPENS NEXT ============ -->
+<section class="section section--bone">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">What happens next</span>
+      <h2 class="h2 balance">Three steps, and you only have to show up for one.</h2>
+      <p class="lede">Most of the work happens before you ever speak to us. That is deliberate — by the time we talk, you are reacting to something real instead of listening to a pitch.</p>
+      <div class="btn-row mt-6">
+        {book_dark}
+        <a class="btn btn--ghost" href="#free-offers">See what else is free</a>
+      </div>
+      <p class="small muted mt-5">A senior strategist answers, not a scheduler.</p>
+    </div>
+    <div>
+      <div class="process">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div>
+            <h3 class="h4">We dig, today</h3>
+            <p>Your site, your analytics where you have shared them, your category's AI answers and your competitors' funnels. A person does this, not a scanner.</p>
+          </div>
+          <div class="step-meta">Today — no action needed from you</div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div>
+            <h3 class="h4">Your plan arrives in writing</h3>
+            <p>What is leaking money, ranked by dollars per week of delay. What we would do first, what it costs, and what we would leave alone. Yours to keep either way.</p>
+          </div>
+          <div class="step-meta">Within 2 business days — check your inbox</div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div>
+            <h3 class="h4">Twenty minutes to pull it apart</h3>
+            <p>You bring the objections, we defend the reasoning. If the plan is right, we scope it. If it is not, you keep the plan and we part on good terms.</p>
+          </div>
+          <div class="step-meta">When it suits you — book it now if you like</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE MEETING ============ -->
+<section class="section section--alt section--line">
+  <div class="wrap">
+    <div class="center mx-auto" style="max-width:720px">
+      <span class="eyebrow" style="justify-content:center">The walkthrough</span>
+      <h2 class="h2 balance">Twenty minutes. No deck, no discovery theatre.</h2>
+      <p class="lede mx-auto">You have probably sat through the other kind. This is the opposite: your plan is already written, so we spend the time on the parts you disagree with.</p>
+    </div>
+    <div class="grid grid-2 mt-7">
+      <article class="card">
+        <span class="offer-tag">What it is</span>
+        <h3 class="h4">A working session on your numbers</h3>
+        <ul class="tick-list mt-5">
+          <li>We walk your plan line by line, in your order</li>
+          <li>Every recommendation carries a dollar figure you can challenge</li>
+          <li>You get the build order and the honest timeline</li>
+          <li>Straight answers on what we would <em>not</em> take on</li>
+          <li>Scope and price if you want it, on the call</li>
+        </ul>
+      </article>
+      <article class="card">
+        <span class="offer-tag">What it is not</span>
+        <h3 class="h4">A qualification call in disguise</h3>
+        <ul class="tick-list mt-5">
+          <li>No slide deck about our process</li>
+          <li>No second call with "the specialist"</li>
+          <li>No contract to see the numbers</li>
+          <li>No retainer minimum to start</li>
+          <li>No follow-up sequence if you say no</li>
+        </ul>
+      </article>
+    </div>
+    <div class="btn-row mt-7" style="justify-content:center">
+      {book_primary}
+      {book_second}
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE OTHER FREE OFFERS ============ -->
+<section class="section" id="free-offers">
+  <div class="wrap">
+    <div class="center mx-auto" style="max-width:800px">
+      <span class="eyebrow" style="justify-content:center">While you wait</span>
+      <h2 class="h2 balance">You claimed one. The other six are free as well.</h2>
+      <p class="lede mx-auto">Every discipline here leads with a real deliverable rather than a discovery call — and they stack. Ask for a second one on your walkthrough and it costs you nothing but the time to answer a few questions.</p>
+    </div>
+    <div class="grid grid-3 mt-7" data-offer-grid>{cards}
+    </div>
+    <p class="small muted center mt-6" style="max-width:60ch;margin-inline:auto">Genuinely free, genuinely useful, and yours whether or not you hire us. We would rather be judged on the work than on a proposal.</p>
+  </div>
+</section>
+
+<!-- ============ NUMBERS ============ -->
+<section class="section section--tight section--alt section--line" aria-label="Key numbers">
+  <div class="wrap">
+    <div class="stat-band">
+      <div class="stat"><b><span data-count="48" data-suffix="h">48h</span></b><span>From this form to a written plan</span></div>
+      <div class="stat"><b><span data-count="20" data-suffix=" min">20 min</span></b><span>The only meeting we ask for</span></div>
+      <div class="stat"><b><span data-count="7" data-suffix="">7</span></b><span>Free deliverables on the table</span></div>
+      <div class="stat"><b><span data-count="0" data-suffix="">0</span></b><span>Contracts before you see the work</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section cta-band">
+  <div class="wrap center mx-auto" style="max-width:820px">
+    <span class="eyebrow" style="justify-content:center">Next step</span>
+    <h2 class="h1 balance">Put the twenty minutes in the diary and skip the wait.</h2>
+    <p class="lede mx-auto">Your plan is being written either way. Booking now just means you read it with us rather than on your own — and you can add any of the other six deliverables while we are talking.</p>
+    <div class="btn-row mt-6" style="justify-content:center">
+      {book_primary}
+      {book_second}
+    </div>
+    <p class="small muted mt-5">No obligation · No contracts to start · Your data is never resold</p>
+  </div>
+</section>
+'''
     page("thank-you.html", "Thank You | Forward Framework",
-         "Your Growth Plan request has been received. A strategist will send your written plan within two business days.",
+         "Your request has been received. A strategist will send your written plan within two business days — and the other six deliverables are free too.",
          body, noindex=True)
 
 
