@@ -1778,9 +1778,16 @@ def logo_png_svg():
 
 
 def render_images():
-    """Rasterise the SVG brand assets with sharp (Node)."""
-    import subprocess, tempfile
-    img = os.path.join(OUT, "assets", "img")
+    """Regenerate the raster brand assets from their SVG sources.
+
+    The generated PNGs are committed under src/assets/img/ and copied into the
+    build like any other asset, so `python3 build.py` works on a machine with no
+    Node and no sharp. This step only refreshes them when sharp is available.
+    """
+    import subprocess
+    import tempfile
+
+    img = os.path.join(ROOT, "src", "assets", "img")
     os.makedirs(img, exist_ok=True)
     with open(os.path.join(img, "favicon.svg"), "w") as f:
         f.write(favicon_svg())
@@ -1801,14 +1808,28 @@ def render_images():
     node = ("const sharp=require('sharp');const jobs=" + json.dumps(spec) + ";"
             "(async()=>{for(const j of jobs){await sharp(j.src,{density:300})"
             ".resize(j.w,j.h,{fit:'contain',background:'#ffffff'}).png({compressionLevel:9})"
-            ".toFile(j.out);}console.log('images:'+jobs.length)})()")
-    modules = os.environ.get("SHARP_MODULES", "")
+            ".toFile(j.out);}console.log('regenerated '+jobs.length+' brand images')})()")
     try:
         r = subprocess.run(["node", "-e", node], capture_output=True, text=True,
-                           cwd=modules or ROOT, timeout=120)
-        print("  " + (r.stdout.strip() or r.stderr.strip()[:200] or "image step skipped"))
-    except Exception as ex:                                     # pragma: no cover
-        print("  image render skipped (%s) — SVG favicon still written" % ex)
+                           cwd=os.environ.get("SHARP_MODULES") or ROOT, timeout=120)
+        if r.returncode == 0:
+            print("  " + r.stdout.strip())
+            # refresh the copies already staged in site/
+            out_img = os.path.join(OUT, "assets", "img")
+            os.makedirs(out_img, exist_ok=True)
+            for j in spec:
+                shutil.copy2(j["out"], out_img)
+            shutil.copy2(os.path.join(img, "favicon.svg"), out_img)
+            return
+    except Exception:
+        pass
+    missing = [j for j in spec if not os.path.exists(os.path.join(OUT, "assets", "img",
+                                                                 os.path.basename(j["out"])))]
+    if missing:
+        print("  ! brand images missing and sharp is unavailable: "
+              + ", ".join(os.path.basename(j["out"]) for j in missing))
+    else:
+        print("  using committed brand images (sharp unavailable — nothing to regenerate)")
 
 
 # ======================================================================== MAIN
