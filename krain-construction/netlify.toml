@@ -1,0 +1,27 @@
+# Netlify deploy config for the Krain Construction site.
+#
+# The generated site lives in site/, not the repo root — without `publish`
+# Netlify serves the root, which has no index.html and 404s on every URL.
+#
+# site/ is committed and the build is reproducible, so the build command is a
+# refresh, not a requirement: if Python is unavailable or the build fails, the
+# committed output is published unchanged and the deploy still succeeds.
+
+[build]
+  publish = "site"
+  command = "python3 build.py || echo 'Build step skipped — publishing the committed site/ directory.'"
+
+# Pretty URLs are on by default, so /services/log-homes resolves to
+# site/services/log-homes/index.html, and site/404.html serves the 404.
+# Caching and security headers come from site/_headers.
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sitemap"
+  to = "/sitemap.xml"
+  status = 301

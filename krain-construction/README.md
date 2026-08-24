@@ -138,10 +138,14 @@ The `site/` folder is a plain static site — deploy it anywhere.
 
 | Host | How |
 | --- | --- |
-| **Netlify** | Drag `site/` onto the deploy page, or connect the repo with build `python3 build.py` and publish directory `site`. `_headers` is picked up automatically. |
+| **Netlify** | Connect the repo — `netlify.toml` sets publish directory `site` and the build command. Or drag the `site/` folder onto the deploy page. |
 | **Vercel** | Output directory `site`. |
 | **Cloudflare Pages** | Build `python3 build.py`, output `site`. |
 | **Any host** | Upload the contents of `site/` to the web root. |
+
+**The publish directory must be `site`, not the repo root.** The root holds the generator,
+not the website — publishing it gives a 404 on every URL. `netlify.toml` handles this for
+Netlify; set it manually on other hosts.
 
 Point `www.krainconstructionllc.com` at the host and enable HTTPS.
 
