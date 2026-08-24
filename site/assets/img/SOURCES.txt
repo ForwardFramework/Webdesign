@@ -1,0 +1,30 @@
+Rough Diamond Pressure Washing — image sources
+==============================================
+
+Every photo on this site was generated with the Higgsfield MCP image models
+(seedream_v4_5) from prompts written for this brand: dark, cinematic, red /
+orange / gold lighting to match the logo.
+
+`fetch-assets.sh` in the site root downloads these originals and writes the
+optimized .webp files the pages reference. Filenames map as follows:
+
+hero-driveway   hf_20260824_141808_462eec63-7a16-4b57-a4f7-80b3cc29512f.png
+svc-concrete    hf_20260824_141807_0e74599a-b171-4d2a-8545-a460d02b6938.png
+svc-house       hf_20260824_141807_b3ef9f90-07e0-466d-8a59-3904b6593784.png
+svc-deck        hf_20260824_141807_6cd7887c-7585-4ceb-8d28-a2d1fa6047c6.png
+svc-commercial  hf_20260824_141807_0959f5ce-7d8d-4c33-9842-571c87f80550.png
+svc-roof        hf_20260824_141914_604def94-98fd-40a2-93b0-a1ee7c59ebe9.png
+svc-pavers      hf_20260824_141807_225e2fe2-60bf-4ff1-b493-852c7ad365c2.png
+svc-fence       hf_20260824_141914_a3d7d301-db1a-4337-95dc-038188dd5193.png
+pittsburgh      hf_20260824_141807_034b70d0-6609-4a7e-ae62-431089ba29e4.png
+owner           hf_20260824_141808_a17a8d6c-af9a-424b-bce3-6811d5a1fea0.png
+equipment       hf_20260824_141807_f0b42444-53dc-4c83-8c61-532cc212c997.png
+aerial-split    hf_20260824_141807_c9fa7831-feea-469d-b3a9-bd681c9fcb17.png
+neighborhood    hf_20260824_141914_4a45e9ad-2917-4021-af58-536e8d715b5c.png
+og-image        (cropped 1200x630 from hero-driveway)
+
+Base URL:
+https://d8j0ntlcm91z4.cloudfront.net/user_3IL9tsARcNNDKmHrDHi3CGZRiYg/
+
+Replacing these with real job photos is a drop-in swap: keep the same
+filenames and the pages pick them up with no markup changes.

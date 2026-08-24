@@ -4,3 +4,8 @@
 # Local environment files
 .env
 .env.local
+
+# Photography fetched by site/fetch-assets.sh (not stored in the repo)
+site/assets/img/*.webp
+site/assets/img/*.png
+site/assets/img/*.jpg

@@ -1,0 +1,199 @@
+<section class="page-hero">
+  <div class="page-hero__media"><img src="assets/img/svc-commercial.webp" alt="" width="1100" height="733"></div>
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="shell">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      <span>Contact</span>
+    </nav>
+    <h1>Get Your <span class="fire-text">Free Quote</span></h1>
+    <p class="lede">
+      Fastest way is to call or text. If you'd rather type it out, the form below goes
+      straight to our inbox.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="glow glow--fire" style="width:560px;height:560px;top:-140px;right:-180px" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="split" style="align-items:start">
+
+      <div class="reveal">
+        <p class="eyebrow">Reach Us</p>
+        <h2>Talk To A <span class="fire-text">Real Person</span></h2>
+        <p class="lede" style="margin-bottom:28px">
+          No phone tree, no ticket number. Call during business hours and someone who
+          works on the trucks picks up.
+        </p>
+
+        <div class="contact-list">
+          <div class="contact-item">
+            <span class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div>
+              <h4>Call or Text</h4>
+              <a href="tel:+14125001363">412-500-1363</a>
+              <small>Photos by text are welcome — it speeds up the quote.</small>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+            <div>
+              <h4>Email</h4>
+              <a href="mailto:roughdiamondpw@gmail.com">roughdiamondpw@gmail.com</a>
+              <small>We answer email within one business day.</small>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div>
+              <h4>Service Area</h4>
+              <p>Pittsburgh, PA</p>
+              <small>Plus Allegheny, Washington, Butler and Westmoreland counties.</small>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <div>
+              <h4>Hours</h4>
+              <p>Mon – Sat, 7am – 7pm</p>
+              <small>Commercial work scheduled outside your business hours.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The form has no backend wired up: submitting opens the visitor's own
+           mail client pre-filled. Point the <form> at a form service (Formspree,
+           Netlify Forms, etc.) when you have one. -->
+      <form class="form reveal" data-delay="1" data-quote-form novalidate>
+        <p class="eyebrow">Request A Quote</p>
+        <h3 style="margin-bottom:8px;color:var(--cream)">Tell Us About The Job</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:26px">
+          Takes about a minute. We'll get back to you with a real number.
+        </p>
+
+        <div class="form__status" role="status" aria-live="polite"></div>
+
+        <div class="field__row">
+          <div class="field">
+            <label for="f-name">Name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Jane Doe" required>
+            <p class="field__error"></p>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone <span class="req">*</span></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="412-555-0100" required>
+            <p class="field__error"></p>
+          </div>
+        </div>
+
+        <div class="field__row">
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+            <p class="field__error"></p>
+          </div>
+          <div class="field">
+            <label for="f-address">City or ZIP <span class="req">*</span></label>
+            <input id="f-address" name="address" type="text" autocomplete="address-level2" placeholder="Bethel Park, 15102" required>
+            <p class="field__error"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-service">What needs cleaning? <span class="req">*</span></label>
+          <select id="f-service" name="service" required>
+            <option value="">Choose a service…</option>
+            <option>Driveway &amp; Concrete</option>
+            <option>House Soft Washing</option>
+            <option>Deck or Fence</option>
+            <option>Roof Soft Washing</option>
+            <option>Patio &amp; Pavers</option>
+            <option>Commercial / Storefront</option>
+            <option>Whole Exterior Package</option>
+            <option>Something else</option>
+          </select>
+          <p class="field__error"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-details">Details</label>
+          <textarea id="f-details" name="details" placeholder="Rough size, how bad it is, anything we should know about access or water hookup…"></textarea>
+        </div>
+
+        <button class="btn btn--lg btn--block" type="submit">
+          Send My Request
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="form__note">Or just call <a href="tel:+14125001363" style="color:var(--amber)">412-500-1363</a> — usually faster.</p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="section section--panel" id="faq">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="section-head section-head--center reveal">
+      <p class="eyebrow">Common Questions</p>
+      <h2>Good To <span class="fire-text">Know</span></h2>
+    </div>
+
+    <div class="faq reveal">
+      <details open>
+        <summary>How much does pressure washing cost?</summary>
+        <div class="faq__body">It depends on square footage, the surface and how bad the buildup is — a small front walk and a 1,200 square foot driveway are very different jobs. That's why every quote is specific to your property. Send a photo or two and we can usually give you a number the same day.</div>
+      </details>
+      <details>
+        <summary>Do you need to use my water?</summary>
+        <div class="faq__body">Yes, in most cases we hook up to an outside spigot. It uses less water than you'd think — a surface cleaner is far more efficient than running a garden hose at the same job for an hour. If your property doesn't have a working outside tap, tell us when you book and we'll plan around it.</div>
+      </details>
+      <details>
+        <summary>Will pressure washing damage my siding, deck or roof?</summary>
+        <div class="faq__body">Not when the method matches the surface. Concrete can take real pressure. Siding, roofs and older wood cannot — those get soft washed with detergent at low pressure instead. Damage almost always comes from someone using driveway settings on a surface that couldn't take it.</div>
+      </details>
+      <details>
+        <summary>Do I need to be home?</summary>
+        <div class="faq__body">Not necessarily. As long as we have access to the areas being cleaned and an outside water spigot, we can work while you're out. We'd rather you were there at the end to walk the job with us, but we can also send photos when we finish.</div>
+      </details>
+      <details>
+        <summary>How long does it take?</summary>
+        <div class="faq__body">Most residential driveways run one to three hours. A full house soft wash is usually half a day. Whole-exterior packages are typically a single full day. We'll give you a realistic window when we quote it.</div>
+      </details>
+      <details>
+        <summary>How often should this be done?</summary>
+        <div class="faq__body">Around Pittsburgh, most homes look best on a yearly cycle — concrete and siding pick up algae fast in our humidity. North-facing surfaces and heavily shaded properties sometimes want it twice a year. Roofs are more like every two to four years.</div>
+      </details>
+      <details>
+        <summary>What about my plants and landscaping?</summary>
+        <div class="faq__body">Beds get pre-wet before we start and rinsed again when we finish, which dilutes anything that drifts. Anything especially delicate, point it out to us and we'll cover it or work around it.</div>
+      </details>
+      <details>
+        <summary>What if it rains?</summary>
+        <div class="faq__body">Light rain is not a problem — we're already applying a lot of water. Heavy storms or lightning mean we reschedule, and you'll hear from us that morning rather than being left waiting.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="shell">
+    <div class="cta__inner">
+      <div>
+        <h2>Still Have A Question?</h2>
+        <p>Call or text 412-500-1363 and ask. We're happy to talk it through before you book anything.</p>
+      </div>
+      <div class="cta__actions">
+        <a class="btn btn--lg" href="tel:+14125001363">Call 412-500-1363</a>
+        <a class="btn btn--ghost btn--lg" href="mailto:roughdiamondpw@gmail.com">Email Us</a>
+      </div>
+    </div>
+  </div>
+</section>

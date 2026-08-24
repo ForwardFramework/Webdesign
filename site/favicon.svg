@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rough Diamond Pressure Washing diamond mark">
+  <defs>
+    <linearGradient id="gem" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#FFC01E"/>
+      <stop offset="0.34" stop-color="#FF6A13"/>
+      <stop offset="0.72" stop-color="#E11414"/>
+      <stop offset="1" stop-color="#8E0A0A"/>
+    </linearGradient>
+    <linearGradient id="crown" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD86B"/>
+      <stop offset="1" stop-color="#FF6A13"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFC01E"/>
+      <stop offset="0.5" stop-color="#FF6A13"/>
+      <stop offset="1" stop-color="#E11414"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FF6A13" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FF6A13" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="235" fill="url(#glow)"/>
+
+  <!-- badge arcs -->
+  <circle cx="256" cy="256" r="228" fill="none" stroke="url(#ring)" stroke-width="9"
+          stroke-linecap="round" stroke-dasharray="600 130" transform="rotate(-58 256 256)"/>
+  <circle cx="256" cy="256" r="205" fill="none" stroke="#E11414" stroke-width="5" opacity="0.75"
+          stroke-linecap="round" stroke-dasharray="470 250" transform="rotate(128 256 256)"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#FFC01E" stroke-width="4" opacity="0.55"
+          stroke-linecap="round" stroke-dasharray="250 430" transform="rotate(-20 256 256)"/>
+
+  <!-- gem: table + crown + pavilion -->
+  <g>
+    <path d="M256 400 L112 226 L400 226 Z" fill="url(#gem)"/>
+    <path d="M112 226 L166 132 L346 132 L400 226 Z" fill="url(#crown)"/>
+    <path d="M166 132 L196 226 L316 226 L346 132 Z" fill="#FFA02A" opacity="0.85"/>
+    <path d="M196 226 L256 400 L316 226 Z" fill="#FF6A13" opacity="0.9"/>
+    <path d="M112 226 L196 226 L256 400 Z" fill="#C41010" opacity="0.85"/>
+    <path d="M400 226 L316 226 L256 400 Z" fill="#E11414" opacity="0.7"/>
+    <g stroke="#2A0A05" stroke-width="9" stroke-linejoin="round" fill="none" opacity="0.9">
+      <path d="M256 400 L112 226 L166 132 L346 132 L400 226 Z"/>
+      <path d="M112 226 H400"/>
+      <path d="M196 226 L166 132 M316 226 L346 132"/>
+      <path d="M196 226 L256 400 L316 226"/>
+    </g>
+  </g>
+
+  <!-- sparkle -->
+  <g fill="#FFFFFF">
+    <path d="M372 96 L384 142 L430 154 L384 166 L372 212 L360 166 L314 154 L360 142 Z"/>
+    <path d="M436 196 L442 218 L464 224 L442 230 L436 252 L430 230 L408 224 L430 218 Z" opacity="0.85"/>
+  </g>
+</svg>
