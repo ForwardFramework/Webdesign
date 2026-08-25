@@ -120,6 +120,8 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
 /* ---------- Header ---------- */
 .topbar{background:var(--navy-800);color:#c9d6ea;font-size:var(--step--1)}
 .topbar__inner{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:center;justify-content:center;padding:.5rem 0;text-align:center}
+.topbar__area{display:none}
+@media(min-width:720px){.topbar__area{display:inline}}
 .topbar a{color:#fff;font-weight:600}
 .topbar a:hover{color:var(--green-400)}
 .topbar strong{color:var(--green-400)}
@@ -129,11 +131,11 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
 .site-header.is-stuck{box-shadow:var(--shadow-sm)}
 .header__inner{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);min-height:var(--header-h)}
 .brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
-.brand img{height:56px;width:auto}
-.brand__text{display:none;line-height:1.05}
-.brand__name{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--navy-700);letter-spacing:.01em}
-.brand__tag{display:block;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--green-600);font-weight:700}
-@media(min-width:480px){.brand__text{display:block}}
+.brand img{height:46px;width:46px;border-radius:12px;box-shadow:var(--shadow-sm)}
+.brand__text{display:block;line-height:1.05}
+.brand__name{font-family:var(--font-display);font-weight:700;font-size:1.3rem;white-space:nowrap;color:var(--navy-700);letter-spacing:.01em}
+.brand__tag{display:none;font-size:.6rem;white-space:nowrap;letter-spacing:.18em;text-transform:uppercase;color:var(--green-600);font-weight:700}
+@media(min-width:420px){.brand__tag{display:block}}
 
 .nav{display:none}
 @media(min-width:1120px){
@@ -167,7 +169,21 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
   radial-gradient(900px 420px at 88% -8%,rgba(106,176,35,.28),transparent 62%),
   radial-gradient(620px 380px at 6% 108%,rgba(106,176,35,.16),transparent 60%)}
 .hero__inner{position:relative;display:grid;gap:var(--sp-6);padding:var(--sp-7) 0}
-@media(min-width:1000px){.hero__inner{grid-template-columns:1.05fr .95fr;align-items:center;gap:var(--sp-6);padding:var(--sp-7) 0}}
+/* Hero is three blocks — headline, social proof, quote card — so the order
+   can differ by breakpoint. On phones the form sits directly under the
+   headline instead of below a screenful of copy; on desktop the copy and
+   proof stack in the left column beside a full-height card. */
+@media(max-width:999px){
+  .hero__text{order:1}
+  .hero__quote{order:2}
+  .hero__proof{order:3}
+}
+@media(min-width:1000px){
+  .hero__inner{grid-template-columns:1.05fr .95fr;align-items:center;gap:var(--sp-6) var(--sp-7);padding:var(--sp-7) 0}
+  .hero__text{grid-column:1;grid-row:1;align-self:end}
+  .hero__proof{grid-column:1;grid-row:2;align-self:start}
+  .hero__quote{grid-column:2;grid-row:1 / span 2;align-self:center}
+}
 .hero__text h1{color:#fff;margin-bottom:var(--sp-4)}
 .hero__text h1 em{font-style:normal;color:var(--green-400)}
 /* Scoped to .hero__text on purpose: a bare `.hero p` rule outranks the
@@ -355,7 +371,7 @@ fieldset{border:0;padding:0;margin:0 0 var(--sp-3)}
 .site-footer a{color:#a9bad4}
 .site-footer a:hover{color:var(--green-400)}
 .site-footer ul{list-style:none;padding:0;margin:0;display:grid;gap:.55rem}
-.footer__brand img{height:64px;background:#fff;border-radius:12px;padding:8px 12px;margin-bottom:var(--sp-4)}
+.footer__brand img{height:88px;background:#fff;border-radius:12px;padding:8px 12px;margin-bottom:var(--sp-4)}
 .footer__legal{border-top:1px solid rgba(255,255,255,.1);margin-top:var(--sp-6);padding-top:var(--sp-4);display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between;font-size:.83rem;color:#7f92b0}
 .footer__contact li{display:flex;gap:.6rem;align-items:flex-start}
 .footer__contact svg{width:18px;height:18px;color:var(--green-400);flex:0 0 18px;margin-top:3px}
@@ -390,6 +406,7 @@ fieldset{border:0;padding:0;margin:0 0 var(--sp-3)}
 .check-list li{display:flex;gap:.6rem;align-items:flex-start;font-size:.98rem}
 .check-list svg{flex:0 0 20px;margin-top:3px;color:var(--green-500)}
 .page-hero{background:var(--navy-050);border-bottom:1px solid var(--border);padding:var(--sp-7) 0;text-align:center}
+.page-hero h1{max-width:20ch;margin-inline:auto}
 .page-hero p{color:var(--text-muted);font-size:var(--step-1);max-width:44rem;margin-inline:auto;margin-bottom:0}
 .breadcrumb{font-size:.83rem;color:var(--text-muted);margin-bottom:var(--sp-3)}
 .breadcrumb a{color:var(--text-muted)}
