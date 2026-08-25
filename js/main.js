@@ -55,20 +55,19 @@
     var tier = PRICING.tierMultiplier[opts.tier] || 1;
     var freq = opts.frequency || 'biweekly';
 
-    var rooms = PRICING.base + beds * PRICING.perBedroom + baths * PRICING.perBathroom;
+    // The tier multiplier is scope-of-work, so it always applies. Callers that
+    // have no tier picker decide which scope to price against — see the
+    // estimator below, which quotes one-time jobs at base scope to match the
+    // published one-time rate table.
+    var raw = (PRICING.base + beds * PRICING.perBedroom + baths * PRICING.perBathroom) * tier;
 
     // A one-off visit costs more than a maintained home: no plan discount,
-    // plus the job type multiplier for deep / move-out work. The tier
-    // multiplier does NOT apply here — Fresh Start / Signature / Platinum are
-    // recurring plans, so a one-time job is priced off the room base alone.
-    // This is what keeps the estimator inside the published one-time ranges.
+    // plus the job type multiplier for deep / move-out work.
     if (freq === 'once') {
       var type = PRICING.typeMultiplier[opts.jobType] || PRICING.typeMultiplier.standard;
-      var oneOff = rooms * type;
+      var oneOff = raw * type;
       return { list: oneOff, price: oneOff, saved: 0, pct: 0 };
     }
-
-    var raw = rooms * tier;
 
     var pct = PRICING.frequencyDiscount[freq] || 0;
     var price = raw * (1 - pct);
@@ -96,10 +95,16 @@
 
     function update() {
       var frequency = read('frequency', 'biweekly');
+
+      // This widget has no package picker. Recurring quotes assume the
+      // most-booked plan (Signature); one-time jobs are quoted at base scope,
+      // which is what the published one-time rate table reflects.
+      var tier = frequency === 'once' ? 'fresh' : read('tier', 'signature');
+
       var result = estimate({
         bedrooms: read('bedrooms', 3),
         bathrooms: read('bathrooms', 2),
-        tier: read('tier', 'signature'),
+        tier: tier,
         frequency: frequency,
         jobType: read('jobType', 'standard')
       });
