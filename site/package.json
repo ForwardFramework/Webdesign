@@ -1,0 +1,13 @@
+{
+  "name": "kotouch-equipment-services",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing website for Kotouch Equipment Services — mobile heavy equipment mechanic, Western Pennsylvania.",
+  "scripts": {
+    "build": "node _build/build.mjs",
+    "check": "node _build/check.mjs",
+    "serve": "python3 -m http.server 8080",
+    "start": "npm run build && npm run check && npm run serve"
+  },
+  "engines": { "node": ">=18" }
+}

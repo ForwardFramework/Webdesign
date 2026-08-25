@@ -3,6 +3,12 @@
 Design tooling for Claude Code: the vendored [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 skills plus the [21st.dev](https://21st.dev) MCP server.
 
+## Sites
+
+`site/` holds the **Kotouch Equipment Services** website — a static, dependency-free
+marketing site built with these skills. See [site/README.md](site/README.md) for
+deployment and editing.
+
 ## Skills
 
 `.claude/skills/` holds seven vendored skills (`ui-ux-pro-max`, `ui-styling`, `design`,
