@@ -142,11 +142,22 @@ nav item, `aria-expanded` on the mobile menu toggle, `role="status"` on form fee
 and a `prefers-reduced-motion` block that disables all transitions and reveals.
 No frameworks, no images beyond two SVGs, one Google Fonts request.
 
-Text colours are checked against WCAG AA rather than eyeballed. Pale palettes fail
-this easily, so if you change `--ink-500`, `--ink-700` or any badge gradient, re-check
-the contrast — the muted grey is set to `#6E655D` specifically because it clears 4.5:1
-on every cream and sage ground the site uses, and the blush badges use `--rose-600/700`
-(not the pale tints) because white text on the light blush measured about 2.6:1.
+Text colours are measured against WCAG AA, not eyeballed — a soft palette fails this
+very easily. Specifics worth preserving if you change colours:
+
+- `--ink-500` (`#6E655D`) is chosen because it clears 4.5:1 on *every* cream and sage
+  ground in use. The lighter warm grey it replaced measured 3.4–4.1:1.
+- Badges and medallions that carry white text use the deep stops (`--rose-700`,
+  `#8C4C43`, `--sage-700`). The pale blush tints measured 2.6–3.4:1 against white.
+- **`--green-cta` (`#478016`) exists only for buttons.** The logo green `#6AB023` is
+  gorgeous but gives white text just 2.68:1, so the button uses a deeper green from
+  the same family (4.8:1) while the logo, ticks and icons keep the true brand green.
+  Don't "fix" the button back to `--green-500`.
+
+Two cascade traps bit this design twice, both from a bare descendant selector
+outranking a component class: `.hero p` repainting the estimate price, and
+`.review__who span` repainting the white avatar initials. If a component's colour
+mysteriously ignores its own rule, look for a descendant selector above it.
 
 ## Local preview
 
