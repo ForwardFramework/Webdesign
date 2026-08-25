@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Yasse's Cleaning">
+  <rect width="64" height="64" rx="14" fill="#16305C"/>
+  <path d="M32 12 12 30h6v16h28V30h6L32 12zm0 5.5L40.5 25v16h-5v-9h-7v9h-5V25L32 17.5z" fill="#fff"/>
+  <rect x="27" y="27" width="10" height="10" rx="1.5" fill="#fff"/>
+  <path d="M8 47c8 5 16 7 24 6.5S48 50 54 45c-5 6-14 10-23 10.5S14 53 8 47z" fill="#6AB023"/>
+  <path d="M52 33c-5 .5-9 3-10 7 4 1 7.5-.5 9-3.5.9-1.6 1.2-2.7.9-3.5z" fill="#6AB023"/>
+  <path d="M46 8c1.1 5.3 2.8 7 8.1 8.1-5.3 1.1-7 2.8-8.1 8.1-1.1-5.3-2.8-7-8.1-8.1C43.2 15 44.9 13.3 46 8z" fill="#6AB023"/>
+</svg>
