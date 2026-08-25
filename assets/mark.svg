@@ -1,8 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Yasse's Cleaning">
-  <rect width="64" height="64" rx="14" fill="#16305C"/>
-  <path d="M32 12 12 30h6v16h28V30h6L32 12zm0 5.5L40.5 25v16h-5v-9h-7v9h-5V25L32 17.5z" fill="#fff"/>
-  <rect x="27" y="27" width="10" height="10" rx="1.5" fill="#fff"/>
-  <path d="M8 47c8 5 16 7 24 6.5S48 50 54 45c-5 6-14 10-23 10.5S14 53 8 47z" fill="#6AB023"/>
-  <path d="M52 33c-5 .5-9 3-10 7 4 1 7.5-.5 9-3.5.9-1.6 1.2-2.7.9-3.5z" fill="#6AB023"/>
-  <path d="M46 8c1.1 5.3 2.8 7 8.1 8.1-5.3 1.1-7 2.8-8.1 8.1-1.1-5.3-2.8-7-8.1-8.1C43.2 15 44.9 13.3 46 8z" fill="#6AB023"/>
+  <defs>
+    <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAE5E1"/>
+      <stop offset="55%" stop-color="#F2F7EF"/>
+      <stop offset="100%" stop-color="#D0E3C5"/>
+    </linearGradient>
+  </defs>
+  <!-- soft petal-cornered ground -->
+  <path d="M32 2c18 0 30 12 30 30 0 12-8 30-30 30S2 54 2 32C2 14 14 2 32 2z" fill="url(#petal)"/>
+  <!-- house, from the logo -->
+  <path d="M32 13 13 30h5.5v15h27V30H51L32 13zm0 5.4L40 26v14h-4.6v-8.4h-6.8V40H24V26l8-7.6z" fill="#16305C"/>
+  <rect x="27.6" y="27.6" width="8.8" height="8.8" rx="2" fill="#16305C"/>
+  <!-- leaf swoosh -->
+  <path d="M9 47c8 4.6 16 6.6 24 6.2C41 52.8 48 50 54 45.4c-5 6-13.6 9.8-22.6 10.2C22.4 56 14.6 52.6 9 47z" fill="#6AB023"/>
+  <path d="M52.6 33.4c-4.8.5-8.6 2.9-9.6 6.7 3.8 1 7.2-.5 8.6-3.4.9-1.5 1.2-2.6 1-3.3z" fill="#8CB57A"/>
+  <!-- sparkle -->
+  <path d="M47 7c1 4.9 2.6 6.5 7.5 7.5-4.9 1-6.5 2.6-7.5 7.5-1-4.9-2.6-6.5-7.5-7.5C44.4 13.5 46 11.9 47 7z" fill="#6AB023"/>
 </svg>

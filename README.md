@@ -39,6 +39,31 @@ safe to find-and-replace across all seven HTML files.
 grep -rl '(941) 555-0142' *.html | xargs sed -i 's/(941) 555-0142/(941) 555-1234/g'
 ```
 
+## Brand
+
+Soft, natural and feminine, built around the two colours that are actually in the
+logo:
+
+| Role | Token | Value |
+| --- | --- | --- |
+| Logo navy — headings, wordmark | `--navy-700` | `#16305C` |
+| Logo leaf green — primary CTA | `--green-500` | `#6AB023` |
+| Warm cream — page ground | `--cream-50/100/200` | `#FDFAF6` → `#F3E9DC` |
+| Blush — accents, eyebrows, "most popular" | `--rose-50…700` | `#FDF3F1` → `#A15B50` |
+| Sage — supporting greens, ticks, checked states | `--sage-50…700` | `#F2F7EF` → `#547A44` |
+| Deep botanical — dark sections, footer | `--forest-600…900` | `#42765A` → `#1E3A2C` |
+
+Type is **Fraunces** for display (a soft, organic serif — `SOFT 100 / WONK 1` for the
+rounder, slightly hand-cut letterforms), **Nunito Sans** for body copy, and **Caveat**
+as a handwritten accent used sparingly on the tagline and the guarantee seal.
+
+Shapes and depth are softened throughout: larger radii (`18px` / `28px`), petal-cornered
+icon tiles, a leaf-shaped bullet, warm brown-tinted shadows instead of blue-grey ones,
+and an organic curve where the hero meets the page.
+
+The hero is deliberately light — cream through blush into sage — rather than the dark
+navy slab it started as.
+
 ## The offer
 
 Three recurring packages — **Fresh Start**, **Signature Sparkle** (featured),
@@ -116,6 +141,12 @@ Skip link, visible focus rings, labelled form controls, `aria-current` on the ac
 nav item, `aria-expanded` on the mobile menu toggle, `role="status"` on form feedback,
 and a `prefers-reduced-motion` block that disables all transitions and reveals.
 No frameworks, no images beyond two SVGs, one Google Fonts request.
+
+Text colours are checked against WCAG AA rather than eyeballed. Pale palettes fail
+this easily, so if you change `--ink-500`, `--ink-700` or any badge gradient, re-check
+the contrast — the muted grey is set to `#6E655D` specifically because it clears 4.5:1
+on every cream and sage ground the site uses, and the blush badges use `--rose-600/700`
+(not the pale tints) because white text on the light blush measured about 2.6:1.
 
 ## Local preview
 
