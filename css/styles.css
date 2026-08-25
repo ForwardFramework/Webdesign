@@ -83,7 +83,7 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
 .section--alt{background:var(--bg-alt)}
 .section--navy{background:var(--navy-800);color:#dbe4f2}
 .section--navy h2,.section--navy h3{color:#fff}
-.section-head{max-width:44rem;margin:0 auto var(--sp-7);text-align:center}
+.section-head{max-width:44rem;margin:0 auto var(--sp-6);text-align:center}
 .section-head p{color:var(--text-muted);font-size:var(--step-1);margin-bottom:0}
 .section--navy .section-head p{color:#b9c8e0}
 .grid{display:grid;gap:var(--sp-5)}
@@ -120,8 +120,9 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
 /* ---------- Header ---------- */
 .topbar{background:var(--navy-800);color:#c9d6ea;font-size:var(--step--1)}
 .topbar__inner{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:center;justify-content:center;padding:.5rem 0;text-align:center}
-.topbar__area{display:none}
-@media(min-width:720px){.topbar__area{display:inline}}
+.topbar__area,.topbar__note{display:none}
+@media(min-width:560px){.topbar__note{display:inline}}
+@media(min-width:900px){.topbar__area{display:inline}}
 .topbar a{color:#fff;font-weight:600}
 .topbar a:hover{color:var(--green-400)}
 .topbar strong{color:var(--green-400)}
@@ -168,7 +169,7 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
 .hero::before{content:"";position:absolute;inset:0;background:
   radial-gradient(900px 420px at 88% -8%,rgba(106,176,35,.28),transparent 62%),
   radial-gradient(620px 380px at 6% 108%,rgba(106,176,35,.16),transparent 60%)}
-.hero__inner{position:relative;display:grid;gap:var(--sp-6);padding:var(--sp-7) 0}
+.hero__inner{position:relative;display:grid;gap:var(--sp-5);padding:var(--sp-6) 0}
 /* Hero is three blocks — headline, social proof, quote card — so the order
    can differ by breakpoint. On phones the form sits directly under the
    headline instead of below a screenful of copy; on desktop the copy and
@@ -179,7 +180,7 @@ ul,ol{margin:0 0 var(--sp-4);padding-left:1.25rem}
   .hero__proof{order:3}
 }
 @media(min-width:1000px){
-  .hero__inner{grid-template-columns:1.05fr .95fr;align-items:center;gap:var(--sp-6) var(--sp-7);padding:var(--sp-7) 0}
+  .hero__inner{grid-template-columns:1.05fr .95fr;align-items:center;gap:var(--sp-3) var(--sp-7);padding:var(--sp-7) 0}
   .hero__text{grid-column:1;grid-row:1;align-self:end}
   .hero__proof{grid-column:1;grid-row:2;align-self:start}
   .hero__quote{grid-column:2;grid-row:1 / span 2;align-self:center}
@@ -405,7 +406,7 @@ fieldset{border:0;padding:0;margin:0 0 var(--sp-3)}
 .check-list{list-style:none;padding:0;margin:0 0 var(--sp-5);display:grid;gap:.7rem}
 .check-list li{display:flex;gap:.6rem;align-items:flex-start;font-size:.98rem}
 .check-list svg{flex:0 0 20px;margin-top:3px;color:var(--green-500)}
-.page-hero{background:var(--navy-050);border-bottom:1px solid var(--border);padding:var(--sp-7) 0;text-align:center}
+.page-hero{background:var(--navy-050);border-bottom:1px solid var(--border);padding:var(--sp-6) 0;text-align:center}
 .page-hero h1{max-width:20ch;margin-inline:auto}
 .page-hero p{color:var(--text-muted);font-size:var(--step-1);max-width:44rem;margin-inline:auto;margin-bottom:0}
 .breadcrumb{font-size:.83rem;color:var(--text-muted);margin-bottom:var(--sp-3)}
