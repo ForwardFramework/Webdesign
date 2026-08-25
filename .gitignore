@@ -4,3 +4,10 @@
 # Local environment files
 .env
 .env.local
+
+# Node dependencies (playwright-core, installed on demand for tests/e2e.js)
+node_modules/
+package-lock.json
+
+# Test screenshots — regenerate with `node tests/e2e.js`
+tests/shots/
