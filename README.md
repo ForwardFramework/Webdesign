@@ -66,9 +66,20 @@ var PRICING = {
 ```
 
 Change those values and the hero estimator, the pricing-page estimator and all three
-tier cards reprice together. The static prices in prose (the `From $…` labels, the
-one-time rate table on `pricing.html`) are written into the HTML and need editing
-separately if the model changes materially.
+tier cards reprice together.
+
+Two rules the model follows, worth knowing before you change it:
+
+- **Tier multipliers apply to recurring plans only.** A one-time job (deep, move-out,
+  standard) is priced off the room base times its job-type multiplier — the Fresh
+  Start / Signature / Platinum multipliers are not applied, because those are plan
+  tiers, not job types. This is what keeps the calculator inside the published
+  one-time ranges.
+- **Published prices are derived from the same formula.** The `From $…` labels on the
+  service cards and the one-time rate table on `pricing.html` were generated from the
+  numbers above, so the calculator and the printed tables agree. They are written
+  into the HTML as static text — if you change the pricing model, regenerate or edit
+  them too, or the site will quote two different numbers for the same job.
 
 ## Forms
 

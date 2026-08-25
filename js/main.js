@@ -55,15 +55,20 @@
     var tier = PRICING.tierMultiplier[opts.tier] || 1;
     var freq = opts.frequency || 'biweekly';
 
-    var raw = (PRICING.base + beds * PRICING.perBedroom + baths * PRICING.perBathroom) * tier;
+    var rooms = PRICING.base + beds * PRICING.perBedroom + baths * PRICING.perBathroom;
 
     // A one-off visit costs more than a maintained home: no plan discount,
-    // plus the job type multiplier for deep / move-out work.
+    // plus the job type multiplier for deep / move-out work. The tier
+    // multiplier does NOT apply here — Fresh Start / Signature / Platinum are
+    // recurring plans, so a one-time job is priced off the room base alone.
+    // This is what keeps the estimator inside the published one-time ranges.
     if (freq === 'once') {
       var type = PRICING.typeMultiplier[opts.jobType] || PRICING.typeMultiplier.standard;
-      var oneOff = raw * type;
+      var oneOff = rooms * type;
       return { list: oneOff, price: oneOff, saved: 0, pct: 0 };
     }
+
+    var raw = rooms * tier;
 
     var pct = PRICING.frequencyDiscount[freq] || 0;
     var price = raw * (1 - pct);

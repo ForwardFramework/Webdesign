@@ -362,6 +362,12 @@ fieldset{border:0;padding:0;margin:0 0 var(--sp-4)}
 @media(min-width:1040px){.mobile-bar{display:none}}
 @media(max-width:1039px){body{padding-bottom:76px}}
 
+/* [hidden] must win over class rules that set an explicit display.
+   .tier__save / .estimate__save are display:inline-block, which would
+   otherwise beat the UA sheet's [hidden]{display:none} and stay visible
+   when JS hides them (e.g. one-time pricing, which has no discount). */
+[hidden]{display:none !important}
+
 /* ---------- Utilities / misc ---------- */
 .skip-link{position:absolute;left:-9999px;top:0;background:var(--navy-700);color:#fff;padding:.75rem 1.25rem;z-index:100;border-radius:0 0 8px 0}
 .skip-link:focus{left:0;color:#fff}
