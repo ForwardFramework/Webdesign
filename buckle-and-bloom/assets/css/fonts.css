@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Self-hosted brand fonts — latin subset, variable where available.
+   Playfair Display (display serif), Parisienne (script accent) and
+   Montserrat (body/labels) are all SIL Open Font License 1.1.
+   See README.md for how to refresh these files.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display-variable.woff2') format('woff2-variations'),
+       url('../fonts/playfair-display-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display-italic-variable.woff2') format('woff2-variations'),
+       url('../fonts/playfair-display-italic-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/montserrat-variable.woff2') format('woff2-variations'),
+       url('../fonts/montserrat-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Parisienne';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/parisienne-400.woff2') format('woff2');
+}
