@@ -9,7 +9,7 @@
     email: 'kubshandy@gmail.com',
     monthly: 99,          // Care Plan price per month
     yearly: 990,          // Care Plan price per year (2 months free)
-    hourlyValue: 60,      // labor value used for the "hours banked" figure
+    hourlyValue: 95,      // hourly labor rate, used for the "hours banked" figure
     maxBankedMonths: 12
   };
 
@@ -112,7 +112,7 @@
     if (monthsOut) monthsOut.textContent = String(months);
     if (hoursEl) hoursEl.textContent = String(months);
     if (valueEl) {
-      valueEl.textContent = 'a $' + (months * CONFIG.hourlyValue) + ' value of labor';
+      valueEl.textContent = 'a $' + (months * CONFIG.hourlyValue).toLocaleString('en-US') + ' value of labor';
     }
     if (exampleEl) exampleEl.innerHTML = EXAMPLES[months] || '';
 
