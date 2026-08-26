@@ -28,12 +28,12 @@ These were needed to make the page concrete and are **placeholders — change th
 
 | What | Where | Current value |
 |---|---|---|
-| Care Plan monthly price | `script.js` → `CONFIG.monthly` | `$49` |
-| Care Plan yearly price | `script.js` → `CONFIG.yearly` | `$490` (2 months free) |
+| Care Plan monthly price | `script.js` → `CONFIG.monthly` | `$99` |
+| Care Plan yearly price | `script.js` → `CONFIG.yearly` | `$990` (2 months free) |
 | Hourly value used in the hour-bank figure | `script.js` → `CONFIG.hourlyValue` | `$60` |
 | Cap on banked months shown in the widget | `script.js` → `CONFIG.maxBankedMonths` | `12` |
 | Member discount | `index.html`, feature list + hero card | `10% off` |
-| Hero price shown on the floating card | `index.html`, `.hero-plan-card` | `$49` |
+| Hero price shown on the floating card | `index.html`, `.hero-plan-card` | `$99` |
 | Facebook page URL | `index.html`, Messenger contact row | placeholder profile link |
 | Canonical / `og:url` domain | `index.html` `<head>` | `kubshandy.com` |
 

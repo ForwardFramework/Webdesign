@@ -7,8 +7,8 @@
      --------------------------------------------------------------- */
   var CONFIG = {
     email: 'kubshandy@gmail.com',
-    monthly: 49,          // Care Plan price per month
-    yearly: 490,          // Care Plan price per year (2 months free)
+    monthly: 99,          // Care Plan price per month
+    yearly: 990,          // Care Plan price per year (2 months free)
     hourlyValue: 60,      // labor value used for the "hours banked" figure
     maxBankedMonths: 12
   };
@@ -70,7 +70,7 @@
     } else {
       priceEl.textContent = '$' + CONFIG.monthly;
       periodEl.textContent = 'per month';
-      priceNoteEl.textContent = 'Billed monthly · $' + CONFIG.monthly * 12 + ' a year';
+      priceNoteEl.textContent = 'Billed monthly · $' + (CONFIG.monthly * 12).toLocaleString('en-US') + ' a year';
     }
   }
 
