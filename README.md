@@ -10,6 +10,14 @@ skills plus the [21st.dev](https://21st.dev) MCP server.
 need only Python 3.x. See [.claude/skills/VENDORED.md](.claude/skills/VENDORED.md) for the
 upstream version and update procedure.
 
+## Sites
+
+`sites/` holds pages built with these skills.
+
+- [`sites/kubs-handyman`](sites/kubs-handyman/) — landing page for KUBS Handy-Man
+  Services (Sarasota, FL), including the Care Plan membership. Static HTML/CSS/JS,
+  no build step.
+
 ## 21st.dev MCP server
 
 `.mcp.json` registers the `21st` HTTP MCP server at project scope, so anyone working in this
