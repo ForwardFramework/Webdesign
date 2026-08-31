@@ -1,0 +1,4 @@
+# Netlify: pretty URLs and legacy paths
+/services            /services/index.html        200
+/service-areas       /service-areas/index.html   200
+/*                   /404.html                   404

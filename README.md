@@ -3,6 +3,17 @@
 Design tooling for Claude Code: the vendored [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 skills plus the [21st.dev](https://21st.dev) MCP server.
 
+## Client sites
+
+`site/` holds the **Top Gun Roofing LLC** website — a hand-built, dependency-free static
+site (32 pages) generated from the data files in `build/`. See
+[site/README.md](site/README.md) for the pre-launch checklist, deployment options and
+editing guide.
+
+```bash
+node build/build.js    # regenerate every page into site/
+```
+
 ## Skills
 
 `.claude/skills/` holds seven vendored skills (`ui-ux-pro-max`, `ui-styling`, `design`,
