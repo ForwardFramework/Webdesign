@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 56" width="236" height="56" role="img" aria-label="Acosta Pro Aluminum Screen LLC">
+  <defs>
+    <pattern id="meshLight" width="5" height="5" patternUnits="userSpaceOnUse">
+      <path d="M5 0H0V5" fill="none" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <g>
+    <rect x="2" y="6" width="44" height="44" rx="5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+    <rect x="8" y="12" width="32" height="32" rx="2" fill="url(#meshLight)"/>
+    <path d="M24 12v32M8 28h32" stroke="#FFFFFF" stroke-width="2" stroke-opacity=".55"/>
+    <path d="M13 40l22-22" stroke="#C2410C" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+  <text x="58" y="27" font-family="Poppins, Segoe UI, sans-serif" font-size="21" font-weight="800" letter-spacing="1.2" fill="#FFFFFF">ACOSTA<tspan fill="#C2410C"> PRO</tspan></text>
+  <text x="59" y="43" font-family="Open Sans, Segoe UI, sans-serif" font-size="8.6" font-weight="600" letter-spacing="2.5" fill="#A9C0D8">ALUMINUM &#38; SCREEN LLC</text>
+</svg>

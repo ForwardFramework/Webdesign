@@ -4,3 +4,11 @@
 # Local environment files
 .env
 .env.local
+
+# Dev tooling used for build-time checks only (playwright, axe-core)
+node_modules/
+package.json
+package-lock.json
+
+# Python bytecode from the site generator
+site/__pycache__/

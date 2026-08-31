@@ -1,0 +1,9 @@
+# Legacy / convenience paths -> canonical URLs
+/index.html               /                                   301
+/services/index.html      /services/                          301
+/screen-repair            /services/window-screen-repair/     301
+/pool-cage                /services/pool-cage-rescreening/    301
+/lanai                    /services/lanai-patio-screen-enclosures/ 301
+/quote                    /contact/                           301
+/estimate                 /contact/                           301
+/reviews.html             /reviews/                           301
