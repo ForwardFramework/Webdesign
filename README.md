@@ -10,6 +10,14 @@ skills plus the [21st.dev](https://21st.dev) MCP server.
 need only Python 3.x. See [.claude/skills/VENDORED.md](.claude/skills/VENDORED.md) for the
 upstream version and update procedure.
 
+## Sites
+
+`sites/` holds the client sites built with this tooling.
+
+- [`sites/set-n-concrete/`](sites/set-n-concrete/) — landing page for Set 'N Concrete, a
+  concrete, excavation, epoxy and roofing contractor in Southwestern Pennsylvania. Static
+  HTML/CSS/JS, no build step. See its README for the pre-launch checklist.
+
 ## 21st.dev MCP server
 
 `.mcp.json` registers the `21st` HTTP MCP server at project scope, so anyone working in this

@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Project photos for the "Our work" gallery.
+
+   The gallery shows a branded concrete texture until real photos exist, so a
+   fresh install never 404s. To use your own photos:
+
+     1. Save each image into assets/img/gallery/ with the filename below.
+        Landscape, roughly 1200x800, WebP or JPG, compressed under ~250 KB.
+     2. Uncomment that image's rule.
+     3. Update the matching <figcaption> and aria-label in index.html so the
+        caption and alt text describe the photo you actually used.
+   ========================================================================== */
+
+/*
+.tile[data-photo="concrete-driveway"]     { --tile-photo: url("/assets/img/gallery/concrete-driveway.jpg"); }
+.tile[data-photo="stamped-patio"]         { --tile-photo: url("/assets/img/gallery/stamped-patio.jpg"); }
+.tile[data-photo="excavation-site-prep"]  { --tile-photo: url("/assets/img/gallery/excavation-site-prep.jpg"); }
+.tile[data-photo="epoxy-garage-floor"]    { --tile-photo: url("/assets/img/gallery/epoxy-garage-floor.jpg"); }
+.tile[data-photo="metal-roof"]            { --tile-photo: url("/assets/img/gallery/metal-roof.jpg"); }
+.tile[data-photo="retaining-wall"]        { --tile-photo: url("/assets/img/gallery/retaining-wall.jpg"); }
+*/

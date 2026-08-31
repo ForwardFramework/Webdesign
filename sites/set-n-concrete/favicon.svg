@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Set 'N Concrete trowel mark">
+  <defs>
+    <linearGradient id="bladeG" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#F4F6F7"/><stop offset=".5" stop-color="#C3C8CE"/><stop offset="1" stop-color="#8B9199"/>
+    </linearGradient>
+    <linearGradient id="gripG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF9248"/><stop offset="1" stop-color="#D14E14"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0B0B0D"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" fill="none" stroke="#F26A21" stroke-width="3"/>
+  <!-- handle -->
+  <g transform="rotate(-20 32 22)">
+    <rect x="14" y="15" width="36" height="14" rx="7" fill="url(#gripG)"/>
+    <rect x="17.5" y="18" width="29" height="4" rx="2" fill="#fff" opacity=".3"/>
+  </g>
+  <!-- posts -->
+  <path d="m19 30 5.5-2 3 10-5.5 2z" fill="#41474F"/>
+  <path d="m39 23 5.5-2 3 10-5.5 2z" fill="#41474F"/>
+  <!-- blade -->
+  <path d="M6 44 38 30l20 7.5L26 51.5z" fill="url(#bladeG)"/>
+  <path d="M6 44 26 51.5v4.5L6 48.5z" fill="#71777F"/>
+  <path d="M26 51.5 58 37.5V42L26 56z" fill="#585E66"/>
+</svg>
