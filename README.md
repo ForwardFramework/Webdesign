@@ -3,6 +3,13 @@
 Design tooling for Claude Code: the vendored [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 skills plus the [21st.dev](https://21st.dev) MCP server.
 
+## Projects
+
+| Project | What it is |
+| --- | --- |
+| [`denis-pro-cleaning/`](denis-pro-cleaning/) | Conversion-focused marketing site for Denis Pro Cleaning Services (Pittsburgh, PA) — instant quote calculator, interval-based packages, online booking calendar and contact form. Static HTML/CSS/JS, no build step. |
+
+
 ## Skills
 
 `.claude/skills/` holds seven vendored skills (`ui-ux-pro-max`, `ui-styling`, `design`,

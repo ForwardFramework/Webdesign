@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="82 108 494 292" role="img" aria-label="Denis Pro Cleaning Services emblem">
+  <defs>
+    <linearGradient id="gNavy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E4590"/><stop offset=".55" stop-color="#0D2A5E"/><stop offset="1" stop-color="#08183A"/></linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A93F0"/><stop offset=".5" stop-color="#1554C0"/><stop offset="1" stop-color="#0E3D93"/></linearGradient>
+    <linearGradient id="gRing" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0D2A5E"/><stop offset=".5" stop-color="#1554C0"/><stop offset="1" stop-color="#5AACF7"/></linearGradient>
+    <linearGradient id="gSilver" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDF1F6"/><stop offset=".45" stop-color="#9BA9BA"/><stop offset="1" stop-color="#DCE4EC"/></linearGradient>
+    <linearGradient id="gSwoosh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0D2A5E"/><stop offset=".45" stop-color="#2E7DE0"/><stop offset="1" stop-color="#5AACF7"/></linearGradient>
+    <linearGradient id="gSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8F9DAE"/><stop offset=".4" stop-color="#F1F5F9"/><stop offset="1" stop-color="#7C8B9D"/></linearGradient>
+    <linearGradient id="gBucket" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0E3D93"/><stop offset=".45" stop-color="#2E7DE0"/><stop offset="1" stop-color="#0D2A5E"/></linearGradient>
+  </defs>
+  <!-- ring: silver outer accent + blue ring, open at the bottom for the swoosh -->
+  <path d="M142 291.3 A166 166 0 1 1 458 291.3" fill="none" stroke="url(#gSilver)" stroke-width="15" stroke-linecap="round"/>
+  <path d="M170.1 315 A150 150 0 1 1 429.9 315" fill="none" stroke="url(#gRing)" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- house: roof + wall + window, tucked lower-left inside the ring -->
+  <g>
+    <rect x="98" y="318" width="112" height="54" fill="url(#gNavy)"/>
+    <path d="M84 324 L152 258 L220 324 Z" fill="url(#gNavy)"/>
+    <path d="M152 249 L232 326 L214 326 L152 268 L90 326 L72 326 Z" fill="#DCE4EC"/>
+    <rect x="180" y="244" width="14" height="34" rx="3" fill="url(#gNavy)"/>
+    <path d="M210 372 L210 300 L242 332 L242 372 Z" fill="#12326C"/>
+    <rect x="114" y="330" width="36" height="34" rx="3" fill="#12326C"/>
+    <path d="M132 330v34M114 347h36" stroke="#DCE4EC" stroke-width="4"/>
+  </g>
+
+  <!-- DP monogram -->
+  <text x="262" y="305" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="190" fill="url(#gNavy)">D</text>
+  <text x="348" y="326" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="190" fill="url(#gBlue)">P</text>
+
+  <!-- swoosh across the open base of the ring -->
+  <path d="M88 352C190 412 330 402 430 352 500 316 540 268 562 232" fill="none" stroke="url(#gSwoosh)" stroke-width="17" stroke-linecap="round"/>
+  <path d="M104 376C204 430 336 420 434 372 498 340 536 296 558 264" fill="none" stroke="url(#gSilver)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- squeegee -->
+  <g transform="rotate(-16 488 300)">
+    <rect x="465" y="196" width="50" height="17" rx="5" fill="url(#gSteel)"/>
+    <rect x="471" y="213" width="38" height="12" rx="4" fill="#0D2A5E"/>
+    <rect x="483" y="225" width="13" height="76" rx="6" fill="url(#gSteel)"/>
+    <rect x="479" y="301" width="21" height="62" rx="10" fill="#0D2A5E"/>
+  </g>
+
+  <!-- bucket + suds -->
+  <g>
+    <path d="M436 314h72l-8 58a12 12 0 0 1-12 10h-32a12 12 0 0 1-12-10z" fill="url(#gBucket)"/>
+    <ellipse cx="472" cy="314" rx="36" ry="9" fill="#5AACF7"/>
+    <path d="M441 313a31 31 0 0 1 62 0" fill="none" stroke="#E6ECF3" stroke-width="3.5"/>
+    <circle cx="452" cy="298" r="12" fill="#EAF3FF"/><circle cx="474" cy="288" r="15" fill="#F7FBFF"/>
+    <circle cx="495" cy="300" r="10" fill="#DCEBFF"/><circle cx="487" cy="272" r="7" fill="#EAF3FF"/>
+  </g>
+
+  <!-- sparkles -->
+  <g fill="#1554C0">
+    <path d="M436 122c3.6 21 9 26 30 30-21 3.6-26 9-30 30-3.6-21-9-26-30-30 21-3.6 26-9 30-30z"/>
+    <path d="M512 168c2.7 13.5 6.3 17 20 20-13.5 2.7-17 6.3-20 20-2.7-13.5-6.3-17-20-20 13.5-2.7 17-6.3 20-20z" opacity=".85"/>
+    <path d="M546 232c1.9 9.4 4.4 12 14 14-9.4 1.9-12 4.4-14 14-1.9-9.4-4.4-12-14-14 9.4-1.9 12-4.4 14-14z" opacity=".65"/>
+  </g>
+</svg>
