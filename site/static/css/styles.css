@@ -5,16 +5,19 @@
    ========================================================================== */
 
 :root{
-  /* Brand ---------------------------------------------------------------- */
-  --navy-900:#06192E;
-  --navy-800:#0B2B4C;
-  --navy-700:#123A63;   /* primary. white text on this = 10.4:1 */
-  --navy-600:#1A4C7F;
-  --blue-600:#1B6AC0;   /* links on white = 4.6:1 */
-  --blue-100:#E7F0FA;
-  --orange-700:#C2410C; /* CTA. white text on this = 5.0:1 */
-  --orange-600:#EA580C; /* hover + non-text accents only */
-  --amber-400:#FBBF24;
+  /* Brand — sampled from the Acosta Pro logo. There is no orange in this
+     identity; the accent is the logo's cyan-blue apex. ------------------- */
+  --navy-900:#04121F;   /* the logo's own background */
+  --navy-800:#072742;
+  --navy-700:#0B3A63;   /* primary surface. white text on this = 11.6:1 */
+  --navy-600:#0F4E86;
+  --blue-700:#0B57A4;
+  --blue-600:#1273CE;   /* links on white = 4.8:1 */
+  --blue-500:#3FA9F5;   /* CTA fill. navy-900 text on this = 7.4:1 */
+  --blue-400:#7FD9FF;   /* the logo's apex — CTA hover, accents on dark */
+  --blue-100:#E4F2FD;
+  --blue-line:#BBDDF7;
+  --amber-400:#FBBF24;  /* review stars: a rating colour, not a brand colour */
   --green-700:#15803D;
 
   /* Neutrals ------------------------------------------------------------- */
@@ -67,7 +70,7 @@ a{color:var(--blue-600);text-decoration-thickness:1px;text-underline-offset:2px}
 a:hover{color:var(--navy-700)}
 strong{color:var(--ink);font-weight:700}
 ul,ol{padding-left:1.15em}
-:focus-visible{outline:3px solid var(--orange-600);outline-offset:2px;border-radius:3px}
+:focus-visible{outline:3px solid var(--blue-500);outline-offset:2px;border-radius:3px}
 
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gut)}
 .section{padding:clamp(3rem,7vw,5.5rem) 0}
@@ -75,7 +78,7 @@ ul,ol{padding-left:1.15em}
 .section-alt{background:var(--bg-3);border-block:1px solid var(--line)}
 .muted{color:var(--ink-3)}
 .eyebrow{font-family:var(--f-head);font-weight:700;font-size:.8125rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--orange-700);margin:0 0 .6rem}
+  text-transform:uppercase;color:var(--blue-600);margin:0 0 .6rem}
 .lede{font-size:clamp(1.0625rem,1rem + .3vw,1.1875rem);color:var(--ink-2)}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;
   flex-wrap:wrap;margin-bottom:2rem}
@@ -96,8 +99,8 @@ ul,ol{padding-left:1.15em}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
 .btn .ico{flex:none}
-.btn-accent{background:var(--orange-700);color:#fff;box-shadow:var(--sh-2)}
-.btn-accent:hover{background:var(--orange-600);color:#fff;box-shadow:var(--sh-3)}
+.btn-accent{background:var(--blue-500);color:var(--navy-900);box-shadow:var(--sh-2)}
+.btn-accent:hover{background:var(--blue-400);color:var(--navy-900);box-shadow:var(--sh-3)}
 .btn-primary{background:var(--navy-700);color:#fff;box-shadow:var(--sh-2)}
 .btn-primary:hover{background:var(--navy-600);color:#fff;box-shadow:var(--sh-3)}
 .btn-outline{background:transparent;color:var(--navy-700);border-color:var(--navy-700)}
@@ -134,7 +137,8 @@ ul,ol{padding-left:1.15em}
 .site-head.is-stuck{box-shadow:var(--sh-2)}
 .head-in{display:flex;align-items:center;gap:1.25rem;min-height:var(--head-h)}
 .logo{flex:none;display:block}
-.logo img{height:clamp(38px,4.4vw,50px);width:auto}
+/* --logo-h is set per build from the logo's real aspect ratio. */
+.logo img{height:clamp(36px,var(--logo-h,46px),var(--logo-h,46px));width:auto;max-width:min(60vw,280px);object-fit:contain}
 .nav{margin-left:auto}
 .nav>ul{display:flex;align-items:center;gap:.15rem;list-style:none;margin:0;padding:0}
 .nav a{display:flex;align-items:center;gap:.25rem;white-space:nowrap;padding:.65rem .7rem;border-radius:var(--r-sm);
@@ -154,7 +158,7 @@ ul,ol{padding-left:1.15em}
 .head-phone{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink);
   padding:.35rem .5rem;border-radius:var(--r-sm)}
 .head-phone:hover{background:var(--bg-2)}
-.head-phone .ico{color:var(--orange-700);flex:none}
+.head-phone .ico{color:var(--blue-600);flex:none}
 .head-phone span{display:flex;flex-direction:column;line-height:1.2}
 .head-phone em{font-style:normal;font-size:.6875rem;color:var(--ink-3);letter-spacing:.02em}
 .head-phone strong{font-family:var(--f-head);font-size:1.0625rem;color:var(--navy-700)}
@@ -216,7 +220,7 @@ ul,ol{padding-left:1.15em}
 .hero-badges li{display:inline-flex;align-items:center;gap:.4rem;font-size:.8125rem;
   font-weight:600;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);
   color:#DCE8F4;border-radius:var(--r-pill);padding:.35rem .8rem}
-.hero-badges .ico{color:var(--amber-400)}
+.hero-badges .ico{color:var(--blue-400)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
 .hero-proof{display:flex;align-items:center;gap:.75rem;margin-top:1.5rem;
   padding-top:1.4rem;border-top:1px solid rgba(255,255,255,.14);font-size:.9375rem;color:#C6D8EA}
@@ -247,12 +251,15 @@ ul,ol{padding-left:1.15em}
 .page-head-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.4rem}
 
 /* Answer capsule — the block AI engines lift. Keep it self-contained. ------ */
-.answer-capsule{background:var(--blue-100);border:1px solid #C6DCF2;
+.answer-capsule{background:var(--blue-100);border:1px solid var(--blue-line);
   border-left:5px solid var(--navy-700);border-radius:var(--r);
   padding:1.25rem 1.4rem;margin:0 0 2rem}
 .answer-capsule h2,.answer-capsule p:first-child.ac-t{font-family:var(--f-head);font-size:.8125rem;
   letter-spacing:.09em;text-transform:uppercase;color:var(--navy-700);margin:0 0 .5rem;font-weight:700}
 .answer-capsule p{margin:0;color:var(--ink);font-size:1.0625rem;line-height:1.6}
+/* --blue-600 is 4.8:1 on white but only 4.2:1 on the capsule's tint, so
+   links inside tinted blocks step down a shade. */
+.answer-capsule a,.note a,.form-alt a{color:var(--blue-700)}
 
 /* Trust bar --------------------------------------------------------------- */
 .trust-bar{background:var(--bg-3);border-bottom:1px solid var(--line)}
@@ -282,7 +289,7 @@ ul,ol{padding-left:1.15em}
 .card h3{margin-bottom:.5rem}
 .card p{font-size:.9375rem;margin-bottom:1rem}
 a.card{text-decoration:none;color:inherit;display:flex;flex-direction:column}
-a.card:hover{box-shadow:var(--sh-3);transform:translateY(-3px);border-color:#C6DCF2}
+a.card:hover{box-shadow:var(--sh-3);transform:translateY(-3px);border-color:var(--blue-line)}
 .card-ico{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;
   border-radius:var(--r);background:var(--blue-100);color:var(--navy-700);margin-bottom:1rem}
 .card .link-arrow{margin-top:auto;font-size:.9375rem}
@@ -295,7 +302,7 @@ a.card:hover{box-shadow:var(--sh-3);transform:translateY(-3px);border-color:#C6D
 @media (max-width:680px){.checks-2{grid-template-columns:1fr}}
 
 /* Tables — deliberately extraction-friendly for AI answer engines ---------- */
-.table-wrap:focus-visible{outline:3px solid var(--orange-600);outline-offset:2px}
+.table-wrap:focus-visible{outline:3px solid var(--blue-500);outline-offset:2px}
 .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);
   background:#fff;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%;min-width:560px;font-size:.9375rem}
@@ -399,7 +406,7 @@ tbody th{font-weight:700;color:var(--ink)}
 .field{margin-bottom:1.1rem}
 .field label{display:block;font-family:var(--f-head);font-weight:600;font-size:.875rem;
   color:var(--ink);margin-bottom:.35rem}
-.field .req{color:var(--orange-700)}
+.field .req{color:var(--blue-600)}
 .field .hint{display:block;font-size:.8125rem;color:var(--ink-3);font-weight:400;margin-top:.2rem}
 .field input,.field select,.field textarea{width:100%;font:inherit;font-size:1rem;
   color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:var(--r);
@@ -414,7 +421,7 @@ tbody th{font-weight:700;color:var(--ink)}
 .form-note{font-size:.8125rem;color:var(--ink-3);margin-top:.9rem}
 .form-alt{display:flex;align-items:center;gap:.75rem;padding:1rem;background:var(--bg-3);
   border:1px solid var(--line);border-radius:var(--r);margin-bottom:1.5rem;font-size:.9375rem}
-.form-alt .ico{color:var(--orange-700);flex:none}
+.form-alt .ico{color:var(--blue-600);flex:none}
 
 /* Contact cards ----------------------------------------------------------- */
 .contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.5rem,4vw,3rem);
@@ -425,7 +432,7 @@ tbody th{font-weight:700;color:var(--ink)}
 .contact-list .ico{color:var(--navy-700);flex:none;margin-top:3px}
 .contact-list a{font-family:var(--f-head);font-weight:700;font-size:1.125rem;
   text-decoration:none;color:var(--navy-700)}
-.contact-list a:hover{color:var(--orange-700);text-decoration:underline}
+.contact-list a:hover{color:var(--blue-600);text-decoration:underline}
 .contact-list em{font-style:normal;display:block;font-size:.8125rem;color:var(--ink-3)}
 
 /* Prose ------------------------------------------------------------------- */
@@ -444,8 +451,11 @@ tbody th{font-weight:700;color:var(--ink)}
 .site-foot ul{list-style:none;padding:0;margin:0;display:grid;gap:.6rem}
 .site-foot a:not(.btn){color:#A9C0D8;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
 .site-foot a:not(.btn):hover{color:#fff;text-decoration:underline}
-.site-foot .btn-accent{color:#fff}
-.foot-brand img{height:46px;width:auto;margin-bottom:1rem}
+.site-foot .btn-accent{color:var(--navy-900)}
+.foot-brand img{height:46px;width:auto;max-width:240px;object-fit:contain;margin-bottom:1rem}
+/* Only one logo file supplied: show the dark mark on a light chip so it
+   stays legible against the navy footer. */
+.foot-logo.on-chip{background:#fff;border-radius:var(--r);padding:.6rem .8rem;box-sizing:content-box}
 .foot-brand p{font-size:.875rem;line-height:1.6}
 .foot-rating{display:flex;align-items:center;gap:.5rem;font-size:.875rem}
 .foot-rating strong{color:#fff}
@@ -470,7 +480,7 @@ tbody th{font-weight:700;color:var(--ink)}
 .cb{flex:1;display:flex;align-items:center;justify-content:center;gap:.45rem;min-height:50px;
   border-radius:var(--r);font-family:var(--f-head);font-weight:700;font-size:.9375rem;
   text-decoration:none}
-.cb-call{background:var(--orange-700);color:#fff}
+.cb-call{background:var(--blue-500);color:var(--navy-900)}
 .cb-quote{background:var(--navy-700);color:#fff}
 @media (max-width:768px){
   .callbar{display:flex;gap:.5rem}
@@ -489,6 +499,6 @@ tbody th{font-weight:700;color:var(--ink)}
   background:var(--bg-2);border:1px solid var(--line);font-size:.875rem;text-decoration:none;
   color:var(--ink-2)}
 .pill-list li a:hover{background:var(--navy-700);color:#fff;border-color:var(--navy-700)}
-.note{background:var(--bg-3);border:1px solid var(--line);border-left:4px solid var(--orange-700);
+.note{background:var(--bg-3);border:1px solid var(--line);border-left:4px solid var(--blue-500);
   border-radius:var(--r);padding:1.15rem 1.35rem;font-size:.9375rem}
 .note strong{display:block;font-family:var(--f-head);margin-bottom:.25rem}

@@ -78,14 +78,17 @@ GTM_ID = ""
 #    Swap for the exact colors sampled from the Acosta Pro logo.
 # --------------------------------------------------------------------------
 BRAND = {
-    "navy_900": "#06192E",
-    "navy_800": "#0B2B4C",
-    "navy_700": "#123A63",   # primary — header, primary buttons (white text 10.4:1)
-    "navy_600": "#1A4C7F",
-    "blue_600": "#1B6AC0",   # links & icons on white (4.6:1)
-    "blue_100": "#E7F0FA",
-    "orange_700": "#C2410C", # CTA button (white text 5.0:1)
-    "orange_600": "#EA580C", # CTA hover / non-text accents
+    # Sampled from the Acosta Pro logo. There is no orange in this identity —
+    # the accent is the cyan-blue apex of the roofline mark.
+    "navy_900": "#04121F",   # the logo's own background
+    "navy_800": "#072742",
+    "navy_700": "#0B3A63",   # primary surface (white text 11.6:1)
+    "navy_600": "#0F4E86",
+    "blue_700": "#0B57A4",
+    "blue_600": "#1273CE",   # links on white (4.8:1)
+    "blue_500": "#3FA9F5",   # CTA fill (navy_900 text 7.4:1)
+    "blue_400": "#7FD9FF",   # logo apex — CTA hover, accents on dark
+    "blue_100": "#E4F2FD",
     "amber_400": "#FBBF24",  # review stars
     "slate_900": "#0F172A",
     "slate_700": "#334155",

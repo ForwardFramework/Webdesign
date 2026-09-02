@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="12" fill="#123A63"/>
-  <rect x="14" y="14" width="36" height="36" rx="4" fill="none" stroke="#fff" stroke-width="3"/>
-  <path d="M32 14v36M14 32h36" stroke="#fff" stroke-opacity=".45" stroke-width="2"/>
-  <path d="M20 44l24-24" stroke="#EA580C" stroke-width="5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Acosta Pro">
+<defs><linearGradient id="fav" x1="0" y1="0" x2=".22" y2="1"><stop offset="0" stop-color="#7FD9FF"/><stop offset=".46" stop-color="#2E9BE8"/><stop offset="1" stop-color="#0B4F97"/></linearGradient></defs>
+<rect width="64" height="64" rx="13" fill="#04121F"/>
+<g transform="translate(5.0 17.5) scale(0.54)"><path d="M1 49 L50 19 L99 49 L83 49 L50 28 L17 49 Z" fill="url(#fav)" stroke="#04121F" stroke-width="2.4" stroke-linejoin="round"/><path d="M13 45 L50 5 L87 45 L73 45 L50 21 L27 45 Z" fill="url(#fav)" stroke="#04121F" stroke-width="2.4" stroke-linejoin="round"/><path d="M63 12 h4.4 v12 h-4.4 Z" fill="url(#fav)" stroke="#04121F" stroke-width="2.4" stroke-linejoin="round"/><path d="M43.6 32 h4.2 v13 h-4.2 Z" fill="#6FCFFA" stroke="#04121F" stroke-width="2.4" stroke-linejoin="round"/><path d="M52.2 32 h4.2 v13 h-4.2 Z" fill="#6FCFFA" stroke="#04121F" stroke-width="2.4" stroke-linejoin="round"/></g>
 </svg>

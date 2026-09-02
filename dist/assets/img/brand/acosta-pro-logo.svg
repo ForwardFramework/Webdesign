@@ -1,15 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 56" width="236" height="56" role="img" aria-label="Acosta Pro Aluminum Screen LLC">
-  <defs>
-    <pattern id="meshDark" width="5" height="5" patternUnits="userSpaceOnUse">
-      <path d="M5 0H0V5" fill="none" stroke="#123A63" stroke-opacity=".35" stroke-width="1"/>
-    </pattern>
-  </defs>
-  <g>
-    <rect x="2" y="6" width="44" height="44" rx="5" fill="none" stroke="#123A63" stroke-width="3"/>
-    <rect x="8" y="12" width="32" height="32" rx="2" fill="url(#meshDark)"/>
-    <path d="M24 12v32M8 28h32" stroke="#123A63" stroke-width="2" stroke-opacity=".55"/>
-    <path d="M13 40l22-22" stroke="#C2410C" stroke-width="3.5" stroke-linecap="round"/>
-  </g>
-  <text x="58" y="27" font-family="Poppins, Segoe UI, sans-serif" font-size="21" font-weight="800" letter-spacing="1.2" fill="#123A63">ACOSTA<tspan fill="#C2410C"> PRO</tspan></text>
-  <text x="59" y="43" font-family="Open Sans, Segoe UI, sans-serif" font-size="8.6" font-weight="600" letter-spacing="2.5" fill="#5B6B7F">ALUMINUM &#38; SCREEN LLC</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 64" width="292" height="64" role="img" aria-label="Acosta Pro Aluminum Screen">
+<defs><linearGradient id="lgD" x1="0" y1="0" x2=".22" y2="1"><stop offset="0" stop-color="#7FD9FF"/><stop offset=".46" stop-color="#2E9BE8"/><stop offset="1" stop-color="#0B4F97"/></linearGradient></defs>
+<g transform="translate(0 5) scale(1.0)"><path d="M1 49 L50 19 L99 49 L83 49 L50 28 L17 49 Z" fill="url(#lgD)" stroke="#FFFFFF" stroke-width="2.0" stroke-linejoin="round"/><path d="M13 45 L50 5 L87 45 L73 45 L50 21 L27 45 Z" fill="url(#lgD)" stroke="#FFFFFF" stroke-width="2.0" stroke-linejoin="round"/><path d="M63 12 h4.4 v12 h-4.4 Z" fill="url(#lgD)" stroke="#FFFFFF" stroke-width="2.0" stroke-linejoin="round"/><path d="M43.6 32 h4.2 v13 h-4.2 Z" fill="#6FCFFA" stroke="#FFFFFF" stroke-width="2.0" stroke-linejoin="round"/><path d="M52.2 32 h4.2 v13 h-4.2 Z" fill="#6FCFFA" stroke="#FFFFFF" stroke-width="2.0" stroke-linejoin="round"/></g>
+<text x="116" y="35" font-family="Poppins, Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="28" font-weight="700" fill="#08243D">Acosta Pro</text>
+<text x="117" y="53" font-family="Poppins, Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="13" font-weight="500" letter-spacing=".5" fill="#1273CE">Aluminum Screen</text>
 </svg>

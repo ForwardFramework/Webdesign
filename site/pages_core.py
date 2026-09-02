@@ -209,7 +209,7 @@ def home():
 def about():
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">About us</p>
+    <p class="eyebrow" style="color:var(--blue-400)">About us</p>
     <h1>Acosta Pro Aluminum Screen LLC</h1>
     <p class="lede">A small, family-run screen and aluminum contractor working
     Sarasota, Manatee and Charlotte County. Same crew on every job, every time.</p>
@@ -328,7 +328,7 @@ def contact():
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">Free estimate</p>
+    <p class="eyebrow" style="color:var(--blue-400)">Free estimate</p>
     <h1>Get a free, written estimate</h1>
     <p class="lede">Call either number and you will usually reach us directly. Or send
     the form and we will come back to you with a time to come measure.</p>

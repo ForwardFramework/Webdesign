@@ -14,7 +14,7 @@ from config import BUSINESS as B, SITE_URL, SAME_AS, BRAND, BUILD_DATE, GA4_ID, 
 from content_reviews import REVIEWS, REVIEW_COUNT, RATING_AVG
 from content_areas import AREAS
 from icons import icon, star_row
-from assets import img_src
+from assets import img_src, logo as logo_asset
 
 TEL1 = "+1" + B["phone_primary"].replace("-", "")
 TEL2 = "+1" + B["phone_secondary"].replace("-", "")
@@ -79,7 +79,9 @@ def local_business_node():
         "url": SITE_URL + "/",
         "telephone": TEL1,
         "logo": {"@type": "ImageObject", "@id": SITE_URL + "/#logo",
-                 "url": SITE_URL + "/assets/img/brand/acosta-pro-logo.svg",
+                 "url": SITE_URL + logo_asset("dark")[0],
+                 "width": str(logo_asset("dark")[1]),
+                 "height": str(logo_asset("dark")[2]),
                  "caption": B["legal_name"]},
         "image": SITE_URL + img_src("pool-cage-rescreen-01"),
         "address": _postal_address(),
@@ -254,10 +256,29 @@ def gallery_strip(items, title="Recent work", link=True):
   </div>
 </section>'''
 
+def _logo_height(w, h):
+    """Pick a header height band from the logo's shape.
+
+    A wide wordmark and a square badge cannot share one height without one of
+    them looking wrong, so the build reads the real aspect ratio and sizes to
+    it rather than assuming the placeholder's proportions.
+    """
+    ratio = (w / h) if h else 4
+    if ratio >= 3.2:
+        return 48   # wide wordmark
+    if ratio >= 1.8:
+        return 50   # icon + wordmark lockup
+    if ratio >= 1.1:
+        return 56   # compact lockup
+    return 60       # square or stacked badge
+
+
 def logo_mark(cls="logo"):
-    return f'''<a class="{cls}" href="/" aria-label="{esc(B["legal_name"])} home">
-  <img src="/assets/img/brand/acosta-pro-logo.svg" alt="{esc(B["legal_name"])} logo"
-       width="200" height="56" fetchpriority="high" decoding="async">
+    src, w, h, _fb = logo_asset("dark")
+    return f'''<a class="{cls}" href="/" aria-label="{esc(B["legal_name"])} home"
+   style="--logo-h:{_logo_height(w, h)}px">
+  <img src="{src}" alt="{esc(B["legal_name"])} logo"
+       width="{w}" height="{h}" fetchpriority="high" decoding="async">
 </a>'''
 
 def header():
@@ -303,6 +324,8 @@ def header():
 </header>'''
 
 def footer():
+    foot_logo_src, foot_logo_w, foot_logo_h, needs_chip = logo_asset("light")
+    foot_logo_cls = "foot-logo on-chip" if needs_chip else "foot-logo"
     svc = "".join(f'<li><a href="{h}">{l}</a></li>' for l, h in NAV[0][2])
     areas = "".join(f'<li><a href="{h}">{l}</a></li>' for l, h in NAV[1][2])
     social = ""
@@ -315,8 +338,8 @@ def footer():
     return f'''<footer class="site-foot">
   <div class="wrap foot-grid">
     <div class="foot-brand">
-      <img src="/assets/img/brand/acosta-pro-logo-light.svg" alt="{esc(B["legal_name"])}"
-           width="200" height="56" loading="lazy" decoding="async">
+      <img class="{foot_logo_cls}" src="{foot_logo_src}" alt="{esc(B["legal_name"])}"
+           width="{foot_logo_w}" height="{foot_logo_h}" loading="lazy" decoding="async">
       <p>Aluminum and screen specialists serving Sarasota, Manatee and Charlotte County.
          Pool cages, lanais, screen doors, window screens and storm damage repair.</p>
       <p class="foot-rating">{star_row(5,16)} <strong>{RATING_AVG}</strong>

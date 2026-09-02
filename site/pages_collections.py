@@ -48,7 +48,7 @@ def services_hub():
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">Services</p>
+    <p class="eyebrow" style="color:var(--blue-400)">Services</p>
     <h1>Screen &amp; Aluminum Services in Southwest Florida</h1>
     <p class="lede">Everything Acosta Pro does, from a single torn window screen to a
     complete pool cage rescreen. Free written estimates on all of it.</p>
@@ -145,7 +145,7 @@ def service_page(s):
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">{s["nav"]}</p>
+    <p class="eyebrow" style="color:var(--blue-400)">{s["nav"]}</p>
     <h1>{s["h1"]}</h1>
     <p class="lede">{s["summary"]}</p>
     <div class="page-head-actions">
@@ -302,7 +302,7 @@ def areas_hub():
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">Service areas</p>
+    <p class="eyebrow" style="color:var(--blue-400)">Service areas</p>
     <h1>Where Acosta Pro Works</h1>
     <p class="lede">Sarasota, Manatee and Charlotte County &mdash; roughly a
     {B["service_radius_mi"]}-mile radius. We are a local crew, not a franchise driving
@@ -394,7 +394,7 @@ def area_page(a):
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">{a["county"]}</p>
+    <p class="eyebrow" style="color:var(--blue-400)">{a["county"]}</p>
     <h1>Screen &amp; Pool Cage Services in {a["city"]}, FL</h1>
     <p class="lede">Pool cage rescreening, lanai enclosures, screen doors and window
     screens throughout {a["city"]} and the surrounding {a["county"]} area.</p>
@@ -505,7 +505,7 @@ def gallery():
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">Gallery</p>
+    <p class="eyebrow" style="color:var(--blue-400)">Gallery</p>
     <h1>Our Work</h1>
     <p class="lede">Pool cages, lanais, doors and aluminum work from around Sarasota,
     Manatee and Charlotte County.</p>
@@ -564,7 +564,7 @@ def reviews_page():
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">Reviews</p>
+    <p class="eyebrow" style="color:var(--blue-400)">Reviews</p>
     <h1>{RATING_AVG} Stars from {REVIEW_COUNT} Google Reviews</h1>
     <p class="lede">Every review we have received is a five-star review. Here they all
     are, unedited.</p>
@@ -644,7 +644,7 @@ def faq_page():
 
     body = f'''<section class="page-head">
   <div class="wrap">
-    <p class="eyebrow" style="color:#FBBF24">FAQ</p>
+    <p class="eyebrow" style="color:var(--blue-400)">FAQ</p>
     <h1>Screen &amp; Pool Cage Questions, Answered</h1>
     <p class="lede">Twenty questions we get asked most often about screen work in
     Southwest Florida &mdash; costs, timing, materials, permits and warranties.</p>

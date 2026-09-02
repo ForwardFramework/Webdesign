@@ -9,26 +9,38 @@ them directly affect how well you rank locally, so they're worth an hour.
 
 ---
 
-## 1. The logo and job photos never arrived
+## 1. The logo is in — as a redrawn vector. Job photos still needed.
 
-Your message said the logo and job photos were attached, but nothing came through
-to this session — I checked the filesystem and the attachment directories were
-empty. So the site currently ships with **generated placeholders** styled in the
-brand colors.
+**Logo: done.** The whole site is now built on your roofline mark and its blue
+palette. Because the logo reached me as a picture rather than a file, I rebuilt
+it as vector artwork traced from your image — the layered eave and gable, the
+chimney, the two-pane window, the cyan-to-deep-blue gradient, and "Acosta Pro /
+Aluminum Screen" set in Poppins Bold, which is a very close match to your
+lettering.
 
-**Logo** — replace these two files, keeping the filenames:
+It is a faithful recreation, not the original file. If you have the vector your
+designer produced (`.ai`, `.eps`, or `.svg`), use it — drop it in and you get
+the exact curves and letterforms:
 
-| File | Where it shows |
+| File | Where it appears |
 |---|---|
-| `site/static/img/brand/acosta-pro-logo.svg` | Header (dark logo on white) |
-| `site/static/img/brand/acosta-pro-logo-light.svg` | Footer (light logo on navy) |
+| `site/static/img/brand/acosta-pro-logo.svg` | Header — dark wordmark for white backgrounds |
+| `site/static/img/brand/acosta-pro-logo-light.svg` | Footer — white wordmark for navy backgrounds |
+| `site/static/img/brand/acosta-pro-logo-stacked.svg` | Stacked lockup, matching your original layout |
 
-SVG is best. A PNG works too — change the extension in
-`site/components.py` (`logo_mark()` and `footer()`).
+Any format works — `.svg`, `.png`, `.webp`. The build reads the real pixel
+dimensions and adjusts the header height to the logo's actual proportions, so a
+square mark and a wide wordmark both sit correctly. If you supply only one file
+and no light version, the footer automatically puts it on a white chip so it
+stays legible.
 
-**Job photos** — drop them in `site/static/img/gallery/` using exactly these
-basenames. The extension can be `.jpg`, `.webp` or `.png`; the build picks up
-whichever it finds and prefers `.webp`.
+All the brand assets are generated from one shared definition of the mark in
+`site/make_brand.py` — logo lockups, favicon, app icons and the social card.
+Edit the geometry or colors there and run `python3 site/make_brand.py` to
+regenerate every size at once.
+
+**Job photos: still needed.** Drop them in `site/static/img/gallery/` using
+exactly these basenames — `.jpg`, `.webp` or `.png`, whichever you have:
 
 ```
 pool-cage-rescreen-01     pool-cage-rescreen-02     pool-cage-rescreen-03
@@ -39,18 +51,18 @@ storm-repair-01           storm-repair-02
 aluminum-work-01
 ```
 
-Then edit the `GALLERY` list in `site/content_pages.py` so the **alt text matches
-what's actually in each photo**. The alt text I wrote is a plausible guess — it
-needs to describe the real image, both for screen readers and because Google
-Images is a live lead source for this trade. Before/after pairs convert best if
-you have them.
+Then edit the `GALLERY` list in `site/content_pages.py` so the **alt text
+matches what's actually in each photo**. The alt text I wrote is a plausible
+guess — it needs to describe the real image, both for screen readers and
+because Google Images is a live lead source for this trade. Before/after pairs
+convert best if you have them.
 
 Photos should be roughly 4:3, 1600px wide, and compressed to under ~250KB each
 (https://squoosh.app is free). Page speed is a ranking factor.
 
-**Social share image** — `site/static/img/brand/og-default.png` is a generated
-brand card. Replace it with a real 1200×630 photo of your best job and it will do
-far more work when someone shares a link.
+**Social share image** — `site/static/img/brand/og-default.png` is now your
+mark on the brand navy. A real photo of your best job would do more work when
+someone shares a link; replace it at 1200×630.
 
 ---
 

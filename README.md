@@ -62,9 +62,15 @@ and the structured data in one shot.
 
 **Change the brand colors** — `BRAND` in `site/config.py` documents the palette,
 and `:root` at the top of `site/static/css/styles.css` is what actually drives it.
-Sample the colors from your logo, replace the `--navy-*` and `--orange-*` values,
-and the entire site follows. Contrast ratios are noted in comments — keep white
-text on backgrounds at 4.5:1 or better.
+The palette is sampled from the logo: navy `#04121F` (the logo's own background)
+through to the cyan apex `#7FD9FF`, with `--blue-500` `#3FA9F5` as the call-to-action
+fill. Contrast ratios are noted in comments — every pairing on the site clears
+WCAG AA, so keep new ones at 4.5:1 or better.
+
+**Regenerate the brand assets** — `python3 site/make_brand.py`. The roofline mark
+is defined once in that file and reused for the header and footer lockups, the
+stacked lockup, the favicon, the app icons and the social card, so it cannot
+drift between sizes. Change the geometry or the colors there and rerun.
 
 **Add a review** — append to `REVIEWS` in `site/content_reviews.py`. The star
 average, the review count and the `aggregateRating` in the structured data all
