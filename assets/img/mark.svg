@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Roughneck Roofing">
+  <defs>
+    <linearGradient id="o" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFB05A"/><stop offset=".5" stop-color="#F26A1B"/><stop offset="1" stop-color="#C24608"/>
+    </linearGradient>
+    <linearGradient id="s" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E7EBF0"/><stop offset="1" stop-color="#6B7480"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#0B0D10"/>
+  <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="11.75" fill="none" stroke="#2E343E" stroke-width="1.5"/>
+  <!-- crossed hammer handles -->
+  <g stroke="url(#s)" stroke-width="4.2" stroke-linecap="round" opacity=".9">
+    <path d="M20 46 L40 22"/><path d="M44 46 L24 22"/>
+  </g>
+  <!-- roof chevron -->
+  <path d="M32 14 L54 33 L47.5 33 L32 20.5 L16.5 33 L10 33 Z" fill="url(#o)"/>
+  <path d="M32 24.5 L45 35.5 L45 50 L19 50 L19 35.5 Z" fill="none" stroke="url(#o)" stroke-width="4" stroke-linejoin="round"/>
+</svg>

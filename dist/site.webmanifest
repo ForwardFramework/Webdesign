@@ -1,0 +1,17 @@
+{
+  "name": "Roughneck Roofing",
+  "short_name": "Roughneck",
+  "description": "Roofs Built Tough. Service Done Right.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0D10",
+  "theme_color": "#0B0D10",
+  "icons": [
+    {
+      "src": "/assets/img/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
