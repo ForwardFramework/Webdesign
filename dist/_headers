@@ -1,3 +1,7 @@
+# Asset filenames carry a content hash (see fingerprint_assets in build.py),
+# so a year-long immutable cache is safe: changed bytes mean a changed URL.
+# Never point this rule at unhashed filenames — returning visitors would keep
+# the old CSS and logo and see the previous design over the new HTML.
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff

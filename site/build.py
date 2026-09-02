@@ -8,7 +8,7 @@ No dependencies beyond the Python standard library. Output in dist/ is plain
 static HTML — deploy it to Netlify, Vercel, Cloudflare Pages, S3, or any host
 that serves files.
 """
-import os, sys, shutil, re
+import os, sys, shutil, re, hashlib
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -266,7 +266,11 @@ def write_manifest():
 
 def write_headers_and_redirects():
     """Netlify/Cloudflare Pages conventions. Harmless on other hosts."""
-    open(os.path.join(DIST, "_headers"), "w").write("""/*
+    open(os.path.join(DIST, "_headers"), "w").write("""# Asset filenames carry a content hash (see fingerprint_assets in build.py),
+# so a year-long immutable cache is safe: changed bytes mean a changed URL.
+# Never point this rule at unhashed filenames — returning visitors would keep
+# the old CSS and logo and see the previous design over the new HTML.
+/*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -294,6 +298,98 @@ def copy_static():
     src = os.path.join(HERE, "static")
     dst = os.path.join(DIST, "assets")
     shutil.copytree(src, dst)
+
+
+# ------------------------------------------------------------- fingerprinting
+TEXT_EXT = (".html", ".css", ".xml", ".txt", ".webmanifest", ".json")
+
+
+def _digest(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 16), b""):
+            h.update(chunk)
+    return h.hexdigest()[:10]
+
+
+def _text_files(root):
+    for d, _sub, files in os.walk(root):
+        for f in files:
+            if f.endswith(TEXT_EXT):
+                yield os.path.join(d, f)
+
+
+def _rewrite(paths, mapping):
+    # Longest path first: /assets/css/styles.css must not be partially matched
+    # by a shorter key before its own replacement runs.
+    ordered = sorted(mapping.items(), key=lambda kv: -len(kv[0]))
+    for p in paths:
+        s = open(p, encoding="utf-8").read()
+        out = s
+        for old, new in ordered:
+            out = out.replace(old, new)
+        if out != s:
+            open(p, "w", encoding="utf-8").write(out)
+
+
+def fingerprint_assets():
+    """Rename every asset to include a content hash and rewrite all references.
+
+    The _headers / netlify.toml rules serve /assets/* with
+    `max-age=31536000, immutable`, which is only safe if the URL changes when
+    the bytes change. Without this, a returning visitor keeps last year's CSS
+    and logo and sees the old design over the new HTML — `immutable` tells the
+    browser not to revalidate even on a normal reload.
+
+    Two tiers: leaf assets first, then fonts.css (which references the woff2
+    files), then every text file in the site.
+    """
+    assets = os.path.join(DIST, "assets")
+    fonts_css = os.path.join(assets, "fonts", "fonts.css")
+    mapping = {}
+
+    def stamp(abspath):
+        rel = os.path.relpath(abspath, DIST).replace(os.sep, "/")
+        base, ext = os.path.splitext(abspath)
+        new_abs = f"{base}.{_digest(abspath)}{ext}"
+        os.rename(abspath, new_abs)
+        new_rel = os.path.relpath(new_abs, DIST).replace(os.sep, "/")
+        mapping["/" + rel] = "/" + new_rel
+
+    leaves = [os.path.join(d, f)
+              for d, _s, files in os.walk(assets) for f in files
+              if os.path.join(d, f) != fonts_css]
+    for p in leaves:
+        stamp(p)
+
+    if os.path.exists(fonts_css):
+        _rewrite([fonts_css], mapping)      # point at the hashed woff2 files
+        stamp(fonts_css)                    # then hash fonts.css itself
+
+    _rewrite(list(_text_files(DIST)), mapping)
+    check_fingerprints()
+    return len(mapping)
+
+
+HASHED = re.compile(r"\.[0-9a-f]{10}\.[A-Za-z0-9]+$")
+
+
+def check_fingerprints(root=None):
+    """Fail the build on any unhashed asset reference.
+
+    An unhashed URL served under `immutable` is exactly how a returning
+    visitor gets last month's stylesheet over this month's HTML.
+    """
+    stale = set()
+    for f in _text_files(root or DIST):
+        for ref in re.findall(r"/assets/[A-Za-z0-9._/-]+", open(f, encoding="utf-8").read()):
+            if not HASHED.search(ref):
+                stale.add(ref)
+    if stale:
+        raise SystemExit("Unfingerprinted asset references would be cached as "
+                         "immutable:\n  " + "\n  ".join(sorted(stale)))
+    return True
+
 
 
 def check(pages):
@@ -335,7 +431,8 @@ def main():
     write_manifest()
     write_headers_and_redirects()
 
-    print(f"Built {len(pages)} pages -> dist/  ({n} in sitemap)")
+    fp_n = fingerprint_assets()
+    print(f"Built {len(pages)} pages -> dist/  ({n} in sitemap, {fp_n} assets fingerprinted)")
     problems = check(pages)
     if problems:
         print(f"\n{len(problems)} issue(s):")

@@ -164,6 +164,14 @@ from two directions.
 - title tags over 65 characters (truncated in search results)
 - meta descriptions outside 70–165 characters
 - internal links pointing at pages that don't exist
+- unfingerprinted asset references
+
+That last one matters more than it sounds. Every asset filename gets a content
+hash at build time (`styles.5831629c85.css`), which is what makes the year-long
+`immutable` cache header safe — changed bytes mean a changed URL. If an asset
+were referenced without a hash, returning visitors would keep the old CSS and
+logo for a year and see the previous design over the new HTML. The build
+refuses to complete rather than ship that.
 
 Run `python3 site/build.py` and it reports. Clean output means all three passed.
 
