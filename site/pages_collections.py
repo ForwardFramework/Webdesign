@@ -6,7 +6,7 @@ from content_areas import AREAS
 from content_pages import GALLERY, FAQ_GROUPS, all_faqs, PROCESS
 from components import (esc, url, icon, star_row, btn_call, btn_quote, trust_bar,
                         review_card, faq_list, cta_band, gallery_strip, TEL1, TEL2,
-                        review_nodes, ORG_ID)
+                        review_nodes, ORG_ID, profile_link, profile)
 from assets import img_src
 
 CITY_LIST = ", ".join(a["city"] for a in AREAS[:-1]) + " and " + AREAS[-1]["city"]
@@ -570,6 +570,7 @@ def reviews_page():
     are, unedited.</p>
     <div class="page-head-actions">
       {btn_call(B["phone_primary"], f'Call {B["phone_primary"]}', "btn btn-accent", "rev-call")}
+      {profile_link("google", "btn btn-outline-light", "See them on Google", "rev-head-google")}
       {btn_quote("Free Estimate", "btn btn-outline-light", "rev-quote")}
     </div>
   </div>
@@ -586,9 +587,10 @@ def reviews_page():
       </div>
       <div style="flex:1;min-width:260px">
         <h2 style="font-size:1.25rem;margin-bottom:.35rem">Perfect rating, every review</h2>
-        <p style="margin:0;font-size:.9375rem">All {REVIEW_COUNT} reviews of Acosta Pro
-        Aluminum Screen LLC are five stars. Customers most often mention
+        <p style="margin:0 0 1rem;font-size:.9375rem">All {REVIEW_COUNT} reviews of Acosta
+        Pro Aluminum Screen LLC are five stars. Customers most often mention
         professionalism, quality of work, speed and fair pricing.</p>
+        {profile_link("google", "btn btn-primary", f"Verify all {REVIEW_COUNT} on Google", "reviews-google")}
       </div>
     </div>
 

@@ -83,10 +83,23 @@ your real domain **before you deploy** — it's used in every canonical tag, the
 sitemap and all structured data. Getting it wrong is the one thing here that
 actively hurts.
 
-**`SAME_AS`** is empty and it shouldn't stay that way. Paste in your Google
-Business Profile URL, Facebook and Instagram. This is how search engines and AI
-tools connect this website to your 14 five-star reviews. It is the single
-highest-value edit on this page.
+**`PROFILES`** now carries your Google Business Profile, which feeds the
+`sameAs` structured data and puts a "Verify all 14 on Google" link on the
+reviews page, the homepage and in the footer. That is how search engines and AI
+tools connect this website to your review corpus — done.
+
+Two follow-ups on it:
+
+- **A canonical Maps URL would be a slightly stronger signal.** You gave me a
+  `share.google/...` link, which is a Google-owned redirect and works fine. The
+  direct form is marginally better because it names the place entity outright
+  rather than pointing at a redirect. To get it: open your business on Google
+  Maps in a desktop browser and copy the address bar — it looks like
+  `https://www.google.com/maps/place/Acosta+Pro+Aluminum+Screen/@27.33,-82.53,17z/...`.
+  Paste that over the `url` in `PROFILES` and rebuild. Not urgent.
+- **Facebook and Instagram are stubbed out**, commented, right below it in
+  `site/config.py`. Uncomment and add the URLs and they appear in the footer
+  automatically, with their own icons and labels.
 
 ---
 

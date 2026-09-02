@@ -10,7 +10,8 @@ Structured data notes (this is the AEO/GEO engine of the site):
   * `speakable` marks the answer capsules for voice assistants.
 """
 import json, html
-from config import BUSINESS as B, SITE_URL, SAME_AS, BRAND, BUILD_DATE, GA4_ID, GTM_ID
+from config import (BUSINESS as B, SITE_URL, SAME_AS, PROFILES, BRAND,
+                    BUILD_DATE, GA4_ID, GTM_ID)
 from content_reviews import REVIEWS, REVIEW_COUNT, RATING_AVG
 from content_areas import AREAS
 from icons import icon, star_row
@@ -184,6 +185,26 @@ def btn_quote(label="Get a Free Estimate", cls="btn btn-primary", track="quote")
     return (f'<a class="{cls}" href="/contact/" data-track="{track}">'
             f'<span>{label}</span>{icon("arrow-right", 20)}</a>')
 
+def profile(key):
+    """One configured public profile, or None if it has no URL yet."""
+    for p in PROFILES:
+        if p["key"] == key and p.get("url"):
+            return p
+    return None
+
+
+def profile_link(key, cls="btn btn-outline", label=None, track=None):
+    """Outbound link to a public profile. Renders nothing when unconfigured,
+    so the templates do not need to guard every call site."""
+    p = profile(key)
+    if not p:
+        return ""
+    return (f'<a class="{cls}" href="{p["url"]}" target="_blank" rel="noopener"'
+            f' data-track="{track or ("profile-" + key)}">'
+            f'{icon(p["icon"], 20)}<span>{label or p["label"]}</span>'
+            f'<span class="sr-only"> (opens in a new tab)</span></a>')
+
+
 def rating_pill(cls="rating-pill"):
     return (f'<span class="{cls}">{star_row(5, 16)}'
             f'<strong>{RATING_AVG}</strong>'
@@ -329,10 +350,13 @@ def footer():
     svc = "".join(f'<li><a href="{h}">{l}</a></li>' for l, h in NAV[0][2])
     areas = "".join(f'<li><a href="{h}">{l}</a></li>' for l, h in NAV[1][2])
     social = ""
-    if SAME_AS:
-        social = '<div class="social">' + "".join(
-            f'<a href="{u}" rel="noopener" aria-label="Acosta Pro on social media">{icon("google",20)}</a>'
-            for u in SAME_AS) + "</div>"
+    live = [p for p in PROFILES if p.get("url")]
+    if live:
+        links = "".join(
+            f'<a class="profile-link" href="{p["url"]}" target="_blank" rel="noopener"'
+            f' data-track="footer-{p["key"]}">{icon(p["icon"], 18)}<span>{p["short"]}</span>'
+            f'<span class="sr-only"> (opens in a new tab)</span></a>' for p in live)
+        social = f'<div class="social">{links}</div>'
     email = (f'<li><a href="mailto:{B["email"]}">{icon("mail",18)}{B["email"]}</a></li>'
              if B["email"] else "")
     return f'''<footer class="site-foot">

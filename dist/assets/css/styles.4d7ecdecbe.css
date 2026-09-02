@@ -461,9 +461,15 @@ tbody th{font-weight:700;color:var(--ink)}
 .foot-rating strong{color:#fff}
 .foot-contact .ico{color:#7FA6CE;flex:none}
 .foot-contact .btn{margin-top:1.25rem}
-.social{display:flex;gap:.5rem;margin-top:1rem}
-.social a{width:40px;height:40px;border-radius:var(--r-sm);background:rgba(255,255,255,.08);
-  display:flex;align-items:center;justify-content:center}
+.social{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.1rem}
+.profile-link{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .85rem;
+  border-radius:var(--r-sm);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);font-size:.8438rem;font-weight:600}
+.profile-link:hover{background:rgba(255,255,255,.16)}
+.profile-link .ico{color:var(--amber-400);flex:none}
+/* Visually hidden but announced — used for "opens in a new tab". */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;
   flex-wrap:wrap;margin-top:clamp(2rem,4vw,3rem);padding-block:1.25rem;
   border-top:1px solid rgba(255,255,255,.1);font-size:.8125rem}

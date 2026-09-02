@@ -6,7 +6,7 @@ from content_areas import AREAS
 from content_pages import home_faqs, GALLERY, DIFFERENTIATORS, PROCESS
 from components import (esc, url, icon, star_row, btn_call, btn_quote, trust_bar,
                         review_card, faq_list, cta_band, gallery_strip, TEL1, TEL2,
-                        rating_pill, ORG_ID)
+                        rating_pill, ORG_ID, profile_link)
 from assets import img_src
 
 # --------------------------------------------------------------------- home
@@ -160,6 +160,8 @@ def home():
       <a class="link-arrow" href="/reviews/">Read every review{icon("arrow-right", 18)}</a>
     </div>
     <div class="grid g-3">{rev}</div>
+    <p class="center" style="margin-top:1.75rem">
+      {profile_link("google", "btn btn-outline", "Verify these on Google", "home-google")}</p>
   </div>
 </section>
 

@@ -48,13 +48,30 @@ BUSINESS = {
     "service_radius_mi": 45,
 }
 
-# Public profiles. Adding the real URLs is one of the highest-value SEO/GEO
-# edits you can make: it is how engines link this site to your review corpus.
-SAME_AS = [
-    # "https://www.google.com/maps/place/...",            # VERIFY - your GBP link
-    # "https://www.facebook.com/...",                     # VERIFY
-    # "https://www.instagram.com/...",                    # VERIFY
+# Public profiles. Adding these is one of the highest-value SEO/GEO edits
+# available: sameAs is how search engines and AI answer engines confirm that
+# this website and that review corpus are the same business entity.
+#
+# `url` feeds schema.org sameAs; `label` is the visible link text on the site.
+PROFILES = [
+    {
+        "key": "google",
+        "name": "Google Business Profile",
+        # A share.google link is a Google-owned redirect and works fine. The
+        # canonical https://www.google.com/maps/place/... URL is a marginally
+        # stronger entity signal — see CONTENT-TO-VERIFY.md.
+        "url": "https://share.google/ydh3wAUEdnz0Fo3g7",
+        "label": "Read our reviews on Google",
+        "short": "Google reviews",
+        "icon": "star",
+    },
+    # {"key": "facebook", "name": "Facebook", "url": "",                # VERIFY
+    #  "label": "Follow us on Facebook", "short": "Facebook", "icon": "facebook"},
+    # {"key": "instagram", "name": "Instagram", "url": "",              # VERIFY
+    #  "label": "See our work on Instagram", "short": "Instagram", "icon": "instagram"},
 ]
+
+SAME_AS = [p["url"] for p in PROFILES if p.get("url")]
 
 # --------------------------------------------------------------------------
 # 2. Site
