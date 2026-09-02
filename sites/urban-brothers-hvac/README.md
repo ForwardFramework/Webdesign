@@ -7,6 +7,8 @@ in a browser and it runs.
 ```
 index.html          the site
 thank-you.html      post-submit confirmation page
+404.html            not-found page
+netlify.toml        Netlify deploy config (no build step)
 robots.txt          crawl rules
 sitemap.xml         one-URL sitemap
 assets/css/styles.css
@@ -14,6 +16,12 @@ assets/js/main.js   all behavior + the CONFIG block you edit
 assets/img/logo.svg      vector stand-in for the banner logo
 assets/img/logo-mark.svg favicon
 ```
+
+**These files belong at the root of the deployment repo**, not in a subfolder —
+`netlify.toml` sets `publish = "."`, so Netlify serves whatever directory the
+config sits in. If the site must live in a subfolder instead, set **Base
+directory** to that subfolder in Netlify's build settings and the same config
+applies.
 
 ---
 
@@ -64,23 +72,36 @@ send a request" panel that still captures the lead. Nothing is ever a dead end.
 
 ### 3. Point the contact form somewhere
 
-In `CONFIG.form`, set an endpoint that accepts a JSON `POST`. Two options with no
-server to run:
+**On Netlify this is already done.** The form is wired for Netlify Forms out of
+the box (`CONFIG.form.provider = 'netlify'`). Deploy, and submissions show up
+under **Site configuration → Forms → `service-request`**. Add an email
+notification there so leads reach an inbox instead of sitting in the dashboard —
+that's the one step worth doing on day one.
+
+Netlify's spam filtering is already wired up too: the form declares a honeypot
+field that bots fill in and humans never see.
+
+> Netlify Forms only works on a deployed Netlify site. Opening `index.html`
+> locally and submitting will fail and show the "please call us" message —
+> that's expected, not a bug.
+
+Hosting somewhere other than Netlify? Switch the provider:
 
 ```js
-// Formspree — create a form at formspree.io, paste the endpoint
-form: { endpoint: 'https://formspree.io/f/xxxxxxxx', accessKey: '', fallbackEmail: '...' }
+// any endpoint that accepts a JSON POST
+form: { provider: 'endpoint', endpoint: 'https://formspree.io/f/xxxxxxxx', ... }
 
-// Web3Forms — free, needs the access key too
-form: { endpoint: 'https://api.web3forms.com/submit', accessKey: 'your-key', fallbackEmail: '...' }
+// Web3Forms also needs the access key
+form: { provider: 'endpoint', endpoint: 'https://api.web3forms.com/submit',
+        accessKey: 'your-key', ... }
+
+// or skip the service entirely and open the visitor's email client
+form: { provider: 'mailto', fallbackEmail: 'service@urbanbrothershvac.com' }
 ```
 
-Until an endpoint is set, submitting opens the visitor's email client with every
-field pre-filled and addressed to `fallbackEmail` — so leads still arrive, just
-less smoothly. **Set `fallbackEmail` to a real inbox either way.**
-
-The form already includes a honeypot field, client-side validation, and inline
-error messaging.
+`'endpoint'` with no URL set falls back to `mailto` automatically, and any
+failed send tells the visitor to call. **Set `fallbackEmail` to a real inbox
+regardless of provider.**
 
 ### 4. Confirm the placeholder business details
 
@@ -169,12 +190,41 @@ Phone photos are fine. Real and slightly imperfect outperforms polished and gene
 
 ---
 
-## Deploying
+## Deploying to Netlify
 
-It's static, so anything works — Netlify, Vercel, Cloudflare Pages, GitHub Pages,
-or plain shared hosting. Upload the folder contents to the web root.
+The repo is import-ready — no build step, no environment variables.
 
-For a quick local preview:
+1. Netlify → **Add new site → Import an existing project → GitHub**
+2. Pick the repository and authorize it if prompted
+3. Leave the build settings as Netlify detects them from `netlify.toml`:
+   - **Build command:** *(empty)*
+   - **Publish directory:** `.`
+   - **Base directory:** *(empty — or the subfolder, if the site isn't at the root)*
+4. **Deploy**
+
+First deploy takes well under a minute since there's nothing to build.
+
+After it's live:
+
+- **Forms** — Site configuration → Forms → add an email notification for
+  `service-request`.
+- **Domain** — Domain management → add the custom domain. Netlify provisions
+  the HTTPS certificate automatically. Then find-and-replace
+  `urbanbrothershvac.com` across `index.html`, `robots.txt`, and `sitemap.xml`
+  so the canonical URL, structured data, and sitemap point at the real domain.
+- **Deploys** — every push to the production branch redeploys automatically.
+
+`netlify.toml` also sets security headers and short, revalidating cache times
+(asset filenames aren't content-hashed, so a long immutable cache would strand
+edits in visitors' browsers).
+
+### Other hosts
+
+It's a plain static site, so Vercel, Cloudflare Pages, GitHub Pages, or ordinary
+shared hosting all work — upload the folder contents to the web root. Only the
+form provider needs changing (see step 3).
+
+### Local preview
 
 ```bash
 cd sites/urban-brothers-hvac

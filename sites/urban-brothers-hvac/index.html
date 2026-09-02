@@ -632,7 +632,11 @@
           <h3>Request service</h3>
           <p>No obligation. We never share your information.</p>
 
-          <form id="serviceForm" novalidate>
+          <form id="serviceForm" name="service-request" method="POST" action="/thank-you.html"
+                data-netlify="true" data-netlify-honeypot="company_website" novalidate>
+            <!-- Netlify detects this form at deploy time; form-name is required in the POST body.
+                 Harmless on any other host. -->
+            <input type="hidden" name="form-name" value="service-request">
             <input type="text" name="company_website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="_subject" value="New service request — urbanbrothershvac.com">
             <input type="hidden" name="page_source" id="pageSource" value="">

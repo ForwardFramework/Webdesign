@@ -31,14 +31,23 @@
     },
 
     /* 2. CONTACT FORM ------------------------------------------------------
-       Any endpoint that accepts a POST works. Two zero-backend options:
-         Formspree  → https://formspree.io/f/YOUR_FORM_ID
-         Web3Forms  → https://api.web3forms.com/submit  (add accessKey below)
-       Leave endpoint empty and the form falls back to opening the visitor's
-       email client with everything pre-filled, so no lead is ever lost.
+       provider: 'netlify'  → Netlify Forms. Nothing to configure: deploy to
+                              Netlify and submissions appear under
+                              Site → Forms → service-request. Set up email
+                              notifications there.
+                 'endpoint' → any URL that accepts a JSON POST, e.g.
+                              Formspree  https://formspree.io/f/YOUR_FORM_ID
+                              Web3Forms  https://api.web3forms.com/submit
+                                         (also set accessKey)
+                 'mailto'   → always open the visitor's email client instead.
+
+       Whatever the provider, a failed send tells the visitor to call, so a
+       lead is never silently dropped. Note that Netlify Forms only works on a
+       deployed Netlify site — locally it will fail and show that call prompt.
     ------------------------------------------------------------------------ */
     form: {
-      endpoint: '',                                  // <-- paste POST URL here
+      provider: 'netlify',
+      endpoint: '',                                  // 'endpoint' provider only
       accessKey: '',                                 // Web3Forms only
       fallbackEmail: 'service@urbanbrothershvac.com' // <-- confirm this address
     },
@@ -321,6 +330,12 @@
     return data;
   }
 
+  function encode(data) {
+    return Object.keys(data).map(function (k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+  }
+
   function mailtoFallback(data) {
     var lines = [
       'Name: ' + (data.name || ''),
@@ -362,8 +377,10 @@
       }
 
       var data = payload();
+      var provider = CONFIG.form.provider;
+      if (provider === 'endpoint' && !CONFIG.form.endpoint) provider = 'mailto';
 
-      if (!CONFIG.form.endpoint) {
+      if (provider === 'mailto') {
         say('busy', 'Opening your email so you can send this to us…');
         track('lead_submit', { method: 'mailto', service: data.service });
         mailtoFallback(data);
@@ -373,16 +390,25 @@
       submitBtn.disabled = true;
       say('busy', 'Sending your request…');
 
-      fetch(CONFIG.form.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(function (res) {
+      var request = provider === 'netlify'
+        /* Netlify Forms wants urlencoded data posted back to the site itself. */
+        ? fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encode(data)
+          })
+        : fetch(CONFIG.form.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+      request.then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
         say('ok', 'Got it — thanks! We\'ll call you shortly to confirm your appointment window. ' +
                   'Need someone right now? Call ' + CONFIG.business.phoneDisplay + '.');
-        track('lead_submit', { method: 'form', service: data.service, offer: data.offer || 'none' });
+        track('lead_submit', { method: provider, service: data.service, offer: data.offer || 'none' });
       }).catch(function () {
         say('err', 'That didn\'t go through. Please call ' + CONFIG.business.phoneDisplay +
                    ' — we\'ll get you on the schedule right away.');

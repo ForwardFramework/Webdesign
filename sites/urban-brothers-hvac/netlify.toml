@@ -1,0 +1,40 @@
+# Netlify config for Urban Brother's Heating & Air.
+# Static site, no build step — Netlify serves this directory as-is.
+# This file must sit at the REPOSITORY ROOT for "publish" to resolve correctly.
+
+[build]
+  publish = "."
+  command = ""
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = true
+
+# --- Security headers --------------------------------------------------------
+# No Content-Security-Policy here on purpose: the booking panel embeds a
+# third-party scheduler (Calendly / Google / Housecall Pro) and pulls Google
+# Fonts, and a CSP tight enough to be worth having would need updating every
+# time that provider changes. Add one only alongside a known scheduler.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+# --- Caching -----------------------------------------------------------------
+# Asset filenames are not content-hashed, so they get a short cache with
+# revalidation rather than a long immutable one. Editing a file shows up on the
+# next request instead of being stuck in browsers for a year.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
