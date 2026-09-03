@@ -657,6 +657,10 @@ a.card { text-decoration: none; color: inherit; }
 .footer ul { display: grid; gap: var(--sp-2); }
 .footer a { color: var(--text-on-dark-mut); text-decoration: none; transition: color var(--t-fast); }
 .footer a:hover { color: var(--tg-gold); text-decoration: underline; }
+/* `.footer a` outranks `.btn--primary`, which would leave the footer CTA
+   rendering muted-grey on gold (~1.9:1). Restore the button's own colours. */
+.footer a.btn--primary,
+.footer a.btn--primary:hover { color: var(--text-on-gold); text-decoration: none; }
 .footer__brand img { width: 62px; height: 62px; margin-bottom: var(--sp-4); }
 .footer__brand p { max-width: 42ch; margin-bottom: var(--sp-4); }
 .footer__contact { display: grid; gap: var(--sp-3); }
