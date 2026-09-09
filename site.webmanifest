@@ -1,0 +1,22 @@
+{
+  "name": "Angel's Hand Painting LLC",
+  "short_name": "Angel's Hand",
+  "description": "Painting, drywall and home improvement in Sarasota, Bradenton and Lakewood Ranch, FL.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#14315F",
+  "icons": [
+    {
+      "src": "/assets/img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
