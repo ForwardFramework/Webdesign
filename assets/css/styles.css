@@ -758,6 +758,81 @@ select.field__control {
 .price__unit { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
 
 /* --------------------------------------------------------------------------
+   10b. Rate cards (rental packages)
+   -------------------------------------------------------------------------- */
+.rates {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .rates { grid-template-columns: repeat(3, 1fr); } }
+
+.rate-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.rate-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.rate-card--featured {
+  border-color: var(--gold-500);
+  border-width: 2px;
+  box-shadow: var(--shadow-md);
+}
+.rate-card__badge {
+  position: absolute;
+  top: calc(var(--space-md) * -0.85);
+  left: var(--space-xl);
+  background: var(--gold-500);
+  color: var(--navy-700);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-pill);
+}
+.rate-card__term {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--navy-700);
+  line-height: 1.1;
+  margin-bottom: var(--space-2xs);
+}
+.rate-card__sub {
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  margin-bottom: var(--space-lg);
+}
+.rate-card__list { list-style: none; margin: 0 0 var(--space-lg); padding: 0; display: grid; gap: var(--space-sm); }
+.rate-card__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px dashed var(--border);
+}
+.rate-card__row:last-child { border-bottom: 0; }
+.rate-card__seat { font-weight: 600; font-size: 0.97rem; }
+.rate-card__amount { text-align: right; line-height: 1.15; }
+.rate-card__price {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--navy-700);
+  display: block;
+}
+.rate-card__perday { font-size: 0.78rem; color: var(--text-muted); }
+.rate-card .btn { margin-top: auto; }
+
+/* --------------------------------------------------------------------------
    11. Steps
    -------------------------------------------------------------------------- */
 .steps { counter-reset: step; display: grid; gap: var(--space-xl); }

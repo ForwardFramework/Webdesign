@@ -11,22 +11,14 @@ framework.** Open `index.html` in a browser and it works.
 
 ## ⚠️ Before you go live — read this
 
-Three things need your input. Nothing else is blocking.
+Two things need your input, plus one question to confirm.
 
-### 1. Check the rental rates
+### 1. Confirm the fleet — is there an 8-seater?
 
-The original site could not be reached from the environment this was built in
-(the domain is blocked by an egress policy), so **the prices are industry-typical
-placeholders, not your real rates**:
-
-| Cart | Placeholder daily | Placeholder weekly |
-|---|---|---|
-| 4-passenger | $125 | $525 |
-| 6-passenger | $165 | $695 |
-| 8-passenger | $225 | $895 |
-
-They appear in exactly two files, each marked with a `RATES:` comment:
-`src/index.html` and `src/rentals.html`. Update both, then run `python3 build.py`.
+The rate sheet you supplied lists **only 4 seater and 6 seater carts**, so the
+site now offers exactly those two. An 8-passenger option that was on the earlier
+draft has been removed. If you do rent a larger cart, send the rate and it goes
+back in.
 
 ### 2. Connect the booking forms
 
@@ -65,13 +57,33 @@ Pulled from public sources and your own review screenshots:
 - Fleet: American-made E-Z-GO and Club Car, gas or electric, lithium batteries,
   SoundExtreme Bluetooth soundbars, upgraded wheels/tires, premium seating
 - "No processing fees, no hidden fees, no sales gimmicks"
+- Rental rates (flat-rate packages, live on the site):
+
+  | Cart | 3-Day | 5-Day | 7-Day |
+  |---|---|---|---|
+  | 4 Seater | $350 | $400 | $450 |
+  | 6 Seater | $450 | $500 | $550 |
+
+  Per-day equivalents ($117/$80/$64 and $150/$100/$79) are shown alongside each
+  price to make the longer packages sell themselves.
+- Rental agreement (Adobe Sign) linked from the footer, the rentals page, the
+  booking form and the FAQ
 - Owners **Kelly and Zack**; booster seats and car seats available
 - **95 five-star reviews**; 19 real reviews are quoted on the site
 
-Anything not on that list — hours of operation, deposit amounts, minimum rental
-length, cancellation policy, insurance terms — was deliberately **left off**
-rather than invented. The FAQ answers general questions only. Add the specifics
-when you have them.
+Prices live in three places, all marked with a `RATES:` comment: the fleet cards
+in `src/index.html` and `src/rentals.html`, the rate-card block in each, and the
+`hasOfferCatalog` schema in `partials/head.html`. Update all three together, then
+run `python3 build.py`.
+
+Your Adobe Sign rental agreement is **linked, not transcribed** — the document is
+behind a signing widget this environment could not read, and linking it means
+customers always get the current version and can sign it online.
+
+Anything not verified — hours of operation, deposit amounts, cancellation policy,
+insurance terms — was deliberately **left off** rather than invented. Those
+details are presumably in your rental agreement; if you want them summarised on
+the site as well, send the text.
 
 ---
 

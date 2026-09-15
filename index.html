@@ -31,7 +31,19 @@
   "url": "https://coastalcustomcarts.com/",
   "telephone": "+1-941-312-1494",
   "email": "sales@coastalcustomcarts.com",
-  "priceRange": "$$",
+  "priceRange": "$350-$550",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Golf cart rental packages",
+    "itemListElement": [
+      { "@type": "Offer", "name": "4 Seater Golf Cart — 3-Day Rental", "price": "350", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "4 Seater Golf Cart — 5-Day Rental", "price": "400", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "4 Seater Golf Cart — 7-Day Rental", "price": "450", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "6 Seater Golf Cart — 3-Day Rental", "price": "450", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "6 Seater Golf Cart — 5-Day Rental", "price": "500", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "6 Seater Golf Cart — 7-Day Rental", "price": "550", "priceCurrency": "USD" }
+    ]
+  },
   "image": "https://coastalcustomcarts.com/assets/img/og-image.jpg",
   "address": {
     "@type": "PostalAddress",
@@ -214,7 +226,6 @@
               <option value="">Choose your cart&hellip;</option>
               <option>4-passenger</option>
               <option>6-passenger</option>
-              <option>8-passenger</option>
               <option>Not sure yet &mdash; help me pick</option>
             </select>
           </div>
@@ -283,10 +294,10 @@
       </div>
 
       <!-- ============================================================
-           RATES: update the three prices below when your rates change.
-           They also appear on rentals.html.
+           RATES: the headline figures below are the 3-day package price.
+           The full rate table lives on rentals.html — keep the two in step.
            ============================================================ -->
-      <div class="grid grid--3">
+      <div class="grid grid--2" style="max-width:860px;margin-inline:auto">
         <article class="fleet-card reveal">
           <div class="fleet-card__media">
             <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M34 84h112"/><circle cx="52" cy="92" r="11"/><circle cx="146" cy="92" r="11"/><path d="M30 84V56h84v28M42 56V36h60v20M114 62h26l16 22h-20"/><path d="M63 84V62M90 84V62"/></g></svg>
@@ -306,8 +317,8 @@
             </ul>
             <div class="fleet-card__foot">
               <p class="price">
-                <span class="price__label">From</span>
-                <span class="price__value">$125<span class="price__unit">/day</span></span>
+                <span class="price__label">Rentals from</span>
+                <span class="price__value">$350<span class="price__unit"> / 3 days</span></span>
               </p>
               <a class="btn btn--sm" href="contact.html">Book it</a>
             </div>
@@ -333,44 +344,75 @@
             </ul>
             <div class="fleet-card__foot">
               <p class="price">
-                <span class="price__label">From</span>
-                <span class="price__value">$165<span class="price__unit">/day</span></span>
+                <span class="price__label">Rentals from</span>
+                <span class="price__value">$450<span class="price__unit"> / 3 days</span></span>
               </p>
               <a class="btn btn--sm" href="contact.html">Book it</a>
             </div>
           </div>
         </article>
 
-        <article class="fleet-card reveal" data-reveal-delay="180">
-          <div class="fleet-card__media">
-            <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M14 84h172"/><circle cx="38" cy="92" r="11"/><circle cx="170" cy="92" r="11"/><path d="M10 84V56h126v28M24 56V36h98v20M136 62h34l16 22h-24"/><path d="M42 84V62M70 84V62M98 84V62M124 84V62"/></g></svg>
-          </div>
-          <div class="fleet-card__body">
-            <p class="fleet-card__seats">Seats 8</p>
-            <h3>The Sunset Limo</h3>
-            <p class="fleet-card__desc">
-              Big group, one cart. Ideal for wedding parties, reunions and
-              multi-family rentals who&rsquo;d rather ride together than convoy.
-            </p>
-            <ul class="fleet-card__specs">
-              <li><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg> Eight-passenger limo body</li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-music"></use></svg> Full audio &amp; LED package</li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg> Limited availability &mdash; book early</li>
-            </ul>
-            <div class="fleet-card__foot">
-              <p class="price">
-                <span class="price__label">From</span>
-                <span class="price__value">$225<span class="price__unit">/day</span></span>
-              </p>
-              <a class="btn btn--sm" href="contact.html">Book it</a>
-            </div>
-          </div>
+      </div>
+
+      <p style="text-align:center;margin-top:2.5rem;margin-bottom:2.5rem;color:var(--text-muted)">
+        Every rental is priced as a package &mdash; the longer you keep it, the less
+        it costs per day. Here&rsquo;s the whole list:
+      </p>
+
+      <div class="rates reveal">
+        <article class="rate-card">
+          <p class="rate-card__term">3-Day Rental</p>
+          <p class="rate-card__sub">A long weekend on the island</p>
+          <ul class="rate-card__list">
+            <li class="rate-card__row">
+              <span class="rate-card__seat">4 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$350</span><span class="rate-card__perday">$117 / day</span></span>
+            </li>
+            <li class="rate-card__row">
+              <span class="rate-card__seat">6 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$450</span><span class="rate-card__perday">$150 / day</span></span>
+            </li>
+          </ul>
+          <a class="btn btn--sm btn--ghost btn--block" href="contact.html">Book 3 days</a>
+        </article>
+
+        <article class="rate-card">
+          <p class="rate-card__term">5-Day Rental</p>
+          <p class="rate-card__sub">The midweek sweet spot</p>
+          <ul class="rate-card__list">
+            <li class="rate-card__row">
+              <span class="rate-card__seat">4 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$400</span><span class="rate-card__perday">$80 / day</span></span>
+            </li>
+            <li class="rate-card__row">
+              <span class="rate-card__seat">6 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$500</span><span class="rate-card__perday">$100 / day</span></span>
+            </li>
+          </ul>
+          <a class="btn btn--sm btn--ghost btn--block" href="contact.html">Book 5 days</a>
+        </article>
+
+        <article class="rate-card rate-card--featured">
+          <span class="rate-card__badge">Best value</span>
+          <p class="rate-card__term">7-Day Rental</p>
+          <p class="rate-card__sub">A full week, lowest daily rate</p>
+          <ul class="rate-card__list">
+            <li class="rate-card__row">
+              <span class="rate-card__seat">4 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$450</span><span class="rate-card__perday">$64 / day</span></span>
+            </li>
+            <li class="rate-card__row">
+              <span class="rate-card__seat">6 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$550</span><span class="rate-card__perday">$79 / day</span></span>
+            </li>
+          </ul>
+          <a class="btn btn--sm btn--block" href="contact.html">Book 7 days</a>
         </article>
       </div>
 
       <p style="text-align:center;margin-top:2rem;color:var(--text-muted)">
-        Rates vary by season and length of stay. Weekly and monthly pricing available &mdash;
-        <a href="rentals.html">see full rental details</a>.
+        No processing fees, no hidden fees. Free delivery and pickup included &mdash;
+        <a href="rentals.html">see what else is included</a>.
       </p>
     </div>
   </section>
@@ -720,6 +762,17 @@
         </details>
 
         <details class="faq__item">
+          <summary>How much does it cost, and how long can I rent for?</summary>
+          <div class="faq__answer">
+            <p>We rent in flat-rate packages rather than by the day. A 4 seater is
+            $350 for 3 days, $400 for 5 days or $450 for a full week; a 6 seater is
+            $450, $500 and $550 for the same lengths. That price is everything
+            &mdash; delivery, pickup and the whole cart. Need a different length?
+            Call or text us and we&rsquo;ll work it out.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
           <summary>How far in advance should I book?</summary>
           <div class="faq__answer">
             <p>For peak season, spring break and holiday weeks, the earlier the
@@ -741,9 +794,19 @@
         <details class="faq__item">
           <summary>Do you rent for long stays or seasonal visits?</summary>
           <div class="faq__answer">
-            <p>Yes &mdash; weekly, monthly and seasonal rentals are all available,
-            and longer stays come with better rates. Snowbirds and construction or
-            event rentals are welcome too.</p>
+            <p>Yes. Our published packages run to 7 days, and longer stays come
+            with better rates &mdash; the weekly price already works out at about
+            $64 a day for a 4 seater. Snowbirds and seasonal visitors, just call
+            and we&rsquo;ll quote your dates.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Is there a rental agreement to sign?</summary>
+          <div class="faq__answer">
+            <p>Yes, and you can read it before you commit. Our
+            <a href="https://na1.documents.adobe.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhDWDQ5G4f680b_SaH2MsIIcdGAQYYhyTACa0pLbbJHrh8ZF1bAh0fPjOHKb7RTL4sk*" rel="noopener">rental agreement</a> is signed
+            online, so everything is squared away before your cart is delivered.</p>
           </div>
         </details>
       </div>
@@ -780,6 +843,7 @@
     { "@type": "Question", "name": "Who is allowed to drive the cart?", "acceptedAnswer": { "@type": "Answer", "text": "Any licensed driver 18 or older who is listed on the rental agreement. Because the carts are street legal, a valid driver's license is required." } },
     { "@type": "Question", "name": "Is delivery really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Delivery and pickup are complimentary throughout Manatee and Sarasota County, including Anna Maria Island, Holmes Beach, Bradenton Beach, Lido Key, Siesta Key and Lakewood Ranch. There are no processing fees or hidden fees." } },
     { "@type": "Question", "name": "Can you accommodate kids?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Booster seats and car seats are available on request at no extra hassle — just tell us how many and what ages when you book." } },
+    { "@type": "Question", "name": "How much does a golf cart rental cost?", "acceptedAnswer": { "@type": "Answer", "text": "Rentals are priced as flat-rate packages. A 4 seater is $350 for 3 days, $400 for 5 days or $450 for 7 days. A 6 seater is $450 for 3 days, $500 for 5 days or $550 for 7 days. Free delivery and pickup are included, with no processing or hidden fees." } },
     { "@type": "Question", "name": "Do you rent for long stays or seasonal visits?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Weekly, monthly and seasonal rentals are available, and longer stays come with better rates." } }
   ]
 }
@@ -822,6 +886,7 @@
           <li><a href="reviews.html">Guest Reviews</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="contact.html">Book Your Cart</a></li>
+          <li><a href="https://na1.documents.adobe.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhDWDQ5G4f680b_SaH2MsIIcdGAQYYhyTACa0pLbbJHrh8ZF1bAh0fPjOHKb7RTL4sk*" rel="noopener">Rental Agreement</a></li>
         </ul>
       </div>
 

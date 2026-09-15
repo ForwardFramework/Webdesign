@@ -31,7 +31,19 @@
   "url": "https://coastalcustomcarts.com/",
   "telephone": "+1-941-312-1494",
   "email": "sales@coastalcustomcarts.com",
-  "priceRange": "$$",
+  "priceRange": "$350-$550",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Golf cart rental packages",
+    "itemListElement": [
+      { "@type": "Offer", "name": "4 Seater Golf Cart — 3-Day Rental", "price": "350", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "4 Seater Golf Cart — 5-Day Rental", "price": "400", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "4 Seater Golf Cart — 7-Day Rental", "price": "450", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "6 Seater Golf Cart — 3-Day Rental", "price": "450", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "6 Seater Golf Cart — 5-Day Rental", "price": "500", "priceCurrency": "USD" },
+      { "@type": "Offer", "name": "6 Seater Golf Cart — 7-Day Rental", "price": "550", "priceCurrency": "USD" }
+    ]
+  },
   "image": "https://coastalcustomcarts.com/assets/img/og-image.jpg",
   "address": {
     "@type": "PostalAddress",
@@ -193,9 +205,10 @@
       </div>
 
       <!-- ============================================================
-           RATES: keep these in step with the three cards on index.html.
+           RATES: keep these in step with the cards on index.html and with
+           the rate table in the "Rental packages" section below.
            ============================================================ -->
-      <div class="grid grid--3">
+      <div class="grid grid--2" style="max-width:860px;margin-inline:auto">
         <article class="fleet-card reveal">
           <div class="fleet-card__media">
             <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M34 84h112"/><circle cx="52" cy="92" r="11"/><circle cx="146" cy="92" r="11"/><path d="M30 84V56h84v28M42 56V36h60v20M114 62h26l16 22h-20"/><path d="M63 84V62M90 84V62"/></g></svg>
@@ -213,9 +226,9 @@
             </ul>
             <div class="fleet-card__foot">
               <p class="price">
-                <span class="price__label">From</span>
-                <span class="price__value">$125<span class="price__unit">/day</span></span>
-                <span class="price__label" style="margin-top:.35rem">or $525/week</span>
+                <span class="price__label">Rentals from</span>
+                <span class="price__value">$350<span class="price__unit"> / 3 days</span></span>
+                <span class="price__label" style="margin-top:.35rem">7 days from $450</span>
               </p>
               <a class="btn btn--sm" href="contact.html">Book it</a>
             </div>
@@ -239,38 +252,80 @@
             </ul>
             <div class="fleet-card__foot">
               <p class="price">
-                <span class="price__label">From</span>
-                <span class="price__value">$165<span class="price__unit">/day</span></span>
-                <span class="price__label" style="margin-top:.35rem">or $695/week</span>
+                <span class="price__label">Rentals from</span>
+                <span class="price__value">$450<span class="price__unit"> / 3 days</span></span>
+                <span class="price__label" style="margin-top:.35rem">7 days from $550</span>
               </p>
               <a class="btn btn--sm" href="contact.html">Book it</a>
             </div>
           </div>
         </article>
 
-        <article class="fleet-card reveal" data-reveal-delay="180">
-          <div class="fleet-card__media">
-            <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M14 84h172"/><circle cx="38" cy="92" r="11"/><circle cx="170" cy="92" r="11"/><path d="M10 84V56h126v28M24 56V36h98v20M136 62h34l16 22h-24"/><path d="M42 84V62M70 84V62M98 84V62M124 84V62"/></g></svg>
-          </div>
-          <div class="fleet-card__body">
-            <p class="fleet-card__seats">Seats 8</p>
-            <h3>The Sunset Limo</h3>
-            <p class="fleet-card__desc">Wedding parties, reunions and multi-family stays that would rather ride together.</p>
-            <ul class="fleet-card__specs">
-              <li><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg> Eight-passenger limo body</li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-music"></use></svg> Full audio &amp; LED package</li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg> Belts throughout</li>
-              <li><svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg> Limited availability</li>
-            </ul>
-            <div class="fleet-card__foot">
-              <p class="price">
-                <span class="price__label">From</span>
-                <span class="price__value">$225<span class="price__unit">/day</span></span>
-                <span class="price__label" style="margin-top:.35rem">or $895/week</span>
-              </p>
-              <a class="btn btn--sm" href="contact.html">Book it</a>
-            </div>
-          </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================ RENTAL PACKAGES ==== -->
+  <section class="section section--alt" id="rates">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow eyebrow--center">Rental packages</p>
+        <h2>Simple, flat pricing</h2>
+        <p>
+          One price for the whole rental, not a daily rate with fees stacked on
+          top. The longer you keep the cart, the less each day costs.
+        </p>
+      </div>
+
+      <div class="rates reveal">
+        <article class="rate-card">
+          <p class="rate-card__term">3-Day Rental</p>
+          <p class="rate-card__sub">A long weekend on the island</p>
+          <ul class="rate-card__list">
+            <li class="rate-card__row">
+              <span class="rate-card__seat">4 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$350</span><span class="rate-card__perday">$117 / day</span></span>
+            </li>
+            <li class="rate-card__row">
+              <span class="rate-card__seat">6 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$450</span><span class="rate-card__perday">$150 / day</span></span>
+            </li>
+          </ul>
+          <a class="btn btn--sm btn--ghost btn--block" href="contact.html">Book 3 days</a>
+        </article>
+
+        <article class="rate-card">
+          <p class="rate-card__term">5-Day Rental</p>
+          <p class="rate-card__sub">The midweek sweet spot</p>
+          <ul class="rate-card__list">
+            <li class="rate-card__row">
+              <span class="rate-card__seat">4 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$400</span><span class="rate-card__perday">$80 / day</span></span>
+            </li>
+            <li class="rate-card__row">
+              <span class="rate-card__seat">6 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$500</span><span class="rate-card__perday">$100 / day</span></span>
+            </li>
+          </ul>
+          <a class="btn btn--sm btn--ghost btn--block" href="contact.html">Book 5 days</a>
+        </article>
+
+        <article class="rate-card rate-card--featured">
+          <span class="rate-card__badge">Best value</span>
+          <p class="rate-card__term">7-Day Rental</p>
+          <p class="rate-card__sub">A full week, lowest daily rate</p>
+          <ul class="rate-card__list">
+            <li class="rate-card__row">
+              <span class="rate-card__seat">4 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$450</span><span class="rate-card__perday">$64 / day</span></span>
+            </li>
+            <li class="rate-card__row">
+              <span class="rate-card__seat">6 Seater</span>
+              <span class="rate-card__amount"><span class="rate-card__price">$550</span><span class="rate-card__perday">$79 / day</span></span>
+            </li>
+          </ul>
+          <a class="btn btn--sm btn--block" href="contact.html">Book 7 days</a>
         </article>
       </div>
 
@@ -278,13 +333,14 @@
         <div style="display:flex;gap:1rem;align-items:flex-start">
           <span class="card__icon" style="margin:0;background:#fff"><svg class="icon" aria-hidden="true"><use href="#i-tag"></use></svg></span>
           <div>
-            <h3 style="margin-bottom:.35rem">Longer stays cost less per day</h3>
+            <h3 style="margin-bottom:.35rem">What that price covers</h3>
             <p style="color:var(--navy-600)">
-              Weekly, monthly and seasonal rates are available on every cart, and
-              the longer you keep it the better the daily rate gets. Rates shift
-              with the season, so call or text <a href="tel:+19413121494"><strong>941-312-1494</strong></a>
-              for an exact quote on your dates &mdash; you&rsquo;ll get a real number
-              with no processing fees bolted on afterwards.
+              Free delivery and pickup, the Bluetooth soundbar, the street-legal
+              setup and local support &mdash; all in. No processing fees, no
+              hidden fees, no sales gimmicks. Staying longer than a week or need
+              something outside these packages? Call or text
+              <a href="tel:+19413121494"><strong>941-312-1494</strong></a> and
+              we&rsquo;ll sort it out.
             </p>
           </div>
         </div>
@@ -312,6 +368,12 @@
             <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>Charge it overnight.</strong> Electric carts plug into a standard outlet at your rental; gas carts go back with the fuel they arrived with.</span></li>
             <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>Questions are welcome.</strong> We walk you through everything at delivery and stay a phone call away.</span></li>
           </ul>
+          <div class="btn-row" style="margin-top:1.5rem">
+            <a class="btn btn--ghost-light" href="https://na1.documents.adobe.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhDWDQ5G4f680b_SaH2MsIIcdGAQYYhyTACa0pLbbJHrh8ZF1bAh0fPjOHKb7RTL4sk*" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg>
+              Read &amp; sign the rental agreement
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -369,6 +431,7 @@
           <li><a href="reviews.html">Guest Reviews</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="contact.html">Book Your Cart</a></li>
+          <li><a href="https://na1.documents.adobe.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhDWDQ5G4f680b_SaH2MsIIcdGAQYYhyTACa0pLbbJHrh8ZF1bAh0fPjOHKb7RTL4sk*" rel="noopener">Rental Agreement</a></li>
         </ul>
       </div>
 
