@@ -1,0 +1,156 @@
+<!--title: Book a Golf Cart | Coastal Custom Carts-->
+<!--description: Reserve a street-legal golf cart on Anna Maria Island, Siesta Key, Lido Key or Lakewood Ranch. Call or text 941-312-1494, or send your dates and we will reply fast.-->
+<!--slug: contact-->
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Book your cart</p>
+      <p class="eyebrow">Let&rsquo;s do this</p>
+      <h1>Book your cart</h1>
+      <p>
+        Send your dates below, or skip the form entirely and text us &mdash; most
+        of our bookings start with a text message and take about two minutes.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="split" style="align-items:start">
+
+        <!-- ------------------------------------------------ booking form -->
+        <div class="card card--roomy reveal">
+          <p class="eyebrow">Request availability</p>
+          <h2 style="font-size:var(--step-2)">Tell us about your trip</h2>
+
+          <form data-booking-form action="REPLACE_WITH_YOUR_FORM_ENDPOINT" method="post" novalidate style="margin-top:1.5rem">
+
+            <div class="field-grid field-grid--2">
+              <div class="field">
+                <label class="field__label" for="c-name">Full name</label>
+                <input class="field__control" type="text" id="c-name" name="name" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label class="field__label" for="c-phone">Mobile number</label>
+                <input class="field__control" type="tel" id="c-phone" name="phone" autocomplete="tel" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="c-email">Email</label>
+              <input class="field__control" type="email" id="c-email" name="email" autocomplete="email" required>
+            </div>
+
+            <div class="field-grid field-grid--2">
+              <div class="field">
+                <label class="field__label" for="c-delivery">Delivery date</label>
+                <input class="field__control" type="date" id="c-delivery" name="delivery_date" required>
+              </div>
+              <div class="field">
+                <label class="field__label" for="c-pickup">Pickup date</label>
+                <input class="field__control" type="date" id="c-pickup" name="pickup_date" required>
+              </div>
+            </div>
+
+            <div class="field-grid field-grid--2">
+              <div class="field">
+                <label class="field__label" for="c-cart">Cart size</label>
+                <select class="field__control" id="c-cart" name="cart_size" required>
+                  <option value="">Choose&hellip;</option>
+                  <option>4-passenger</option>
+                  <option>6-passenger</option>
+                  <option>8-passenger</option>
+                  <option>More than one cart</option>
+                  <option>Not sure &mdash; help me pick</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="field__label" for="c-power">Gas or electric</label>
+                <select class="field__control" id="c-power" name="power">
+                  <option>No preference</option>
+                  <option>Electric (lithium)</option>
+                  <option>Gas</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="c-address">Delivery address or area</label>
+              <input class="field__control" type="text" id="c-address" name="delivery_address" placeholder="e.g. Holmes Beach, Siesta Key, Lakewood Ranch" required>
+              <span class="field__hint">Delivery and pickup are free across Manatee &amp; Sarasota County.</span>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="c-notes">Anything else we should know?</label>
+              <textarea class="field__control" id="c-notes" name="notes" placeholder="Booster seats, number of kids, arrival time, special occasion&hellip;"></textarea>
+            </div>
+
+            <button class="btn btn--lg btn--block" type="submit">
+              <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+              Send My Request
+            </button>
+
+            <p class="form-status" hidden></p>
+
+            <p class="form-note" style="margin-top:1rem">
+              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+              <span>We use your details to quote your rental and nothing else. No mailing lists, no third parties.</span>
+            </p>
+          </form>
+        </div>
+
+        <!-- ------------------------------------------------ contact rail -->
+        <div class="reveal" data-reveal-delay="90">
+          <div class="card" style="background:var(--navy-700);color:var(--text-on-ink);border-color:transparent">
+            <h2 style="color:#fff;font-size:var(--step-2)">Faster: just text us</h2>
+            <p style="color:var(--text-on-ink-muted)">
+              Kelly answers quickly, seven days a week. Tell her your dates and
+              group size and she&rsquo;ll come straight back with availability.
+            </p>
+            <div class="btn-row" style="margin-top:1.5rem">
+              <a class="btn btn--block" href="tel:+19413121494">
+                <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+                941-312-1494
+              </a>
+            </div>
+            <p style="color:var(--text-on-ink-muted);font-size:.9rem;margin-top:1rem;text-align:center">Call or text &mdash; whichever you prefer</p>
+          </div>
+
+          <div class="card" style="margin-top:1.5rem">
+            <h3>Other ways to reach us</h3>
+            <div class="footer__contact" style="margin-top:1rem;color:var(--text)">
+              <a href="mailto:sales@coastalcustomcarts.com" style="color:var(--navy-700);text-decoration:none;display:inline-flex;gap:.75rem;align-items:flex-start;font-weight:600">
+                <svg class="icon" aria-hidden="true" style="width:19px;height:19px;color:var(--gold-600);flex:none;margin-top:3px"><use href="#i-mail"></use></svg>
+                <span>sales@coastalcustomcarts.com</span>
+              </a>
+              <p style="display:flex;gap:.75rem;align-items:flex-start;margin:0;font-weight:600">
+                <svg class="icon" aria-hidden="true" style="width:19px;height:19px;color:var(--gold-600);flex:none;margin-top:3px"><use href="#i-map-pin"></use></svg>
+                <span>Lakewood Ranch, FL 34211<br><span style="font-weight:400;color:var(--text-muted)">Serving Manatee &amp; Sarasota County</span></span>
+              </p>
+              <p style="display:flex;gap:.75rem;align-items:flex-start;margin:0;font-weight:600">
+                <svg class="icon" aria-hidden="true" style="width:19px;height:19px;color:var(--gold-600);flex:none;margin-top:3px"><use href="#i-clock"></use></svg>
+                <span>Seven days a week<br><span style="font-weight:400;color:var(--text-muted)">Delivery scheduled around your arrival</span></span>
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:1.5rem;background:var(--gold-100);border-color:var(--gold-200)">
+            <span class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            </span>
+            <p style="margin-top:.75rem;color:var(--navy-600)">
+              &ldquo;I loved that I could book a golf cart for our vacation on Anna
+              Maria Island directly over text message. The process was smooth and
+              the price was just right.&rdquo;
+            </p>
+            <p style="margin-top:.75rem;font-weight:700;font-size:.92rem">Emma Johnson &mdash; one of 95 five-star reviews</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>

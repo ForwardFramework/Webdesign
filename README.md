@@ -1,53 +1,159 @@
-# Webdesign
+# Coastal Custom Carts — Website
 
-Design tooling for Claude Code: the vendored [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-skills plus the [21st.dev](https://21st.dev) MCP server.
+A redesigned marketing site for **Coastal Custom Carts, LLC** — family-owned,
+street-legal luxury golf cart rentals and custom builds serving Anna Maria
+Island, Holmes Beach, Bradenton Beach, Lido Key, Siesta Key and Lakewood Ranch.
 
-## Skills
+Static HTML, CSS and vanilla JavaScript. **No build tools, no dependencies, no
+framework.** Open `index.html` in a browser and it works.
 
-`.claude/skills/` holds seven vendored skills (`ui-ux-pro-max`, `ui-styling`, `design`,
-`design-system`, `brand`, `banner-design`, `slides`). They auto-activate on UI/UX work and
-need only Python 3.x. See [.claude/skills/VENDORED.md](.claude/skills/VENDORED.md) for the
-upstream version and update procedure.
+---
 
-## 21st.dev MCP server
+## ⚠️ Before you go live — read this
 
-`.mcp.json` registers the `21st` HTTP MCP server at project scope, so anyone working in this
-repo is offered the server on their first session here.
+Three things need your input. Nothing else is blocking.
 
-The API key is **not** stored in the repo. The config reads it from the environment via
-`${API_KEY_21ST}`, which is the same variable the official
-[21st plugin](https://github.com/21st-dev/claude-code-plugin) uses, so one export serves both.
+### 1. Check the rental rates
 
-### Setup
+The original site could not be reached from the environment this was built in
+(the domain is blocked by an egress policy), so **the prices are industry-typical
+placeholders, not your real rates**:
+
+| Cart | Placeholder daily | Placeholder weekly |
+|---|---|---|
+| 4-passenger | $125 | $525 |
+| 6-passenger | $165 | $695 |
+| 8-passenger | $225 | $895 |
+
+They appear in exactly two files, each marked with a `RATES:` comment:
+`src/index.html` and `src/rentals.html`. Update both, then run `python3 build.py`.
+
+### 2. Connect the booking forms
+
+Both forms (hero quick-quote and the full form on `contact.html`) currently have
+`action="REPLACE_WITH_YOUR_FORM_ENDPOINT"`. Until that's replaced, the form
+validates and then shows a message telling the visitor to call or text — so no
+enquiry is silently lost, but none reaches your inbox either.
+
+To connect it, pick one and paste the endpoint into both forms' `action`:
+
+- **Netlify Forms** — host on Netlify and add `netlify` and
+  `name="booking"` attributes to the `<form>` tag. Zero config.
+- **Formspree** — sign up, create a form, paste the `https://formspree.io/f/xxxx`
+  URL.
+- **Your own handler** — any URL that accepts a POST.
+
+The JS detects a real endpoint automatically and stops intercepting the submit.
+
+### 3. Add photos
+
+Every image slot is currently a line-art cart illustration on a navy gradient.
+They look intentional, but **real photos of your carts will convert far better**.
+Full instructions and file names: [`assets/img/README.md`](assets/img/README.md).
+
+---
+
+## Content that was verified
+
+Pulled from public sources and your own review screenshots:
+
+- Phone **941-312-1494**, email **sales@coastalcustomcarts.com**
+- **Lakewood Ranch, FL 34211**; free delivery & pickup across Manatee &
+  Sarasota County
+- Service area: Anna Maria Island, City of Anna Maria, Holmes Beach, Bradenton
+  Beach, Lido Key, Siesta Key, Lakewood Ranch
+- Fleet: American-made E-Z-GO and Club Car, gas or electric, lithium batteries,
+  SoundExtreme Bluetooth soundbars, upgraded wheels/tires, premium seating
+- "No processing fees, no hidden fees, no sales gimmicks"
+- Owners **Kelly and Zack**; booster seats and car seats available
+- **95 five-star reviews**; 19 real reviews are quoted on the site
+
+Anything not on that list — hours of operation, deposit amounts, minimum rental
+length, cancellation policy, insurance terms — was deliberately **left off**
+rather than invented. The FAQ answers general questions only. Add the specifics
+when you have them.
+
+---
+
+## Structure
+
+```
+index.html  rentals.html  for-sale.html        ← generated — don't edit these
+reviews.html  about.html  contact.html  404.html
+robots.txt   sitemap.xml
+build.py                                        ← assembles pages from the parts below
+src/           page bodies (edit these)
+partials/      head, header, footer, icon sprite (edit these)
+assets/css/styles.css    design tokens + all styling
+assets/js/main.js        nav, scroll reveal, form handling
+assets/img/              logo SVGs, favicon, photo drop-zone
+```
+
+### Editing
+
+Header, footer and `<head>` live in `partials/` so a change lands on every page
+at once. Page content lives in `src/`. After any edit to `src/` or `partials/`:
 
 ```bash
-# Get a key at https://21st.dev/settings/api-keys
-export API_KEY_21ST="21st_sk_..."   # add to ~/.zshrc, ~/.bashrc, or a gitignored .env
+python3 build.py
+```
+
+That regenerates the seven standalone HTML files at the root. Those files are
+the deployable site — they need no server-side anything.
+
+### Deploying
+
+Upload the root HTML files plus `assets/`, `robots.txt` and `sitemap.xml` to any
+static host (Netlify, Vercel, Cloudflare Pages, GitHub Pages, or plain shared
+hosting). There is no build step to configure.
+
+---
+
+## Design system
+
+Colors are taken from the logo:
+
+| Token | Hex | Use |
+|---|---|---|
+| `--navy-700` | `#12283C` | Primary brand ink, dark sections |
+| `--gold-500` | `#C79760` | Accent, primary buttons |
+| `--sand-100` | `#FBF8F4` | Page background |
+| `--sand-200` | `#F5EFE6` | Alternating sections |
+
+Type: **Fraunces** (headings), **Karla** (body), **Kaushan Script** (accents,
+echoing the logo's brush script). All from Google Fonts.
+
+Every color pair used for text meets WCAG AA (4.5:1). Gold is used as a
+*background* for dark text rather than as light-background text, because
+`#C79760` on white is only 2.9:1.
+
+### Built-in behaviour
+
+- Sticky header, full-screen mobile menu, sticky call/book bar on phones
+- Scroll-reveal animations that respect `prefers-reduced-motion`
+- Keyboard accessible with visible focus rings and a skip link
+- `AutoRental` + `FAQPage` structured data for Google rich results
+- Verified at 390px, 768px and 1440px with zero horizontal overflow
+
+---
+
+## Skills and tooling
+
+This repo also vendors the [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+skills in `.claude/skills/` and registers the [21st.dev](https://21st.dev) MCP
+server in `.mcp.json`. Neither is required to build or deploy the site.
+
+<details>
+<summary>21st.dev MCP setup</summary>
+
+The API key is not stored in the repo; `.mcp.json` reads `${API_KEY_21ST}`.
+
+```bash
+export API_KEY_21ST="21st_sk_..."   # get one at https://21st.dev/settings/api-keys
 claude                              # approve the project MCP server when prompted
 ```
 
-Verify with `claude mcp list` (or `/mcp` inside a session); `21st` should report connected.
-
-### Alternatives
-
-Register the server privately instead of via `.mcp.json`:
-
-```bash
-claude mcp add --transport http 21st https://21st.dev/api/mcp \
-  --header "x-api-key: $API_KEY_21ST"
-```
-
-Or install the official plugin, which bundles the same MCP server with the 21st CLI skills:
-
-```
-/plugin marketplace add 21st-dev/claude-code-plugin
-/plugin install 21st@21st
-```
-
-### Network requirement
-
-`21st.dev:443` must be reachable. In sandboxed or proxied environments with an egress
-allowlist, add `21st.dev` to it — otherwise the server registers fine but reports
-`Needs authentication`, which is the proxy's `403` surfacing as an auth failure rather than
-a bad key.
+Requires `21st.dev:443` to be reachable. In a sandbox with an egress allowlist,
+add it — otherwise the server registers but reports `Needs authentication`,
+which is the proxy's 403 surfacing as an auth failure rather than a bad key.
+</details>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Coastal Custom Carts monogram">
+  <title>Coastal Custom Carts</title>
+  <g fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="miter">
+    <path d="M100 5 L186 53 L186 147 L100 195 L14 147 L14 53 Z"/>
+    <path d="M100 26 L168 64 L168 136 L100 174 L32 136 L32 64 Z" stroke-width="7"/>
+  </g>
+  <g fill="currentColor">
+    <path d="M46 72 h30 v15 H61 v26 h15 v15 H46 z"/>
+    <path d="M85 60 h30 v15 h-15 v50 h15 v15 H85 z"/>
+    <path d="M124 72 h30 v15 h-15 v26 h15 v15 h-30 z"/>
+  </g>
+</svg>

@@ -1,0 +1,657 @@
+<!--title: Golf Cart Rentals on Anna Maria Island | Coastal Custom Carts-->
+<!--description: Street-legal luxury golf cart rentals delivered free to Anna Maria Island, Holmes Beach, Bradenton Beach, Lido Key, Siesta Key & Lakewood Ranch. Family owned, 95 five-star reviews, no hidden fees.-->
+<!--slug: -->
+
+<main id="main">
+
+  <!-- ====================================================== HERO ========= -->
+  <section class="hero">
+    <svg class="hero__scene" viewBox="0 0 1440 340" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+      <path d="M0 250C180 214 320 236 520 258s340 14 520-24 400-38 400-38v144H0z" fill="#0A1723" opacity=".55"/>
+      <path d="M0 292c220-30 380-12 600 10s420 6 620-22 220-18 220-18v78H0z" fill="#0A1723" opacity=".8"/>
+      <g fill="#0A1723" opacity=".9">
+        <path d="M138 300V190c0-6 9-6 9 0v110z"/>
+        <path d="M143 192c-26-24-56-28-78-14 20-4 44 2 60 18-22-32-52-46-80-42 26-4 56 10 74 34-10-34-34-54-62-60 32-2 62 22 72 56 4-32 22-58 48-68-20 16-32 42-30 68 14-26 40-42 68-42-28 8-50 28-58 54z"/>
+        <path d="M1292 306V176c0-7 10-7 10 0v130z"/>
+        <path d="M1298 178c28-26 60-30 84-16-22-4-48 2-64 20 24-34 56-50 86-46-28-4-60 10-80 36 12-36 38-58 68-64-34-2-66 24-78 60-4-34-24-62-52-72 22 16 34 44 32 72-14-28-42-44-72-44 30 8 54 30 62 58z"/>
+        <path d="M1218 312V226c0-5 8-5 8 0v86z"/>
+        <path d="M1223 228c-19-18-41-20-57-10 15-3 32 1 44 13-16-23-38-34-59-31 19-3 41 7 54 25-7-25-25-40-45-44 23-1 45 16 53 41 3-23 16-42 35-50-15 12-24 31-22 50 10-19 29-31 50-31-21 6-37 21-43 40z"/>
+      </g>
+    </svg>
+
+    <div class="container hero__inner">
+      <div>
+        <p class="eyebrow">Anna Maria Island &middot; Lakewood Ranch &middot; Siesta Key</p>
+        <h1>
+          <span class="script">Cruise the</span>
+          Island in Style
+        </h1>
+        <p class="hero__lede">
+          Street-legal luxury golf carts, delivered free to your door and picked
+          up when you leave. Lithium power, Bluetooth soundbars, premium seating
+          &mdash; and not a single hidden fee.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn--lg" href="contact.html">
+            Check Availability
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+          <a class="btn btn--lg btn--ghost-light" href="tel:+19413121494">
+            <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+            941-312-1494
+          </a>
+        </div>
+
+        <ul class="chips">
+          <li class="chip"><svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg> Free delivery &amp; pickup</li>
+          <li class="chip"><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg> Street legal</li>
+          <li class="chip"><svg class="icon" aria-hidden="true"><use href="#i-tag"></use></svg> No hidden fees</li>
+          <li class="chip"><svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg> Lithium powered</li>
+        </ul>
+
+        <div class="hero__proof">
+          <span class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="hero__proof-text"><strong>95 five-star reviews</strong> from island guests and neighbors</p>
+        </div>
+      </div>
+
+      <!-- Quick booking card -->
+      <div class="book-card reveal" data-reveal-delay="120">
+        <h2 class="book-card__title">Check your dates</h2>
+        <p class="book-card__note">Takes 30 seconds. We reply by text, fast.</p>
+
+        <form data-booking-form action="REPLACE_WITH_YOUR_FORM_ENDPOINT" method="post" novalidate>
+          <div class="field-grid field-grid--2">
+            <div class="field">
+              <label class="field__label" for="hero-delivery">Delivery date</label>
+              <input class="field__control" type="date" id="hero-delivery" name="delivery_date" required>
+            </div>
+            <div class="field">
+              <label class="field__label" for="hero-pickup">Pickup date</label>
+              <input class="field__control" type="date" id="hero-pickup" name="pickup_date" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="hero-cart">Cart size</label>
+            <select class="field__control" id="hero-cart" name="cart_size" required>
+              <option value="">Choose your cart&hellip;</option>
+              <option>4-passenger</option>
+              <option>6-passenger</option>
+              <option>8-passenger</option>
+              <option>Not sure yet &mdash; help me pick</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="hero-name">Your name</label>
+            <input class="field__control" type="text" id="hero-name" name="name" autocomplete="name" required>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="hero-phone">Mobile number</label>
+            <input class="field__control" type="tel" id="hero-phone" name="phone" autocomplete="tel" required>
+            <span class="field__hint">We&rsquo;ll text you availability &mdash; no spam, ever.</span>
+          </div>
+
+          <button class="btn btn--block" type="submit">
+            <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+            Get My Quote
+          </button>
+
+          <p class="form-status" hidden></p>
+          <p class="book-card__foot">Prefer to talk? Call or text <a href="tel:+19413121494"><strong>941-312-1494</strong></a></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== TRUST BAR ====== -->
+  <section class="trustbar">
+    <div class="container">
+      <div class="trustbar__grid">
+        <div class="trustbar__item">
+          <svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg>
+          <span class="trustbar__value">95</span>
+          <span class="trustbar__label">Five-star reviews</span>
+        </div>
+        <div class="trustbar__item">
+          <svg class="icon" aria-hidden="true"><use href="#i-truck"></use></svg>
+          <span class="trustbar__value">$0</span>
+          <span class="trustbar__label">Delivery &amp; pickup</span>
+        </div>
+        <div class="trustbar__item">
+          <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+          <span class="trustbar__value">100%</span>
+          <span class="trustbar__label">Street legal fleet</span>
+        </div>
+        <div class="trustbar__item">
+          <svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>
+          <span class="trustbar__value">Family</span>
+          <span class="trustbar__label">Owned &amp; operated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== FLEET ======== -->
+  <section class="section" id="fleet">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow eyebrow--center">The Fleet</p>
+        <h2>Pick your ride</h2>
+        <p>
+          Every cart is an American-made E-Z-GO or Club Car, loaded with the
+          upgrades that make island days better. Gas or electric &mdash; your call.
+        </p>
+      </div>
+
+      <!-- ============================================================
+           RATES: update the three prices below when your rates change.
+           They also appear on rentals.html.
+           ============================================================ -->
+      <div class="grid grid--3">
+        <article class="fleet-card reveal">
+          <div class="fleet-card__media">
+            <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M34 84h112"/><circle cx="52" cy="92" r="11"/><circle cx="146" cy="92" r="11"/><path d="M30 84V56h84v28M42 56V36h60v20M114 62h26l16 22h-20"/><path d="M63 84V62M90 84V62"/></g></svg>
+            <span class="fleet-card__badge">Most booked</span>
+          </div>
+          <div class="fleet-card__body">
+            <p class="fleet-card__seats">Seats 4</p>
+            <h3>The Beach Cruiser</h3>
+            <p class="fleet-card__desc">
+              Perfect for a couple or a small family. Nimble enough for Pine
+              Avenue parking, comfortable enough for all-day island loops.
+            </p>
+            <ul class="fleet-card__specs">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-zap"></use></svg> Lithium battery or gas</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-music"></use></svg> SoundExtreme Bluetooth soundbar</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg> Street legal, lights &amp; belts</li>
+            </ul>
+            <div class="fleet-card__foot">
+              <p class="price">
+                <span class="price__label">From</span>
+                <span class="price__value">$125<span class="price__unit">/day</span></span>
+              </p>
+              <a class="btn btn--sm" href="contact.html">Book it</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="fleet-card fleet-card--featured reveal" data-reveal-delay="90">
+          <div class="fleet-card__media">
+            <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M22 84h150"/><circle cx="44" cy="92" r="11"/><circle cx="160" cy="92" r="11"/><path d="M18 84V56h108v28M32 56V36h80v20M126 62h30l16 22h-22"/><path d="M52 84V62M80 84V62M108 84V62"/></g></svg>
+            <span class="fleet-card__badge">Best for groups</span>
+          </div>
+          <div class="fleet-card__body">
+            <p class="fleet-card__seats">Seats 6</p>
+            <h3>The Island Hauler</h3>
+            <p class="fleet-card__desc">
+              The vacation favorite. Six real seats, room for beach chairs and a
+              cooler, and enough power to do it all again tomorrow.
+            </p>
+            <ul class="fleet-card__specs">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg> Forward &amp; rear-facing seating</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-sparkle"></use></svg> Custom lighting &amp; premium wheels</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-baby"></use></svg> Booster &amp; car seats available</li>
+            </ul>
+            <div class="fleet-card__foot">
+              <p class="price">
+                <span class="price__label">From</span>
+                <span class="price__value">$165<span class="price__unit">/day</span></span>
+              </p>
+              <a class="btn btn--sm" href="contact.html">Book it</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="fleet-card reveal" data-reveal-delay="180">
+          <div class="fleet-card__media">
+            <svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"><path d="M14 84h172"/><circle cx="38" cy="92" r="11"/><circle cx="170" cy="92" r="11"/><path d="M10 84V56h126v28M24 56V36h98v20M136 62h34l16 22h-24"/><path d="M42 84V62M70 84V62M98 84V62M124 84V62"/></g></svg>
+          </div>
+          <div class="fleet-card__body">
+            <p class="fleet-card__seats">Seats 8</p>
+            <h3>The Sunset Limo</h3>
+            <p class="fleet-card__desc">
+              Big group, one cart. Ideal for wedding parties, reunions and
+              multi-family rentals who&rsquo;d rather ride together than convoy.
+            </p>
+            <ul class="fleet-card__specs">
+              <li><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg> Eight-passenger limo body</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-music"></use></svg> Full audio &amp; LED package</li>
+              <li><svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg> Limited availability &mdash; book early</li>
+            </ul>
+            <div class="fleet-card__foot">
+              <p class="price">
+                <span class="price__label">From</span>
+                <span class="price__value">$225<span class="price__unit">/day</span></span>
+              </p>
+              <a class="btn btn--sm" href="contact.html">Book it</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p style="text-align:center;margin-top:2rem;color:var(--text-muted)">
+        Rates vary by season and length of stay. Weekly and monthly pricing available &mdash;
+        <a href="rentals.html">see full rental details</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================================================== HOW IT WORKS === -->
+  <section class="section section--ink">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow eyebrow--center">How it works</p>
+        <h2>Booked in minutes. Driving the same day.</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <h3>Tell us your dates</h3>
+          <p>
+            Call, text, or send the form. Kelly answers quickly and will talk you
+            through cart sizes, the island rules, and what actually fits your group.
+          </p>
+        </div>
+        <div class="step reveal" data-reveal-delay="90">
+          <h3>We deliver, free</h3>
+          <p>
+            Your cart arrives at your rental or home &mdash; spotless, fully charged
+            or gassed up, and ready to roll. No depot visit, no paperwork queue.
+          </p>
+        </div>
+        <div class="step reveal" data-reveal-delay="180">
+          <h3>Just go enjoy it</h3>
+          <p>
+            Cruise the island, chase the sunset, park anywhere. When your stay ends
+            we collect the cart. That pickup is free too.
+          </p>
+        </div>
+      </div>
+
+      <div class="btn-row btn-row--center" style="margin-top:3rem">
+        <a class="btn btn--lg" href="contact.html">Start My Booking</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== WHY US ======= -->
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split__media reveal">
+          <svg viewBox="0 0 200 150" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".8"><path d="M26 104h148"/><circle cx="52" cy="113" r="13"/><circle cx="160" cy="113" r="13"/><path d="M22 104V68h104v36M36 68V44h76v24M126 76h30l18 28h-22"/><path d="M58 104V76M86 104V76M112 104V76"/><path d="M36 44l-6-10M112 44l6-10"/></g><g fill="#C79760" opacity=".5"><circle cx="160" cy="34" r="18"/></g></svg>
+        </div>
+        <div class="reveal" data-reveal-delay="90">
+          <p class="eyebrow">Why guests rebook</p>
+          <h2>A rental company that acts like a neighbor</h2>
+          <p style="color:var(--text-muted);font-size:var(--step-1)">
+            Coastal Custom Carts is Kelly and Zack &mdash; a family business, not a
+            franchise counter. That shows up in every part of the rental.
+          </p>
+          <ul class="checklist">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>No processing fees, no hidden fees, no sales gimmicks.</strong> The price we quote is the price you pay.</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>Free delivery and pickup</strong> throughout Manatee &amp; Sarasota County.</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>Newer, genuinely nice carts.</strong> American-made E-Z-GO and Club Car with lithium batteries, upgraded wheels and tires, and premium seating.</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>Booster seats and car seats</strong> on request, so the kids ride safely.</span></li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> <span><strong>We check in mid-stay.</strong> If anything comes up, we come out.</span></li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn btn--ghost" href="about.html">Meet the owners</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== REVIEWS ======= -->
+  <section class="section section--alt" id="reviews">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow eyebrow--center">Guest reviews</p>
+        <h2>95 five-star reviews and counting</h2>
+      </div>
+
+      <div class="rating-summary reveal">
+        <div>
+          <p class="rating-summary__score">5.0</p>
+          <span class="stars" role="img" aria-label="Rated 5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+        </div>
+        <p class="rating-summary__meta">
+          <strong>95 five-star reviews</strong><br>
+          from guests across Anna Maria Island, Siesta Key &amp; Lakewood Ranch
+        </p>
+        <a class="btn btn--sm btn--navy" href="reviews.html">Read them all</a>
+      </div>
+
+      <div class="reviews">
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">CH</span>
+            <span class="review__who">
+              <span class="review__name">Corey Holcombe</span>
+              <span class="review__meta">Anna Maria Island &middot; a month ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">We absolutely loved our time on Anna Maria but what really made our trip was having the golf cart. It was our favorite part about the trip, just cruising around listening to music. Coastal Custom Carts was so easy to work with and very nice! They deliver and pick up for free. We will definitely be using them again next year!</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">JR</span>
+            <span class="review__who">
+              <span class="review__name">Jordan Rieskamp</span>
+              <span class="review__meta">Local Guide &middot; 10 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">We had an awesome experience with Coastal Custom Carts! Our golf cart was delivered right on time &mdash; spotless, fully charged, and ready to roll.</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">CF</span>
+            <span class="review__who">
+              <span class="review__name">Chrisy Fritcher</span>
+              <span class="review__meta">2 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">Kelly and Zack were awesome to work with, they had our golf cart at our rental home when we arrived and they checked in to see how things were going. It was so nice to have the cart to cruise around the island! Highly recommend Coastal Custom Carts!</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">LM</span>
+            <span class="review__who">
+              <span class="review__name">Lisa Mattia</span>
+              <span class="review__meta">Local Guide &middot; 5 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">What a great experience!!! I was in need of a Golf Cart for Easter weekend and I called Coastal Custom Carts. Kelly was awesome! Customer Service tactics were incredible with immediate responses no matter when I texted her.</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">AB</span>
+            <span class="review__who">
+              <span class="review__name">Autumn Bost</span>
+              <span class="review__meta">5 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">We had a great experience renting a golf cart from Coastal Custom Carts! Highly recommend and would definitely book with this company again in the future! The owners were so nice and everything went so smoothly from drop off to pick up! The Golf Cart was new and had a great sound bar and custom lights on it!</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">AS</span>
+            <span class="review__who">
+              <span class="review__name">Andy S</span>
+              <span class="review__meta">2 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">Highly recommend. Kelly was very helpful when booking and provided a lot of good information about the cart and island in general. We had a 6 person cart and it was like new and ran well.</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">EJ</span>
+            <span class="review__who">
+              <span class="review__name">Emma Johnson</span>
+              <span class="review__meta">4 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">10/10 experience with Coastal Custom Carts! I loved that I could book a golf cart for our vacation on Anna Maria Island directly over text message. The process was smooth and the price was just right. Highly recommend!</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">CS</span>
+            <span class="review__who">
+              <span class="review__name">Christine Schierloh</span>
+              <span class="review__meta">3 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">Cannot say enough great things about this business! From start to finish Kelly &amp; Zach were very very easy to work with! Very professional &amp; got exactly what we asked for! We are definitely renting a cart from them next time we&rsquo;re in town!!</p>
+        </article>
+
+        <article class="review reveal">
+          <div class="review__head">
+            <span class="review__avatar" aria-hidden="true">MP</span>
+            <span class="review__who">
+              <span class="review__name">Mindy Parrish</span>
+              <span class="review__meta">3 months ago</span>
+            </span>
+          </div>
+          <span class="stars stars--sm" role="img" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"></use></svg>
+          </span>
+          <p class="review__body">From first contact, Coastal Custom Carts has been so easy to deal with, friendly and helpful! The cart was fantastic, loved the speaker! Very clean and worked flawlessly! Would definitely recommend renting from Coastal Custom Carts!</p>
+        </article>
+      </div>
+
+      <div class="reviews-more">
+        <a class="btn btn--ghost" href="reviews.html">Read all 95 reviews</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== SERVICE AREA ===== -->
+  <section class="section section--ink" id="service-area">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Free delivery zone</p>
+        <h2>We bring the cart to you</h2>
+        <p>
+          Delivery and pickup are complimentary throughout Manatee &amp; Sarasota
+          County. If you&rsquo;re staying anywhere on this list, your cart comes to
+          your door at no extra charge.
+        </p>
+      </div>
+
+      <ul class="areas reveal" data-reveal-delay="90">
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Anna Maria Island</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> City of Anna Maria</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Holmes Beach</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Bradenton Beach</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Lido Key</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Siesta Key</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Lakewood Ranch</li>
+        <li class="area"><svg class="icon" aria-hidden="true"><use href="#i-map-pin"></use></svg> Manatee &amp; Sarasota County</li>
+      </ul>
+
+      <p style="margin-top:1.5rem;color:var(--text-on-ink-muted)">
+        Staying somewhere that isn&rsquo;t listed? <a href="tel:+19413121494">Give us a call</a> &mdash; we can usually make it work.
+      </p>
+    </div>
+  </section>
+
+  <!-- =================================================== FOR SALE ======== -->
+  <section class="section">
+    <div class="container">
+      <div class="split split--reverse">
+        <div class="split__media reveal">
+          <svg viewBox="0 0 200 150" aria-hidden="true"><g fill="none" stroke="#F3EEE6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".8"><path d="M20 100h160"/><circle cx="48" cy="110" r="14"/><circle cx="164" cy="110" r="14"/><path d="M16 100V62h114v38M30 62V38h86v24M130 70h32l18 30h-24"/><path d="M54 100V70M84 100V70M112 100V70"/></g><g fill="#C79760" opacity=".45"><circle cx="44" cy="32" r="16"/></g></svg>
+        </div>
+        <div class="reveal" data-reveal-delay="90">
+          <p class="eyebrow">Custom builds</p>
+          <h2>Love the cart? Take one home.</h2>
+          <p style="color:var(--text-muted);font-size:var(--step-1)">
+            We don&rsquo;t just rent carts &mdash; we build them. Tell us the colors,
+            the seating, the sound and the lighting, and we&rsquo;ll spec a
+            street-legal cart that&rsquo;s genuinely yours.
+          </p>
+          <ul class="checklist">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> American-made E-Z-GO &amp; Club Car platforms</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> Lithium battery conversions &amp; gas builds</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> Custom paint, seating, wheels, audio &amp; lighting</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-check-circle"></use></svg> Street-legal packages built to Florida spec</li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn" href="for-sale.html">See carts for sale</a>
+            <a class="btn btn--ghost" href="contact.html">Start a custom build</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== FAQ ======== -->
+  <section class="section section--alt" id="faq">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <p class="eyebrow eyebrow--center">Good to know</p>
+        <h2>Questions, answered</h2>
+      </div>
+
+      <div class="faq reveal">
+        <details class="faq__item">
+          <summary>Are your golf carts street legal?</summary>
+          <div class="faq__answer">
+            <p>Yes. Our entire fleet is street legal, which means headlights, tail
+            lights, turn signals, mirrors, seat belts and a VIN. You can legally
+            drive them on Anna Maria Island&rsquo;s posted roads and throughout the
+            neighborhoods we serve.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Who is allowed to drive the cart?</summary>
+          <div class="faq__answer">
+            <p>Any licensed driver 18 or older who is listed on the rental
+            agreement. Because our carts are street legal, a valid driver&rsquo;s
+            license is required &mdash; the same rules as driving a car apply.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Is delivery really free?</summary>
+          <div class="faq__answer">
+            <p>Really free. Delivery and pickup are complimentary throughout
+            Manatee &amp; Sarasota County, including Anna Maria Island, Holmes
+            Beach, Bradenton Beach, Lido Key, Siesta Key and Lakewood Ranch. No
+            processing fees, no hidden fees, no sales gimmicks.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Gas or electric &mdash; which should I choose?</summary>
+          <div class="faq__answer">
+            <p>Electric carts run on top-of-the-line lithium batteries: quiet,
+            quick and no fuel stops, just plug in overnight at your rental. Gas
+            carts are the pick if you&rsquo;re covering a lot of miles each day and
+            would rather top up at a pump. Tell us how you&rsquo;ll use it and
+            we&rsquo;ll point you to the right one.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Can you accommodate kids?</summary>
+          <div class="faq__answer">
+            <p>Absolutely. Booster seats and car seats are available on request at
+            no drama &mdash; just tell us how many and what ages when you book.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>How far in advance should I book?</summary>
+          <div class="faq__answer">
+            <p>For peak season, spring break and holiday weeks, the earlier the
+            better &mdash; those dates go first. That said, we&rsquo;ve saved plenty
+            of last-minute trips, so it&rsquo;s always worth a call or text to
+            941-312-1494.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>What happens if something goes wrong with the cart?</summary>
+          <div class="faq__answer">
+            <p>Call us and we&rsquo;ll come out. We&rsquo;re local, we check in
+            during your stay, and we service everything we rent. You&rsquo;re never
+            waiting on an out-of-town call center.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Do you rent for long stays or seasonal visits?</summary>
+          <div class="faq__answer">
+            <p>Yes &mdash; weekly, monthly and seasonal rentals are all available,
+            and longer stays come with better rates. Snowbirds and construction or
+            event rentals are welcome too.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================== FINAL CTA ======= -->
+  <section class="section cta-band">
+    <div class="container container--narrow" style="text-align:center">
+      <p class="eyebrow eyebrow--center">Ready when you are</p>
+      <h2>Your cart is waiting</h2>
+      <p style="margin-bottom:2rem">
+        Tell us your dates and we&rsquo;ll have a clean, charged, street-legal cart
+        parked at your door &mdash; free delivery, free pickup, no surprises.
+      </p>
+      <div class="btn-row btn-row--center">
+        <a class="btn btn--lg" href="contact.html">Book Your Cart</a>
+        <a class="btn btn--lg btn--ghost-light" href="tel:+19413121494">
+          <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>
+          Call or Text 941-312-1494
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Are your golf carts street legal?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Our entire fleet is street legal, with headlights, tail lights, turn signals, mirrors, seat belts and a VIN, so they can be driven legally on posted roads on Anna Maria Island and in the neighborhoods we serve." } },
+    { "@type": "Question", "name": "Who is allowed to drive the cart?", "acceptedAnswer": { "@type": "Answer", "text": "Any licensed driver 18 or older who is listed on the rental agreement. Because the carts are street legal, a valid driver's license is required." } },
+    { "@type": "Question", "name": "Is delivery really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Delivery and pickup are complimentary throughout Manatee and Sarasota County, including Anna Maria Island, Holmes Beach, Bradenton Beach, Lido Key, Siesta Key and Lakewood Ranch. There are no processing fees or hidden fees." } },
+    { "@type": "Question", "name": "Can you accommodate kids?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Booster seats and car seats are available on request at no extra hassle — just tell us how many and what ages when you book." } },
+    { "@type": "Question", "name": "Do you rent for long stays or seasonal visits?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Weekly, monthly and seasonal rentals are available, and longer stays come with better rates." } }
+  ]
+}
+</script>
