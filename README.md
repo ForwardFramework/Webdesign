@@ -1,10 +1,10 @@
-# Yasse's Cleaning — website
+# Mommy Made — website
 
-Marketing site for **Yasse's Cleaning**, a locally owned house cleaning company in
-Lakewood Ranch, Florida. Static HTML, CSS and vanilla JS — no build step, no
+Marketing site for **Mommy Made**, a locally owned house cleaning company in
+Lakewood Ranch, Florida, that gives a percentage of every job back to charity. Static HTML, CSS and vanilla JS — no build step, no
 dependencies. Open `index.html` or drop the folder on any host.
 
-*Sparkling Spaces, Happy Places.*
+*Cleaned with care, given back with love.*
 
 ## Pages
 
@@ -28,26 +28,43 @@ safe to find-and-replace across all seven HTML files.
 
 | Placeholder | Replace with |
 | --- | --- |
-| `(941) 555-0142` and `+19415550142` | The real phone number (display + `tel:` format) |
-| `hello@yassescleaning.com` | The real inbox |
-| `https://yassescleaning.com` | The real domain (canonical, OG tags, sitemap, robots) |
+| `hello@mommymadeclean.com` | The real inbox |
+| `https://mommymadeclean.com` | The real domain (canonical, OG tags, sitemap, robots) |
 | `34202` | The business ZIP, if different |
 | Geo coordinates in the `index.html` JSON-LD | Exact business coordinates |
 
+**The phone number `(720) 563-1575` is real and already set** — it is not a placeholder.
+
+### Set the charity figure
+
+The give-back is currently worded as "a percentage" everywhere, because the figure and
+the cause are yours to state and this site will not invent either. Both live in one
+place, `SITE` at the top of the page generator (and as literal text in the HTML):
+
+```python
+"charity_pct":  "",   # e.g. "5%"
+"charity_name": "",   # e.g. "All Faiths Food Bank"
+```
+
+Fill them in and the copy sharpens automatically — the giving card switches from
+"Every job / gives a little back" to "5% / of every job, given back", and the FAQ,
+hero, footer and About page all name the cause. Until then the site makes a true but
+vague promise, which is the safe default but converts less well than a specific one.
+
 ```bash
 # example
-grep -rl '(941) 555-0142' *.html | xargs sed -i 's/(941) 555-0142/(941) 555-1234/g'
+grep -rl 'mommymadeclean.com' *.html | xargs sed -i 's/mommymadeclean.com/yourdomain.com/g'
 ```
 
 ## Brand
 
-Soft, natural and feminine, built around the two colours that are actually in the
-logo:
+Soft, natural and feminine, anchored on the Mommy Made logo — a home with a heart in
+it, flanked by sage sprigs:
 
 | Role | Token | Value |
 | --- | --- | --- |
-| Logo navy — headings, wordmark | `--navy-700` | `#16305C` |
-| Logo leaf green — primary CTA | `--green-500` | `#6AB023` |
+| Logo plum — headings, wordmark | `--plum-700` | `#5A2E41` |
+| Leaf green — primary CTA | `--green-500` | `#6AB023` |
 | Warm cream — page ground | `--cream-50/100/200` | `#FDFAF6` → `#F3E9DC` |
 | Blush — accents, eyebrows, "most popular" | `--rose-50…700` | `#FDF3F1` → `#A15B50` |
 | Sage — supporting greens, ticks, checked states | `--sage-50…700` | `#F2F7EF` → `#547A44` |
@@ -119,8 +136,15 @@ business uses. Everything else (validation, success message, honeypot) already w
 
 ## Reviews
 
-The testimonials on `index.html` and `about.html` are **real recommendations from the
-Yasse's Cleaning Facebook page**, used verbatim and defined once in the review block.
+The testimonials on `index.html` and `about.html` are **real Facebook recommendations**,
+used verbatim and defined once in the review block.
+
+**They name Yasse, the owner, because they were written before the Mommy Made rebrand.**
+Do not reword them to say "Mommy Made" — editing a real review's text is falsifying a
+testimonial. The section heading carries the context instead ("These were written for
+Yasse and her team — the same people who now clean as Mommy Made"). If Mommy Made is
+*not* the same business, these reviews do not belong on the site at all and should be
+removed rather than reworded.
 Facebook "recommends" is a yes/no endorsement rather than a star rating, so they are
 presented as recommendations and no star counts or aggregate rating are claimed
 anywhere on the site. If you add reviews from a source that does carry star ratings
@@ -149,7 +173,7 @@ very easily. Specifics worth preserving if you change colours:
   ground in use. The lighter warm grey it replaced measured 3.4–4.1:1.
 - Badges and medallions that carry white text use the deep stops (`--rose-700`,
   `#8C4C43`, `--sage-700`). The pale blush tints measured 2.6–3.4:1 against white.
-- **`--green-cta` (`#478016`) exists only for buttons.** The logo green `#6AB023` is
+- **`--green-cta` (`#478016`) exists only for buttons.** The brand green `#6AB023` is
   gorgeous but gives white text just 2.68:1, so the button uses a deeper green from
   the same family (4.8:1) while the logo, ticks and icons keep the true brand green.
   Don't "fix" the button back to `--green-500`.
