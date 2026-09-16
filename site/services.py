@@ -1,0 +1,1027 @@
+"""Service pages. One dict per page; `build.py` turns each into a URL.
+
+Fields
+------
+slug        URL segment under /services/
+nav         short label for menus
+group       used to cluster the services menu and the services hub
+icon        key from business.ICONS
+h1          on-page headline
+meta_title  <title> — aim for 50-60 characters
+meta_desc   meta description — aim for 140-160 characters
+tagline     one sentence under the H1
+answer      the direct answer block. 40-70 words, complete on its own, because
+            this is what answer engines and AI assistants quote.
+intro       body paragraphs
+scope       [(subhead, [line items])] — the actual work performed
+sections    [{"h": heading, "p": [paras], "list": [bullets]}]
+faqs        [(question, answer)] — rendered as <details> and as FAQPage schema
+related     slugs of sibling services
+"""
+
+SERVICES = [
+    # ---------------------------------------------------------------- interior
+    {
+        "slug": "home-renovation",
+        "nav": "Full Home Renovation",
+        "group": "Remodeling & Interiors",
+        "icon": "home",
+        "h1": "Full Home Renovation in Pittsburgh",
+        "meta_title": "Home Renovation Contractor Pittsburgh PA | Osas Construction",
+        "meta_desc": "Whole-home renovation in Pittsburgh, PA. Kitchens, baths, flooring, roofing and siding from one licensed, insured general contractor. Free estimates.",
+        "tagline": "Interior and exterior solutions from one team — so your kitchen, your floors and your roof are not three separate arguments.",
+        "answer": "Osas Construction Group is a licensed, insured general contractor in Pittsburgh, PA that handles whole-home renovations end to end — kitchens, bathrooms, drywall, painting, flooring, windows, doors, roofing, siding, concrete and decks. One contract, one schedule, one crew leader. Call or text (412) 923-2092 for a free on-site estimate.",
+        "intro": [
+            "A whole-home renovation goes wrong in the gaps between trades. The drywall crew leaves before the electrician is finished, the flooring shows up before the plumbing is inspected, and the homeowner ends up playing project manager on their own house.",
+            "We run renovations as a single contract instead. The same general contractor holds the schedule, the material orders, the permit paperwork and the punch list, and you get one number to call when something needs a decision.",
+            "That covers everything from a dated 1950s ranch in the South Hills getting a full interior refresh to a century-old Lawrenceville rowhouse where the plaster, the wiring and the back porch all need attention at the same time.",
+        ],
+        "scope": [
+            ("Interior", [
+                "Kitchen remodeling — cabinets, countertops, tile, appliances",
+                "Bathroom remodeling — tubs, showers, vanities, fixtures",
+                "Drywall installation, repair, taping and finishing",
+                "Interior painting, trim, ceilings and custom finishes",
+                "Flooring — LVP, hardwood, laminate and tile",
+                "Window and door replacement",
+                "Basement and attic finishing",
+            ]),
+            ("Exterior", [
+                "Roofing, gutters and downspouts",
+                "Siding — vinyl, fiber cement and more",
+                "Concrete and masonry — driveways, walkways, steps, retaining walls",
+                "Decks, porches, stairs and railings",
+                "Grading, drainage and landscape restoration after construction",
+            ]),
+            ("Project management", [
+                "Written, itemized scope before work starts",
+                "Permit applications with your municipality",
+                "Material selection and ordering",
+                "Trade scheduling and site protection",
+                "Debris hauling and daily cleanup — we own the trailers",
+                "Final walkthrough and punch list",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "How a renovation with us actually runs",
+                "p": [
+                    "We walk the property first. Not a photo estimate — an in-person look at the framing, the mechanical runs, the moisture, the access and the existing finishes, because those are what turn a clean estimate into a change order later.",
+                    "Then you get an itemized written quote: labor, materials and disposal broken out by phase, so you can see what a line costs and decide to keep it, cut it or phase it for later. Pennsylvania's Home Improvement Consumer Protection Act requires a written contract for residential work, and we would put one in front of you either way.",
+                ],
+                "list": [
+                    "Phased scheduling so you can stay in the house where that makes sense",
+                    "Dust control and floor protection through occupied areas",
+                    "Debris hauled in our own trailers instead of sitting in your driveway for weeks",
+                    "Permits pulled where the municipality requires them",
+                ],
+            },
+            {
+                "h": "Older Pittsburgh houses need a contractor who expects surprises",
+                "p": [
+                    "Most of the housing stock here predates 1960. That means plaster over lath instead of drywall, balloon framing, undersized joists, buried chimneys, cast iron drains and at least one previous owner's weekend project hiding behind a wall.",
+                    "We price for what we can see and tell you plainly where the risk sits — the section of subfloor we will not know about until the tile comes up, the joist we expect to sister once the ceiling is open. You will hear about it before the demo, not after.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("How long does a full home renovation take in Pittsburgh?",
+             "It depends on scope and permitting, not on square footage alone. A single-room remodel is usually measured in weeks; a whole-house interior with kitchen, baths, flooring and paint is usually measured in months. We give you a phase-by-phase schedule with the quote so you can see which trades are on site when."),
+            ("Do I need a permit to renovate my house?",
+             "Usually yes for structural, electrical, plumbing, HVAC and most additions, and usually no for like-for-like cosmetic work such as paint and flooring. Requirements differ between the City of Pittsburgh's PLI department and each surrounding municipality. We confirm what your address needs and handle the application."),
+            ("Can I live in the house during the renovation?",
+             "Often, yes — we phase the work and seal off active areas. Kitchens and single-bathroom homes are the hard cases, since you lose a room you use every day. We will tell you honestly at the estimate which weeks will be genuinely difficult."),
+            ("Are you licensed and insured?",
+             "Yes. Osas Construction Group carries Pennsylvania Home Improvement Contractor registration PA200902 and general contractor license GC-2025-006171, and we are fully insured. Ask for the certificate any time."),
+        ],
+        "related": ["kitchen-remodeling", "bathroom-remodeling", "drywall-painting", "flooring"],
+        "card_blurb": "Kitchens, baths, floors, roofing and siding under one contract, one schedule and one crew leader.",
+        "card_tags": ["Interior", "Exterior", "General contracting"],
+    },
+    {
+        "slug": "kitchen-remodeling",
+        "nav": "Kitchen Remodeling",
+        "group": "Remodeling & Interiors",
+        "icon": "kitchen",
+        "h1": "Kitchen Remodeling in Pittsburgh",
+        "meta_title": "Kitchen Remodeling Pittsburgh PA | Osas Construction Group",
+        "meta_desc": "Kitchen remodeling in Pittsburgh, PA — cabinets, countertops, backsplash tile, flooring and lighting from a licensed, insured contractor. Free estimates.",
+        "tagline": "Custom cabinet designs, countertops, backsplashes, flooring and the electrical and plumbing work that has to happen behind them.",
+        "answer": "Osas Construction Group remodels kitchens across Pittsburgh and Allegheny County — cabinet layout and installation, countertops, backsplash tile, flooring, lighting and the plumbing and electrical rough-in behind the finishes. We are licensed (PA HIC #PA200902) and insured, and estimates are free. Call or text (412) 923-2092.",
+        "intro": [
+            "A kitchen remodel is the most disruptive room in the house to touch and the one where sloppy sequencing shows the most. Cabinets that go in before the floor is level, a backsplash cut around a crooked outlet, a range hood vented into the ceiling cavity instead of outside — every one of those is a scheduling failure, not a materials failure.",
+            "We handle the whole room: demo, any framing changes, plumbing and electrical rough-in, drywall, flooring, cabinets, countertops, tile and trim. One crew leader owns the order of operations.",
+        ],
+        "scope": [
+            ("What a kitchen project includes", [
+                "Layout planning and custom cabinet design",
+                "Cabinet installation — new, refaced or relocated",
+                "Countertops: quartz, granite, butcher block, laminate",
+                "Backsplash and feature tile",
+                "Sink, faucet, disposal and dishwasher hookups",
+                "Range hood venting to the exterior",
+                "Recessed, pendant and under-cabinet lighting",
+                "New circuits, GFCI outlets and switch relocation",
+                "Flooring — LVP, tile, hardwood",
+                "Drywall repair, trim, and paint",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Where kitchen budgets actually go",
+                "p": [
+                    "Cabinets and countertops usually carry the largest share of a kitchen budget, and labor carries more than most homeowners expect — because moving a sink, a gas line or a load-bearing wall multiplies the trades involved.",
+                    "The cheapest way to control cost is to keep the plumbing wall where it is. The second cheapest is to decide the finish selections before demo instead of during. We will show you both options at the estimate and let you pick.",
+                ],
+                "list": [
+                    "Keeping the existing layout: lowest cost, fastest schedule",
+                    "Moving appliances within the same wall: moderate cost",
+                    "Relocating plumbing or removing a wall: highest cost, needs permits and possibly an engineer",
+                ],
+            },
+            {
+                "h": "Older-home kitchens",
+                "p": [
+                    "In pre-war Pittsburgh houses the kitchen is often a small back room with an exterior door, a chimney chase and 60 years of layered flooring. Opening it to the dining room is the single most requested change we see, and it is very often possible — but it needs a structural look first, not a sledgehammer.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("How long is a kitchen remodel?",
+             "A cosmetic refresh — cabinets, counters, backsplash, paint — typically runs a few weeks once materials are on site. A full gut with layout changes and permits runs longer, and countertop templating alone adds a fabrication wait after cabinets are set. Your quote includes a phase schedule."),
+            ("Do you install cabinets and countertops I buy myself?",
+             "Yes. We can supply everything or install materials you have purchased. Tell us at the estimate which you prefer so the quote reflects labor only or labor plus materials."),
+            ("Will I lose my kitchen for the whole project?",
+             "Mostly, yes — that is the honest answer. We can often set up a temporary counter and keep the refrigerator live, and we sequence the appliance reconnect as early as the inspections allow."),
+            ("Do you handle the plumbing and electrical too?",
+             "Yes, as part of the contract, including new circuits, GFCI protection at counter-serving outlets and proper exterior venting for the range hood."),
+        ],
+        "related": ["bathroom-remodeling", "flooring", "drywall-painting", "home-renovation"],
+        "card_blurb": "Cabinets, countertops, backsplash, lighting and the plumbing and electrical behind them.",
+        "card_tags": ["Cabinets", "Countertops", "Tile"],
+    },
+    {
+        "slug": "bathroom-remodeling",
+        "nav": "Bathroom Remodeling",
+        "group": "Remodeling & Interiors",
+        "icon": "bath",
+        "h1": "Bathroom Remodeling in Pittsburgh",
+        "meta_title": "Bathroom Remodeling Pittsburgh PA | Osas Construction Group",
+        "meta_desc": "Bathroom remodeling in Pittsburgh, PA — tile showers, tub replacement, vanities and proper waterproofing. Licensed and insured. Free estimates.",
+        "tagline": "Modern upgrades, tile work, showers, tubs, vanities and fixtures — waterproofed properly the first time.",
+        "answer": "Osas Construction Group remodels bathrooms throughout Pittsburgh — tile showers, tub and shower replacement, vanities, flooring, fixtures and the waterproofing behind them. We are a licensed Pennsylvania home improvement contractor (PA200902), fully insured, and estimates are free. Call or text (412) 923-2092.",
+        "intro": [
+            "Bathrooms fail at the waterproofing, not the tile. A beautiful shower built on the wrong substrate leaks into the joists within a few years, and the repair costs more than the original remodel.",
+            "We build showers on a proper waterproofed assembly, slope the pan correctly, and treat the niche and the curb as the leak risks they are. The tile pattern is the easy part.",
+        ],
+        "scope": [
+            ("Bathroom scope", [
+                "Full gut and rebuild, or targeted upgrades",
+                "Custom tile showers with waterproofed substrate",
+                "Tub replacement and tub-to-shower conversions",
+                "Vanities, tops, mirrors and storage",
+                "Toilets, faucets, valves and supply lines",
+                "Exhaust fans vented to the outside",
+                "Water-resistant flooring — tile, LVP",
+                "Grab bars, curbless entries and accessible layouts",
+                "Subfloor repair where past leaks did damage",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "What we check before quoting",
+                "p": [
+                    "We look under the existing fixtures where we can. Soft flooring at the toilet flange, staining on a basement ceiling below, or a bouncy floor all point to damage that has to be priced into the job rather than discovered mid-demo.",
+                    "We also check the vent. A huge number of older Pittsburgh bathrooms either have no exhaust fan or vent one straight into the attic, which is how you get mold on the roof sheathing. Fixing that is cheap during a remodel and expensive later.",
+                ],
+            },
+            {
+                "h": "One bathroom or three floors",
+                "p": [
+                    "Half bath refreshes, hall bath gut-and-rebuilds, primary suite work and basement bathroom additions are all in scope. For a single-bathroom home we schedule the fixture-out window tightly so you are not without a toilet longer than necessary.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("How long will my bathroom be out of service?",
+             "A standard hall bathroom gut is usually a couple of weeks of active work, driven by demo, rough-in inspection if required, waterproofing cure times, tile setting and grout. We give you the day-by-day sequence up front."),
+            ("Can you convert my tub to a walk-in shower?",
+             "Yes, and it is one of the most common requests we get. It involves new drain placement, framing the curb or building a curbless pan, and waterproofing — which is why it is worth doing with a contractor rather than a one-day insert."),
+            ("Do you fix water damage you find during demo?",
+             "Yes. We show you the damage, price the repair as a separate line, and get your approval before continuing. Rotted subfloor and compromised joists are not optional repairs — but you should see them and understand the cost."),
+            ("Do you do accessible or aging-in-place bathrooms?",
+             "Yes — curbless showers, blocking for grab bars, comfort-height fixtures and wider door openings where the framing allows."),
+        ],
+        "related": ["kitchen-remodeling", "flooring", "drywall-painting", "home-renovation"],
+        "card_blurb": "Tile showers, tub conversions, vanities and fixtures — with the waterproofing done right.",
+        "card_tags": ["Tile showers", "Vanities", "Fixtures"],
+    },
+    {
+        "slug": "drywall-painting",
+        "nav": "Drywall & Painting",
+        "group": "Remodeling & Interiors",
+        "icon": "roller",
+        "h1": "Drywall & Painting in Pittsburgh",
+        "meta_title": "Drywall Repair & Painting Pittsburgh PA | Osas",
+        "meta_desc": "Drywall installation, repair, taping and finishing plus interior and exterior painting in Pittsburgh, PA. Licensed and insured. Free estimate: (412) 923-2092.",
+        "tagline": "Installation, repairs, taping and finishing — then trim, ceilings, walls and custom finishes.",
+        "answer": "Osas Construction Group installs, repairs and finishes drywall and handles interior and exterior painting across Pittsburgh, PA. That includes water-damage patching, plaster repair in older homes, full-room hangs, level-5 finishes, ceilings, trim and custom finishes. Licensed and insured. Free estimates: (412) 923-2092.",
+        "intro": [
+            "Drywall finish quality is the thing people notice from across the room without knowing why. Bad taping telegraphs through paint under any side light, and no amount of good color choice hides it.",
+            "We hang, tape, finish and paint — and we repair, which is most of the work in a city full of century-old plaster walls, settled corners and ceilings that met a bathroom leak.",
+        ],
+        "scope": [
+            ("Drywall", [
+                "New drywall hanging for remodels and additions",
+                "Water damage and ceiling patching",
+                "Plaster repair and plaster-to-drywall transitions",
+                "Taping, mudding and sanding to a matched finish level",
+                "Texture matching and knockdown removal",
+                "Moisture-resistant board in baths and basements",
+                "Corner bead, archways and soffits",
+            ]),
+            ("Painting", [
+                "Interior walls, ceilings and trim",
+                "Cabinet and door painting",
+                "Exterior painting and prep",
+                "Custom and accent finishes",
+                "Caulking, filling and surface prep",
+                "Primer coats over repairs and stains",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Finish level matters more than paint brand",
+                "p": [
+                    "We ask what the wall is going to be before we finish it. A hallway with a window at one end needs a higher finish level than a closet, because raking light exposes every seam. Telling us where the light falls changes how we prep.",
+                ],
+                "list": [
+                    "Stain-blocking primer over water damage so it does not bleed back through",
+                    "Full prep — sanding, filling, caulking — before a single finish coat",
+                    "Floor and furniture protection, clean cut lines, daily cleanup",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do you repair plaster, or only drywall?",
+             "Both. Many Pittsburgh homes have plaster over wood lath. We can re-anchor and skim plaster, or cut out failing sections and blend drywall into them so the transition does not show."),
+            ("Can you match my existing ceiling texture?",
+             "In most cases yes. Knockdown, orange peel and light textures can be matched closely; heavy hand-applied textures sometimes look better feathered across a larger area than spot-patched."),
+            ("Do you paint exteriors?",
+             "Yes, weather permitting — exterior painting needs dry surfaces and appropriate temperatures, which in Pittsburgh limits the season on both ends."),
+            ("How soon can you fix a ceiling after a leak?",
+             "Quickly, but the leak has to be fixed and the cavity has to be dry first. Closing up wet framing traps moisture and causes mold. We will tell you if it needs drying time."),
+        ],
+        "related": ["home-renovation", "flooring", "bathroom-remodeling", "kitchen-remodeling"],
+        "card_blurb": "Hanging, taping, finishing and repair — plus interior, exterior, trim and cabinet painting.",
+        "card_tags": ["Drywall repair", "Interior paint", "Ceilings"],
+    },
+    {
+        "slug": "flooring",
+        "nav": "Flooring",
+        "group": "Remodeling & Interiors",
+        "icon": "layers",
+        "h1": "Flooring Installation in Pittsburgh",
+        "meta_title": "Flooring Installation Pittsburgh PA | Osas Construction Group",
+        "meta_desc": "LVP, hardwood, laminate and tile flooring installed in Pittsburgh, PA, including subfloor prep and leveling. Licensed and insured. Free estimates.",
+        "tagline": "LVP, hardwood, laminate and tile — durable, stylish, and set on a subfloor that is actually ready for it.",
+        "answer": "Osas Construction Group installs luxury vinyl plank, hardwood, laminate and tile flooring throughout Pittsburgh, PA, including the subfloor prep, leveling and transitions that determine whether the finished floor lasts. Licensed and insured, free estimates. Call or text (412) 923-2092.",
+        "intro": [
+            "Almost every flooring failure traces back to what was underneath. Tile cracks over a deflecting subfloor, LVP telegraphs every hump in an old plank floor, and hardwood cups when it goes down over a slab with no moisture management.",
+            "We check the substrate first, price the prep honestly, and install on a surface that is flat, dry and solid.",
+        ],
+        "scope": [
+            ("Flooring services", [
+                "Luxury vinyl plank (LVP) and luxury vinyl tile",
+                "Hardwood installation and refinishing",
+                "Laminate and engineered wood",
+                "Ceramic, porcelain and natural stone tile",
+                "Subfloor repair, replacement and leveling",
+                "Underlayment and moisture barriers",
+                "Stair treads, risers and nosing",
+                "Transitions, thresholds and trim",
+                "Old flooring removal and disposal",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Choosing a floor for the room",
+                "p": [
+                    "Basements and Pittsburgh's damp shoulder seasons argue for waterproof LVP or tile. Main-floor living areas where you want resale value argue for hardwood. Kitchens and mudrooms argue for whatever you can mop without thinking about it.",
+                    "We will tell you where a material is a bad fit before you buy it — a floating floor over a badly out-of-level slab, for instance, or solid hardwood below grade.",
+                ],
+            },
+            {
+                "h": "Subfloor work is not an upsell",
+                "p": [
+                    "In older homes we routinely find diagonal plank subfloors with gaps, patched sections at old registers, and floors that slope visibly toward a wall. The fix ranges from self-leveling compound to sistering joists, and the quote spells out which one your house needs and why.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do you remove and haul away the old flooring?",
+             "Yes. Removal and disposal are included in the quote, and we haul debris in our own trailers rather than leaving a pile in your driveway."),
+            ("Can you install flooring over my existing floor?",
+             "Sometimes — LVP and laminate can go over sound, flat vinyl or tile. We will not float a new floor over something that is loose, wet or badly uneven, because it will fail."),
+            ("Do you refinish existing hardwood?",
+             "Yes, where the boards have enough thickness left to sand. We will check the wear layer and tell you if refinishing or replacement is the better use of the money."),
+            ("How long before I can walk on it?",
+             "LVP and laminate are usually walkable the same day. Tile needs the mortar and then the grout to cure, and site-finished hardwood needs the finish to dry — those take days, not hours."),
+        ],
+        "related": ["kitchen-remodeling", "bathroom-remodeling", "drywall-painting", "home-renovation"],
+        "card_blurb": "LVP, hardwood, laminate and tile — with real subfloor prep underneath.",
+        "card_tags": ["LVP", "Hardwood", "Tile"],
+    },
+    {
+        "slug": "windows-doors",
+        "nav": "Windows & Doors",
+        "group": "Remodeling & Interiors",
+        "icon": "window",
+        "h1": "Window & Door Installation in Pittsburgh",
+        "meta_title": "Window & Door Replacement Pittsburgh PA | Osas",
+        "meta_desc": "Window and door replacement in Pittsburgh, PA — efficient units, proper flashing, clean trim. Licensed and insured. Free estimates: (412) 923-2092.",
+        "tagline": "New installation and replacement for improved style, comfort and efficiency.",
+        "answer": "Osas Construction Group installs and replaces windows and exterior doors across Pittsburgh, PA — including flashing, insulating the rough opening, and interior and exterior trim. Old Pittsburgh houses rarely have square openings, so we frame and shim to fit. Licensed and insured. Free estimates: (412) 923-2092.",
+        "intro": [
+            "Window replacement is sold as a product and delivered as an installation. The unit matters far less than whether the opening was flashed correctly and whether the gap around the frame was insulated and sealed.",
+            "We treat the opening as the job: check the sill for rot, flash it so water drains out rather than in, insulate the perimeter, and trim it so it looks like it belongs in the house.",
+        ],
+        "scope": [
+            ("Windows and doors", [
+                "Full-frame and insert window replacement",
+                "Energy-efficient double and triple-pane units",
+                "Entry doors, storm doors and sliders",
+                "Patio and French doors",
+                "Interior doors, casing and hardware",
+                "Rotted sill and jamb repair",
+                "Flashing, sealing and insulation of the rough opening",
+                "Interior and exterior trim, capping and caulking",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Old openings are rarely square",
+                "p": [
+                    "In houses that have settled for a hundred years, the rough opening is a parallelogram. An installer who does not shim and check reveal ends up with a window that binds, a sash that will not lock, and drafts at the corners. We measure each opening individually rather than ordering one size for a whole elevation.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Insert replacement or full-frame?",
+             "Insert replacement is faster and cheaper and keeps the existing frame — fine when the frame and sill are sound. Full-frame is the right call when there is rot, when the frame is out of square, or when you want to change the opening size."),
+            ("Will new windows lower my heating bill?",
+             "They help, especially replacing single-pane units, but air sealing and attic insulation usually return more per dollar. We will tell you if your money is better spent elsewhere first."),
+            ("Do you replace exterior doors and the framing around them?",
+             "Yes, including rotted jambs, thresholds and sill pans, which is where most exterior door problems actually start."),
+        ],
+        "related": ["siding", "home-renovation", "drywall-painting", "roofing-gutters"],
+        "card_blurb": "Replacement windows and exterior doors, flashed and insulated properly at the opening.",
+        "card_tags": ["Replacement", "Entry doors", "Trim"],
+    },
+    # ---------------------------------------------------------------- exterior
+    {
+        "slug": "roofing-gutters",
+        "nav": "Roofing & Gutters",
+        "group": "Roofing & Exteriors",
+        "icon": "roof",
+        "h1": "Roofing, Gutters & Downspouts in Pittsburgh",
+        "meta_title": "Roofing Contractor Pittsburgh PA | Gutters & Downspouts",
+        "meta_desc": "Roof repairs, replacements, seamless gutters and downspouts in Pittsburgh, PA. Licensed and insured roofing contractor. Free estimate: (412) 923-2092.",
+        "tagline": "Roof repairs and replacements, seamless gutters and downspout systems that move water away from the house.",
+        "answer": "Osas Construction Group provides roof repair, roof replacement, seamless gutters and downspout work throughout Pittsburgh, PA. Typical jobs include storm and wind damage repair, worn asphalt shingle replacement, flashing and valley repairs, ice dam damage and gutter replacement. Licensed and insured. Call or text (412) 923-2092.",
+        "intro": [
+            "Roofs in Western Pennsylvania are worked hard. Freeze-thaw cycling, ice at the eaves, heavy wet snow, summer storms and mature tree cover all shorten the life of a roof that would last longer in a milder climate.",
+            "We repair what can be repaired and say so when a roof is past it. A valley, a flashing detail or a section of blown shingles is a repair. Granule loss across the whole field with curling edges is not.",
+        ],
+        "scope": [
+            ("Roofing", [
+                "Roof replacement — asphalt shingle and more",
+                "Leak diagnosis and targeted repair",
+                "Storm, wind and hail damage repair",
+                "Flashing, valleys, step flashing and chimney details",
+                "Ridge and soffit ventilation",
+                "Ice and water shield at eaves and valleys",
+                "Decking replacement where sheathing is soft",
+                "Tear-off and disposal",
+            ]),
+            ("Gutters and downspouts", [
+                "Seamless gutter installation",
+                "Downspout replacement and rerouting",
+                "Gutter cleaning, flushing and inspection",
+                "Downspout extensions away from the foundation",
+                "Fascia and soffit repair",
+                "Debris removal from roof and gutters",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Ice dams and why your gutters are not the problem",
+                "p": [
+                    "When water backs up under shingles at the eave in January, the gutter usually gets blamed. The actual cause is almost always heat escaping into the attic, melting snow mid-roof, which then refreezes over the cold overhang.",
+                    "The durable fixes are attic air sealing, insulation and balanced ventilation, with ice and water shield at the eaves as a backstop when the roof is replaced. We will point at the real cause rather than selling you a gutter you did not need.",
+                ],
+            },
+            {
+                "h": "Where the water goes after the gutter",
+                "p": [
+                    "On Pittsburgh's hillside lots and tight side yards, a downspout that dumps at the foundation is a wet basement waiting to happen. We extend, bury or reroute downspouts so roof water actually leaves the building envelope — and we do the drainage work too, so it is one contractor, not two.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do I need a full roof replacement or just a repair?",
+             "Repair is right for localized damage on a roof with life left — a flashing failure, a few blown shingles, a valley. Replacement is right when the field is failing everywhere: widespread granule loss, curling, multiple leaks or a second layer already installed. We will show you photos of what we find."),
+            ("Do you work with insurance claims for storm damage?",
+             "We document the damage with photographs and provide a written, itemized scope you can submit. Your carrier's adjuster makes the coverage decision."),
+            ("How often should gutters be cleaned in Pittsburgh?",
+             "Twice a year is the usual rhythm — late spring after the seeds and buds drop, and late fall after the leaves are down. Houses under heavy oak or maple cover often need a third visit."),
+            ("Do you install gutter guards?",
+             "We can, but we will be straight with you: guards reduce cleaning frequency, they do not eliminate it, and cheap guards can make ice problems worse."),
+        ],
+        "related": ["siding", "pressure-washing", "home-renovation", "hardscaping-drainage"],
+        "card_blurb": "Repairs, replacements, seamless gutters and downspouts that actually move water away.",
+        "card_tags": ["Roof repair", "Replacement", "Seamless gutters"],
+    },
+    {
+        "slug": "siding",
+        "nav": "Siding",
+        "group": "Roofing & Exteriors",
+        "icon": "siding",
+        "h1": "Siding Installation in Pittsburgh",
+        "meta_title": "Siding Contractor Pittsburgh PA | Vinyl & Fiber Cement",
+        "meta_desc": "Vinyl, fiber cement and specialty siding installation and repair in Pittsburgh, PA. Licensed, insured siding contractor. Free estimate: (412) 923-2092.",
+        "tagline": "Vinyl, fiber cement and other siding options for beauty and durability — installed with the weather barrier done right.",
+        "answer": "Osas Construction Group installs and repairs vinyl, fiber cement and other siding across Pittsburgh, PA, including house wrap, flashing, trim, soffit and fascia. We also repair storm and impact damage and replace rotted sheathing found during tear-off. Licensed and insured. Free estimates: (412) 923-2092.",
+        "intro": [
+            "Siding is a rain screen, not a raincoat. Water gets behind it — the weather-resistive barrier, the flashing at windows and the drainage details are what keep the wall dry.",
+            "That is where we spend the attention: house wrap lapped correctly, window and door heads flashed, penetrations sealed, and sheathing replaced where we find rot rather than covered over.",
+        ],
+        "scope": [
+            ("Siding work", [
+                "Vinyl siding installation and replacement",
+                "Fiber cement siding",
+                "Board and batten, shake and accent panels",
+                "Storm and impact damage repair",
+                "House wrap and weather-resistive barrier",
+                "Window, door and corner flashing",
+                "Sheathing replacement where rot is found",
+                "Soffit, fascia and trim wrapping",
+                "Exterior insulation options",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "What we find behind old siding",
+                "p": [
+                    "Tear-off is the honest moment in a siding job. Under 40-year-old aluminum or the previous owner's DIY vinyl, we regularly find missing house wrap, unflashed windows, insect damage at the sill plate and soft sheathing under a leaking gutter.",
+                    "We photograph it, price the repair as its own line, and get your sign-off. Nobody should pay for a surprise they never saw.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Vinyl or fiber cement?",
+             "Vinyl costs less, installs faster and never needs painting. Fiber cement costs more, is far more impact- and fire-resistant, holds paint well and looks closer to wood. Both are appropriate here; the decision is usually budget and how long you plan to stay."),
+            ("Can you side just one elevation?",
+             "Yes, and it is sometimes the sensible repair. Matching an existing color and profile on an older installation is the limitation — sun fade means a perfect match is rare, so we will tell you how noticeable it will be."),
+            ("Do you do soffit and fascia?",
+             "Yes, including wrapping fascia in aluminum and replacing vented soffit, which matters for attic ventilation."),
+        ],
+        "related": ["roofing-gutters", "windows-doors", "pressure-washing", "home-renovation"],
+        "card_blurb": "Vinyl and fiber cement siding, house wrap, flashing, soffit and fascia.",
+        "card_tags": ["Vinyl", "Fiber cement", "Soffit & fascia"],
+    },
+]
+
+SERVICES += [
+    {
+        "slug": "concrete-masonry",
+        "nav": "Concrete & Masonry",
+        "group": "Concrete, Decks & Outdoor",
+        "icon": "brick",
+        "h1": "Concrete & Masonry in Pittsburgh",
+        "meta_title": "Concrete & Masonry Contractor Pittsburgh PA | Osas",
+        "meta_desc": "Driveways, sidewalks, steps, patios and retaining walls in Pittsburgh, PA. Licensed, insured concrete and masonry contractor. Free estimates.",
+        "tagline": "Driveways, patios, walkways, steps and retaining walls — poured and laid for freeze-thaw country.",
+        "answer": "Osas Construction Group pours and repairs concrete and builds masonry across Pittsburgh, PA: driveways, sidewalks, steps, patios, garage floors, block and brick work, and retaining walls. Work is built for Western Pennsylvania freeze-thaw cycles with proper base, thickness, reinforcement and drainage. Licensed and insured. Call or text (412) 923-2092.",
+        "intro": [
+            "Concrete in this climate fails from the bottom up. A slab poured on soft or unwashed fill heaves; one poured without drainage traps water underneath; one poured too thin on a driveway cracks the first winter a truck parks on it.",
+            "The visible part — the finish, the broom texture, the control joints — takes a day. The base, the compaction, the reinforcement and the drainage are what make it still look right in ten years.",
+        ],
+        "scope": [
+            ("Concrete", [
+                "Driveways and aprons",
+                "Sidewalks and walkways",
+                "Front and back steps",
+                "Patios and slabs",
+                "Garage and basement floors",
+                "Footings and pads",
+                "Concrete removal and replacement",
+                "Crack repair and resurfacing",
+            ]),
+            ("Masonry", [
+                "Brick and block work",
+                "Stone veneer and stone walls",
+                "Retaining walls — block and natural stone",
+                "Chimney repair and repointing",
+                "Tuckpointing and mortar joint repair",
+                "Foundation wall repairs and parging",
+                "Window wells and areaways",
+                "Steps, piers and porch columns",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Built for freeze-thaw, not for a photo",
+                "p": [
+                    "Western Pennsylvania cycles above and below freezing dozens of times each winter. Every cycle, water that got into the concrete expands. That is why base preparation, air-entrained mix, adequate thickness, correct control joint spacing and drainage all matter more here than in a mild climate.",
+                ],
+                "list": [
+                    "Excavation and compacted, properly graded stone base",
+                    "Thickness and reinforcement matched to the load — a driveway is not a sidewalk",
+                    "Control joints cut at the right spacing so cracks land where we put them",
+                    "Slope set to carry water away from the house, not toward it",
+                ],
+            },
+            {
+                "h": "Retaining walls on Pittsburgh hillsides",
+                "p": [
+                    "Half this city is built on a slope, and failed retaining walls are everywhere — leaning, bulging, spilling into a neighbor's yard. Almost always the cause is the same: no drainage behind the wall, so hydrostatic pressure pushed it over.",
+                    "We build with drainage stone, filter fabric and a drain outlet behind the wall, and we will tell you when a wall's height or the load above it means you need an engineered design rather than a stacked block.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("How long before I can drive on a new concrete driveway?",
+             "You can usually walk on it within about a day, but vehicles should stay off substantially longer while the concrete gains strength — we will give you specific dates for your pour, since temperature changes the curing schedule considerably."),
+            ("Can you just resurface my cracked driveway?",
+             "Sometimes. Surface-level scaling can be resurfaced. Cracks that move, sections that have settled at different heights, or slabs broken up by heaving mean the base has failed, and resurfacing over that just buys a year or two."),
+            ("Do you repoint brick and repair chimneys?",
+             "Yes — tuckpointing, rebuilding deteriorated chimney crowns and repointing foundation and wall joints. Failing mortar joints in Pittsburgh brick are extremely common and are a water-entry path, not just a cosmetic issue."),
+            ("Do you need a permit for a driveway or a retaining wall?",
+             "It depends on the municipality and the wall height; many require permits for walls above a set height, for work in the right-of-way, and for curb cuts. We check before we dig."),
+        ],
+        "related": ["decks-patios", "hardscaping-drainage", "junk-removal", "home-renovation"],
+        "card_blurb": "Driveways, walkways, steps, patios, retaining walls, tuckpointing and chimney repair.",
+        "card_tags": ["Driveways", "Steps", "Retaining walls"],
+    },
+    {
+        "slug": "decks-patios",
+        "nav": "Decks & Railings",
+        "group": "Concrete, Decks & Outdoor",
+        "icon": "fence",
+        "h1": "Decks, Porches & Railings in Pittsburgh",
+        "meta_title": "Deck Builder Pittsburgh PA | Porches, Stairs & Railings",
+        "meta_desc": "Custom decks, porches, stairs and railings built in Pittsburgh, PA by a licensed, insured contractor — code-compliant footings and framing. (412) 923-2092.",
+        "tagline": "Custom decks, porches, stairs and railing solutions — framed and footed to code, not to guesswork.",
+        "answer": "Osas Construction Group designs and builds decks, porches, stairs and railings throughout Pittsburgh, PA using pressure-treated, composite and cedar materials. We set proper frost-depth footings, flash the ledger correctly and build guards and stairs to code. Licensed and insured, free estimates. Call or text (412) 923-2092.",
+        "intro": [
+            "Deck collapses almost always start at one of two details: the ledger connection to the house, or the footings. Both are invisible after the decking goes on, which is exactly why they get skipped by the cheapest bid.",
+            "We flash and bolt the ledger properly, dig footings below frost depth, and build guards and stair geometry to what the inspector is actually going to measure.",
+        ],
+        "scope": [
+            ("Deck and porch work", [
+                "Custom deck design and build",
+                "Pressure-treated, cedar and composite decking",
+                "Covered porches and porch rebuilds",
+                "Stairs, landings and multi-level decks",
+                "Railings — wood, composite, aluminum, cable",
+                "Frost-depth footings and structural framing",
+                "Ledger flashing and attachment",
+                "Deck repair, reframing and board replacement",
+                "Privacy screens, benches and skirting",
+                "Old deck demolition and haul-away",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Permits and inspections",
+                "p": [
+                    "Most municipalities in Allegheny County require a permit for a deck above a set height off grade, and they inspect the footings before you backfill and the framing before you cover it. That is a good thing — the inspection is free quality control on the parts you cannot see later.",
+                    "We handle the application and schedule the inspections as part of the job.",
+                ],
+            },
+            {
+                "h": "Decking material, honestly compared",
+                "p": [
+                    "Pressure-treated is the cheapest to build and the most work to own — it wants cleaning and sealing on a cycle. Composite costs more up front, does not need sealing, and stays put under our freeze-thaw and humidity swings. Cedar sits between them and looks the best when new.",
+                ],
+                "list": [
+                    "Pressure-treated: lowest cost, needs regular maintenance",
+                    "Composite / PVC: highest cost, lowest maintenance, best for busy owners",
+                    "Cedar: best appearance, moderate cost, still wants finishing",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do I need a permit to build a deck in Pittsburgh?",
+             "In most cases yes, particularly once the walking surface is more than about 30 inches above grade, and anything attached to the house gets scrutiny at the ledger. Requirements differ by municipality — we confirm for your address and pull the permit."),
+            ("Can you repair my existing deck instead of replacing it?",
+             "Often, yes. If the posts, beams and joists are sound, replacing decking and railings is a fraction of the cost. If the ledger is unflashed or the footings are inadequate, we will recommend a rebuild, and we will show you why."),
+            ("How long does a deck take to build?",
+             "Straightforward decks are usually a matter of days of on-site work once permits are issued, plus the inspection schedule. Multi-level decks, roofs over decks and difficult hillside access add time."),
+            ("Do you build on steep or hillside lots?",
+             "Yes — that is normal work in this city. Steep lots mean taller posts, more footings and more attention to lateral bracing, all of which we price into the quote."),
+        ],
+        "related": ["concrete-masonry", "hardscaping-drainage", "pressure-washing", "junk-removal"],
+        "card_blurb": "Custom decks, porches, stairs and railings — proper footings, flashed ledgers, permits pulled.",
+        "card_tags": ["Composite", "Railings", "Porches"],
+    },
+    {
+        "slug": "hardscaping-drainage",
+        "nav": "Hardscaping & Drainage",
+        "group": "Concrete, Decks & Outdoor",
+        "icon": "paver",
+        "h1": "Hardscaping, Drainage & Irrigation in Pittsburgh",
+        "meta_title": "Hardscaping & Drainage Pittsburgh PA | Patios & Walls",
+        "meta_desc": "Paver patios, walkways, retaining walls, fire pits, French drains and drainage solutions in Pittsburgh, PA. Licensed and insured. Free estimate: (412) 923-2092.",
+        "tagline": "Patios, walkways, retaining walls, fire pits and outdoor kitchens — plus the drainage that keeps them and your basement dry.",
+        "answer": "Osas Construction Group builds paver patios, walkways, retaining walls, fire pits, fireplaces and outdoor kitchens in Pittsburgh, PA, and installs French drains, downspout extensions, grading and irrigation systems. Hillside lots and wet basements are routine work here. Licensed and insured. Call or text (412) 923-2092.",
+        "intro": [
+            "Hardscaping and drainage belong in the same conversation. A beautiful paver patio that sheds water toward the house creates a basement problem, and a French drain that daylights into a neighbor's yard creates a different kind of problem.",
+            "We look at the whole site: where the roof water goes, where the surface water runs, how the grade falls, and what the soil does when it is saturated.",
+        ],
+        "scope": [
+            ("Hardscaping", [
+                "Paver and flagstone patios",
+                "Walkways, paths and steps",
+                "Retaining walls and seat walls",
+                "Fire pits and outdoor fireplaces",
+                "Outdoor kitchens and grill surrounds",
+                "Stone and brick work",
+                "Outdoor living space design",
+                "Landscape lighting",
+            ]),
+            ("Drainage & irrigation", [
+                "French drains and trench drains",
+                "Downspout extensions and burial",
+                "Yard grading and regrading",
+                "Dry wells and catch basins",
+                "Sump discharge routing",
+                "Erosion control on slopes",
+                "Irrigation system installation and repair",
+                "Excavation and site preparation",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Why wet basements are usually a yard problem",
+                "p": [
+                    "Most chronically damp Pittsburgh basements are not foundation failures. They are surface water problems: downspouts dumping at the wall, grade sloping back toward the house after decades of settling, a patio pitched the wrong way, or a hillside above the property delivering everything downhill to your foundation.",
+                    "Those are fixable from outside, and they are dramatically cheaper than interior waterproofing. We start there and tell you plainly if the problem is bigger than grading.",
+                ],
+                "list": [
+                    "Extend or bury downspouts to carry roof water well away from the foundation",
+                    "Re-establish positive grade — fall away from the house in the first several feet",
+                    "French drain to intercept water moving downhill toward the building",
+                    "Catch basins where surface water ponds",
+                ],
+            },
+            {
+                "h": "Paver patios that stay flat",
+                "p": [
+                    "A paver patio is only as good as its excavation. Proper depth, compacted stone base in lifts, screeded bedding layer, edge restraint and joint sand are what stop the settling, tipping and weed growth that plague patios built in a weekend.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Will a French drain fix my wet basement?",
+             "Often, when the water is coming from the yard or the downspouts. It will not fix a cracked foundation wall or a failed interior drain tile. We look at where and when the water shows up before recommending anything — the timing relative to rainfall tells you a lot."),
+            ("Pavers or poured concrete for a patio?",
+             "Pavers flex with freeze-thaw movement and individual units can be lifted and reset; concrete is a single monolithic surface that is faster to install and easier to clean, but cracks are permanent. Both work well here when the base is right."),
+            ("Do you do excavation and grading?",
+             "Yes — grading, regrading, land clearing and site prep, including hauling the spoil away in our own trailers."),
+            ("Can you build a retaining wall on a steep slope?",
+             "Yes. Above certain heights and loads a wall needs an engineered design, and we will say so rather than stacking block and hoping. Drainage behind the wall is non-negotiable either way."),
+        ],
+        "related": ["concrete-masonry", "landscaping", "decks-patios", "junk-removal"],
+        "card_blurb": "Paver patios, walls, fire pits and outdoor kitchens — plus French drains, grading and irrigation.",
+        "card_tags": ["Pavers", "French drains", "Grading"],
+    },
+    {
+        "slug": "landscaping",
+        "nav": "Landscaping & Lawn Care",
+        "group": "Concrete, Decks & Outdoor",
+        "icon": "trees",
+        "h1": "Landscaping & Lawn Care in Pittsburgh",
+        "meta_title": "Landscaping Services Pittsburgh PA | Lawn Care & Design",
+        "meta_desc": "Lawn mowing, fertilization, mulch, planting, landscape design and seasonal cleanups in Pittsburgh, PA. Licensed and insured. Free estimate: (412) 923-2092.",
+        "tagline": "Beautiful outdoor spaces, built to last — design, softscaping, lawn maintenance and seasonal cleanups.",
+        "answer": "Osas Construction Group provides landscaping and lawn care across Pittsburgh, PA: mowing, fertilization, weed control, hedge trimming, mulch installation, planting and gardens, sod and seeding, landscape design, leaf removal and seasonal cleanups. We also handle hardscaping and drainage, so design and construction stay with one contractor. Call or text (412) 923-2092.",
+        "intro": [
+            "Landscaping in Western Pennsylvania has to survive clay soil, heavy shade under mature trees, hillside runoff and a winter that kills anything planted in the wrong spot.",
+            "We design and maintain for those conditions — plant selection that suits the light and drainage you actually have, beds that are prepared rather than just mulched over, and a maintenance schedule that keeps it looking intentional.",
+        ],
+        "scope": [
+            ("Lawn care & maintenance", [
+                "Lawn mowing and edging",
+                "Fertilization programs",
+                "Weed control",
+                "Hedge and shrub trimming",
+                "Seasonal cleanups, spring and fall",
+                "Leaf removal",
+                "Aeration and overseeding",
+            ]),
+            ("Softscaping & design", [
+                "Planting, gardens and beds",
+                "Mulch installation and rock delivery",
+                "Sod installation and seeding",
+                "Trees and shrubs",
+                "Custom landscape design",
+                "Plant selection for shade, slope and soil",
+                "Landscape lighting",
+                "Outdoor living space planning",
+            ]),
+            ("Property cleanups", [
+                "Overgrowth and brush clearing",
+                "Land clearing and debris removal",
+                "Grading and excavation",
+                "Storm debris and branch removal",
+                "Bed edging and re-definition",
+                "Rental and listing turnovers",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Design, install, maintain — with the construction side attached",
+                "p": [
+                    "Most landscape projects run into a construction problem: a retaining wall that has to come first, a drainage issue that has to be solved before planting, a patio that changes the whole grade. Because we are a general contractor, those do not become someone else's job and a second mobilization fee.",
+                ],
+            },
+            {
+                "h": "Seasonal rhythm in Pittsburgh",
+                "p": [
+                    "Spring cleanup and bed prep, mowing and weed control through the season, fall cleanup and leaf removal, then snow and ice management through the winter. We can hold a property year-round on one relationship instead of four vendors.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do you offer recurring lawn maintenance or one-time visits?",
+             "Both. Weekly or biweekly mowing schedules, seasonal cleanup visits, and one-time overgrowth clearing for properties that have gotten away from someone."),
+            ("When should leaves be removed?",
+             "Once most of the canopy is down, usually late fall here. Leaving a heavy wet mat on the lawn over winter smothers grass and invites disease, so a final cleanup before the first lasting snow is worth scheduling."),
+            ("Can you fix a lawn that is mostly weeds and bare spots?",
+             "Yes — that is typically a soil and light problem rather than a seed problem. Depending on what we find it may be aeration and overseeding, or removal and new sod. Deep shade under mature trees may call for beds or ground cover instead of grass."),
+            ("Do you deliver and spread mulch and rock?",
+             "Yes, including bed prep, edging, weed barrier where appropriate, and hauling out the old material."),
+        ],
+        "related": ["hardscaping-drainage", "pressure-washing", "snow-removal", "junk-removal"],
+        "card_blurb": "Mowing, fertilization, mulch, planting, design and seasonal cleanups.",
+        "card_tags": ["Lawn care", "Mulch & beds", "Cleanups"],
+    },
+    {
+        "slug": "pressure-washing",
+        "nav": "Pressure Washing & Gutter Cleaning",
+        "group": "Concrete, Decks & Outdoor",
+        "icon": "droplets",
+        "h1": "Pressure Washing & Gutter Cleaning in Pittsburgh",
+        "meta_title": "Pressure Washing Pittsburgh PA | Gutter Cleaning Service",
+        "meta_desc": "Pressure washing for driveways, patios, decks, siding and fences plus gutter cleaning in Pittsburgh, PA. Licensed and insured. Free estimate: (412) 923-2092.",
+        "tagline": "Driveways, walkways, patios, decks, siding and fences — cleaned at the right pressure for the surface.",
+        "answer": "Osas Construction Group pressure washes driveways, walkways, patios, decks, siding, fences and concrete in Pittsburgh, PA, and cleans gutters and downspouts including flushing, inspection and debris removal. Soft washing is used on siding and wood so the surface is not damaged. Call or text (412) 923-2092.",
+        "intro": [
+            "Pressure washing damages more surfaces than it cleans when it is done by someone chasing speed. Vinyl siding driven with water forced up behind the laps, wood decks fuzzed by too tight a nozzle, mortar joints blown out of a brick patio — all common, all avoidable.",
+            "We match the pressure and the tip to the surface, and use lower-pressure soft washing where that is what the material needs.",
+        ],
+        "scope": [
+            ("Pressure washing", [
+                "Driveways and walkways",
+                "Patios, porches and decks",
+                "Siding and exterior walls (soft wash)",
+                "Fences",
+                "Concrete cleaning and degreasing",
+                "Steps, retaining walls and stonework",
+                "Rust, algae and organic growth removal",
+            ]),
+            ("Gutter cleaning", [
+                "Gutter cleaning and debris removal",
+                "Downspout clearing and flushing",
+                "Leaf and shingle grit removal",
+                "Flush and inspect for leaks and sags",
+                "Downspout extension checks",
+                "Roof debris removal",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Clean before you seal, stain or sell",
+                "p": [
+                    "Cleaning is prep work as much as it is curb appeal. Deck stain will not bond to a dirty board, sealer over algae traps it, and a listing photo of a green-streaked driveway costs more than the wash would have.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Will pressure washing damage my vinyl siding?",
+             "It can, in the wrong hands. Water driven upward behind the laps gets into the wall. We soft wash siding with a cleaning solution and low pressure instead of blasting it."),
+            ("How often should a driveway be washed?",
+             "Once a year is typical here, usually spring, to clear the winter salt residue, algae and organic staining that build up in a damp climate with heavy tree cover."),
+            ("Do you clean gutters in the same visit?",
+             "Yes, and it is the efficient way to do it — one mobilization, one ladder set-up, one crew."),
+        ],
+        "related": ["roofing-gutters", "landscaping", "decks-patios", "siding"],
+        "card_blurb": "Driveways, patios, decks, siding and fences — plus gutter cleaning, flushing and inspection.",
+        "card_tags": ["Soft wash", "Concrete", "Gutters"],
+    },
+    # ---------------------------------------------------------- hauling & snow
+    {
+        "slug": "junk-removal",
+        "nav": "Junk Removal & Demolition",
+        "group": "Hauling, Demo & Snow",
+        "icon": "trash",
+        "h1": "Junk Removal, Demolition & Hauling in Pittsburgh",
+        "meta_title": "Junk Removal & Dumpster Rental Pittsburgh PA",
+        "meta_desc": "Junk removal, demolition, hauling and dumpster trailer rental in Pittsburgh, PA. Weekend dumpster rental $225 Friday to Sunday. Call or text (412) 923-2092.",
+        "tagline": "Demolition, hauling and clean-outs — plus dumpster trailer rental when you would rather load it yourself.",
+        "answer": "Osas Construction Group provides junk removal, demolition, hauling and clean-outs in Pittsburgh, PA, and rents dumpster trailers. The weekend rental is $225 from Friday to Sunday, with dumping fees of $100 per ton. Trailers are a 6 ft x 14 ft and a 6 ft x 12 ft dump trailer, each carrying up to 3 tons. Call or text (412) 923-2092.",
+        "intro": [
+            "Two ways to do this: we load it, or you load it. Full-service removal is faster and you never touch the heavy end of a couch. A trailer in the driveway for the weekend is cheaper if you have time and help.",
+            "Either way it is the same company that does the demolition, so a bathroom gut and the debris haul-out are not two phone calls.",
+        ],
+        "scope": [
+            ("Demolition", [
+                "Interior demolition",
+                "Exterior demolition",
+                "Clean-outs",
+                "Concrete removal",
+                "Shed and deck demolition",
+                "Selective demo for remodels",
+            ]),
+            ("Hauling", [
+                "Dirt, rock, mulch and gravel",
+                "Construction material hauling",
+                "Land clearing debris",
+                "Tree branches",
+                "Material delivery to the job site",
+            ]),
+            ("Junk removal", [
+                "Household junk removal",
+                "Furniture and appliance removal",
+                "Garage, basement and attic cleanouts",
+                "Estate cleanouts",
+                "Construction debris removal",
+                "Rental property and eviction cleanouts",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Dumpster trailer rental",
+                "p": [
+                    "Both trailers are dump trailers you can load at your own pace over a weekend. Pricing below is the standard weekend rate; call or text for weekday rentals, longer terms, or drop-off outside the usual area.",
+                ],
+                "table": {
+                    "caption": "Weekend dumpster trailer rental — Friday through Sunday",
+                    "head": ["Trailer", "Size", "Load capacity", "Weekend rate", "Dumping fee"],
+                    "rows": [
+                        ["Black — Biggy trailer", "6 ft x 14 ft", "Up to 3 tons", "$225", "$100 per ton"],
+                        ["Gray — Dump trailer", "6 ft x 12 ft", "Up to 3 tons", "$225", "$100 per ton"],
+                    ],
+                },
+            },
+            {
+                "h": "Clean-outs nobody wants to start",
+                "p": [
+                    "Estate cleanouts, hoarding situations, a basement that has been filling since 1998, a rental left full after a tenant moved out. We have done them. We bring the trailers, sort what has to be separated, and leave the space broom-clean.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("How much is a dumpster rental for the weekend?",
+             "The weekend rate is $225 from Friday through Sunday for either trailer, with dumping fees of $100 per ton on top. Each trailer holds up to 3 tons. For weekday rentals, longer terms or anything outside the standard setup, call or text (412) 923-2092."),
+            ("What can't go in the trailer?",
+             "Hazardous materials, liquids, paint, tires, batteries and appliances containing refrigerant generally cannot go to a standard landfill and need separate handling. Tell us what is in the pile and we will tell you what needs to be pulled out."),
+            ("Do you do same-week junk removal?",
+             "Scheduling depends on the current workload, but hauling and cleanouts move faster than construction projects. Call or text and we will tell you the soonest realistic date."),
+            ("Can you demo a deck, shed or concrete slab and take it away?",
+             "Yes. Demolition and disposal in the same visit is standard for us — we own the trailers, so there is no third-party dumpster waiting in your driveway."),
+        ],
+        "related": ["concrete-masonry", "home-renovation", "landscaping", "snow-removal"],
+        "card_blurb": "Full-service junk removal, demolition and hauling — or rent a dump trailer for the weekend.",
+        "card_tags": ["$225 weekend", "Demolition", "Cleanouts"],
+    },
+    {
+        "slug": "snow-removal",
+        "nav": "Snow & Ice Removal",
+        "group": "Hauling, Demo & Snow",
+        "icon": "snow",
+        "h1": "Snow Removal in Pittsburgh — Residential & Commercial",
+        "meta_title": "Snow Removal Pittsburgh PA | Plowing & Ice Management",
+        "meta_desc": "Residential and commercial snow removal in Pittsburgh, PA — driveway plowing, parking lots, sidewalks, ice management and seasonal contracts. (412) 923-2092.",
+        "tagline": "Keeping your property safe, accessible and open all winter long — fast response throughout the season.",
+        "answer": "Osas Construction Group provides residential and commercial snow removal in Pittsburgh, PA: driveway plowing, parking lot plowing, sidewalk and entrance clearing, deck and patio snow removal, flat roof snow removal, salting, de-icing and seasonal contracts. Fast response, 24/7 through the season. Call or text (412) 923-2092.",
+        "intro": [
+            "Snow is a liability problem before it is an inconvenience. A commercial lot that is not cleared and treated before opening is a slip-and-fall claim waiting to happen, and an untreated residential walk is the same risk on a smaller scale.",
+            "We run residential and commercial routes with seasonal contracts so your property is already on the list when the forecast turns — not competing for a truck at 4 a.m.",
+        ],
+        "scope": [
+            ("Residential", [
+                "Driveway snow plowing",
+                "Sidewalk and walkway clearing",
+                "Deck and patio snow removal",
+                "Ice management — salting and de-icing",
+                "Steps and entryway clearing",
+                "Reliable and on call, storm to storm",
+            ]),
+            ("Commercial", [
+                "Parking lot plowing, including large lots",
+                "Sidewalk and entrance clearing",
+                "Flat roof snow removal",
+                "Ice management to reduce slips and liability",
+                "Seasonal contracts with set response terms",
+                "Fast, efficient service for customers and employees",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "Seasonal contracts vs. per-storm calls",
+                "p": [
+                    "A seasonal contract puts you on a route with a defined trigger depth and response window, which is what you want for a business that has to open on time. Per-storm calls work for homeowners who only want help with the big ones — but during a major event, contracted properties get cleared first. That is simply how routing works, and we would rather say it plainly.",
+                ],
+                "list": [
+                    "Defined trigger depth and response expectations",
+                    "Salting and de-icing as scheduled or as conditions require",
+                    "Flat roof loads monitored after heavy, wet snowfall",
+                    "Pre-marked lots so plows avoid curbs, islands and irrigation heads",
+                ],
+            },
+            {
+                "h": "Flat roofs and heavy wet snow",
+                "p": [
+                    "Western Pennsylvania gets wet snow that weighs far more than dry powder, and flat commercial roofs accumulate it. Removal has to be done without damaging the membrane — which means the right technique, not a shovel and enthusiasm.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do you offer seasonal snow contracts?",
+             "Yes, for both residential and commercial properties, with plans built around your property's trigger depth and how early you need to be open."),
+            ("How quickly do you respond after a storm?",
+             "We run fast response throughout the season, and contracted properties are serviced on route order. The honest answer for a major multi-day event is that everyone waits some amount of time — a contract shortens yours."),
+            ("Do you salt as well as plow?",
+             "Yes. Ice management — salting and de-icing of lots, walks, steps and entrances — is available with plowing or on its own."),
+            ("Can you clear a parking lot before business hours?",
+             "That is the normal arrangement for commercial contracts. We set the target time with you when the contract is written."),
+        ],
+        "related": ["landscaping", "junk-removal", "commercial-construction", "pressure-washing"],
+        "card_blurb": "Driveway and lot plowing, sidewalks, ice management and seasonal contracts, 24/7 in season.",
+        "card_tags": ["Plowing", "Salting", "Seasonal contracts"],
+    },
+    {
+        "slug": "commercial-construction",
+        "nav": "Commercial Construction",
+        "group": "Hauling, Demo & Snow",
+        "icon": "building",
+        "h1": "Commercial Construction in Pittsburgh",
+        "meta_title": "Commercial Contractor Pittsburgh PA | Osas Construction Group",
+        "meta_desc": "Commercial construction, tenant fit-outs, build-outs and property maintenance in Pittsburgh, PA from a licensed general contractor. (412) 923-2092.",
+        "tagline": "Build-outs, renovations and year-round property maintenance for Pittsburgh businesses and property owners.",
+        "answer": "Osas Construction Group works on commercial property in Pittsburgh, PA — tenant fit-outs and build-outs, interior renovations, demolition, flooring, drywall, painting, concrete, roofing and exterior work, plus ongoing maintenance including landscaping, pressure washing and snow removal. General contractor license GC-2025-006171. Call (412) 923-2092.",
+        "intro": [
+            "Commercial work is judged on schedule and disruption as much as on craft. A retail space that opens two weeks late costs the tenant more than the build-out did.",
+            "We sequence around your operating hours where we can, coordinate inspections, and keep the site presentable while customers are still walking past it.",
+        ],
+        "scope": [
+            ("Commercial services", [
+                "Tenant fit-outs and build-outs",
+                "Office, retail and restaurant interior renovation",
+                "Interior and exterior demolition",
+                "Commercial flooring, drywall and painting",
+                "Concrete, sidewalks, curbs and lot repairs",
+                "Roofing, gutters and exterior repairs",
+                "ADA-related access improvements",
+                "Multi-unit and rental property turnovers",
+            ]),
+            ("Ongoing property maintenance", [
+                "Grounds and landscape maintenance",
+                "Parking lot and walkway pressure washing",
+                "Snow plowing, salting and ice management",
+                "Gutter cleaning and roof debris removal",
+                "Junk removal and dumpster service",
+                "Scheduled repair and punch work",
+            ]),
+        ],
+        "sections": [
+            {
+                "h": "One contractor across the property calendar",
+                "p": [
+                    "Property managers usually juggle a landscaper, a snow vendor, a cleaning company and a general contractor. We cover all four, which means one point of contact, one insurance certificate on file and one invoice trail.",
+                ],
+            },
+        ],
+        "faqs": [
+            ("Do you work on occupied commercial spaces?",
+             "Yes — phased work, after-hours scheduling where the job allows, dust containment and clear separation between the work area and the public area."),
+            ("Are you insured for commercial job sites?",
+             "Yes, we are fully insured and can provide a certificate of insurance naming your entity as required by your lease or management agreement."),
+            ("Do you handle multi-property maintenance contracts?",
+             "Yes, including seasonal snow contracts and recurring grounds maintenance across several addresses."),
+        ],
+        "related": ["snow-removal", "junk-removal", "home-renovation", "concrete-masonry"],
+        "card_blurb": "Fit-outs, build-outs, renovations and year-round maintenance for commercial property.",
+        "card_tags": ["Fit-outs", "Property maintenance", "Insured"],
+    },
+]
+
+SERVICE_GROUPS = [
+    "Remodeling & Interiors",
+    "Roofing & Exteriors",
+    "Concrete, Decks & Outdoor",
+    "Hauling, Demo & Snow",
+]

@@ -1,5 +1,23 @@
 # Webdesign
 
+Design tooling for Claude Code plus the client sites built with it.
+
+## osasconstructiongroup.com
+
+A complete static marketing site for Osas Construction Group (Pittsburgh, PA) lives in this
+repo: content and generator in `site/`, deployable output in `public/`, Netlify config in
+`netlify.toml`. See [SITE-README.md](SITE-README.md) for how to edit, build and deploy it.
+
+```bash
+python3 site/build.py    # regenerate all 36 pages into public/
+```
+
+The same site is published as its own repository at
+[ForwardFramework/osasconstruction](https://github.com/ForwardFramework/osasconstruction),
+which is the copy connected to Netlify.
+
+## Design tooling
+
 Design tooling for Claude Code: the vendored [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 skills plus the [21st.dev](https://21st.dev) MCP server.
 

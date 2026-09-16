@@ -1,0 +1,35 @@
+# robots.txt — Osas Construction Group
+User-agent: *
+Allow: /
+Disallow: /thank-you/
+
+# Answer engines and AI crawlers are welcome: this site is public marketing
+# information and we would rather be quoted accurately than not at all.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://osasconstructiongroup.com/sitemap.xml

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Osas Construction Group">
+  <rect width="64" height="64" rx="8" fill="#12151a"/>
+  <g>
+    <rect x="7"  y="14" width="15" height="8" rx="1" fill="#C0553A"/>
+    <rect x="24" y="14" width="15" height="8" rx="1" fill="#D07452"/>
+    <rect x="41" y="14" width="16" height="8" rx="1" fill="#B84A31"/>
+    <rect x="7"  y="24" width="23" height="8" rx="1" fill="#D07452"/>
+    <rect x="32" y="24" width="25" height="8" rx="1" fill="#C96143"/>
+    <rect x="7"  y="34" width="15" height="8" rx="1" fill="#B84A31"/>
+    <rect x="24" y="34" width="15" height="8" rx="1" fill="#EDE4DC"/>
+    <rect x="41" y="34" width="16" height="8" rx="1" fill="#C0553A"/>
+    <rect x="7"  y="44" width="25" height="8" rx="1" fill="#C96143"/>
+    <rect x="34" y="44" width="23" height="8" rx="1" fill="#B84A31"/>
+  </g>
+</svg>

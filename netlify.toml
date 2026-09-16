@@ -1,0 +1,107 @@
+# Netlify configuration — Osas Construction Group
+# Docs: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  # The generator is plain Python 3 with no dependencies, so Netlify rebuilds the
+  # HTML on every push. The generated output is also committed, so you can drop
+  # the command line below and deploy the folder as-is if you prefer.
+  command = "python3 site/build.py"
+  publish = "public"
+
+[build.processing]
+  skip_processing = false
+[build.processing.html]
+  pretty_urls = true
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+
+# ---------------------------------------------------------------- headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; frame-src https://www.google.com https://maps.google.com; form-action 'self' https://*.netlify.app; base-uri 'self'; object-src 'none'"
+
+# Fingerprint-free assets are versioned by content, so revalidate HTML but cache
+# fonts, CSS, JS and images hard.
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+# ---------------------------------------------------------------- redirects
+# Short URLs that are easy to put on a yard sign, a truck or a flyer.
+[[redirects]]
+  from = "/estimate"
+  to = "/contact/"
+  status = 301
+[[redirects]]
+  from = "/quote"
+  to = "/contact/"
+  status = 301
+[[redirects]]
+  from = "/snow"
+  to = "/services/snow-removal/"
+  status = 301
+[[redirects]]
+  from = "/dumpster"
+  to = "/services/junk-removal/"
+  status = 301
+[[redirects]]
+  from = "/junk"
+  to = "/services/junk-removal/"
+  status = 301
+[[redirects]]
+  from = "/roofing"
+  to = "/services/roofing-gutters/"
+  status = 301
+[[redirects]]
+  from = "/kitchens"
+  to = "/services/kitchen-remodeling/"
+  status = 301
+[[redirects]]
+  from = "/bathrooms"
+  to = "/services/bathroom-remodeling/"
+  status = 301
+[[redirects]]
+  from = "/decks"
+  to = "/services/decks-patios/"
+  status = 301
+[[redirects]]
+  from = "/landscaping"
+  to = "/services/landscaping/"
+  status = 301
