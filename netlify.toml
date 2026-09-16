@@ -1,0 +1,106 @@
+# ============================================================================
+#  Booth's Contracting — Netlify configuration
+# ============================================================================
+
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Netlify Forms picks the two lead forms up automatically from the built HTML
+# (they carry data-netlify="true"). After the first deploy, set up notification
+# emails under: Site configuration → Forms → Form notifications.
+
+# --------------------------------------------------------------------------
+#  Redirects — keep one canonical URL per page so link equity does not split.
+# --------------------------------------------------------------------------
+
+# Trailing-slash normalisation for the pages people are most likely to type.
+[[redirects]]
+  from = "/services"
+  to = "/services/"
+  status = 301
+
+[[redirects]]
+  from = "/service-areas"
+  to = "/service-areas/"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/"
+  status = 301
+
+# Friendly short links for print, vehicle lettering and social bios.
+[[redirects]]
+  from = "/quote"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/estimate"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/free-estimate"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/driveways"
+  to = "/services/concrete-driveways/"
+  status = 301
+
+[[redirects]]
+  from = "/patios"
+  to = "/services/concrete-patios/"
+  status = 301
+
+[[redirects]]
+  from = "/excavation"
+  to = "/services/excavation-site-prep/"
+  status = 301
+
+[[redirects]]
+  from = "/reviews"
+  to = "/gallery/"
+  status = 301
+
+# --------------------------------------------------------------------------
+#  Headers
+# --------------------------------------------------------------------------
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# Fingerprint-free asset names, so cache for a day and revalidate rather than
+# caching for a year and shipping a stale stylesheet after an edit.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Cache-Control = "public, max-age=3600"

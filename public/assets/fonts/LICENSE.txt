@@ -1,0 +1,15 @@
+Fonts in this directory are self-hosted rather than loaded from Google Fonts,
+which removes two third-party connections from the critical path and keeps the
+site rendering if Google Fonts is slow or blocked.
+
+  Inter           — SIL Open Font License 1.1 — https://github.com/rsms/inter
+  Oswald          — SIL Open Font License 1.1 — https://github.com/googlefonts/OswaldFont
+  Kaushan Script  — SIL Open Font License 1.1 — https://fonts.google.com/specimen/Kaushan+Script
+
+Each file is the latin subset of the Google Fonts build. The SIL OFL permits
+redistribution and embedding, including with the full license text available at
+https://openfontlicense.org.
+
+To refresh these files, re-run the URLs from:
+  https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Kaushan+Script&family=Oswald:wght@500;600;700&display=swap
+(requested with a modern-browser User-Agent so Google returns woff2).

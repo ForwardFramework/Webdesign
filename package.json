@@ -1,0 +1,17 @@
+{
+  "name": "booths-contracting-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing website for Booth's Contracting — concrete, excavation and landscaping in Western Pennsylvania.",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs && npx --yes http-server dist -p 8099 -c-1",
+    "preview": "npx --yes http-server dist -p 8099 -c-1",
+    "audit": "node scripts/audit.mjs",
+    "test": "node scripts/functional-test.mjs",
+    "assets": "node scripts/render-assets.mjs",
+    "shots": "node scripts/shots.mjs ./.shots"
+  }
+}

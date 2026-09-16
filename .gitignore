@@ -4,3 +4,11 @@
 # Local environment files
 .env
 .env.local
+
+# Build output — Netlify regenerates it with `node build.mjs`
+dist/
+
+# Local tooling
+node_modules/
+.shots/
+.netlify/
