@@ -1,3 +1,5 @@
+import type { AmenityTag } from './amenities';
+
 /**
  * Shared data contracts.
  *
@@ -142,6 +144,12 @@ export interface Village {
   cddAnnualHigh: number;
   cddNote?: string;
   amenities: string[];
+  /**
+   * Machine-readable amenity tags, derived by hand from `amenities` above.
+   * Drives the amenity filters on the village and home searches — free-text
+   * amenity prose cannot be filtered reliably. See data/amenities.ts.
+   */
+  amenityTags: AmenityTag[];
   bestFor: string[];
   summary: string;
   /** One honest trade-off per village — this is what buyers actually ask about. */

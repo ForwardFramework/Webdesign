@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Container, Section, Breadcrumbs, JsonLd, SourceList } from '@/components/ui';
 import { VillageExplorer } from '@/components/VillageExplorer';
 import { VILLAGES, villageStats } from '@/data/villages';
+import { AMENITIES, type AmenityTag } from '@/data/amenities';
 import { pageMeta, breadcrumbLd, itemListLd, faqLd } from '@/lib/seo';
 import { imgSrc, imgAlt } from '@/config/images';
 import { legal } from '@/config/site';
@@ -24,7 +25,18 @@ const CRUMBS = [
   { name: 'Villages', href: '/villages' },
 ];
 
-export default function VillagesPage() {
+export default async function VillagesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ amenities?: string }>;
+}) {
+  const sp = await searchParams;
+  const valid = new Set(AMENITIES.map((a) => a.id as string));
+  const initialAmenities = (sp.amenities ?? '')
+    .split(',')
+    .map((x) => x.trim())
+    .filter((x) => valid.has(x)) as AmenityTag[];
+
   return (
     <>
       <section className="relative isolate overflow-hidden bg-gulf-900">
@@ -61,7 +73,7 @@ export default function VillagesPage() {
 
       <Section tone="shell">
         <Container>
-          <VillageExplorer villages={VILLAGES} />
+          <VillageExplorer villages={VILLAGES} initialAmenities={initialAmenities} />
 
           <div className="mt-14 rounded-3xl border border-ink/10 bg-white p-6 sm:p-8">
             <h2 className="font-display text-xl font-semibold text-gulf-900">How to read these numbers</h2>

@@ -32,7 +32,8 @@ export const agent = {
   },
   title: 'REALTOR® | Lakewood Ranch, Sarasota & Bradenton Specialist',
   /** Florida sales-associate license number. Legally required context for advertising. */
-  licenseNumber: todo('Florida real estate sales associate license number (DBPR SL#)'),
+  /** Verified against the licensee's own record. Displayed in the footer and on /contact. */
+  licenseNumber: 'SL3663384',
   licenseState: 'Florida',
   phone: todo('direct business phone number'),
   email: todo('business email address'),

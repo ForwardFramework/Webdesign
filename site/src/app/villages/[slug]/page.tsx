@@ -6,6 +6,7 @@ import { Container, Section, Breadcrumbs, JsonLd, SourceList, ConfidenceBadge, P
 import { DriveTimes } from '@/components/DriveTimes';
 import { LeadForm } from '@/components/LeadForm';
 import { VILLAGES, villageBySlug } from '@/data/villages';
+import { AMENITY_BY_ID, AMENITY_DISCLAIMER } from '@/data/amenities';
 import { SCHOOL_BOUNDARY_WARNING } from '@/data/schools';
 import { pageMeta, breadcrumbLd, placeLd, faqLd } from '@/lib/seo';
 import { imgSrc, imgAlt } from '@/config/images';
@@ -142,6 +143,27 @@ export default async function VillagePage({ params }: { params: Promise<{ slug: 
                     </li>
                   ))}
                 </ul>
+                {v.amenityTags.length > 0 && (
+                  <div className="mt-6 border-t border-ink/8 pt-5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-soft">Search by these</p>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {v.amenityTags.map((t) => (
+                        <li key={t}>
+                          <Link
+                            href={`/villages?amenities=${t}`}
+                            title={AMENITY_BY_ID[t].hint}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-gulf-200 bg-gulf-50 px-3 py-1.5 text-xs font-medium text-gulf-700 transition-colors hover:border-gulf-400 hover:bg-gulf-100"
+                          >
+                            <span aria-hidden="true">{AMENITY_BY_ID[t].icon}</span>
+                            {AMENITY_BY_ID[t].label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-xs leading-relaxed text-ink-muted">{AMENITY_DISCLAIMER}</p>
+                  </div>
+                )}
+
                 {v.status === 'selling' && (
                   <p className="mt-6 rounded-2xl bg-sand-50 p-4 text-sm leading-relaxed text-ink-soft">
                     This village is still building. Ask which amenities are <em>finished and open today</em> rather

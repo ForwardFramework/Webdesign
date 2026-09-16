@@ -4,6 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Listing, ListingResult } from '@/lib/mls/types';
 import { VILLAGES } from '@/data/villages';
+import type { AmenityTag } from '@/data/amenities';
+import { AMENITY_BY_ID, AMENITY_DISCLAIMER } from '@/data/amenities';
+import { AmenityPicker, amenityCounts, villageHasAllAmenities } from './AmenityPicker';
 import { moneyFull, Pill } from './ui';
 import { idx } from '@/config/site';
 
@@ -24,12 +27,15 @@ interface Filters {
   pool: boolean;
   waterfront: boolean;
   maxHoa: number;
+  /** Community amenities. Resolved to a village set — see `effectiveVillages`. */
+  amenities: AmenityTag[];
   sort: string;
 }
 
 const EMPTY: Filters = {
   villages: [], cities: [], minPrice: 0, maxPrice: 0, minBeds: 0, minBaths: 0, minSqft: 0,
-  propertyTypes: [], newConstruction: false, pool: false, waterfront: false, maxHoa: 0, sort: 'newest',
+  propertyTypes: [], newConstruction: false, pool: false, waterfront: false, maxHoa: 0,
+  amenities: [], sort: 'newest',
 };
 
 export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[] }) {
@@ -41,9 +47,31 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
 
   const PER = 24;
 
+  /**
+   * Community amenities belong to the VILLAGE, not to the listing — an MLS feed
+   * has no field for "this neighborhood has pickleball". So an amenity
+   * selection is resolved to the set of villages that qualify, and the search
+   * is scoped to those. If the buyer has also picked villages by name, the two
+   * are intersected: picking Wild Blue and "dog park" should not silently add
+   * back villages they did not ask for.
+   */
+  const amenityVillages = useMemo(
+    () => (f.amenities.length ? VILLAGES.filter((v) => villageHasAllAmenities(v, f.amenities)).map((v) => v.slug) : null),
+    [f.amenities]
+  );
+
+  const effectiveVillages = useMemo(() => {
+    if (!amenityVillages) return f.villages;
+    if (!f.villages.length) return amenityVillages;
+    return f.villages.filter((s) => amenityVillages.includes(s));
+  }, [amenityVillages, f.villages]);
+
+  /** No village can satisfy the combination — say so rather than querying for it. */
+  const impossible = f.amenities.length > 0 && effectiveVillages.length === 0;
+
   const qs = useMemo(() => {
     const p = new URLSearchParams();
-    if (f.villages.length) p.set('villages', f.villages.join(','));
+    if (effectiveVillages.length) p.set('villages', effectiveVillages.join(','));
     if (f.cities.length) p.set('cities', f.cities.join(','));
     if (f.minPrice) p.set('minPrice', String(f.minPrice));
     if (f.maxPrice) p.set('maxPrice', String(f.maxPrice));
@@ -59,10 +87,29 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
     p.set('limit', String(PER));
     p.set('offset', String(page * PER));
     return p.toString();
-  }, [f, page]);
+  }, [f, page, effectiveVillages]);
 
   useEffect(() => {
     let canceled = false;
+
+    // No village satisfies the amenity + village combination, so there is
+    // nothing to ask the MLS for. Querying anyway would drop the village
+    // filter from the request and return the ENTIRE result set — which reads
+    // to the visitor as "your filters found 99 homes" when the honest answer
+    // is "nothing matches".
+    if (impossible) {
+      setData((d) => ({
+        listings: [],
+        total: 0,
+        provider: d?.provider ?? 'sample',
+        isLive: d?.isLive ?? false,
+        lastUpdated: d?.lastUpdated ?? null,
+        notice: d?.notice,
+      }));
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     fetch(`/api/listings?${qs}`)
       .then((r) => r.json())
@@ -70,7 +117,7 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
       .catch(() => !canceled && setData(null))
       .finally(() => !canceled && setLoading(false));
     return () => { canceled = true; };
-  }, [qs]);
+  }, [qs, impossible]);
 
   const update = useCallback(<K extends keyof Filters>(k: K, v: Filters[K]) => {
     setPage(0);
@@ -81,9 +128,14 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
     update(k, f[k].includes(v) ? f[k].filter((x) => x !== v) : [...f[k], v]);
 
   const activeCount =
-    f.villages.length + f.cities.length + f.propertyTypes.length +
+    f.villages.length + f.cities.length + f.propertyTypes.length + f.amenities.length +
     (f.minPrice ? 1 : 0) + (f.maxPrice ? 1 : 0) + (f.minBeds ? 1 : 0) + (f.minBaths ? 1 : 0) +
     (f.minSqft ? 1 : 0) + (f.newConstruction ? 1 : 0) + (f.pool ? 1 : 0) + (f.waterfront ? 1 : 0) + (f.maxHoa ? 1 : 0);
+
+  const amenityPickerCounts = useMemo(() => {
+    const pool = f.villages.length ? VILLAGES.filter((v) => f.villages.includes(v.slug)) : VILLAGES;
+    return amenityCounts(pool.filter((v) => villageHasAllAmenities(v, f.amenities)));
+  }, [f.villages, f.amenities]);
 
   const totalPages = data ? Math.ceil(data.total / PER) : 0;
   const selectCls = 'w-full rounded-xl border border-ink/15 bg-white px-3 py-2 text-sm focus:border-gulf-500 focus:outline-none focus:ring-2 focus:ring-gulf-500/30';
@@ -107,7 +159,7 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
 
       <div className="grid gap-8 lg:grid-cols-[18rem_1fr]">
         {/* ── Filters ── */}
-        <aside className={`${showFilters ? 'block' : 'hidden'} lg:block lg:sticky lg:top-24 lg:h-fit`}>
+        <aside className={`${showFilters ? 'block' : 'hidden'} lg:block lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-1`}>
           <div className="card space-y-6 p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-lg font-semibold text-gulf-900">Filters</h2>
@@ -202,6 +254,24 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
               </div>
             </fieldset>
 
+            <div className="border-t border-ink/8 pt-5">
+              <AmenityPicker
+                selected={f.amenities}
+                counts={amenityPickerCounts}
+                onToggle={(t) =>
+                  update('amenities', f.amenities.includes(t) ? f.amenities.filter((x) => x !== t) : [...f.amenities, t])
+                }
+                onClear={() => update('amenities', [])}
+                idPrefix="home-amenity"
+                defaultOpen
+              />
+              <p className="mt-3 text-[0.7rem] leading-relaxed text-ink-muted">
+                These describe the <strong>neighborhood</strong>, not the individual house — MLS listings carry no
+                field for them. Ticking one narrows the search to villages that have it.
+                {f.amenities.length > 0 && ` ${AMENITY_DISCLAIMER}`}
+              </p>
+            </div>
+
             <fieldset>
               <legend className={legendCls}>Max HOA / month</legend>
               <select aria-label="Maximum HOA" value={f.maxHoa} onChange={(e) => update('maxHoa', Number(e.target.value))} className={`mt-2 ${selectCls}`}>
@@ -225,10 +295,16 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
                   <>
                     <strong className="font-semibold text-gulf-900">{data?.total.toLocaleString() ?? 0}</strong>{' '}
                     {data?.total === 1 ? 'home' : 'homes'}
-                    {f.villages.length === 1 && ` in ${VILLAGES.find((v) => v.slug === f.villages[0])?.name}`}
+                    {effectiveVillages.length === 1 && ` in ${VILLAGES.find((v) => v.slug === effectiveVillages[0])?.name}`}
                   </>
                 )}
               </p>
+              {f.amenities.length > 0 && !impossible && (
+                <p className="mt-1 text-xs text-ink-muted">
+                  {effectiveVillages.length} village{effectiveVillages.length === 1 ? '' : 's'} match{effectiveVillages.length === 1 ? 'es' : ''}{' '}
+                  {f.amenities.map((t) => AMENITY_BY_ID[t].label.toLowerCase()).join(' + ')}
+                </p>
+              )}
               {data?.isLive && data.lastUpdated && (
                 <p className="mt-0.5 text-xs text-ink-muted">
                   {idx.mlsName} data last updated {new Date(data.lastUpdated).toLocaleString('en-US')}
@@ -265,10 +341,22 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
 
           {!loading && data && data.listings.length === 0 && (
             <div className="mt-8 rounded-3xl border border-dashed border-ink/20 p-12 text-center">
-              <p className="font-display text-xl font-semibold text-gulf-900">Nothing matches all of that right now.</p>
+              <p className="font-display text-xl font-semibold text-gulf-900">
+                {impossible ? 'No village has all of those amenities.' : 'Nothing matches all of that right now.'}
+              </p>
               <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
-                Loosen a filter — or tell Caitlin what you are after and she will watch for it, including
-                the off-market and coming-soon inventory that never reaches a portal.
+                {impossible ? (
+                  <>
+                    You ticked {f.amenities.map((t) => AMENITY_BY_ID[t].label.toLowerCase()).join(' + ')}, and no
+                    Lakewood Ranch village currently offers that combination. Drop one and the list comes back —
+                    or ask Caitlin which village comes closest to what you actually want.
+                  </>
+                ) : (
+                  <>
+                    Loosen a filter — or tell Caitlin what you are after and she will watch for it, including
+                    the off-market and coming-soon inventory that never reaches a portal.
+                  </>
+                )}
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <button type="button" onClick={() => { setF({ ...EMPTY }); setPage(0); }} className="btn-ghost">Clear filters</button>

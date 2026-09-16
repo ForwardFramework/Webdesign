@@ -3,6 +3,7 @@ import { GUIDES } from '@/data/guides';
 import { FAQS } from '@/data/faqs';
 import { MARKET, CLIMATE, COST_OF_LIVING, LWR_FACTS } from '@/data/lifestyle';
 import { RESEARCH_DATE, SOURCES } from '@/data/sources';
+import { AMENITIES, AMENITY_DISCLAIMER, AMENITY_BY_ID } from '@/data/amenities';
 import { BASE } from '@/lib/seo';
 import { agent, brokerage, show } from '@/config/site';
 
@@ -52,7 +53,18 @@ export function GET() {
 
 ## Villages (${VILLAGES.length})
 
-${VILLAGES.map((v) => `- [${v.name}](${BASE}/villages/${v.slug}): ${v.area}, ${v.county} County. $${v.priceLow.toLocaleString()}–$${v.priceHigh.toLocaleString()}. HOA $${v.hoaMonthlyLow}–$${v.hoaMonthlyHigh}/mo, CDD $${v.cddAnnualLow.toLocaleString()}–$${v.cddAnnualHigh.toLocaleString()}/yr. ${v.gated ? 'Gated. ' : ''}${v.ageRestricted ? '55+. ' : ''}Status: ${v.status}. Trade-off: ${v.tradeOff}`).join('\n')}
+${VILLAGES.map((v) => `- [${v.name}](${BASE}/villages/${v.slug}): ${v.area}, ${v.county} County. $${v.priceLow.toLocaleString()}–$${v.priceHigh.toLocaleString()}. HOA $${v.hoaMonthlyLow}–$${v.hoaMonthlyHigh}/mo, CDD $${v.cddAnnualLow.toLocaleString()}–$${v.cddAnnualHigh.toLocaleString()}/yr. ${v.gated ? 'Gated. ' : ''}${v.ageRestricted ? '55+. ' : ''}Status: ${v.status}. Amenities: ${v.amenityTags.map((t) => AMENITY_BY_ID[t].label).join(', ') || 'none confirmed yet'}. Trade-off: ${v.tradeOff}`).join('\n')}
+
+## Community amenities you can filter villages by
+
+Both the village search (${BASE}/villages) and the home search (${BASE}/homes) filter on these,
+with AND semantics — selecting two returns only villages that have both. Community amenities
+belong to the village, not to an individual listing, so on the home search they narrow the
+search to qualifying villages.
+
+${AMENITIES.map((a) => `- ${a.label} (${a.group}): ${a.hint}`).join('\n')}
+
+${AMENITY_DISCLAIMER}
 
 ## Guides
 

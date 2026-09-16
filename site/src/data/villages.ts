@@ -1,4 +1,5 @@
 import type { Village } from './types';
+
 import { RESEARCH_DATE } from './sources';
 
 /**
@@ -41,6 +42,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 1400,
     cddNote: 'One of the earliest villages, so the CDD bond portion is largely or fully retired — what remains is mostly operations and maintenance.',
     amenities: ['Summerfield Community Park', 'Playgrounds & ball fields', 'Trail access', 'Walkable to Lakewood Ranch schools'],
+    amenityTags: ['neighborhood-park', 'playground', 'sports-fields', 'trails'],
     bestFor: ['First-time Lakewood Ranch buyers', 'Families wanting mature trees', 'Value per square foot'],
     summary:
       'One of the first villages built on the Ranch, and still the argument for buying older here: mature oaks, wide lots, low carrying costs and the lowest entry price inside the 34202 ZIP. Homes are 1990s–early-2000s vintage, so most trade hands already updated.',
@@ -70,6 +72,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 1500,
     cddNote: 'Early-phase village; bond largely retired.',
     amenities: ['Lake & preserve frontage', 'Walking trails', 'Minutes to Main Street', 'Greenbelt lots'],
+    amenityTags: ['lake-access', 'preserve', 'trails', 'walk-to-town-center'],
     bestFor: ['Buyers who want a non-cookie-cutter house', 'Walkers and dog owners', 'Main Street regulars'],
     summary:
       'Established, leafy and genuinely walkable to Main Street. Riverwalk has more architectural variety than newer villages because several builders worked it, and lots back to water or preserve more often than not.',
@@ -98,6 +101,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 900,
     cddAnnualHigh: 2200,
     amenities: ['Lake Uihlein frontage', 'Private boat/kayak access (select sections)', 'Walk to Main Street', 'Lakefront trail'],
+    amenityTags: ['lake-access', 'kayak-launch', 'trails', 'walk-to-town-center'],
     bestFor: ['Water views without leaving the Ranch', 'Walk-to-dinner lifestyle', 'Downsizers wanting a condo option'],
     summary:
       'The lakefront village. Edgewater wraps Lake Uihlein, which means sunset water views and the shortest walk on the Ranch to Main Street restaurants and the cinema. Lakefront custom homes here hold their value unusually well.',
@@ -127,6 +131,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 2000,
     cddNote: 'Bond partially retired in the older sub-neighborhoods; newer pockets still carry more.',
     amenities: ['Greenbrook Adventure Park', 'Inline skating track', 'Dog parks', 'Sports fields', 'Miles of trails'],
+    amenityTags: ['neighborhood-park', 'playground', 'dog-park', 'sports-fields', 'trails'],
     bestFor: ['Active families', 'Dog owners', 'Buyers who want a big park at the end of the street'],
     summary:
       'Greenbrook is the family workhorse of the Ranch — a cluster of sub-neighborhoods built around Greenbrook Adventure Park, with its skating track, paw parks, ball fields and pavilions. Good square footage per dollar and A-rated schools nearby.',
@@ -156,6 +161,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 2600,
     cddNote: 'Bond partially retired.',
     amenities: ['10-acre central park', 'Splash pad', 'Two dog parks', 'Tennis courts', 'Covered pavilion', 'Gated entry'],
+    amenityTags: ['neighborhood-park', 'playground', 'splash-pad', 'dog-park', 'tennis', 'event-lawn'],
     bestFor: ['Young families', 'Dog owners', 'Buyers who want a gate without a club bill'],
     summary:
       'Exactly what the name says: a gated Neal Communities village organised around a genuinely large central green with a splash pad, tennis, a playground and two dog parks. One of the friendliest "kids on bikes" villages on the Ranch.',
@@ -193,6 +199,7 @@ export const VILLAGES: Village[] = [
       'Guard-gated entries',
       'Golf & water views',
     ],
+    amenityTags: ['golf', 'tennis', 'community-pool', 'fitness-center', 'fitness-classes', 'clubhouse', 'restaurant', 'guard-gated', 'lake-access'],
     bestFor: ['Golfers', 'Buyers wanting a true private club', 'Mature landscaping and big lots'],
     summary:
       'The original golf address on the Ranch. Gated, heavily treed, wrapped around the Lakewood Ranch Golf & Country Club’s 54 holes, with everything from maintenance-free villas to lake-and-fairway estate homes.',
@@ -227,6 +234,7 @@ export const VILLAGES: Village[] = [
       'Golf-course frontage',
       'Walking trails',
     ],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'guard-gated', 'golf', 'trails'],
     bestFor: ['Move-up luxury buyers', 'Lock-and-leave seasonal owners', 'Golf-adjacent living'],
     summary:
       'Widely treated as the gold standard for gated luxury inside the Ranch — newer construction than the original Country Club, resident-only amenities at The Retreat, and homes running from the $700Ks into the $3M range.',
@@ -263,6 +271,7 @@ export const VILLAGES: Village[] = [
       'Concierge',
       'Grand lakes & fountains',
     ],
+    amenityTags: ['clubhouse', 'community-pool', 'restaurant', 'spa', 'fitness-center', 'tennis', 'pickleball', 'concierge', 'lake-access'],
     bestFor: ['Luxury and custom-build buyers', 'Privacy', 'Resort-level amenities without leaving the gate'],
     summary:
       'The premier address on the Ranch. Grand entry lakes, a 20,000+ sq ft clubhouse with spa and concierge, and lots sized for genuine custom estates by the region’s best-known luxury builders.',
@@ -299,6 +308,7 @@ export const VILLAGES: Village[] = [
       'Tennis, pickleball, bocce',
       'Lifestyle director',
     ],
+    amenityTags: ['golf', 'restaurant', 'community-pool', 'lap-pool', 'spa', 'fitness-center', 'fitness-classes', 'tennis', 'pickleball', 'bocce', 'lifestyle-director', 'clubhouse'],
     bestFor: ['Golf-included buyers', 'Amenity-maximalists', 'Social calendars'],
     summary:
       'A resort-style club village where the amenity package is the point: golf, spa, culinary center, tiki bar and a full-time lifestyle director. Many homes carry bundled golf, which is why the monthly fee looks high next to other villages.',
@@ -329,6 +339,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1400,
     cddAnnualHigh: 2800,
     amenities: ['Resort pool & spa', 'Fitness center', 'Fire pit & gathering lawn', 'Tennis & pickleball', 'Lawn care included in many sections'],
+    amenityTags: ['community-pool', 'fitness-center', 'event-lawn', 'tennis', 'pickleball', 'lawn-care'],
     bestFor: ['Families wanting top schools within walking distance', 'Low-maintenance living', 'Newer construction under $1M'],
     summary:
       'A tight, well-run gated village whose biggest selling point is location: it sits alongside the B.D. Gullett / Dr. Mona Jain / Lakewood Ranch High school cluster, so school runs can be a walk instead of a drive.',
@@ -357,6 +368,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1300,
     cddAnnualHigh: 2700,
     amenities: ['Clubhouse & resort pool', 'Fitness center', 'Dog park', 'Bocce', 'Preserve frontage', 'Lawn maintenance in villa sections'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'dog-park', 'bocce', 'preserve', 'lawn-care'],
     bestFor: ['Preserve views', 'Buyers who want quiet', 'Lock-and-leave villas'],
     summary:
       'Backs onto Bob Gardner Park and preserve land, which gives it more green edge than most villages its age. Compact, gated, and popular with buyers who want newer construction with a nature buffer.',
@@ -385,6 +397,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1300,
     cddAnnualHigh: 2600,
     amenities: ['Heated resort pool', 'Fitness center', 'Pickleball & bocce', 'Full lawn & landscape maintenance', 'Gated'],
+    amenityTags: ['community-pool', 'fitness-center', 'pickleball', 'bocce', 'lawn-care'],
     bestFor: ['Seasonal owners', 'Downsizers', 'Anyone who never wants to own a mower'],
     summary:
       'Maintenance-free by design — landscaping is included across the village, which makes it a favorite for snowbirds and buyers splitting time between two homes. Neal’s floor plans here are efficient and popular on resale.',
@@ -413,6 +426,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1500,
     cddAnnualHigh: 2900,
     amenities: ['Solar-powered community', 'Resort pool & spa', 'Fitness center', 'Tennis, pickleball, basketball', 'Playground', 'Lawn care included'],
+    amenityTags: ['community-pool', 'fitness-center', 'tennis', 'pickleball', 'basketball', 'playground', 'lawn-care'],
     bestFor: ['Energy-conscious buyers', 'Families', 'Lower utility bills'],
     summary:
       'Lakewood Ranch’s solar village — homes were delivered with rooftop solar as standard, which shows up every month on the electric bill. Otherwise a full-amenity gated family village with lawn care included.',
@@ -441,6 +455,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1200,
     cddAnnualHigh: 2400,
     amenities: ['Clubhouse & pool', 'Fitness center', 'Playground', 'Maintenance-free exteriors in townhome sections'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'playground'],
     bestFor: ['Entry into the 34211 ZIP', 'First-time buyers', 'Investors'],
     summary:
       'One of the most attainable ways into new-ish construction near the top-rated 34211 school cluster. Townhomes here are consistently among the lowest-priced Lakewood Ranch addresses on the market.',
@@ -469,6 +484,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1400,
     cddAnnualHigh: 2800,
     amenities: ['Resort pool', 'Fitness center', 'Playground', 'Dog park', 'Basketball & volleyball'],
+    amenityTags: ['community-pool', 'fitness-center', 'playground', 'dog-park', 'basketball', 'volleyball'],
     bestFor: ['Space per dollar', 'Families needing 4–5 bedrooms', 'Buyers priced out of Country Club East'],
     summary:
       'Larger Lennar floor plans on generous lots at a lower price per square foot than the Country Club villages. A practical family choice with a solid, unfussy amenity set.',
@@ -497,6 +513,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1800,
     cddAnnualHigh: 3400,
     amenities: ['Clubhouse & resort pool', 'Fitness center', 'Playground', 'Pickleball', 'Large lakes & water views'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'playground', 'pickleball', 'lake-access'],
     bestFor: ['New-construction buyers', 'Water-view lots', 'Pulte floor-plan fans'],
     summary:
       'A Pulte village built around a big lake system, with a high share of water-view homesites. Still delivering homes, so builder incentives are in play here more than in finished villages.',
@@ -532,6 +549,7 @@ export const VILLAGES: Village[] = [
       'Trails & lakes',
       'Multiple pools across the village',
     ],
+    amenityTags: ['clubhouse', 'community-pool', 'restaurant', 'coffee', 'fitness-center', 'pickleball', 'tennis', 'bocce', 'dog-park', 'trails', 'lake-access'],
     bestFor: ['Widest price ladder in one village', 'Amenity-heavy new construction', 'Multi-generational buyers'],
     summary:
       'The most flexible new-construction village on the Ranch — townhomes in the $300Ks through executive homes past $1M, all sharing one of the largest amenity packages Lakewood Ranch has built.',
@@ -568,6 +586,7 @@ export const VILLAGES: Village[] = [
       'Arcade & coffee bar',
       'Aerobics studio',
     ],
+    amenityTags: ['clubhouse', 'restaurant', 'coffee', 'community-pool', 'splash-pad', 'lap-pool', 'fitness-center', 'fitness-classes', 'tennis', 'pickleball', 'basketball', 'volleyball'],
     bestFor: ['Amenity maximalists', 'Families who want everything on site', 'Buyers who want a restaurant inside the gate'],
     summary:
       'If the amenity list is what sells you, this is the village. Lorraine Lakes runs a full clubhouse with a restaurant and bar, arcade, splash pad, indoor and outdoor fitness and a deep court sports lineup — unusually complete even by Lakewood Ranch standards.',
@@ -596,6 +615,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1600,
     cddAnnualHigh: 3000,
     amenities: ['Community pool & cabana', 'Playground', 'Lakes & open space', 'Gated entry'],
+    amenityTags: ['community-pool', 'playground', 'lake-access'],
     bestFor: ['Most affordable new build on the Ranch', 'First-time buyers', 'Investors'],
     summary:
       'Consistently the lowest entry point for brand-new construction inside Lakewood Ranch. Straightforward D.R. Horton plans, a simple pool-and-playground amenity set, and a gate.',
@@ -632,6 +652,7 @@ export const VILLAGES: Village[] = [
       'Pickleball, tennis, bocce',
       'Full-time lifestyle director',
     ],
+    amenityTags: ['golf', 'restaurant', 'community-pool', 'lap-pool', 'spa', 'fitness-center', 'fitness-classes', 'pickleball', 'tennis', 'bocce', 'lifestyle-director', 'clubhouse'],
     bestFor: ['Golf-included living', 'Buyers who want the Esplanade formula but newer', 'Social calendars'],
     summary:
       'Taylor Morrison’s newer Esplanade — the same resort-club formula as Esplanade Golf & Country Club, delivered a decade later with updated architecture and a fresh amenity campus.',
@@ -660,6 +681,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1800,
     cddAnnualHigh: 3600,
     amenities: ['Private clubhouse', 'Resort pool', 'Fitness center', 'Tennis & pickleball', 'Canoe/kayak launch', 'Lakes & preserve'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'tennis', 'pickleball', 'kayak-launch', 'lake-access', 'preserve'],
     bestFor: ['Toll Brothers build quality', 'Larger luxury floor plans', 'Water lots'],
     summary:
       'Toll Brothers’ Lakewood Ranch village — larger, better-finished floor plans than the volume builders, on a lake system with its own clubhouse and a kayak launch.',
@@ -688,6 +710,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 2000,
     cddAnnualHigh: 3800,
     amenities: ['Amenity center & pool', 'Fitness', 'Playground', 'Dog park', 'Lakes'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'playground', 'dog-park', 'lake-access'],
     bestFor: ['Buyers who want a bigger, better-specified house', 'Structural options', 'Design flexibility'],
     summary:
       'Homes by WestBay brought its Tampa-market reputation for generous structural options and higher standard specification here. Popular with buyers who found the volume-builder plans too rigid.',
@@ -717,6 +740,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 4200,
     cddNote: 'Carries full debt service — one of the newer CDDs on the Ranch.',
     amenities: ['Amenity center', 'Pool', 'Trails', 'Preserve & tree canopy'],
+    amenityTags: ['clubhouse', 'community-pool', 'trails', 'preserve'],
     bestFor: ['Tree cover', 'Newer construction', 'Quiet'],
     summary:
       'One of the newer northern villages, distinguished by keeping more of the existing tree canopy than the typical cleared-and-graded Florida subdivision.',
@@ -745,6 +769,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 1300,
     cddAnnualHigh: 2600,
     amenities: ['Community pool', 'Playground', 'Gated', 'Lakes'],
+    amenityTags: ['community-pool', 'playground', 'lake-access'],
     bestFor: ['Smaller, quieter village', 'Value in 34211', 'Low-key living'],
     summary:
       'A compact, low-key gated village — fewer homes, a simple pool-and-playground amenity set and a friendlier fee than the resort villages nearby.',
@@ -783,6 +808,7 @@ export const VILLAGES: Village[] = [
       'Dog park',
       'Lawn maintenance included',
     ],
+    amenityTags: ['clubhouse', 'restaurant', 'community-pool', 'pickleball', 'tennis', 'fitness-center', 'lifestyle-director', 'dog-park', 'lawn-care'],
     bestFor: ['55+ buyers', 'Anyone who wants a built-in social life', 'Lock-and-leave'],
     summary:
       'The established 55+ address on the Ranch, and the one with the most active social programming — an on-site restaurant, an activities director who actually fills the calendar, and pickleball courts that stay busy.',
@@ -819,6 +845,7 @@ export const VILLAGES: Village[] = [
       'Lifestyle director',
       'Lawn care included',
     ],
+    amenityTags: ['clubhouse', 'community-pool', 'pickleball', 'tennis', 'fitness-center', 'fitness-classes', 'event-lawn', 'lifestyle-director', 'lawn-care'],
     bestFor: ['55+ buyers wanting new construction', 'Fitness and wellness programming', 'Smaller, newer community'],
     summary:
       'Kolter’s active-adult village, built around a wellness-first amenity program — classes, trails and courts rather than golf. Newer than Del Webb, and still delivering homes.',
@@ -850,6 +877,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 4500,
     cddNote: 'Waterside carries full debt service — CDD assessments here are at the top of the Ranch range.',
     amenities: ['Clubhouse & resort pool', 'Fitness center', 'Kayak launch on Kingfisher Lake', 'Pickleball & bocce', 'Dog park', 'Lakefront trail'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'kayak-launch', 'pickleball', 'bocce', 'dog-park', 'trails', 'lake-access'],
     bestFor: ['Walk/boat to Waterside Place', 'Sarasota County address', 'Lake lifestyle'],
     summary:
       'The most connected-to-Waterside-Place of the Waterside villages — you can kayak or take the lake shuttle to dinner, farmers market and the amphitheatre. Sarasota County schools and a Sarasota mailing address.',
@@ -878,6 +906,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 2200,
     cddAnnualHigh: 4500,
     amenities: ['Clubhouse & resort pool', 'Fitness center', 'Kayak launch', 'Pickleball & tennis', 'Fire pit', 'Lake views'],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'kayak-launch', 'pickleball', 'tennis', 'lake-access'],
     bestFor: ['Water-view lots', 'Pulte plans', 'Waterside lifestyle without Wild Blue pricing'],
     summary:
       'A Pulte village on Kingfisher Lake with a high proportion of genuine water-view homesites and its own clubhouse, pool and kayak launch — the mid-price way into Waterside.',
@@ -914,6 +943,7 @@ export const VILLAGES: Village[] = [
       'Lakes & preserve',
       'Concierge services',
     ],
+    amenityTags: ['clubhouse', 'community-pool', 'fitness-center', 'tennis', 'pickleball', 'sports-fields', 'lake-access', 'preserve', 'concierge'],
     bestFor: ['Luxury new construction', 'Five well-known builders in one gate', 'Sarasota County luxury'],
     summary:
       'Waterside’s luxury village, and the reason Lakewood Ranch expanded south into Sarasota County. Five builders — including Stock, John Cannon and Lee Wetherington — competing inside one gate, from the $900Ks into custom-estate territory.',
@@ -942,6 +972,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 2000,
     cddAnnualHigh: 4000,
     amenities: ['Resort pool', 'Fitness center', 'Kayak launch', 'Walk to Waterside Place', 'Dog park'],
+    amenityTags: ['community-pool', 'fitness-center', 'kayak-launch', 'dog-park', 'walk-to-town-center'],
     bestFor: ['Walkability', 'Lowest entry into Waterside', 'Lock-and-leave'],
     summary:
       'The walk-to-dinner option at Waterside — townhomes and compact single-family homes within strolling distance of Waterside Place’s restaurants, Sunday farmers market and amphitheatre.',
@@ -970,6 +1001,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 2000,
     cddAnnualHigh: 4000,
     amenities: ['Pool & amenity green', 'Front-porch street design', 'Walk to Waterside Place', 'Alley-loaded garages'],
+    amenityTags: ['community-pool', 'event-lawn', 'walk-to-town-center'],
     bestFor: ['Front-porch urbanism', 'Walkable living', 'Buyers tired of garage-forward streets'],
     summary:
       'The most architecturally distinctive village on the Ranch — Key West–inspired cottages with deep front porches, alley-loaded garages and a street design meant to be walked rather than driven.',
@@ -998,6 +1030,7 @@ export const VILLAGES: Village[] = [
     cddAnnualLow: 2800,
     cddAnnualHigh: 6000,
     amenities: ['Waterfront homesites', 'Private amenity center', 'Boat & kayak access', 'Preserve views'],
+    amenityTags: ['clubhouse', 'kayak-launch', 'lake-access', 'preserve'],
     bestFor: ['Waterfront luxury', 'Privacy', 'Boating on the Waterside lake system'],
     summary:
       'A small, water-wrapped luxury enclave within Waterside, with some of the most protected waterfront homesites on the Ranch.',
@@ -1029,6 +1062,7 @@ export const VILLAGES: Village[] = [
     cddAnnualHigh: 4500,
     cddNote: 'Brand-new districts carry full bond debt service. Assume the top of the range until final assessments are set.',
     amenities: ['Amenity plans in development', 'New trail connections', 'Lakes & preserve'],
+    amenityTags: ['trails', 'lake-access', 'preserve'],
     bestFor: ['Earliest-phase pricing', 'Buyers who can wait', 'Lot selection'],
     summary:
       'Lakewood Ranch’s next growth front, east and south of the existing villages, with Pulte, Toll Brothers, Taylor Morrison and Neal Communities all confirmed. Earliest phases historically price below where a village settles — which is the whole reason to look early.',

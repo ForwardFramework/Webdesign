@@ -3,6 +3,9 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { Village } from '@/data/types';
+import type { AmenityTag } from '@/data/amenities';
+import { AMENITY_BY_ID, AMENITY_DISCLAIMER } from '@/data/amenities';
+import { AmenityPicker, amenityCounts, villageHasAllAmenities } from './AmenityPicker';
 import { money, Pill, ConfidenceBadge } from './ui';
 
 type SortKey = 'price-asc' | 'price-desc' | 'hoa-asc' | 'cdd-asc' | 'name';
@@ -23,13 +26,20 @@ const PRICE_BANDS = [
   { label: '$1M+', min: 1_000_000, max: Infinity },
 ];
 
-export function VillageExplorer({ villages }: { villages: Village[] }) {
+export function VillageExplorer({
+  villages,
+  initialAmenities = [],
+}: {
+  villages: Village[];
+  initialAmenities?: AmenityTag[];
+}) {
   const [areas, setAreas] = useState<string[]>([]);
   const [bands, setBands] = useState<number[]>([]);
   const [gated, setGated] = useState(false);
   const [selling, setSelling] = useState(false);
   const [age55, setAge55] = useState(false);
   const [maxHoa, setMaxHoa] = useState<number>(1500);
+  const [amenities, setAmenities] = useState<AmenityTag[]>(initialAmenities);
   const [sort, setSort] = useState<SortKey>('price-asc');
   const [q, setQ] = useState('');
 
@@ -43,6 +53,7 @@ export function VillageExplorer({ villages }: { villages: Village[] }) {
       if (selling && v.status !== 'selling') return false;
       if (age55 && !v.ageRestricted) return false;
       if (v.hoaMonthlyLow > maxHoa) return false;
+      if (amenities.length && !villageHasAllAmenities(v, amenities)) return false;
       if (bands.length) {
         const hit = bands.some((i) => {
           const b = PRICE_BANDS[i];
@@ -67,18 +78,46 @@ export function VillageExplorer({ villages }: { villages: Village[] }) {
       }
     });
     return out;
-  }, [villages, areas, bands, gated, selling, age55, maxHoa, sort, q]);
+  }, [villages, areas, bands, gated, selling, age55, maxHoa, sort, q, amenities]);
+
+  /**
+   * Counts are incremental: each chip shows how many villages would remain if
+   * you added it on top of everything already selected. That makes a chip which
+   * would empty the list visibly disabled instead of a dead end you only
+   * discover by clicking it.
+   */
+  const counts = useMemo(() => {
+    const base = villages.filter((v) => {
+      if (areas.length && !areas.includes(v.area)) return false;
+      if (gated && !v.gated) return false;
+      if (selling && v.status !== 'selling') return false;
+      if (age55 && !v.ageRestricted) return false;
+      if (v.hoaMonthlyLow > maxHoa) return false;
+      if (bands.length) {
+        const hit = bands.some((i) => {
+          const b = PRICE_BANDS[i];
+          return v.priceLow <= b.max && v.priceHigh >= b.min;
+        });
+        if (!hit) return false;
+      }
+      return villageHasAllAmenities(v, amenities);
+    });
+    return amenityCounts(base);
+  }, [villages, areas, bands, gated, selling, age55, maxHoa, amenities]);
 
   const reset = () => {
-    setAreas([]); setBands([]); setGated(false); setSelling(false); setAge55(false); setMaxHoa(1500); setQ('');
+    setAreas([]); setBands([]); setGated(false); setSelling(false); setAge55(false);
+    setMaxHoa(1500); setQ(''); setAmenities([]);
   };
 
-  const active = areas.length + bands.length + (gated ? 1 : 0) + (selling ? 1 : 0) + (age55 ? 1 : 0) + (maxHoa < 1500 ? 1 : 0) + (q ? 1 : 0);
+  const active =
+    areas.length + bands.length + amenities.length +
+    (gated ? 1 : 0) + (selling ? 1 : 0) + (age55 ? 1 : 0) + (maxHoa < 1500 ? 1 : 0) + (q ? 1 : 0);
 
   return (
     <div className="grid gap-8 lg:grid-cols-[17rem_1fr]">
       {/* ── Filters ── */}
-      <aside className="lg:sticky lg:top-24 lg:h-fit">
+      <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-1">
         <div className="card p-5">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-lg font-semibold text-gulf-900">Narrow it down</h2>
@@ -155,6 +194,20 @@ export function VillageExplorer({ villages }: { villages: Village[] }) {
             </div>
           </fieldset>
 
+          <div className="mt-6 border-t border-ink/8 pt-5">
+            <AmenityPicker
+              selected={amenities}
+              counts={counts}
+              onToggle={(t) => setAmenities((a) => (a.includes(t) ? a.filter((x) => x !== t) : [...a, t]))}
+              onClear={() => setAmenities([])}
+              idPrefix="village-amenity"
+                defaultOpen
+            />
+            {amenities.length > 0 && (
+              <p className="mt-3 text-[0.7rem] leading-relaxed text-ink-muted">{AMENITY_DISCLAIMER}</p>
+            )}
+          </div>
+
           <div className="mt-6">
             <label htmlFor="hoa-max" className="flex items-baseline justify-between text-xs font-semibold uppercase tracking-wider text-ink-soft">
               <span>Max HOA</span>
@@ -204,7 +257,11 @@ export function VillageExplorer({ villages }: { villages: Village[] }) {
         {filtered.length === 0 ? (
           <div className="mt-8 rounded-3xl border border-dashed border-ink/20 p-12 text-center">
             <p className="font-display text-xl font-semibold text-gulf-900">No villages match all of that.</p>
-            <p className="mt-2 text-sm text-ink-soft">Try loosening the HOA ceiling or clearing an area filter.</p>
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-soft">
+              {amenities.length > 1
+                ? 'No single village has every amenity you ticked. Try dropping one — or ask Caitlin which village comes closest.'
+                : 'Try loosening the HOA ceiling or clearing an area filter.'}
+            </p>
             <button type="button" onClick={reset} className="btn-ghost mt-5">Clear filters</button>
           </div>
         ) : (
@@ -229,6 +286,17 @@ export function VillageExplorer({ villages }: { villages: Village[] }) {
                 </div>
 
                 <p className="mt-3 leading-relaxed text-ink-soft">{v.summary}</p>
+
+                {amenities.length > 0 && (
+                  <ul className="mt-4 flex flex-wrap gap-1.5">
+                    {amenities.map((t) => (
+                      <li key={t} className="inline-flex items-center gap-1 rounded-full bg-gulf-50 px-2.5 py-1 text-xs font-medium text-gulf-700">
+                        <span aria-hidden="true">{AMENITY_BY_ID[t].icon}</span>
+                        {AMENITY_BY_ID[t].label}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <div className="mt-4 rounded-2xl bg-sand-50 p-4">
                   <p className="text-xs font-semibold uppercase tracking-wider text-sand-700">The trade-off</p>
