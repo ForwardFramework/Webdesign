@@ -7,6 +7,10 @@
 <meta name="description" content="{{DESCRIPTION}}">
 <link rel="canonical" href="https://coastalcustomcarts.com/{{SLUG}}">
 <meta name="theme-color" content="#12283C">
+<meta name="geo.region" content="US-FL">
+<meta name="geo.placename" content="Lakewood Ranch, Florida">
+<meta name="geo.position" content="27.4145;-82.3960">
+<meta name="ICBM" content="27.4145, -82.3960">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
 <meta property="og:type" content="website">
@@ -52,14 +56,32 @@
     "postalCode": "34211",
     "addressCountry": "US"
   },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "27.4145",
+    "longitude": "-82.3960"
+  },
+  "serviceArea": {
+    "@type": "GeoCircle",
+    "geoMidpoint": { "@type": "GeoCoordinates", "latitude": "27.4145", "longitude": "-82.3960" },
+    "geoRadius": "48000"
+  },
+  "knowsAbout": [
+    "Street-legal golf cart rentals",
+    "Golf cart delivery and pickup",
+    "Custom golf cart builds",
+    "Lithium golf cart conversions"
+  ],
   "areaServed": [
-    { "@type": "Place", "name": "Anna Maria Island, FL" },
-    { "@type": "Place", "name": "Anna Maria, FL" },
-    { "@type": "Place", "name": "Holmes Beach, FL" },
-    { "@type": "Place", "name": "Bradenton Beach, FL" },
-    { "@type": "Place", "name": "Lido Key, FL" },
-    { "@type": "Place", "name": "Siesta Key, FL" },
-    { "@type": "Place", "name": "Lakewood Ranch, FL" }
+    { "@type": "Place", "name": "Anna Maria Island, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.4903", "longitude": "-82.7070" } },
+    { "@type": "Place", "name": "Anna Maria, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.5303", "longitude": "-82.7343" } },
+    { "@type": "Place", "name": "Holmes Beach, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.4989", "longitude": "-82.7112" } },
+    { "@type": "Place", "name": "Bradenton Beach, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.4670", "longitude": "-82.6987" } },
+    { "@type": "Place", "name": "Lido Key, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.3106", "longitude": "-82.5757" } },
+    { "@type": "Place", "name": "Siesta Key, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.2664", "longitude": "-82.5465" } },
+    { "@type": "Place", "name": "Lakewood Ranch, FL", "geo": { "@type": "GeoCoordinates", "latitude": "27.4145", "longitude": "-82.3960" } },
+    { "@type": "AdministrativeArea", "name": "Manatee County, FL" },
+    { "@type": "AdministrativeArea", "name": "Sarasota County, FL" }
   ],
   "aggregateRating": {
     "@type": "AggregateRating",

@@ -94,12 +94,42 @@ them and they go in the footer and the contact page.
 
 ---
 
+## Search: SEO, local (geo) and AI answer engines
+
+**Traditional SEO.** Unique title and meta description on every page, all within
+search-result limits (titles ≤ 60 chars, descriptions 70–160). One `<h1>` per
+page, canonical URLs, Open Graph and Twitter cards, a 14-URL sitemap with
+change frequencies, and descriptive alt text on every image.
+
+**Local / geo.** Six location landing pages — Anna Maria Island, Holmes Beach,
+Bradenton Beach, Siesta Key, Lido Key and Lakewood Ranch — each with its own
+copy, local landmarks, a local FAQ and `Service` schema carrying real
+coordinates. They're the pages that can rank for "golf cart rental \<town\>",
+which the homepage alone never will. A `service-area.html` hub links them, and
+they cross-link each other. The business schema carries `geo`, a 48 km
+`serviceArea` radius, and coordinates for all seven places served, plus
+`geo.region` / `ICBM` meta tags.
+
+**GEO (generative engine optimization).** An `llms.txt` at the root gives AI
+answer engines a clean, structured summary: rates as a markdown table, policies
+as a flat list, and the full page index. `robots.txt` explicitly welcomes
+GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot and Google-Extended. Every
+location page opens with an "At a glance" block stating price, delivery and
+driver rules as extractable facts, and `FAQPage` schema is on the home page and
+all six location pages.
+
+Schema types in use: `AutoRental`, `Service`, `FAQPage`, `BreadcrumbList`,
+`AggregateOffer`, `OfferCatalog`, `AggregateRating`, `PostalAddress`,
+`GeoCoordinates`.
+
 ## Structure
 
 ```
 index.html  rentals.html  for-sale.html        ← generated — don't edit these
-reviews.html  about.html  contact.html  404.html
-robots.txt   sitemap.xml
+reviews.html  about.html  contact.html  terms.html
+service-area.html  404.html
+golf-cart-rentals-*.html   ← six location pages
+robots.txt   sitemap.xml   llms.txt
 build.py                                        ← assembles pages from the parts below
 src/           page bodies (edit these)
 partials/      head, header, footer, icon sprite (edit these)
@@ -117,12 +147,13 @@ at once. Page content lives in `src/`. After any edit to `src/` or `partials/`:
 python3 build.py
 ```
 
-That regenerates the seven standalone HTML files at the root. Those files are
+That regenerates the fifteen standalone HTML files at the root. Those files are
 the deployable site — they need no server-side anything.
 
 ### Deploying
 
-Upload the root HTML files plus `assets/`, `robots.txt` and `sitemap.xml` to any
+Upload the root HTML files plus `assets/`, `robots.txt`, `sitemap.xml` and
+`llms.txt` to any
 static host (Netlify, Vercel, Cloudflare Pages, GitHub Pages, or plain shared
 hosting). There is no build step to configure.
 
@@ -139,8 +170,17 @@ Colors are taken from the logo:
 | `--sand-100` | `#FBF8F4` | Page background |
 | `--sand-200` | `#F5EFE6` | Alternating sections |
 
+| `--sea-500` | `#2F9B96` | Water accents, wave dividers, alternating icons |
+| `--sea-100` | `#E4F3F0` | Sea-washed sections |
+
 Type: **Fraunces** (headings), **Karla** (body), **Kaushan Script** (accents,
 echoing the logo's brush script). All from Google Fonts.
+
+**Coastal treatment.** Sunset-over-water gradients on every dark section, SVG
+wave dividers between section colour changes (`<div class="wave wave--sand">`),
+a fine sand-grain texture on alternating sections, layered horizon and palm
+silhouettes in the hero, and feature-card icons alternating warm gold and cool
+sea so grids read coastal rather than corporate.
 
 Every color pair used for text meets WCAG AA (4.5:1). Gold is used as a
 *background* for dark text rather than as light-background text, because

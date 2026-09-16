@@ -29,11 +29,24 @@
   --sand-200: #F5EFE6;   /* alt section */
   --sand-300: #EAE0D2;   /* borders on sand */
 
-  --sea-600: #2E6E6B;    /* supporting accent, used sparingly */
+  /* Sea — the coastal register: horizons, waves, water accents */
+  --sea-900: #0B3A43;
+  --sea-700: #14575C;
+  --sea-600: #1F7A7A;
+  --sea-500: #2F9B96;
+  --sea-400: #5FBDB4;
+  --sea-200: #BEE3DD;
+  --sea-100: #E4F3F0;
+
+  /* Sky & shell — light coastal washes */
+  --sky-200: #CFE4EE;
+  --sky-100: #EAF3F8;
+  --shell-100: #FDF6EE;
 
   /* Semantic */
   --bg: var(--sand-100);
   --bg-alt: var(--sand-200);
+  --bg-sea: var(--sea-100);
   --bg-ink: var(--navy-700);
   --surface: #FFFFFF;
   --text: var(--navy-700);
@@ -72,8 +85,8 @@
   /* Shape & depth */
   --radius-sm: 6px;
   --radius-md: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
   --radius-pill: 999px;
 
   --shadow-sm: 0 1px 2px rgba(18, 40, 60, 0.06), 0 2px 6px rgba(18, 40, 60, 0.05);
@@ -225,6 +238,72 @@ ul, ol { margin: 0 0 var(--space-md); padding-left: 1.2em; }
   color: var(--gold-500);
   font-size: 0.86em;
 }
+
+/* --------------------------------------------------------------------------
+   3b. Coastal texture & wave dividers
+   -------------------------------------------------------------------------- */
+
+/* Very fine sand grain — sits under content, never over it. */
+.section--alt {
+  position: relative;
+  background-color: var(--bg-alt);
+  background-image:
+    radial-gradient(rgba(199, 151, 96, 0.10) 0.6px, transparent 0.7px),
+    radial-gradient(rgba(31, 122, 122, 0.07) 0.6px, transparent 0.7px);
+  background-size: 22px 22px, 34px 34px;
+  background-position: 0 0, 11px 17px;
+}
+
+/* A sea-washed section for lighter coastal moments. */
+.section--sea {
+  background: linear-gradient(180deg, var(--sea-100), var(--sky-100));
+}
+
+/* Wave divider: drop <div class="wave wave--sand"></div> between sections.
+   The SVG is a mask so the wave takes its colour from the section it enters. */
+.wave {
+  display: block;
+  width: 100%;
+  height: clamp(36px, 5vw, 68px);
+  margin: 0;
+  background: currentColor;
+  -webkit-mask: var(--wave) bottom / 100% 100% no-repeat;
+  mask: var(--wave) bottom / 100% 100% no-repeat;
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 46c120-26 240-34 360-20s240 42 360 40 240-32 360-42 240 2 360 18v38H0z' fill='black'/%3E%3C/svg%3E");
+}
+.wave--flip { transform: scaleY(-1); }
+.wave--sand { color: var(--sand-200); }
+.wave--paper { color: var(--sand-100); }
+.wave--ink { color: var(--navy-700); }
+.wave--sea { color: var(--sea-100); }
+
+/* Layered horizon glow for dark sections — sunset over water. */
+.section--ink {
+  position: relative;
+  isolation: isolate;
+}
+.section--ink::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 55%;
+  z-index: -1;
+  background:
+    radial-gradient(60% 100% at 78% 100%, rgba(199, 151, 96, 0.20), transparent 70%),
+    radial-gradient(55% 100% at 18% 100%, rgba(47, 155, 150, 0.18), transparent 72%);
+  pointer-events: none;
+}
+
+/* Palm frond watermark for section heads that want a little island. */
+.frond {
+  position: absolute;
+  width: min(280px, 34vw);
+  opacity: 0.07;
+  pointer-events: none;
+  color: var(--sea-700);
+}
+.frond--tr { top: -20px; right: -40px; transform: rotate(14deg); }
+.frond--bl { bottom: -30px; left: -50px; transform: rotate(-160deg); }
 
 /* --------------------------------------------------------------------------
    4. Buttons
@@ -450,9 +529,10 @@ ul, ol { margin: 0 0 var(--space-md); padding-left: 1.2em; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(70% 55% at 78% 22%, rgba(199, 151, 96, 0.34), transparent 62%),
-    radial-gradient(55% 50% at 12% 88%, rgba(46, 110, 107, 0.26), transparent 65%),
-    linear-gradient(170deg, var(--navy-600) 0%, var(--navy-700) 45%, var(--navy-900) 100%);
+    radial-gradient(64% 46% at 80% 16%, rgba(224, 168, 106, 0.40), transparent 64%),
+    radial-gradient(48% 38% at 72% 30%, rgba(199, 151, 96, 0.26), transparent 70%),
+    radial-gradient(70% 55% at 10% 92%, rgba(47, 155, 150, 0.30), transparent 68%),
+    linear-gradient(168deg, var(--sea-900) 0%, var(--navy-600) 34%, var(--navy-700) 62%, var(--navy-900) 100%);
   z-index: -2;
 }
 .hero__scene {
@@ -626,7 +706,9 @@ select.field__control {
    9. Trust bar
    -------------------------------------------------------------------------- */
 .trustbar {
-  background: var(--navy-800);
+  background:
+    linear-gradient(180deg, rgba(31, 122, 122, 0.22), transparent 70%),
+    var(--navy-800);
   color: var(--text-on-ink);
   padding-block: var(--space-lg);
 }
@@ -680,6 +762,7 @@ select.field__control {
   margin-bottom: var(--space-md);
 }
 .card__icon .icon { width: 26px; height: 26px; }
+.card__icon--sea { background: var(--sea-100); color: var(--sea-700); }
 .card h3 { font-size: var(--step-1); margin-bottom: var(--space-xs); }
 .card p { color: var(--text-muted); font-size: 0.98rem; }
 
@@ -703,8 +786,9 @@ select.field__control {
      the roof/canopy stays in frame. */
   aspect-ratio: 4 / 3;
   background:
-    radial-gradient(90% 70% at 70% 20%, rgba(199, 151, 96, 0.5), transparent 60%),
-    linear-gradient(160deg, var(--navy-600), var(--navy-800));
+    radial-gradient(85% 65% at 72% 18%, rgba(217, 175, 126, 0.55), transparent 62%),
+    radial-gradient(70% 60% at 14% 92%, rgba(47, 155, 150, 0.40), transparent 66%),
+    linear-gradient(158deg, var(--sea-900), var(--navy-700) 55%, var(--navy-800));
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -955,8 +1039,9 @@ select.field__control {
   box-shadow: var(--shadow-lg);
   aspect-ratio: 4 / 3;
   background:
-    radial-gradient(80% 70% at 75% 20%, rgba(199, 151, 96, 0.45), transparent 62%),
-    linear-gradient(160deg, var(--navy-600), var(--navy-900));
+    radial-gradient(78% 66% at 76% 18%, rgba(217, 175, 126, 0.48), transparent 64%),
+    radial-gradient(66% 58% at 16% 90%, rgba(47, 155, 150, 0.38), transparent 66%),
+    linear-gradient(158deg, var(--sea-900), var(--navy-600) 50%, var(--navy-900));
   display: grid;
   place-items: center;
 }
@@ -988,6 +1073,8 @@ select.field__control {
 }
 .area {
   display: flex;
+  text-decoration: none;
+  color: inherit;
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-md);
@@ -997,8 +1084,27 @@ select.field__control {
   font-weight: 600;
   transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
 }
-.area:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--gold-500); }
-.area .icon { width: 19px; height: 19px; color: var(--gold-400); flex: none; }
+.area:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--sea-400); }
+a.area:hover { color: #fff; }
+a.area:focus-visible { outline-offset: 2px; }
+.areas li { list-style: none; }
+.area .icon { width: 19px; height: 19px; color: var(--sea-400); flex: none; }
+
+/* Area tiles on a light section */
+.section--sea .area,
+.section--alt .area {
+  border-color: var(--sea-200);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--navy-700);
+}
+.section--sea .area:hover,
+.section--alt .area:hover {
+  background: #fff;
+  border-color: var(--sea-500);
+  color: var(--navy-700);
+}
+.section--sea .area .icon,
+.section--alt .area .icon { color: var(--sea-600); }
 
 /* --------------------------------------------------------------------------
    15. FAQ
@@ -1107,8 +1213,8 @@ select.field__control {
   content: "";
   position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(60% 80% at 85% 15%, rgba(199, 151, 96, 0.35), transparent 60%),
-    radial-gradient(50% 70% at 10% 90%, rgba(46, 110, 107, 0.28), transparent 65%);
+    radial-gradient(58% 76% at 86% 12%, rgba(224, 168, 106, 0.38), transparent 62%),
+    radial-gradient(56% 74% at 8% 92%, rgba(47, 155, 150, 0.34), transparent 66%);
 }
 .cta-band h2 { color: #fff; }
 .cta-band p { color: var(--text-on-ink-muted); font-size: var(--step-1); }
@@ -1117,7 +1223,11 @@ select.field__control {
    17. Footer
    -------------------------------------------------------------------------- */
 .footer {
-  background: var(--navy-900);
+  position: relative;
+  background:
+    radial-gradient(70% 120% at 12% 0%, rgba(31, 122, 122, 0.24), transparent 62%),
+    radial-gradient(60% 110% at 88% 0%, rgba(199, 151, 96, 0.14), transparent 66%),
+    var(--navy-900);
   color: var(--text-on-ink-muted);
   padding-block: var(--space-3xl) var(--space-xl);
   font-size: 0.95rem;
@@ -1199,8 +1309,8 @@ select.field__control {
   content: "";
   position: absolute; inset: 0; z-index: -1;
   background:
-    radial-gradient(65% 90% at 82% 12%, rgba(199, 151, 96, 0.3), transparent 62%),
-    radial-gradient(50% 80% at 8% 95%, rgba(46, 110, 107, 0.24), transparent 66%);
+    radial-gradient(62% 86% at 84% 10%, rgba(224, 168, 106, 0.34), transparent 64%),
+    radial-gradient(54% 82% at 6% 96%, rgba(47, 155, 150, 0.30), transparent 68%);
 }
 .page-hero h1 { color: #fff; font-size: var(--step-4); }
 .page-hero p { color: var(--text-on-ink-muted); font-size: var(--step-1); max-width: 62ch; }
