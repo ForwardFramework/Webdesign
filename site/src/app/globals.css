@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+    --header-h: 4.5rem;
+  }
+
+  * { -webkit-tap-highlight-color: transparent; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 1rem); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-shell text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 { @apply font-display; text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  /* Visible focus for every interactive element — WCAG 2.4.7 */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-gulf-500 ring-offset-shell rounded-sm;
+  }
+
+  ::selection { @apply bg-gulf-200 text-gulf-900; }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-content px-5 sm:px-6 lg:px-8; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+           text-sm font-semibold tracking-wide transition-all duration-200
+           disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply btn bg-gulf-700 text-white shadow-card hover:bg-gulf-800 hover:shadow-lift
+           active:translate-y-px;
+  }
+  .btn-coral {
+    @apply btn bg-coral-500 text-white shadow-card hover:bg-coral-600 hover:shadow-lift
+           active:translate-y-px;
+  }
+  .btn-ghost {
+    @apply btn border border-gulf-700/25 bg-white/70 text-gulf-800 backdrop-blur
+           hover:border-gulf-700/50 hover:bg-white;
+  }
+  .btn-sm { @apply px-4 py-2 text-xs; }
+
+  .card {
+    @apply rounded-3xl border border-ink/8 bg-white shadow-card transition-shadow duration-300;
+  }
+  .card-hover { @apply hover:shadow-lift; }
+
+  .eyebrow {
+    @apply text-2xs font-semibold uppercase tracking-[0.18em] text-gulf-600;
+  }
+
+  .prose-coastal {
+    @apply text-[1.0625rem] leading-relaxed text-ink-soft;
+  }
+  .prose-coastal p + p { @apply mt-4; }
+  .prose-coastal a { @apply text-gulf-700 underline underline-offset-4 decoration-gulf-300 hover:decoration-gulf-600; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink/10 bg-white
+           px-3 py-1.5 text-xs font-medium text-ink-soft transition-colors;
+  }
+  .chip-active { @apply border-gulf-600 bg-gulf-700 text-white; }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]
+           focus:rounded-full focus:bg-gulf-800 focus:px-5 focus:py-3 focus:text-sm
+           focus:font-semibold focus:text-white;
+  }
+
+  /* Decorative wave divider */
+  .wave-divider { @apply relative block h-12 w-full overflow-hidden text-shell; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .mask-fade-b { mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
+  /*
+   * Film-grain texture.
+   * Applied as a pseudo-element rather than `background-image` on the element
+   * itself: these are layered over gradient backgrounds (`bg-gulf-gradient`,
+   * `bg-sunset-gradient`), and a second `background-image` declaration would
+   * silently replace the gradient instead of sitting on top of it.
+   * `isolation` + `z-index` on direct children keeps the noise behind content.
+   */
+  .grain { position: relative; isolation: isolate; }
+  .grain > * { position: relative; z-index: 1; }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  }
+}
+
+/* Leaflet: scoped overrides so map chrome matches the brand */
+.leaflet-container { font-family: var(--font-sans); background: #EAF6F6; }
+.leaflet-popup-content-wrapper { border-radius: 1rem; box-shadow: 0 12px 32px -12px rgba(12,31,34,.35); }
+.leaflet-popup-content { margin: 0.9rem 1rem; font-size: 0.875rem; }
+.leaflet-control-attribution { font-size: 10px; background: rgba(255,255,255,.85); }
+.leaflet-bar a { color: #115352; }

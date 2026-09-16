@@ -1,0 +1,10 @@
+{
+  "name": "Caitlin Hoffman | Lakewood Ranch Real Estate",
+  "short_name": "LWR Real Estate",
+  "description": "Villages, schools, beaches, happy hours and live home search for Lakewood Ranch, Sarasota and Bradenton.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF8F3",
+  "theme_color": "#0A2F2F",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
