@@ -699,7 +699,9 @@ select.field__control {
 
 .fleet-card__media {
   position: relative;
-  aspect-ratio: 16 / 10;
+  /* 4:3 matches the cart photography, so object-fit: cover crops nothing and
+     the roof/canopy stays in frame. */
+  aspect-ratio: 4 / 3;
   background:
     radial-gradient(90% 70% at 70% 20%, rgba(199, 151, 96, 0.5), transparent 60%),
     linear-gradient(160deg, var(--navy-600), var(--navy-800));
