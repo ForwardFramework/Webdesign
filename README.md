@@ -66,8 +66,13 @@ Pulled from public sources and your own review screenshots:
 
   Per-day equivalents ($117/$80/$64 and $150/$100/$79) are shown alongside each
   price to make the longer packages sell themselves.
-- Rental agreement (Adobe Sign) linked from the footer, the rentals page, the
-  booking form and the FAQ
+- Rental Terms & Conditions published in full at `terms.html`, transcribed from
+  the signed agreement, with a plain-English summary above the legal text
+- Key policies surfaced where they prevent drop-off: charged one week before
+  the start date, free cancellation outside 7 days ($75 admin fee inside),
+  delivery free within the service area, $50 late pick-up fee, replacement fees
+  (charger $350, windshield $100, key $50), 35 MPH street limit, licensed
+  drivers 18+, seating capacity not to be exceeded
 - Owners **Kelly and Zack**; booster seats and car seats available
 - **95 five-star reviews**; 19 real reviews are quoted on the site
 
@@ -76,14 +81,16 @@ in `src/index.html` and `src/rentals.html`, the rate-card block in each, and the
 `hasOfferCatalog` schema in `partials/head.html`. Update all three together, then
 run `python3 build.py`.
 
-Your Adobe Sign rental agreement is **linked, not transcribed** — the document is
-behind a signing widget this environment could not read, and linking it means
-customers always get the current version and can sign it online.
+The Adobe Sign agreement is still linked for **signing** (footer, terms page,
+booking form) so customers always sign the current version — but the terms
+themselves are now on the site, which is what search engines and hesitant
+bookers actually read.
 
-Anything not verified — hours of operation, deposit amounts, cancellation policy,
-insurance terms — was deliberately **left off** rather than invented. Those
-details are presumably in your rental agreement; if you want them summarised on
-the site as well, send the text.
+If you amend the agreement, update `src/terms.html` to match. The two should
+never drift apart.
+
+Still not published because it was never verified: **hours of operation**. Send
+them and they go in the footer and the contact page.
 
 ---
 

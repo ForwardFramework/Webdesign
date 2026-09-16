@@ -1019,6 +1019,64 @@ select.field__control {
 .faq__answer { padding-bottom: var(--space-lg); color: var(--text-muted); max-width: 70ch; }
 
 /* --------------------------------------------------------------------------
+   15b. Legal / long-form document
+   -------------------------------------------------------------------------- */
+.legal { max-width: 74ch; margin-inline: auto; }
+.legal h2 {
+  font-size: var(--step-2);
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+.legal h2:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.legal p { color: var(--text-muted); }
+.legal ol, .legal ul { color: var(--text-muted); display: grid; gap: var(--space-sm); padding-left: 1.4em; }
+.legal li { padding-left: 0.2em; }
+.legal__clause { margin-bottom: var(--space-md); }
+.legal__clause > strong {
+  color: var(--navy-700);
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.3em;
+}
+.legal__statute {
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg);
+  border-left: 3px solid var(--gold-500);
+  background: var(--sand-200);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.legal__statute p { font-style: italic; }
+.legal__statute cite { display: block; font-style: normal; font-weight: 700; color: var(--navy-700); margin-bottom: var(--space-xs); }
+.legal__updated { font-size: var(--step--1); color: var(--text-muted); margin-bottom: var(--space-xl); }
+
+/* Policy summary tiles */
+.policies { display: grid; gap: var(--space-lg); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .policies { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .policies { grid-template-columns: repeat(3, 1fr); } }
+.policy {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  padding: var(--space-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.policy__icon {
+  display: grid;
+  place-items: center;
+  width: 42px; height: 42px;
+  flex: none;
+  border-radius: var(--radius-sm);
+  background: var(--gold-100);
+  color: var(--gold-700);
+}
+.policy__icon .icon { width: 21px; height: 21px; }
+.policy h3 { font-size: var(--step-0); font-family: var(--font-body); font-weight: 700; margin-bottom: 0.15rem; }
+.policy p { font-size: 0.92rem; color: var(--text-muted); margin: 0; }
+
+/* --------------------------------------------------------------------------
    16. CTA band
    -------------------------------------------------------------------------- */
 .cta-band {
