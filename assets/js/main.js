@@ -119,6 +119,15 @@
     });
   });
 
+  /* -------------------------------------------------------- photo fallback */
+  /* Each photo sits on top of an SVG illustration. If the image file hasn't
+     been added yet (or fails to load) we remove it and the illustration shows. */
+  document.querySelectorAll('img[data-photo]').forEach(function (img) {
+    var drop = function () { if (img.parentNode) img.parentNode.removeChild(img); };
+    img.addEventListener('error', drop);
+    if (img.complete && img.naturalWidth === 0) drop();
+  });
+
   /* ------------------------------------------------- current page in nav */
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('.nav__link').forEach(function (link) {

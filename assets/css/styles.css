@@ -707,7 +707,15 @@ select.field__control {
   place-items: center;
   overflow: hidden;
 }
-.fleet-card__media img { width: 100%; height: 100%; object-fit: cover; }
+.fleet-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* The SVG sits behind the photo as a fallback: if the image is missing it is
+   removed by main.js and the illustration shows through instead. */
 .fleet-card__media svg { width: 62%; height: auto; opacity: 0.9; }
 .fleet-card__badge {
   position: absolute;
@@ -950,7 +958,14 @@ select.field__control {
   display: grid;
   place-items: center;
 }
-.split__media img { width: 100%; height: 100%; object-fit: cover; }
+.split__media { position: relative; }
+.split__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .split__media svg { width: 70%; opacity: 0.92; }
 
 .checklist { list-style: none; margin: var(--space-lg) 0; padding: 0; display: grid; gap: var(--space-sm); }

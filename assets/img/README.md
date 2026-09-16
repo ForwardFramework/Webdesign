@@ -18,29 +18,49 @@ without any image files. To use your actual artwork instead:
    ```
 3. Run `python3 build.py` to regenerate the pages.
 
-## Photography — the highest-impact upgrade
+## Photography
 
-Every card and feature block currently shows a **line-art cart illustration on a
-navy gradient**. These are intentional placeholders. Swapping in real photos of
-your carts is the single biggest visual improvement you can make.
+### ⬅️ Add these two files
 
-Where they go:
+The site is already wired for your two cart photos. Save them here with these
+**exact filenames** and they appear everywhere automatically — no code changes:
+
+| Filename | Photo |
+|---|---|
+| `cart-4-seater.jpg` | The rose gold lifted 4-seater |
+| `cart-6-seater.jpg` | The blue lifted 6-seater by the water |
+
+They are used in six places:
+
+- `index.html` — both fleet cards, plus the "acts like a neighbor" feature block
+- `rentals.html` — both fleet cards
+- `for-sale.html` — the "Full custom build" card (the rose gold one, as an
+  example of your paint work)
+
+**Until those files exist, nothing breaks.** Each photo sits on top of the line-art
+illustration; `main.js` removes any image that fails to load, so the illustration
+shows through instead of a broken-image icon.
+
+**Sizing:** roughly 1200px wide, saved as JPEG or WebP under ~300 KB. The CSS
+handles cropping (`object-fit: cover`) at every screen size, so exact dimensions
+don't matter — but keep the cart roughly centred, since the card crop is 16:10
+and the feature block is 4:3.
+
+### Still worth adding
 
 | Slot | File to add | Used on |
 |---|---|---|
-| Fleet card images | `cart-4-passenger.jpg`, `cart-6-passenger.jpg`, `cart-8-passenger.jpg` | `index.html`, `rentals.html` |
-| Feature/split images | `island-cruising.jpg`, `custom-build.jpg`, `owners.jpg` | `index.html`, `about.html`, `for-sale.html` |
-| Social share card | `og-image.jpg` (1200×630) | every page's link preview |
+| Kelly & Zack, or a cart at delivery | `owners.jpg` | `about.html` |
+| Social share card (1200×630) | `og-image.jpg` | every page's link preview |
 
-To use one, replace the `<svg>` inside a `.fleet-card__media` or `.split__media`
-with:
+To use one, add an `<img>` alongside the `<svg>` inside a `.split__media`, copying
+the pattern already in `index.html`:
 
 ```html
-<img src="assets/img/cart-6-passenger.jpg" alt="Six-passenger street-legal golf cart" loading="lazy" width="800" height="500">
+<img data-photo src="assets/img/owners.jpg" alt="Kelly and Zack of Coastal Custom Carts" loading="lazy" decoding="async" width="1200" height="900">
 ```
 
-The CSS already handles `object-fit` and aspect ratio, so the image will crop
-correctly at every screen size.
+The `data-photo` attribute is what enables the fallback behaviour.
 
 **Tips:** shoot in the hour before sunset, get the cart against water, sand or
-palms, and save as WebP or compressed JPEG under ~300 KB each.
+palms, and keep files under ~300 KB each.
