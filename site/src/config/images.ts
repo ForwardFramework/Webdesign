@@ -47,7 +47,7 @@ export const IMAGES = {
   },
   townCenter: {
     key: 'townCenter',
-    alt: 'Lakefront town centre promenade at dusk with string lights over restaurant patios',
+    alt: 'Lakefront town center promenade at dusk with string lights over restaurant patios',
     local: '/images/generated/town-center.png',
     remote: 'https://d8j0ntlcm91z4.cloudfront.net/user_3IL9tsARcNNDKmHrDHi3CGZRiYg/hf_20260916_014337_bf75a72f-92cf-4c68-9ab9-c8300bba2540.png',
     aspect: '16:9',
@@ -89,7 +89,7 @@ export const IMAGES = {
   },
   trail: {
     key: 'trail',
-    alt: 'A wide neighbourhood trail curving between palms and a lake on a bright morning',
+    alt: 'A wide neighborhood trail curving between palms and a lake on a bright morning',
     local: '/images/generated/trail.png',
     remote: 'https://d8j0ntlcm91z4.cloudfront.net/user_3IL9tsARcNNDKmHrDHi3CGZRiYg/hf_20260916_014337_9eef25f9-50f4-4f74-b83c-bbb710dffe59.png',
     aspect: '3:2',

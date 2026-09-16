@@ -38,13 +38,13 @@ export const GUIDES: Guide[] = [
   {
     slug: 'florida-relocation-playbook',
     title: 'The Florida Relocation Playbook',
-    subtitle: 'Driver licences, plates, voter registration, homestead — in the order you actually have to do them',
+    subtitle: 'Driver licenses, plates, voter registration, homestead — in the order you actually have to do them',
     promise: 'A dated, deadline-by-deadline checklist for your first 30 days as a Florida resident.',
     readingTime: '9 min',
     emoji: '🚗',
     updated: UPDATED,
     intro:
-      'Florida gives you two clocks the moment you establish residency, and they run at different speeds: ten days for your vehicles, thirty days for your licence. Almost everyone discovers this in the wrong order, because the vehicle deadline is the tighter one and nobody mentions it. Here is the sequence that works.',
+      'Florida gives you two clocks the moment you establish residency, and they run at different speeds: ten days for your vehicles, thirty days for your license. Almost everyone discovers this in the wrong order, because the vehicle deadline is the tighter one and nobody mentions it. Here is the sequence that works.',
     sections: [
       {
         heading: 'The two deadlines nobody warns you about',
@@ -58,9 +58,9 @@ export const GUIDES: Guide[] = [
             deadline: '10 days',
           },
           {
-            title: 'Florida driver licence',
+            title: 'Florida driver license',
             detail:
-              'You must obtain a valid Florida driver licence within 30 days of establishing residency in order to drive on Florida roads.',
+              'You must obtain a valid Florida driver license within 30 days of establishing residency in order to drive on Florida roads.',
             deadline: '30 days',
           },
         ],
@@ -100,7 +100,7 @@ export const GUIDES: Guide[] = [
         },
       },
       {
-        heading: 'Step 3 — Florida driver licence',
+        heading: 'Step 3 — Florida driver license',
         body:
           'Also at the county tax collector, in person, by appointment. As of 2026 Florida has aligned fully with federal REAL ID standards, so the document requirements are strict and non-negotiable — bring originals, not copies or photos.',
         bullets: [
@@ -108,7 +108,7 @@ export const GUIDES: Guide[] = [
           'Proof of Social Security number: Social Security card, W-2, or a paystub showing the full number.',
           'TWO proofs of Florida residential address: utility bill, lease, mortgage statement, bank statement, or your Florida vehicle registration. They must show your name and the Florida address.',
           'If your name differs from your birth certificate: certified marriage certificates or court orders showing every name change in sequence.',
-          'You will take a vision test. As an existing licence holder in good standing, you are typically exempt from the written and road tests.',
+          'You will take a vision test. As an existing license holder in good standing, you are typically exempt from the written and road tests.',
         ],
         callout: {
           tone: 'tip',
@@ -120,20 +120,20 @@ export const GUIDES: Guide[] = [
       {
         heading: 'Step 4 — Voter registration',
         body:
-          'Register with the Supervisor of Elections in Manatee or Sarasota County. You can do it online, by mail, or at the tax collector office when you get your licence — the last option saves a trip.',
+          'Register with the Supervisor of Elections in Manatee or Sarasota County. You can do it online, by mail, or at the tax collector office when you get your license — the last option saves a trip.',
       },
       {
         heading: 'Step 5 — Homestead exemption (the one that actually saves money)',
         body:
-          'If the home is your permanent residence as of 1 January, file for homestead with your county property appraiser by 1 March of that year. For 2026 the exemption totals $51,411 — the first $25,000 applies to all property taxes including school taxes; the remainder applies to assessed value between $50,000 and $75,000, excluding school taxes.',
+          'If the home is your permanent residence as of January 1, file for homestead with your county property appraiser by March 1 of that year. For 2026 the exemption totals $51,411 — the first $25,000 applies to all property taxes including school taxes; the remainder applies to assessed value between $50,000 and $75,000, excluding school taxes.',
         bullets: [
           'More valuable than the exemption itself: homestead triggers the Save Our Homes cap, limiting how fast your assessed value can rise each year.',
-          'If you are moving within Florida, portability lets you transfer up to $500,000 of accrued Save Our Homes benefit to the new home. You must establish the new residence on or before 1 January of the third year after abandoning the old homestead.',
+          'If you are moving within Florida, portability lets you transfer up to $500,000 of accrued Save Our Homes benefit to the new home. You must establish the new residence on or before January 1 of the third year after abandoning the old homestead.',
           'File online with the Manatee County or Sarasota County Property Appraiser. It is free — ignore any service that offers to file it for a fee.',
         ],
         callout: {
           tone: 'money',
-          title: 'Do not miss 1 March',
+          title: 'Do not miss March 1',
           body:
             'Miss the deadline and you wait a full year for the benefit, which on a Lakewood Ranch home is a four-figure mistake. Put it in your calendar the day you close.',
         },
@@ -158,7 +158,7 @@ export const GUIDES: Guide[] = [
     emoji: '🎒',
     updated: UPDATED,
     intro:
-      'The paperwork itself is straightforward. What catches out-of-state families is that Florida will not accept your existing immunisation record as-is, and that your village name does not determine your school. Sort both of those before you arrive and enrolment takes one visit.',
+      'The paperwork itself is straightforward. What catches out-of-state families is that Florida will not accept your existing immunisation record as-is, and that your village name does not determine your school. Sort both of those before you arrive and enrollment takes one visit.',
     sections: [
       {
         heading: 'What you need to bring',
@@ -180,7 +180,7 @@ export const GUIDES: Guide[] = [
       {
         heading: 'Where to do it',
         bullets: [
-          'Manatee County: School District of Manatee County handles registration; free immunisations are available to eligible children through the federally funded Vaccines for Children programme at the Florida Department of Health in Manatee County.',
+          'Manatee County: School District of Manatee County handles registration; free immunisations are available to eligible children through the federally funded Vaccines for Children program at the Florida Department of Health in Manatee County.',
           'Sarasota County (including all Waterside addresses): register through Sarasota County Schools’ new-student registration process.',
         ],
       },
@@ -205,13 +205,13 @@ export const GUIDES: Guide[] = [
         bullets: [
           'Lakewood Ranch Preparatory Academy — tuition-free public charter, K–12 on one campus, offering Dual Diploma, AP Capstone and Cambridge AICE pathways. Application-based with common waitlists.',
           'The Out-of-Door Academy — independent day school, PK (age 4+) through Grade 12, with its Upper School on the Uihlein campus in Lakewood Ranch.',
-          'Both districts operate school-choice and magnet programmes with their own application windows, typically opening months before the school year. Missing a window usually means waiting a full year.',
+          'Both districts operate school-choice and magnet programs with their own application windows, typically opening months before the school year. Missing a window usually means waiting a full year.',
         ],
         callout: {
           tone: 'tip',
           title: 'Apply earlier than feels necessary',
           body:
-            'Charter and choice applications open long before most relocating families have even picked a house. If a specific programme matters, get the application in while you are still shopping — you can always decline a seat.',
+            'Charter and choice applications open long before most relocating families have even picked a house. If a specific program matters, get the application in while you are still shopping — you can always decline a seat.',
         },
       },
     ],
@@ -276,7 +276,7 @@ export const GUIDES: Guide[] = [
       {
         heading: 'What you get for it',
         body:
-          'It is worth saying plainly: the fees buy something real. Lakewood Ranch maintains more than 150 miles of trails, about 10,000 acres of lakes, parks and preserve, eight community parks, and two town centres with active event programming. Villages that feel expensive on paper are often the ones where you use the amenities weekly. The goal is not the lowest fee — it is the fee you are actually getting value from.',
+          'It is worth saying plainly: the fees buy something real. Lakewood Ranch maintains more than 150 miles of trails, about 10,000 acres of lakes, parks and preserve, eight community parks, and two town centers with active event programming. Villages that feel expensive on paper are often the ones where you use the amenities weekly. The goal is not the lowest fee — it is the fee you are actually getting value from.',
       },
     ],
   },
@@ -296,7 +296,7 @@ export const GUIDES: Guide[] = [
         bullets: [
           'Mortgage rate buydowns — often advertised into the ~4.99%–5.49% range on 30-year fixed loans through the builder’s preferred lender. Usually the most valuable single incentive.',
           'Closing cost credits — commonly $10,000–$30,000+, typically conditional on using the preferred lender and title company.',
-          'Design centre / upgrade allowances — structural or finish credits, sometimes bundled into "move-in ready" packages.',
+          'Design center / upgrade allowances — structural or finish credits, sometimes bundled into "move-in ready" packages.',
           'Pool and outdoor living packages — appearing more often on completed spec homes that have been standing a while.',
           'Preferred lender bonuses stacked on the above. Total packages have been reported from roughly $15,000 to $50,000+ depending on community and inventory status.',
         ],
@@ -318,7 +318,7 @@ export const GUIDES: Guide[] = [
           'The largest incentives are almost always on standing inventory the builder wants off the books before a quarter closes — not on a to-be-built home you design from scratch. If you are flexible on finishes, timing your search to a builder’s quarter-end and looking at completed specs is where the real money is. If you want to choose everything, expect a smaller package and price accordingly.',
       },
       {
-        heading: 'Mistake 3 — Walking into the sales centre unrepresented',
+        heading: 'Mistake 3 — Walking into the sales center unrepresented',
         body:
           'This is the expensive one. The friendly agent in the model home works for the builder. Almost every Lakewood Ranch builder pays buyer-agent compensation out of their own marketing budget, which means going in alone does not get you a discount — it just removes the person whose job is to read the contract, the addenda, the warranty and the lot premium on your behalf.',
         callout: {
@@ -469,7 +469,7 @@ export const GUIDES: Guide[] = [
       {
         heading: 'Practical season habits',
         bullets: [
-          'Hurricane season runs 1 June to 30 November, with the genuine peak in August and September.',
+          'Hurricane season runs June 1 to November 30, with the genuine peak in August and September.',
           'Sign up for Manatee or Sarasota County emergency alerts the week you move in.',
           'Know your evacuation zone and have a plan you could execute in two hours.',
           'Most Florida homes here have impact glass or shutters. Confirm which, and that the shutters are complete and stored, during inspection.',

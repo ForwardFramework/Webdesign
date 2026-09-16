@@ -134,7 +134,7 @@ export default function LifestylePage() {
           </div>
 
           <Callout tone="money" title="The homestead exemption is the one to diarise">
-            If the home is your permanent residence on 1 January, file with your county property appraiser by{' '}
+            If the home is your permanent residence on January 1, file with your county property appraiser by{' '}
             <strong>{COST_OF_LIVING.homesteadDeadline}</strong>. For 2026 the exemption totals{' '}
             ${COST_OF_LIVING.homesteadExemptionTotal2026.toLocaleString()}, and it triggers the Save Our Homes
             assessment cap — with up to ${COST_OF_LIVING.portabilityCapUsd.toLocaleString()} of that benefit portable

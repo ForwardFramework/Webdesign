@@ -24,16 +24,16 @@ export function DriveTimes({
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
+    let canceled = false;
     setRows(null);
     setError(false);
     fetch(`/api/drive-times?from=${encodeURIComponent(originSlug)}&to=${targets.join(',')}`)
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error('failed'))))
       .then((json: { results: Row[] }) => {
-        if (!cancelled) setRows(json.results.sort((a, b) => a.minutes - b.minutes));
+        if (!canceled) setRows(json.results.sort((a, b) => a.minutes - b.minutes));
       })
-      .catch(() => !cancelled && setError(true));
-    return () => { cancelled = true; };
+      .catch(() => !canceled && setError(true));
+    return () => { canceled = true; };
   }, [originSlug, targets]);
 
   const anyEstimated = rows?.some((r) => r.mode === 'estimated');

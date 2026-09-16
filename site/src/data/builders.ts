@@ -31,7 +31,7 @@ export const INCENTIVE_CONTEXT = {
       detail: 'Commonly $10,000–$30,000+, and frequently tied to using the preferred lender and title company.',
     },
     {
-      label: 'Design centre / upgrade packages',
+      label: 'Design center / upgrade packages',
       detail: 'Structural or finish credits, sometimes bundled as "move-in ready" packages on standing inventory.',
     },
     {
@@ -46,7 +46,7 @@ export const INCENTIVE_CONTEXT = {
   theCatch:
     'Incentives are almost always largest on standing inventory the builder wants off the books — not on a to-be-built home you design. They are also usually conditional on the preferred lender, which may not be your best overall rate once you compare. The honest move is to price the incentive AND an independent lender side by side.',
   whyAgent:
-    'Register your REALTOR® on your FIRST visit to a builder’s sales centre. Almost every builder in Lakewood Ranch pays buyer-agent compensation from their own marketing budget, and the sales agent in that model home works for the builder — not for you. If you walk in unrepresented, you do not get a discount for it; you simply give up having someone on your side of the table reading the contract, the addenda and the warranty.',
+    'Register your REALTOR® on your FIRST visit to a builder’s sales center. Almost every builder in Lakewood Ranch pays buyer-agent compensation from their own marketing budget, and the sales agent in that model home works for the builder — not for you. If you walk in unrepresented, you do not get a discount for it; you simply give up having someone on your side of the table reading the contract, the addenda and the warranty.',
 };
 
 export const BUILDERS: Builder[] = [
@@ -67,7 +67,7 @@ export const BUILDERS: Builder[] = [
     villages: ['Esplanade at Azario', 'Esplanade Golf & Country Club', 'Lakewood Ranch Southeast'],
     productTypes: ['Villas', 'Single-family', 'Estate homes'],
     priceFrom: 480000,
-    incentivePattern: 'Design-centre credits and finance incentives; resort-club villages often bundle club initiation offers.',
+    incentivePattern: 'Design-center credits and finance incentives; resort-club villages often bundle club initiation offers.',
     incentiveCheckedOn: CHECKED,
     confidence: 'reported',
     sources: ['builderIncentives', 'newConstructionGuide'],
@@ -79,7 +79,7 @@ export const BUILDERS: Builder[] = [
     productTypes: ['Townhomes', 'Villas', 'Single-family', 'Executive homes'],
     priceFrom: 350000,
     incentivePattern:
-      'Everything’s Included® packaging rather than a design centre — incentives usually show up as price adjustments and finance credits. Villas at Lorraine Lakes have been advertised from around $200,000 at points in the cycle.',
+      'Everything’s Included® packaging rather than a design center — incentives usually show up as price adjustments and finance credits. Villas at Lorraine Lakes have been advertised from around $200,000 at points in the cycle.',
     incentiveCheckedOn: CHECKED,
     confidence: 'reported',
     sources: ['builderIncentives', 'newConstructionGuide'],
@@ -202,7 +202,7 @@ export const BUILDERS: Builder[] = [
     name: 'David Weekley Homes',
     villages: ['Waterside'],
     productTypes: ['Single-family'],
-    incentivePattern: 'Design-centre credits and finance incentives typical of the national builders.',
+    incentivePattern: 'Design-center credits and finance incentives typical of the national builders.',
     incentiveCheckedOn: CHECKED,
     confidence: 'reported',
     sources: ['newConstructionGuide'],

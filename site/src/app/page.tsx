@@ -112,8 +112,8 @@ export default function HomePage() {
               <ul className="mt-8 space-y-4">
                 {[
                   ['Real cost, not list price', 'Every village shows its typical HOA range, its CDD range, and why they differ — because two $650K homes can be $900/month apart.'],
-                  ['An honest trade-off on every village', 'Each one names a genuine drawback. A page with only upside is an advert, and you can already tell the difference.'],
-                  ['Dated and sourced', 'Numbers carry a "checked on" date and a link. Anything we could not confirm is labelled an estimate rather than dressed up as fact.'],
+                  ['An honest trade-off on every village', 'Each one names a genuine drawback. A page with only upside is an ad, and you can already tell the difference.'],
+                  ['Dated and sourced', 'Numbers carry a "checked on" date and a link. Anything we could not confirm is labeled an estimate rather than dressed up as fact.'],
                 ].map(([t, d]) => (
                   <li key={t} className="flex gap-4">
                     <span aria-hidden="true" className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gulf-700 text-xs text-white">✓</span>
@@ -143,7 +143,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
               eyebrow="The villages"
-              title="Thirty-plus neighbourhoods. Wildly different lives."
+              title="Thirty-plus neighborhoods. Wildly different lives."
               lede="From 1990s resale under $400K to custom estates past $6M — and the monthly cost of holding them varies even more than the price."
             />
             <Link href="/villages" className="btn-ghost shrink-0">See all {villageStats.count} →</Link>

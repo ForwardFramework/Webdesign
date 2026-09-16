@@ -28,7 +28,7 @@ export const SCHOOLS: School[] = [
     nicheGrade: 'A-',
     website: 'https://www.greatschools.org/florida/bradenton/1817-Lakewood-Ranch-High-School/',
     notes:
-      'AP plus Cambridge International (AICE) curriculum and a Gifted & Talented programme. Reported 97% graduation rate, average GPA 3.59, average SAT 1190 / ACT 26.',
+      'AP plus Cambridge International (AICE) curriculum and a Gifted & Talented program. Reported 97% graduation rate, average GPA 3.59, average SAT 1190 / ACT 26.',
     confidence: 'verified',
     verifiedOn: V,
     sources: ['greatSchools', 'nicheLwrHigh'],
@@ -168,7 +168,7 @@ export const SCHOOLS: School[] = [
     gsRating: null,
     website: 'https://lakewoodranchprep.charterschoolsusa.com/learn-more',
     notes:
-      'Tuition-free public charter, K–12 on one campus, opened August 2022 (Charter Schools USA). High schoolers can pursue a Dual Diploma, AP Capstone Diploma and Cambridge AICE Diploma. Enrolment is by application — apply early, waitlists are common.',
+      'Tuition-free public charter, K–12 on one campus, opened August 2022 (Charter Schools USA). High schoolers can pursue a Dual Diploma, AP Capstone Diploma and Cambridge AICE Diploma. Enrollment is by application — apply early, waitlists are common.',
     confidence: 'verified',
     verifiedOn: V,
     sources: ['lwrPrep'],
@@ -245,7 +245,7 @@ export const SCHOOLS: School[] = [
     coords: { lat: 27.3620, lng: -82.5390 },
     gsRating: null,
     notes:
-      'Currently the assigned high school for the Waterside villages — about 11.8 miles from Waterside Place. Known regionally for its Visual & Performing Arts (VPA) magnet programme.',
+      'Currently the assigned high school for the Waterside villages — about 11.8 miles from Waterside Place. Known regionally for its Visual & Performing Arts (VPA) magnet program.',
     confidence: 'verified',
     verifiedOn: V,
     sources: ['sarasotaSchools'],

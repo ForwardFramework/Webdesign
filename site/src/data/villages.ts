@@ -12,7 +12,7 @@ import { RESEARCH_DATE } from './sources';
  *  • `cddAnnual*` covers the CDD / Stewardship District assessment that is
  *    collected on the tax bill. It is NOT included in `hoaMonthly*`.
  *  • `tradeOff` is required and must be a real drawback. A village page with
- *    only upside reads as an advert and converts worse than an honest one.
+ *    only upside reads as an ad and converts worse than an honest one.
  *  • Coordinates are approximate village centroids for map placement.
  */
 
@@ -74,7 +74,7 @@ export const VILLAGES: Village[] = [
     summary:
       'Established, leafy and genuinely walkable to Main Street. Riverwalk has more architectural variety than newer villages because several builders worked it, and lots back to water or preserve more often than not.',
     tradeOff:
-      'No village-exclusive amenity centre or gate — you use the Ranch-wide parks and trails rather than a private clubhouse.',
+      'No village-exclusive amenity center or gate — you use the Ranch-wide parks and trails rather than a private clubhouse.',
     confidence: 'reported',
     verifiedOn: V,
     sources: baseSources,
@@ -125,13 +125,13 @@ export const VILLAGES: Village[] = [
     hoaMonthlyHigh: 90,
     cddAnnualLow: 900,
     cddAnnualHigh: 2000,
-    cddNote: 'Bond partially retired in the older sub-neighbourhoods; newer pockets still carry more.',
+    cddNote: 'Bond partially retired in the older sub-neighborhoods; newer pockets still carry more.',
     amenities: ['Greenbrook Adventure Park', 'Inline skating track', 'Dog parks', 'Sports fields', 'Miles of trails'],
     bestFor: ['Active families', 'Dog owners', 'Buyers who want a big park at the end of the street'],
     summary:
-      'Greenbrook is the family workhorse of the Ranch — a cluster of sub-neighbourhoods built around Greenbrook Adventure Park, with its skating track, paw parks, ball fields and pavilions. Good square footage per dollar and A-rated schools nearby.',
+      'Greenbrook is the family workhorse of the Ranch — a cluster of sub-neighborhoods built around Greenbrook Adventure Park, with its skating track, paw parks, ball fields and pavilions. Good square footage per dollar and A-rated schools nearby.',
     tradeOff:
-      'It is a big, spread-out village. Which sub-neighbourhood you pick changes your walk to the park, your lot size and your HOA quite a lot — they are not interchangeable.',
+      'It is a big, spread-out village. Which sub-neighborhood you pick changes your walk to the park, your lot size and your HOA quite a lot — they are not interchangeable.',
     confidence: 'reported',
     verifiedOn: V,
     sources: [...baseSources, 'lwrParks'],
@@ -361,7 +361,7 @@ export const VILLAGES: Village[] = [
     summary:
       'Backs onto Bob Gardner Park and preserve land, which gives it more green edge than most villages its age. Compact, gated, and popular with buyers who want newer construction with a nature buffer.',
     tradeOff:
-      'Amenity centre is modest compared with the big resort villages a few minutes east — this is a quiet village, not a social one.',
+      'Amenity center is modest compared with the big resort villages a few minutes east — this is a quiet village, not a social one.',
     confidence: 'reported',
     verifiedOn: V,
     sources: baseSources,
@@ -387,7 +387,7 @@ export const VILLAGES: Village[] = [
     amenities: ['Heated resort pool', 'Fitness center', 'Pickleball & bocce', 'Full lawn & landscape maintenance', 'Gated'],
     bestFor: ['Seasonal owners', 'Downsizers', 'Anyone who never wants to own a mower'],
     summary:
-      'Maintenance-free by design — landscaping is included across the village, which makes it a favourite for snowbirds and buyers splitting time between two homes. Neal’s floor plans here are efficient and popular on resale.',
+      'Maintenance-free by design — landscaping is included across the village, which makes it a favorite for snowbirds and buyers splitting time between two homes. Neal’s floor plans here are efficient and popular on resale.',
     tradeOff:
       'Full-maintenance means less control over your own yard, and the fee reflects the service. Gardeners tend not to love it.',
     confidence: 'reported',
@@ -821,7 +821,7 @@ export const VILLAGES: Village[] = [
     ],
     bestFor: ['55+ buyers wanting new construction', 'Fitness and wellness programming', 'Smaller, newer community'],
     summary:
-      'Kolter’s active-adult village, built around a wellness-first amenity programme — classes, trails and courts rather than golf. Newer than Del Webb, and still delivering homes.',
+      'Kolter’s active-adult village, built around a wellness-first amenity program — classes, trails and courts rather than golf. Newer than Del Webb, and still delivering homes.',
     tradeOff:
       'Newer CDD means higher assessments, and the community is smaller, so the social calendar is less dense than Del Webb’s.',
     confidence: 'reported',

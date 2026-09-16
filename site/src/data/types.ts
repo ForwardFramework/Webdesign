@@ -38,6 +38,7 @@ export const PLACE_CATEGORIES = [
   'dining',
   'grocery',
   'health',
+  'dental',
   'fitness',
   'attraction',
   'shopping',
@@ -59,7 +60,7 @@ export interface Place {
   state: 'FL';
   zip?: string;
   /**
-   * APPROXIMATE centre point, good to roughly neighbourhood scale. Never used
+   * APPROXIMATE center point, good to roughly neighborhood scale. Never used
    * for turn-by-turn: `directionsQuery` (name + address) drives every map link
    * so the destination is right even when the pin is a little off.
    */

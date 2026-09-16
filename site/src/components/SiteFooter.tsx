@@ -19,6 +19,7 @@ const COLUMNS = [
       { label: 'Happy hours by day', href: '/happy-hours' },
       { label: 'Beaches & parks', href: '/beaches' },
       { label: 'Gulf Coast lifestyle', href: '/lifestyle' },
+      { label: 'New in town essentials', href: '/essentials' },
       { label: 'Search homes', href: '/homes' },
     ],
   },
@@ -105,12 +106,12 @@ export function SiteFooter() {
                   REALTOR®
                 </span>
               </p>
-              {license && <p className="mt-1 text-xs text-gulf-300">Florida Real Estate Licence #{license}</p>}
+              {license && <p className="mt-1 text-xs text-gulf-300">Florida Real Estate License #{license}</p>}
 
               <address className="mt-4 space-y-1 text-sm not-italic text-gulf-100">
                 {/* Brokerage name sits immediately above the point-of-contact details. */}
                 <p className="font-semibold text-white">{firmName}</p>
-                {firmLicense && <p className="text-xs text-gulf-300">Brokerage Licence #{firmLicense}</p>}
+                {firmLicense && <p className="text-xs text-gulf-300">Brokerage License #{firmLicense}</p>}
                 {(street || city) && (
                   <p>
                     {street}

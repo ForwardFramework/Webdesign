@@ -17,7 +17,7 @@ export const FAQS: Faq[] = [
     category: 'Lakewood Ranch basics',
     question: 'What is Lakewood Ranch, Florida?',
     answer:
-      'Lakewood Ranch is a 33,000-acre master-planned community spanning Manatee and Sarasota counties, east of I-75 between Bradenton and Sarasota. It contains more than 30 separate neighbourhoods called villages, two town centres, 150+ miles of trails and about 10,000 acres of lakes, parks and preserve.',
+      'Lakewood Ranch is a 33,000-acre master-planned community spanning Manatee and Sarasota counties, east of I-75 between Bradenton and Sarasota. It contains more than 30 separate neighborhoods called villages, two town centers, 150+ miles of trails and about 10,000 acres of lakes, parks and preserve.',
   },
   {
     id: 'is-lwr-a-city',
@@ -96,7 +96,7 @@ export const FAQS: Faq[] = [
     category: 'Costs',
     question: 'How does the Florida homestead exemption work?',
     answer:
-      'If the home is your permanent residence on 1 January, you can file with your county property appraiser by 1 March for that tax year. For 2026 the exemption totals $51,411. It also triggers the Save Our Homes cap, limiting annual assessed-value increases, and up to $500,000 of that benefit is portable to your next Florida home.',
+      'If the home is your permanent residence on January 1, you can file with your county property appraiser by March 1 for that tax year. For 2026 the exemption totals $51,411. It also triggers the Save Our Homes cap, limiting annual assessed-value increases, and up to $500,000 of that benefit is portable to your next Florida home.',
   },
 
   // ── Buying ──
@@ -126,7 +126,7 @@ export const FAQS: Faq[] = [
     category: 'Buying',
     question: 'Do I need a real estate agent to buy new construction?',
     answer:
-      'You are not required to have one, but you should register your agent on your first visit to a builder’s sales centre. The salesperson in the model home represents the builder. Builders typically pay buyer-agent compensation from their marketing budget, so going unrepresented rarely gets you a discount — it just removes your advocate.',
+      'You are not required to have one, but you should register your agent on your first visit to a builder’s sales center. The salesperson in the model home represents the builder. Builders typically pay buyer-agent compensation from their marketing budget, so going unrepresented rarely gets you a discount — it just removes your advocate.',
   },
   {
     id: 'how-long-build',
@@ -170,9 +170,9 @@ export const FAQS: Faq[] = [
   {
     id: 'driver-license',
     category: 'Moving to Florida',
-    question: 'How long do I have to get a Florida driver licence after moving?',
+    question: 'How long do I have to get a Florida driver license after moving?',
     answer:
-      'Thirty days from establishing residency for your licence, and ten days for vehicle titling and registration. You must apply in person at a county tax collector office that offers driver licence services. You will take a vision test, but as an existing licence holder you are usually exempt from written and road tests.',
+      'Thirty days from establishing residency for your license, and ten days for vehicle titling and registration. You must apply in person at a county tax collector office that offers driver license services. You will take a vision test, but as an existing license holder you are usually exempt from written and road tests.',
   },
   {
     id: 'car-registration',
@@ -216,7 +216,7 @@ export const FAQS: Faq[] = [
     category: 'Lifestyle',
     question: 'What is there to do in Lakewood Ranch?',
     answer:
-      'Two town centres — Main Street and lakefront Waterside Place — with dining, a cinema, a Sunday farmers market and an amphitheatre; 150+ miles of trails; eight community parks; 54 holes of golf; and Premier Sports Campus. Sarasota’s arts scene, The Ringling and Selby Gardens are 20–25 minutes away.',
+      'Two town centers — Main Street and lakefront Waterside Place — with dining, a cinema, a Sunday farmers market and an amphitheatre; 150+ miles of trails; eight community parks; 54 holes of golf; and Premier Sports Campus. Sarasota’s arts scene, The Ringling and Selby Gardens are 20–25 minutes away.',
   },
   {
     id: 'happy-hour',
@@ -246,7 +246,7 @@ export const FAQS: Faq[] = [
     category: 'Working together',
     question: 'Can you help if I am relocating from out of state?',
     answer:
-      'Yes — most Lakewood Ranch buyers are. That usually means video tours, a shortlist built around your actual commute and school needs, and a planned visit where you see three or four villages in a day rather than driving aimlessly. Relocation logistics like licences, registration and homestead filing are covered in the free guides on this site.',
+      'Yes — most Lakewood Ranch buyers are. That usually means video tours, a shortlist built around your actual commute and school needs, and a planned visit where you see three or four villages in a day rather than driving aimlessly. Relocation logistics like licenses, registration and homestead filing are covered in the free guides on this site.',
   },
 ];
 

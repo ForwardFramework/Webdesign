@@ -9,7 +9,7 @@ export { monthlyHoa } from './providers/reso';
 
 /**
  * Provider selection. Explicit env wins; otherwise the first configured
- * provider is used; otherwise sample data (clearly labelled as such).
+ * provider is used; otherwise sample data (clearly labeled as such).
  *
  * Set MLS_PROVIDER to one of: mlsgrid | bridge | simplyrets | sample
  */

@@ -208,7 +208,7 @@ export const UNCONFIRMED_VENUES: {
     district: 'Waterside Place',
     cuisine: 'Korean steakhouse',
     website: 'https://watersideplace.com/tenant/kore/',
-    note: 'Bar programme with specials; window not published at time of checking.',
+    note: 'Bar program with specials; window not published at time of checking.',
   },
   {
     venue: 'Osteria 500',
@@ -238,10 +238,10 @@ export const UNCONFIRMED_VENUES: {
     note: 'Listed among Main Street happy-hour spots; confirm times directly.',
   },
   {
-    venue: 'The Greyson',
+    venue: 'The Grayson',
     district: 'Lakewood Ranch',
     cuisine: 'Cocktail bar',
-    website: 'https://greysonbar.com/',
+    website: 'https://graysonbar.com/',
     note: 'Cocktail-led bar; check current specials.',
   },
 ];

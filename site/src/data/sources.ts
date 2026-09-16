@@ -97,7 +97,7 @@ export const SOURCES: Record<string, SourceRef> = {
   },
   manateeSchools: {
     id: 'manateeSchools',
-    label: 'School District of Manatee County — immunizations & enrolment',
+    label: 'School District of Manatee County — immunizations & enrollment',
     url: 'https://www.manateeschools.net/o/sdmc/page/school-immunizations',
     retrieved: RESEARCH_DATE,
   },

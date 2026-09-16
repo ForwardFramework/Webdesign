@@ -8,7 +8,7 @@ import { pageMeta, breadcrumbLd, faqLd } from '@/lib/seo';
 export const metadata: Metadata = pageMeta({
   title: `Lakewood Ranch FAQ — ${FAQS.length} Straight Answers`,
   description:
-    'Direct answers about Lakewood Ranch: HOA and CDD fees, median prices, schools and boundaries, beaches and drive times, Florida licences and registration, insurance costs and hurricanes.',
+    'Direct answers about Lakewood Ranch: HOA and CDD fees, median prices, schools and boundaries, beaches and drive times, Florida licenses and registration, insurance costs and hurricanes.',
   path: '/faq',
   keywords: [
     'Lakewood Ranch FAQ', 'Lakewood Ranch HOA fees', 'is Lakewood Ranch a city',

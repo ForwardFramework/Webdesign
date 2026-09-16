@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/happy-hours', priority: 0.8, freq: 'weekly' },
     { path: '/beaches', priority: 0.75, freq: 'monthly' },
     { path: '/lifestyle', priority: 0.75, freq: 'monthly' },
+    { path: '/essentials', priority: 0.75, freq: 'monthly' },
     { path: '/guides', priority: 0.8, freq: 'monthly' },
     { path: '/faq', priority: 0.8, freq: 'monthly' },
     { path: '/sell', priority: 0.75, freq: 'monthly' },

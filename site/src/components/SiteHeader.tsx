@@ -23,7 +23,7 @@ const NAV = [
     children: [
       { label: 'Search all homes', href: '/homes', desc: 'Filter by village, price, features' },
       { label: 'New construction', href: '/new-construction', desc: 'Builders and current incentives' },
-      { label: 'Villages A–Z', href: '/villages', desc: 'Start from the neighbourhood' },
+      { label: 'Villages A–Z', href: '/villages', desc: 'Start from the neighborhood' },
     ],
   },
   {
@@ -34,6 +34,7 @@ const NAV = [
       { label: 'Happy hours by day', href: '/happy-hours', desc: 'Who pours what, and when' },
       { label: 'Beaches & parks', href: '/beaches', desc: 'Every beach ranked by drive' },
       { label: 'Life on the Gulf Coast', href: '/lifestyle', desc: 'Weather, costs, what it feels like' },
+      { label: 'New in town essentials', href: '/essentials', desc: 'Doctors, dentists, groceries, admin' },
     ],
   },
   {
@@ -41,7 +42,7 @@ const NAV = [
     href: '/guides',
     children: [
       { label: 'All free guides', href: '/guides', desc: 'Relocation playbooks' },
-      { label: 'Florida relocation', href: '/guides/florida-relocation-playbook', desc: 'Licences, plates, homestead' },
+      { label: 'Florida relocation', href: '/guides/florida-relocation-playbook', desc: 'Licenses, plates, homestead' },
       { label: 'Enrolling your kids', href: '/guides/enrolling-kids-florida-schools', desc: 'Forms and deadlines' },
       { label: 'FAQ', href: '/faq', desc: '30+ answered questions' },
     ],

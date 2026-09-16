@@ -10,7 +10,7 @@ import { SCHOOLS } from '@/data/schools';
 import { PLACE_CATEGORIES, type PlaceCategory } from '@/data/types';
 import { estimateDrive } from '@/lib/drive-times';
 
-/** Layer definitions — label, colour and icon glyph per category. */
+/** Layer definitions — label, color and icon glyph per category. */
 const LAYERS: Record<PlaceCategory | 'village' | 'happyhour', { label: string; color: string; glyph: string }> = {
   beach:      { label: 'Beaches',            color: '#F2B33C', glyph: '🏖' },
   park:       { label: 'Parks & preserves',  color: '#3E9F9B', glyph: '🌳' },
@@ -19,9 +19,10 @@ const LAYERS: Record<PlaceCategory | 'village' | 'happyhour', { label: string; c
   happyhour:  { label: 'Happy hours',        color: '#F97650', glyph: '🍹' },
   grocery:    { label: 'Groceries',          color: '#166967', glyph: '🛒' },
   health:     { label: 'Doctors & hospitals',color: '#C74724', glyph: '⚕' },
+  dental:     { label: 'Dentists',           color: '#A0381C', glyph: '🦷' },
   fitness:    { label: 'Fitness',            color: '#6FBDB9', glyph: '💪' },
   attraction: { label: 'Attractions',        color: '#A17C4F', glyph: '🎭' },
-  shopping:   { label: 'Shopping & town centres', color: '#BE9A69', glyph: '🛍' },
+  shopping:   { label: 'Shopping & town centers', color: '#BE9A69', glyph: '🛍' },
   essential:  { label: 'Essentials & admin', color: '#5B7379', glyph: '📋' },
   golf:       { label: 'Golf',               color: '#115352', glyph: '⛳' },
   airport:    { label: 'Airports',           color: '#0A2F2F', glyph: '✈' },
@@ -49,11 +50,11 @@ export function ExploreMap() {
   /* ── Build the map once ── */
   useEffect(() => {
     if (!mapEl.current || mapRef.current) return;
-    let cancelled = false;
+    let canceled = false;
 
     (async () => {
       const L = (await import('leaflet')).default;
-      if (cancelled || !mapEl.current) return;
+      if (canceled || !mapEl.current) return;
 
       const map = L.map(mapEl.current, {
         center: [27.40, -82.50],
@@ -185,7 +186,7 @@ export function ExploreMap() {
     })();
 
     return () => {
-      cancelled = true;
+      canceled = true;
       mapRef.current?.remove();
       mapRef.current = null;
     };
@@ -206,7 +207,7 @@ export function ExploreMap() {
     }
   }, [active, ready]);
 
-  /* ── Recentre when the origin village changes ── */
+  /* ── Recenter when the origin village changes ── */
   useEffect(() => {
     if (!mapRef.current || !ready) return;
     mapRef.current.flyTo([originVillage.coords.lat, originVillage.coords.lng], 12, { duration: 0.8 });
@@ -325,7 +326,7 @@ export function ExploreMap() {
             aria-label="Interactive map of Lakewood Ranch and the surrounding Gulf Coast area"
           />
           <p className="border-t border-ink/8 bg-sand-50 px-5 py-3 text-xs leading-relaxed text-ink-muted">
-            Pins are placed at approximate neighbourhood scale and drive times are estimated from mapped distance —
+            Pins are placed at approximate neighborhood scale and drive times are estimated from mapped distance —
             use them to compare, not to navigate. Every &ldquo;Directions&rdquo; link resolves the real address.
             Click the map once to enable scroll zoom.
           </p>

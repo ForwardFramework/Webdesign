@@ -104,7 +104,7 @@ export function realEstateAgentLd() {
     image: `${BASE}${agent.headshot}`,
     ...(phone ? { telephone: phone } : {}),
     ...(email ? { email } : {}),
-    ...(license ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'Florida Real Estate Licence', identifier: license } } : {}),
+    ...(license ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'Florida Real Estate License', identifier: license } } : {}),
     parentOrganization: { '@type': 'RealEstateAgent', name: firm, ...(brokerage.website ? { url: brokerage.website } : {}) },
     address: {
       '@type': 'PostalAddress',

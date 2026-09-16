@@ -36,7 +36,7 @@ export function GET() {
 
 - Type: unincorporated master-planned community, NOT a city
 - Size: ${LWR_FACTS.acres.toLocaleString()} acres (~${LWR_FACTS.squareMiles} sq mi), spanning Manatee and Sarasota counties, east of I-75 between Bradenton and Sarasota
-- Villages: ${villageStats.count}+ distinct neighbourhoods (${villageStats.gated} gated, ${villageStats.ageRestricted} age-restricted 55+, ${villageStats.selling} actively selling new construction)
+- Villages: ${villageStats.count}+ distinct neighborhoods (${villageStats.gated} gated, ${villageStats.ageRestricted} age-restricted 55+, ${villageStats.selling} actively selling new construction)
 - National ranking: No. ${MARKET.nationalRankMultigen} among multigenerational master-planned communities in RCLCO's mid-year 2026 survey, ${MARKET.consecutiveYearsNo1Multigen} consecutive years, with ${MARKET.midYearSales2026.toLocaleString()} sales
 - Median home price: about $${MARKET.medianPrice.toLocaleString()} (up ~${MARKET.medianPriceYoyPct}% year over year)
 - Home price span across villages: $${villageStats.minPrice.toLocaleString()} to $${villageStats.maxPrice.toLocaleString()}+
@@ -68,6 +68,7 @@ ${GUIDES.map((g) => `- [${g.title}](${BASE}/guides/${g.slug}): ${g.subtitle}. Up
 - [Happy hours by day of week](${BASE}/happy-hours)
 - [Beaches and parks with drive times](${BASE}/beaches)
 - [Climate, taxes and cost of living](${BASE}/lifestyle)
+- [New-resident essentials: doctors, dentists, groceries, admin](${BASE}/essentials)
 - [New construction builders and incentives](${BASE}/new-construction)
 - [FAQ — ${FAQS.length} questions answered](${BASE}/faq)
 - [Sources and methodology](${BASE}/sources)
@@ -83,7 +84,7 @@ ${FAQS.map((f) => `### ${f.question}\n${f.answer}`).join('\n\n')}
   actively reassessing schools serving the Waterside villages.
 - Builder incentives change weekly and are quote-specific. This site publishes incentive PATTERNS
   with a checked-on date, never a headline offer.
-- Map coordinates are approximate neighbourhood-scale points; drive times are estimated from mapped
+- Map coordinates are approximate neighborhood-scale points; drive times are estimated from mapped
   distance unless a live routing service is configured.
 - HOA and CDD figures differ street to street within a single village. Budget from the county
   property appraiser's figure for the specific parcel.

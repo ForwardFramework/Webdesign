@@ -125,14 +125,14 @@ export default function SchoolsPage() {
                 </li>
                 <li>
                   <strong className="text-gulf-800">Charter and private</strong> — application-based, with their
-                  own windows that open well before the school year. If a specific programme matters, apply while
+                  own windows that open well before the school year. If a specific program matters, apply while
                   you are still house-hunting; you can always decline a seat.
                 </li>
               </ul>
               <p className="mt-6 rounded-2xl bg-gulf-50 p-4 text-sm leading-relaxed text-ink-soft">
                 Moving from out of state?{' '}
                 <Link href="/guides/enrolling-kids-florida-schools" className="font-semibold text-gulf-700 underline underline-offset-2">
-                  The enrolment guide
+                  The enrollment guide
                 </Link>{' '}
                 covers every form, including the Florida DH 680 immunisation certificate that your existing records
                 will not substitute for.

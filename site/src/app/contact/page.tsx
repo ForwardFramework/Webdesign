@@ -40,7 +40,7 @@ export default function ContactPage() {
               <div className="mt-10 space-y-4">
                 {[
                   ['Relocating from out of state', 'Most buyers here are. Video tours, a shortlist built around your real constraints, and a visit planned so you see three villages properly instead of twelve badly.'],
-                  ['Considering new construction', 'Get the current written offers from several builders side by side — and register representation before your first sales-centre visit.'],
+                  ['Considering new construction', 'Get the current written offers from several builders side by side — and register representation before your first sales-center visit.'],
                   ['Selling a Lakewood Ranch home', 'Priced against your village rather than the ZIP code, which is the difference between a fast sale and a long one.'],
                   ['Just have a question', 'Ask it. Good questions get added to the FAQ, with the answer.'],
                 ].map(([t, d]) => (
@@ -56,7 +56,7 @@ export default function ContactPage() {
               */}
               <div className="mt-10 rounded-3xl border border-gulf-200 bg-gulf-50 p-6">
                 <p className="font-display text-lg font-semibold text-gulf-900">{agent.fullName}, REALTOR®</p>
-                {license && <p className="mt-0.5 text-xs text-ink-muted">Florida Real Estate Licence #{license}</p>}
+                {license && <p className="mt-0.5 text-xs text-ink-muted">Florida Real Estate License #{license}</p>}
                 <address className="mt-4 space-y-1 text-sm not-italic text-ink-soft">
                   <p className="font-semibold text-gulf-800">{firm}</p>
                   {(street || city) && <p>{street}{street && city ? ', ' : ''}{city}{city ? ', ' : ''}{brokerage.state} {zip}</p>}

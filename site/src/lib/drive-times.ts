@@ -11,7 +11,7 @@ import type { LatLng } from '@/data/types';
  *
  *  2. ESTIMATED — no key configured. Falls back to great-circle distance scaled
  *     by a road-circuity factor calibrated against the drive times we DID verify
- *     (LWR→SRQ ≈ 8 mi / 12 min; LWR→TPA ≈ 52 mi / 70 min). Clearly labelled as
+ *     (LWR→SRQ ≈ 8 mi / 12 min; LWR→TPA ≈ 52 mi / 70 min). Clearly labeled as
  *     an estimate everywhere it appears, because pretending a straight-line
  *     approximation is a real route is how people miss flights.
  */

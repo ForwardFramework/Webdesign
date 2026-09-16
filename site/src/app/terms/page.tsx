@@ -15,7 +15,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Terms of Use & DMCA"
-      updated="16 September 2026"
+      updated="September 16, 2026"
       lede="Plain terms for using this site, the conditions attached to MLS listing data, and how to send a copyright notice."
     >
       <h2>Who operates this site</h2>
@@ -37,7 +37,7 @@ export default function TermsPage() {
       </p>
       <p>Specifically, and stated plainly on the relevant pages:</p>
       <ul>
-        <li>Map pins are approximate; drive times are estimated unless labelled live.</li>
+        <li>Map pins are approximate; drive times are estimated unless labeled live.</li>
         <li>HOA, CDD and price figures are ranges, not quotes for a specific property.</li>
         <li>School ratings and attendance boundaries change and are controlled entirely by the districts.</li>
         <li>Builder incentives change weekly and are quote-specific; we publish patterns and dates, not offers.</li>
@@ -51,7 +51,7 @@ export default function TermsPage() {
       <h2>MLS / IDX listing data</h2>
       <p>{idx.disclaimer}</p>
       <p>
-        Listing content displayed through the Internet Data Exchange programme is provided for consumers&rsquo;
+        Listing content displayed through the Internet Data Exchange program is provided for consumers&rsquo;
         personal, non-commercial use and may not be used for any purpose other than to identify prospective
         properties consumers may be interested in purchasing. Automated collection of listing data from this site —
         scraping, crawling for republication, or bulk extraction — is prohibited by the MLS participation rules and

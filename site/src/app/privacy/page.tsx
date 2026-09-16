@@ -14,7 +14,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Privacy Policy"
-      updated="16 September 2026"
+      updated="September 16, 2026"
       lede="Short version: the only personal information this site collects is what you type into a form, it goes to Caitlin so she can reply to you, and it is never sold."
     >
       <h2>What we collect</h2>
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
       <h2>What we do not do</h2>
       <ul>
         <li>We do not sell your information, and we do not share it with third-party advertisers or lead brokers.</li>
-        <li>We do not run behavioural advertising trackers on this site.</li>
+        <li>We do not run behavioral advertising trackers on this site.</li>
         <li>We do not require an account or a login to read anything here. Every guide is published in full.</li>
       </ul>
 

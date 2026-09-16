@@ -96,7 +96,7 @@ export default function AboutPage() {
                 ['A straight answer, including "don’t"', 'If a village is wrong for you, you will hear that before you see it, not after you have written an offer.'],
                 ['Numbers you can check', 'Every figure used in a recommendation comes with where it came from. Nothing on this site asks you to take a number on faith.'],
                 ['No pressure to decide', 'Most people relocating here need two visits and a few months. That is normal, and it is fine.'],
-                ['Local logistics, handled', 'Licence, plates, homestead, school enrolment, insurance quotes — the unglamorous list that actually makes a move work.'],
+                ['Local logistics, handled', 'License, plates, homestead, school enrollment, insurance quotes — the unglamorous list that actually makes a move work.'],
               ].map(([t, d]) => (
                 <li key={t} className="rounded-2xl bg-white/10 p-5">
                   <p className="font-semibold">{t}</p>

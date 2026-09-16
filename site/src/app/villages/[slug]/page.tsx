@@ -158,7 +158,7 @@ export default async function VillagePage({ params }: { params: Promise<{ slug: 
                 </div>
                 {v.status === 'selling' && (
                   <p className="mt-5 text-sm leading-relaxed text-ink-soft">
-                    Register your agent on your <strong>first</strong> visit to any sales centre here. Builders
+                    Register your agent on your <strong>first</strong> visit to any sales center here. Builders
                     typically pay buyer-agent compensation from their own marketing budget, so walking in alone
                     does not earn you a discount — it just removes your advocate.{' '}
                     <Link href="/guides/new-construction-playbook" className="text-gulf-700 underline underline-offset-2">

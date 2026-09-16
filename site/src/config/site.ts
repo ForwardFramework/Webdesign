@@ -7,11 +7,11 @@
  *  Every value below whose string starts with `NEEDS_VERIFICATION:` is a
  *  placeholder. They were NOT invented: no public record for this agent could
  *  be verified at build time, and Florida law makes several of these fields
- *  legally operative (see notes on each). Publishing with a fabricated licence
+ *  legally operative (see notes on each). Publishing with a fabricated license
  *  number or an unregistered brokerage name is a FREC violation.
  *
  *  Fill each one from the authoritative source:
- *    • Licence numbers / registered names → Florida DBPR licensee search:
+ *    • License numbers / registered names → Florida DBPR licensee search:
  *      https://www.myfloridalicense.com/wl11.asp  (Real Estate → Sales Associate)
  *    • Brokerage registered name + address → your broker / office manager.
  *
@@ -31,8 +31,8 @@ export const agent = {
     return `${this.firstName} ${this.lastName}`;
   },
   title: 'REALTOR® | Lakewood Ranch, Sarasota & Bradenton Specialist',
-  /** Florida sales-associate licence number. Legally required context for advertising. */
-  licenseNumber: todo('Florida real estate sales associate licence number (DBPR SL#)'),
+  /** Florida sales-associate license number. Legally required context for advertising. */
+  licenseNumber: todo('Florida real estate sales associate license number (DBPR SL#)'),
   licenseState: 'Florida',
   phone: todo('direct business phone number'),
   email: todo('business email address'),
@@ -61,7 +61,7 @@ export const brokerage = {
   registeredName: todo('brokerage name EXACTLY as registered with FREC (e.g. "Realty ONE Group MVP" vs a d/b/a)'),
   /** What people call it day to day. Only ever used alongside `registeredName`. */
   tradeName: 'Realty ONE Group MVP',
-  licenseNumber: todo('brokerage licence number (DBPR CQ#)'),
+  licenseNumber: todo('brokerage license number (DBPR CQ#)'),
   street: todo('brokerage street address'),
   city: todo('brokerage city'),
   state: 'FL',

@@ -153,7 +153,7 @@ export default function NewConstructionPage() {
               <LeadForm
                 variant="contact"
                 heading="Get this week's actual offers"
-                sub="Incentives move weekly and are quote-specific. Tell Caitlin which villages you're weighing and get the current written offers side by side — before you walk into a sales centre."
+                sub="Incentives move weekly and are quote-specific. Tell Caitlin which villages you're weighing and get the current written offers side by side — before you walk into a sales center."
                 cta="Send me current incentives"
                 compact
               />

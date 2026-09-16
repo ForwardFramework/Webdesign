@@ -38,7 +38,7 @@ export default function ExplorePage() {
             Pick the village you are considering, switch on the layers you care about, and see how far everything
             really is. {PLACES.length + SCHOOLS.length + HAPPY_HOURS.length} places across {VILLAGES.length} villages
             — beaches, {SCHOOLS.length} schools, parks, groceries, doctors, {HAPPY_HOURS.length} happy hours, golf,
-            town centres and both airports.
+            town centers and both airports.
           </p>
         </Container>
       </Section>
@@ -52,14 +52,14 @@ export default function ExplorePage() {
               <h2 className="font-display text-lg font-semibold text-gulf-900">How the drive times work</h2>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">
                 Times shown on the map are estimated from mapped distance with a road-circuity adjustment,
-                calibrated against routes we verified. They are labelled as estimates everywhere. Add a routing
+                calibrated against routes we verified. They are labeled as estimates everywhere. Add a routing
                 API key and the site switches to live, traffic-aware times automatically.
               </p>
             </div>
             <div className="card p-6">
               <h2 className="font-display text-lg font-semibold text-gulf-900">Why the pins are approximate</h2>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                There is no geocoding step in this build, so each pin is hand-placed at roughly neighbourhood
+                There is no geocoding step in this build, so each pin is hand-placed at roughly neighborhood
                 scale. That is fine for comparing — and not fine for navigating. Every &ldquo;Directions&rdquo;
                 link therefore resolves by name and address, so you always arrive at the right place.
               </p>

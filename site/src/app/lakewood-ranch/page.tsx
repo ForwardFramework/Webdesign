@@ -11,7 +11,7 @@ import { imgSrc, imgAlt } from '@/config/images';
 export const metadata: Metadata = pageMeta({
   title: 'Lakewood Ranch, FL — The Complete Community Guide',
   description:
-    'What Lakewood Ranch actually is: a 33,000-acre master-planned community across Manatee and Sarasota counties with 30+ villages, two town centres, 150+ miles of trail — and the No. 1 multigenerational community in the U.S. for eight years running.',
+    'What Lakewood Ranch actually is: a 33,000-acre master-planned community across Manatee and Sarasota counties with 30+ villages, two town centers, 150+ miles of trail — and the No. 1 multigenerational community in the U.S. for eight years running.',
   path: '/lakewood-ranch',
   keywords: [
     'Lakewood Ranch Florida', 'what is Lakewood Ranch', 'living in Lakewood Ranch',
@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMeta({
 const CRUMBS = [{ name: 'Home', href: '/' }, { name: 'Lakewood Ranch', href: '/lakewood-ranch' }];
 
 export default function LakewoodRanchPage() {
-  const townCentres = PLACES.filter((p) => ['main-street-lwr', 'waterside-place', 'utc-mall'].includes(p.id));
+  const townCenters = PLACES.filter((p) => ['main-street-lwr', 'waterside-place', 'utc-mall'].includes(p.id));
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function LakewoodRanchPage() {
           <p className="mt-5 max-w-3xl text-lg leading-relaxed text-gulf-100" data-speakable>
             A {LWR_FACTS.acres.toLocaleString()}-acre master-planned community — about {LWR_FACTS.squareMiles} square
             miles — spanning Manatee and Sarasota counties east of I-75 between Bradenton and Sarasota. Not a city:
-            an unincorporated community of {villageStats.count}+ separate villages, two town centres, and roughly
+            an unincorporated community of {villageStats.count}+ separate villages, two town centers, and roughly
             {' '}{LWR_FACTS.greenspaceAcres.toLocaleString()} acres of lakes, parks and preserve.
           </p>
         </Container>
@@ -66,7 +66,7 @@ export default function LakewoodRanchPage() {
               <div className="mt-8 space-y-5">
                 {[
                   ['The developer', 'Schroeder-Manatee Ranch has master-planned the community since the 1990s, which is why the whole thing feels coherent rather than like thirty unrelated subdivisions bolted together.'],
-                  ['The villages', `${villageStats.count}+ distinct neighbourhoods, each with its own HOA, amenity package, builder lineup and price band. ${villageStats.gated} are gated; ${villageStats.ageRestricted} are 55+.`],
+                  ['The villages', `${villageStats.count}+ distinct neighborhoods, each with its own HOA, amenity package, builder lineup and price band. ${villageStats.gated} are gated; ${villageStats.ageRestricted} are 55+.`],
                   ['The CDDs', 'Community Development Districts issued the bonds that funded roads, drainage and amenities, and collect assessments on your property tax bill. Older villages have retired much of that debt; newer ones have not.'],
                   ['The counties', 'Most of Lakewood Ranch is in Manatee County. Waterside sits in Sarasota County — a different school district, a different millage rate and a Sarasota mailing address.'],
                 ].map(([t, d]) => (
@@ -93,12 +93,12 @@ export default function LakewoodRanchPage() {
       <Section tone="white">
         <Container>
           <SectionHeading
-            eyebrow="Two town centres"
+            eyebrow="Two town centers"
             title="Where the community actually gathers"
-            lede="Most master-planned communities have a clubhouse. Lakewood Ranch has two genuine town centres with independent restaurants, events and a farmers market — plus the region's main mall minutes away."
+            lede="Most master-planned communities have a clubhouse. Lakewood Ranch has two genuine town centers with independent restaurants, events and a farmers market — plus the region's main mall minutes away."
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {townCentres.map((t) => (
+            {townCenters.map((t) => (
               <article key={t.id} className="card flex flex-col p-7">
                 <h3 className="font-display text-xl font-semibold text-gulf-900">{t.name}</h3>
                 <p className="mt-0.5 text-xs uppercase tracking-wider text-ink-muted">{t.kind}</p>

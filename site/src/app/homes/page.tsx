@@ -72,7 +72,7 @@ export default async function HomesPage({
             <div className="card p-6">
               <h2 className="font-display text-lg font-semibold text-gulf-900">Not sure which village yet?</h2>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                Start from the neighbourhood instead of the house. All {VILLAGES.length} compared, with the
+                Start from the neighborhood instead of the house. All {VILLAGES.length} compared, with the
                 trade-offs.{' '}
                 <Link href="/villages" className="text-gulf-700 underline underline-offset-2">Compare villages →</Link>
               </p>

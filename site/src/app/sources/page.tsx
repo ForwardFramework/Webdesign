@@ -46,12 +46,12 @@ export default function SourcesPage() {
             <ul className="mt-5 space-y-3 text-sm leading-relaxed text-ink-soft">
               <li>
                 <strong className="text-gulf-800">Map pins are approximate.</strong> They are hand-placed at
-                neighbourhood scale, not geocoded. Every &ldquo;Directions&rdquo; link resolves by name and
+                neighborhood scale, not geocoded. Every &ldquo;Directions&rdquo; link resolves by name and
                 address so you always arrive at the right place.
               </li>
               <li>
                 <strong className="text-gulf-800">Drive times are estimated</strong> unless a live routing key is
-                configured, in which case they are labelled as live. Estimates are marked with an asterisk
+                configured, in which case they are labeled as live. Estimates are marked with an asterisk
                 everywhere they appear.
               </li>
               <li>

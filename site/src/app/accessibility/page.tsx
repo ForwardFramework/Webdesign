@@ -15,7 +15,7 @@ export default function AccessibilityPage() {
   return (
     <LegalPage
       title="Accessibility Statement"
-      updated="16 September 2026"
+      updated="September 16, 2026"
       lede="Housing information should be usable by everyone. An inaccessible real estate website can violate both the Americans with Disabilities Act and the Fair Housing Act, and we treat that as a design requirement rather than a disclaimer."
     >
       <h2>Our standard</h2>
@@ -30,9 +30,9 @@ export default function AccessibilityPage() {
         <li>Semantic HTML landmarks, a single H1 per page, and a logical heading order throughout.</li>
         <li>A &ldquo;skip to main content&rdquo; link as the first focusable element on every page.</li>
         <li>Visible focus indicators on every interactive element, never removed.</li>
-        <li>Colour pairings checked against WCAG AA contrast ratios for body and large text.</li>
+        <li>Color pairings checked against WCAG AA contrast ratios for body and large text.</li>
         <li>All meaningful images carry descriptive alternative text; decorative graphics are hidden from assistive technology.</li>
-        <li>Form fields have persistent, programmatically associated labels — not placeholder-only labelling.</li>
+        <li>Form fields have persistent, programmatically associated labels — not placeholder-only labeling.</li>
         <li>Status messages (search results, form errors) are announced via ARIA live regions.</li>
         <li>Filters, toggles and accordions expose their state with <code>aria-pressed</code> and <code>aria-expanded</code>.</li>
         <li>Full keyboard operability, including the map controls and every filter.</li>

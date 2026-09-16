@@ -6,7 +6,7 @@ import { GUIDES } from '@/data/guides';
 import { pageMeta, breadcrumbLd, itemListLd } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
-  title: 'Free Florida Relocation Guides — Licences, Schools, HOA & Building New',
+  title: 'Free Florida Relocation Guides — Licenses, Schools, HOA & Building New',
   description:
     'Six free guides for moving to Lakewood Ranch: the Florida relocation playbook, enrolling your kids, the HOA & CDD decoder, the new construction playbook, choosing a village, and hurricanes & insurance.',
   path: '/guides',

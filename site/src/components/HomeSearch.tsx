@@ -62,14 +62,14 @@ export function HomeSearch({ initialVillages = [] }: { initialVillages?: string[
   }, [f, page]);
 
   useEffect(() => {
-    let cancelled = false;
+    let canceled = false;
     setLoading(true);
     fetch(`/api/listings?${qs}`)
       .then((r) => r.json())
-      .then((json: ListingResult) => !cancelled && setData(json))
-      .catch(() => !cancelled && setData(null))
-      .finally(() => !cancelled && setLoading(false));
-    return () => { cancelled = true; };
+      .then((json: ListingResult) => !canceled && setData(json))
+      .catch(() => !canceled && setData(null))
+      .finally(() => !canceled && setLoading(false));
+    return () => { canceled = true; };
   }, [qs]);
 
   const update = useCallback(<K extends keyof Filters>(k: K, v: Filters[K]) => {

@@ -3,7 +3,7 @@ import { unverifiedFields } from '@/config/site';
 /**
  * Renders only while `src/config/site.ts` still contains NEEDS_VERIFICATION
  * sentinels. It is deliberately loud and deliberately not dismissible: a real
- * estate site published without a licence number, a registered brokerage name
+ * estate site published without a license number, a registered brokerage name
  * and a working point of contact is a FREC advertising problem, not a cosmetic
  * one. Fill the config and this disappears on its own.
  */
@@ -29,7 +29,7 @@ export function PreLaunchBanner() {
             <p className="mb-3 leading-relaxed">
               These were left as placeholders rather than guessed. Florida&rsquo;s advertising rule
               (Fla. Admin. Code R. 61J2-10.025) makes several of them legally operative — a fabricated
-              licence number or an unregistered brokerage name is a violation. Edit{' '}
+              license number or an unregistered brokerage name is a violation. Edit{' '}
               <code className="rounded bg-black/25 px-1.5 py-0.5 font-mono text-xs">src/config/site.ts</code>.
             </p>
             <ul className="space-y-1 font-mono text-xs">

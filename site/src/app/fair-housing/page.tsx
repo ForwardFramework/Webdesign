@@ -17,7 +17,7 @@ export default function FairHousingPage() {
   return (
     <LegalPage
       title="Fair Housing Commitment"
-      updated="16 September 2026"
+      updated="September 16, 2026"
       lede="We are pledged to the letter and spirit of U.S. policy for the achievement of equal housing opportunity throughout the nation."
     >
       <div className="not-prose flex items-center gap-5 rounded-2xl border border-gulf-200 bg-gulf-50 p-5 text-gulf-700">
@@ -29,20 +29,20 @@ export default function FairHousingPage() {
       <h2>The protected classes</h2>
       <p>
         The federal Fair Housing Act prohibits discrimination in the sale, rental and financing of housing based on
-        <strong> race, colour, religion, sex (including sexual orientation and gender identity), national origin,
+        <strong> race, color, religion, sex (including sexual orientation and gender identity), national origin,
         familial status and disability</strong>. Florida&rsquo;s Fair Housing Act mirrors these protections. Many
         Florida counties and municipalities add further protected characteristics.
       </p>
 
       <h2>How this shapes the website itself</h2>
       <p>
-        This site publishes a lot of neighbourhood information, and that creates a real obligation. Steering — even
+        This site publishes a lot of neighborhood information, and that creates a real obligation. Steering — even
         gently, even well-meant — is a fair housing violation. So:
       </p>
       <ul>
         <li>
           <strong>We describe places, never the people in them.</strong> You will not find characterisations of who
-          lives in a village, its &ldquo;feel&rdquo; in demographic terms, or coded language about neighbourhood
+          lives in a village, its &ldquo;feel&rdquo; in demographic terms, or coded language about neighborhood
           composition anywhere on this site.
         </li>
         <li>
@@ -61,7 +61,7 @@ export default function FairHousingPage() {
         </li>
         <li>
           <strong>We will answer &ldquo;which area is right for me?&rdquo; with facts.</strong> If you ask for a
-          neighbourhood recommendation based on a protected characteristic, we will decline and instead give you
+          neighborhood recommendation based on a protected characteristic, we will decline and instead give you
           the objective data — assessments, commute times, school assignments, amenities — so you can decide.
         </li>
       </ul>
