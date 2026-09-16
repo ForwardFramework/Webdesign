@@ -1,5 +1,5 @@
 /* ============================================================
-   Yasse's Cleaning — site behaviour
+   Mommy Made — site behaviour
    - instant estimate engine (shared by hero + pricing page)
    - plan frequency toggle
    - mobile nav, sticky header, scroll reveal

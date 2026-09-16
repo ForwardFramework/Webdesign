@@ -385,6 +385,18 @@ fieldset{border:0;padding:0;margin:0 0 var(--sp-3)}
 .giving-card hr{border:0;border-top:1px solid rgba(255,255,255,.18);margin:var(--sp-5) 0}
 .giving-card__note{font-size:.95rem;color:#c3d8bd;margin:0}
 
+
+/* ---------- Placeholder review slots ----------
+   These must never be mistakable for a real testimonial: dashed edge, no card
+   shadow, muted italic body and an explicit "replace before launch" badge. */
+.review--placeholder{background:var(--cream-50);border:2px dashed var(--cream-300);box-shadow:none}
+.review--placeholder blockquote{color:var(--ink-500);font-style:italic}
+.review--placeholder .review__who strong{color:var(--ink-700)}
+.avatar--empty{background:var(--cream-200);color:var(--ink-500);border:1.5px dashed var(--ink-300)}
+.avatar--empty svg{width:22px;height:22px}
+.hero__rating-mark{display:grid;place-items:center;width:26px;height:26px;flex:0 0 26px;border-radius:50% 50% 50% 8px;background:var(--rose-100);color:var(--rose-700)}
+.hero__rating-mark svg{width:16px;height:16px}
+
 /* ---------- Guarantee ---------- */
 .guarantee{display:grid;gap:var(--sp-6);align-items:center}
 @media(min-width:900px){.guarantee{grid-template-columns:auto 1fr;gap:var(--sp-7)}}
@@ -488,3 +500,8 @@ fieldset{border:0;padding:0;margin:0 0 var(--sp-3)}
 .review__source svg{width:15px;height:15px;flex:0 0 15px}
 .social-proof{display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;font-size:.95rem;color:var(--text-muted);margin-top:var(--sp-5)}
 .social-proof svg{width:20px;height:20px;color:#1877F2}
+
+/* These override the Facebook-blue badge styling defined just above. Equal
+   specificity, so they must come after it — placed earlier they silently lose. */
+.review__source--placeholder{color:var(--rose-700);background:var(--rose-50);border-color:var(--rose-200)}
+.social-proof svg{color:var(--rose-700)}

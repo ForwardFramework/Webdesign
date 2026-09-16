@@ -136,20 +136,32 @@ business uses. Everything else (validation, success message, honeypot) already w
 
 ## Reviews
 
-The testimonials on `index.html` and `about.html` are **real Facebook recommendations**,
-used verbatim and defined once in the review block.
+The review sections on `index.html` and `about.html` currently hold **clearly-marked
+placeholders**, not testimonials.
 
-**They name Yasse, the owner, because they were written before the Mommy Made rebrand.**
-Do not reword them to say "Mommy Made" — editing a real review's text is falsifying a
-testimonial. The section heading carries the context instead ("These were written for
-Yasse and her team — the same people who now clean as Mommy Made"). If Mommy Made is
-*not* the same business, these reviews do not belong on the site at all and should be
-removed rather than reworded.
-Facebook "recommends" is a yes/no endorsement rather than a star rating, so they are
-presented as recommendations and no star counts or aggregate rating are claimed
-anywhere on the site. If you add reviews from a source that does carry star ratings
-(Google, Yelp), add an `aggregateRating` to the JSON-LD in `index.html` at that point —
-not before.
+The previous owner's real Facebook reviews were removed because they belong to a
+different business. They were **not** replaced with invented ones. A plausible-looking
+fake review that ships by accident is a fabricated endorsement, and the customer reading
+it is being deceived — so the placeholders announce themselves: dashed border, muted
+italic text, and a "Placeholder — replace before launch" badge. If this site went live
+tomorrow nobody would mistake them for real.
+
+Each placeholder also doubles as a prompt for the kind of review worth chasing (a
+long-standing recurring client, a move-out with a deposit riding on it, and so on).
+
+### Putting real reviews in
+
+1. Replace `REVIEW_PLACEHOLDERS` with real customer quotes, used verbatim.
+2. Swap the `review--placeholder` card class and badge for the normal `review` card and
+   a source badge for wherever the review came from (Google, Facebook, Yelp).
+3. Only claim a star rating if the source actually carries one. A Facebook
+   "recommends" is a yes/no endorsement, not a rating — don't turn one into five stars.
+4. Add `aggregateRating` to the `index.html` JSON-LD **only** once you have real ratings
+   from a source that provides them. Rich-result markup describing reviews you don't
+   have is exactly the kind of thing that gets a site penalised.
+
+Until then the hero leads on the charity give-back rather than on social proof, because
+that claim is true today and "recommended by your neighbors" was not.
 
 ## SEO
 
