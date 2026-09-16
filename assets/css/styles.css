@@ -524,17 +524,40 @@ ul, ol { margin: 0 0 var(--space-md); padding-left: 1.2em; }
   overflow: hidden;
   isolation: isolate;
 }
+/* Optional hero photograph. Sits behind the scrim; if the file is missing,
+   main.js removes it and the gradient below is the whole background. */
+.hero__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  z-index: -3;
+}
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
+  /* Sunset over the Gulf: warm sun low and right, coral along the horizon,
+     deep sky above. The copy sits left, where it stays darkest. */
   background:
-    radial-gradient(64% 46% at 80% 16%, rgba(224, 168, 106, 0.40), transparent 64%),
-    radial-gradient(48% 38% at 72% 30%, rgba(199, 151, 96, 0.26), transparent 70%),
-    radial-gradient(70% 55% at 10% 92%, rgba(47, 155, 150, 0.30), transparent 68%),
-    linear-gradient(168deg, var(--sea-900) 0%, var(--navy-600) 34%, var(--navy-700) 62%, var(--navy-900) 100%);
+    radial-gradient(52% 34% at 74% 70%, rgba(255, 186, 116, 0.46), transparent 66%),
+    radial-gradient(85% 30% at 62% 82%, rgba(231, 118, 88, 0.34), transparent 72%),
+    radial-gradient(70% 40% at 90% 94%, rgba(199, 151, 96, 0.28), transparent 70%),
+    radial-gradient(62% 48% at 14% 10%, rgba(47, 155, 150, 0.24), transparent 72%),
+    linear-gradient(172deg, var(--navy-900) 0%, var(--navy-700) 32%, var(--navy-600) 60%, #17405A 80%, #1D3E57 100%);
   z-index: -2;
 }
+.hero.has-photo::before {
+  background:
+    linear-gradient(90deg, rgba(8, 20, 31, 0.94) 0%, rgba(8, 20, 31, 0.80) 42%, rgba(8, 20, 31, 0.42) 78%, rgba(8, 20, 31, 0.30) 100%),
+    linear-gradient(180deg, rgba(8, 20, 31, 0.55) 0%, transparent 28%, transparent 62%, rgba(8, 20, 31, 0.72) 100%);
+}
+/* Illustrated palms would fight a real photograph — drop them, keep the surf. */
+.hero.has-photo .hero__palms { display: none; }
+.hero.has-photo .hero__scene { opacity: 0.4; }
+
 .hero__scene {
   position: absolute;
   inset: auto 0 0 0;
@@ -1384,6 +1407,14 @@ a.area:focus-visible { outline-offset: 2px; }
 
   .callbar { display: flex; }
   body { padding-bottom: 74px; }
+}
+
+@media (max-width: 900px) {
+  .hero.has-photo::before {
+    background:
+      linear-gradient(180deg, rgba(8, 20, 31, 0.86) 0%, rgba(8, 20, 31, 0.78) 45%, rgba(8, 20, 31, 0.88) 100%);
+  }
+  .hero__photo { object-position: center 45%; }
 }
 
 @media (max-width: 560px) {

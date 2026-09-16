@@ -46,6 +46,26 @@ handles cropping (`object-fit: cover`) at every screen size, so exact dimensions
 don't matter — but keep the cart roughly centred, since the card crop is 16:10
 and the feature block is 4:3.
 
+### Hero photo — the slot is already wired
+
+Drop a sunset shot of Anna Maria Island here as **`hero-sunset.jpg`** and it
+becomes the homepage hero background. Nothing else to change.
+
+- **Size:** 2400px wide or so, landscape, ideally under ~400 KB (it loads first
+  on every visit, so weight matters). It is set `fetchpriority="high"` and is
+  never lazy-loaded, because it is the page's largest element.
+- **Composition:** keep the interesting part (sun, horizon) in the **right half**
+  and low in the frame. The headline sits over the left, which the page darkens
+  with a gradient scrim so the type stays readable.
+- **When it loads**, the hero gradient automatically switches from being the
+  background to being a translucent scrim over the photo, and the illustrated
+  palm silhouettes hide themselves so they don't fight a real photograph.
+- **If the file is absent**, the hero falls back to the designed sunset gradient
+  with the palms — which is what ships today. Nothing breaks either way.
+
+A real photo of your own carts at sunset would work even better than a plain
+landscape — your own Facebook page is a good place to look.
+
 ### Still worth adding
 
 | Slot | File to add | Used on |

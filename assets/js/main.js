@@ -126,6 +126,15 @@
     var drop = function () { if (img.parentNode) img.parentNode.removeChild(img); };
     img.addEventListener('error', drop);
     if (img.complete && img.naturalWidth === 0) drop();
+
+    /* The hero photo also switches its gradient from background to scrim, so
+       the headline keeps its contrast either way. */
+    if (img.classList.contains('hero__photo')) {
+      var hero = img.closest('.hero');
+      var mark = function () { if (hero && img.naturalWidth > 0) hero.classList.add('has-photo'); };
+      img.addEventListener('load', mark);
+      if (img.complete) mark();
+    }
   });
 
   /* ------------------------------------------------- current page in nav */
