@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 const OUT = process.argv[2] || '/tmp/shots';
-const base = 'http://127.0.0.1:8099';
+const base = process.env.AUDIT_BASE || 'http://127.0.0.1:8099';
 const targets = [
   ['home-desktop', '/', 1440, 1000, false],
   ['home-mobile', '/', 390, 844, false],

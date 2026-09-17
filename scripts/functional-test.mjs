@@ -1,6 +1,6 @@
 /** Drives the real UI: form validation, phone formatting, mobile nav, promo dismissal. */
 import { chromium } from 'playwright';
-const BASE = 'http://127.0.0.1:8099';
+const BASE = process.env.AUDIT_BASE || 'http://127.0.0.1:8099';
 const results = [];
 const check = (name, pass, extra = '') => { results.push([pass, name, extra]); };
 
